@@ -1,5 +1,13 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react"
-import { View, StyleSheet, ImageSourcePropType } from "react-native"
+import { useState, useEffect, useCallback, useMemo } from "react"
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	ImageSourcePropType,
+	StyleSheet
+} from "react-native"
+import { Image } from "expo-image"
+import { useFonts } from "expo-font"
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -8,18 +16,27 @@ import Animated, {
 	withSequence,
 	runOnJS
 } from "react-native-reanimated"
+import { LinearGradient } from "expo-linear-gradient"
+import { theme } from "../utils/constants"
 
 const backgroundImages: ImageSourcePropType[] = [
-	require("../assets/images/background-1.png"),
-	require("../assets/images/background-2.png"),
-	require("../assets/images/background-3.png"),
-	require("../assets/images/background-4.png")
+	require("../assets/images/background1.png"),
+	require("../assets/images/background2.png"),
+	require("../assets/images/background3.png"),
+	require("../assets/images/background4.png")
 ]
 
 export default function Page() {
 	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
 	const [nextImageIndex, setNextImageIndex] = useState<number>(1)
+
 	const opacity = useSharedValue<number>(1)
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Bold": require("../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../assets/fonts/Roboto/Roboto 400.ttf"),
+		"Roboto-Medium": require("../assets/fonts/Roboto/Roboto Medium 500.ttf")
+	})
 
 	const updateCurrentImageIndex = useCallback((): void => {
 		setCurrentImageIndex(
@@ -67,6 +84,7 @@ export default function Page() {
 		() => backgroundImages[currentImageIndex],
 		[currentImageIndex]
 	)
+
 	const nextImage = useMemo(
 		() => backgroundImages[nextImageIndex],
 		[nextImageIndex]
@@ -88,6 +106,70 @@ export default function Page() {
 				style={[styles.background, styles.nextBackgroundImage]}
 				resizeMode="cover"
 			/>
+			<View style={[styles.background, styles.overlay]}>
+				<LinearGradient
+					colors={["transparent", "black"]}
+					start={{ x: 0, y: 0.25 }}
+					end={{ x: 0, y: 0.75 }}
+					style={styles.backgroundGradient}
+				>
+					{fontsLoaded && (
+						<Text style={styles.salutationText}>
+							Let’s Get Started
+						</Text>
+					)}
+					{fontsLoaded && (
+						<Text style={styles.descriptionText} numberOfLines={4}>
+							Please Log In Or Sign Up To Find The Best Service
+							Providers For All Your Vehicle, Residential, And
+							Commercial Wash And Maintenance Needs.
+						</Text>
+					)}
+					<View style={styles.actionButtonsWrapper}>
+						<TouchableOpacity
+							style={[styles.actionButton, styles.loginButton]}
+						>
+							{fontsLoaded && (
+								<Text style={styles.actionButtonText}>
+									Login
+								</Text>
+							)}
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={[styles.actionButton, styles.signUpButton]}
+						>
+							{fontsLoaded && (
+								<Text style={styles.actionButtonText}>
+									Sign Up
+								</Text>
+							)}
+						</TouchableOpacity>
+					</View>
+					{fontsLoaded && (
+						<Text style={styles.socialLoginText}>
+							Or Via Google And Facebook
+						</Text>
+					)}
+					<View style={styles.socialLoginButtonsWrapper}>
+						<TouchableOpacity style={styles.socialLoginButton}>
+							<Image
+								source={require("../assets/icons/google.svg")}
+								alt="google"
+								style={styles.socialIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.socialLoginButton}>
+							<Image
+								source={require("../assets/icons/facebook.svg")}
+								alt="google"
+								style={styles.socialIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+				</LinearGradient>
+			</View>
 		</View>
 	)
 }
@@ -111,6 +193,79 @@ const styles = StyleSheet.create({
 		zIndex: -10
 	},
 	overlay: {
-		zIndex: 100
+		zIndex: 100,
+		justifyContent: "flex-end",
+		backgroundColor: "rgba(26, 61, 124, 0.25)"
+	},
+	backgroundGradient: {
+		flex: 1,
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "flex-end",
+		gap: 7.5,
+		paddingBottom: 15
+	},
+	salutationText: {
+		fontSize: 30,
+		fontFamily: "Montserrat-Bold",
+		color: "white"
+	},
+	descriptionText: {
+		fontSize: 13.5,
+		fontFamily: "Roboto-Regular",
+		color: "white",
+		width: 275,
+		textAlign: "center"
+	},
+	actionButtonsWrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 10,
+		marginVertical: 20
+	},
+	actionButton: {
+		height: 50,
+		width: 115,
+		borderRadius: 10,
+		borderWidth: 1.5,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	actionButtonText: {
+		fontSize: 15,
+		color: "white",
+		fontFamily: "Roboto-Medium"
+	},
+	loginButton: {
+		backgroundColor: theme.colors.primary
+	},
+	signUpButton: {
+		borderColor: theme.colors.primary
+	},
+	socialLoginText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Regular",
+		color: "white",
+		marginTop: 15
+	},
+	socialLoginButtonsWrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 10,
+		marginVertical: 10
+	},
+	socialLoginButton: {
+		height: 50,
+		width: 70,
+		borderRadius: 10,
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "#1C1C1C"
+	},
+	socialIcon: {
+		height: 20,
+		width: 20
 	}
 })
