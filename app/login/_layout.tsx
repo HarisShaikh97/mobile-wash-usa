@@ -1,4 +1,11 @@
-import { View, ImageBackground, StyleSheet } from "react-native"
+import {
+	View,
+	KeyboardAvoidingView,
+	ScrollView,
+	ImageBackground,
+	Platform,
+	StyleSheet
+} from "react-native"
 import { Slot } from "expo-router"
 import BackButton from "../../components/back-button/BackButton"
 
@@ -14,7 +21,14 @@ export default function Layout() {
 					<BackButton />
 				</View>
 			</ImageBackground>
-			<Slot />
+			<KeyboardAvoidingView
+				style={styles.scrollViewContainer}
+				behavior={Platform.OS === "ios" ? "padding" : "height"}
+			>
+				<ScrollView showsVerticalScrollIndicator={false}>
+					<Slot />
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</View>
 	)
 }
@@ -22,8 +36,7 @@ export default function Layout() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: "column",
-		gap: 15
+		flexDirection: "column"
 	},
 	headerBackgroundImage: {
 		height: 200,
@@ -33,5 +46,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingTop: 25,
 		paddingLeft: 15
+	},
+	scrollViewContainer: {
+		flex: 1
 	}
 })

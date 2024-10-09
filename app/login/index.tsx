@@ -44,6 +44,8 @@ export default function Page() {
 					<View style={styles.inputFieldContainer}>
 						<TextInput
 							style={styles.inputField}
+							value={userName}
+							onChangeText={setUserName}
 							placeholder="Email or phone number"
 							placeholderTextColor={"rgba(173, 173, 173, 0.5)"}
 						/>
@@ -56,6 +58,8 @@ export default function Page() {
 					<View style={styles.inputFieldContainer}>
 						<TextInput
 							style={styles.inputField}
+							value={password}
+							onChangeText={setPassword}
 							placeholder="********"
 							placeholderTextColor={"rgba(173, 173, 173, 0.5)"}
 							secureTextEntry={!isPasswordVisible}
@@ -144,9 +148,9 @@ export default function Page() {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		flexDirection: "column",
 		paddingHorizontal: 35,
+		paddingTop: 15,
 		gap: 10
 	},
 	titleText: {
