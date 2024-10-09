@@ -2,7 +2,7 @@ import { TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import AntDesign from "@expo/vector-icons/AntDesign"
 
-export default function BackButton() {
+export default function BackButton(): React.ReactElement | null {
 	const router = useRouter()
 	return (
 		<TouchableOpacity

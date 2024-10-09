@@ -27,7 +27,7 @@ const backgroundImages: ImageSourcePropType[] = [
 	require("../assets/images/background4.png")
 ]
 
-export default function Page() {
+export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)

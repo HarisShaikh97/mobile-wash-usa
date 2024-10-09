@@ -9,7 +9,7 @@ import {
 import { Slot } from "expo-router"
 import BackButton from "../../components/back-button/BackButton"
 
-export default function Layout() {
+export default function Layout(): React.ReactElement | null {
 	return (
 		<View style={styles.container}>
 			<ImageBackground

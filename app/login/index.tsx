@@ -11,7 +11,7 @@ import { useFonts } from "expo-font"
 import Feather from "@expo/vector-icons/Feather"
 import { theme } from "../../utils/constants"
 
-export default function Page() {
+export default function Page(): React.ReactElement | null {
 	const [userName, setUserName] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
