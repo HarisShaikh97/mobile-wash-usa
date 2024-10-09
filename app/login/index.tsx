@@ -1,18 +1,15 @@
 import { useState, useCallback } from "react"
-import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import InputField from "../../components/input-field/InputField"
 import FormButton from "../../components/form-button/FormButton"
 import { theme } from "../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [userName, setUserName] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
 
@@ -23,6 +20,9 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleLogin = useCallback((): void => {}, [])
+	const handleForgetPassword = useCallback((): void => {
+		router.navigate("/forgot-password")
+	}, [])
 
 	return (
 		<View style={styles.container}>
@@ -52,7 +52,10 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={true}
 				/>
 				<FormButton title="Login" onPress={handleLogin} />
-				<TouchableOpacity style={styles.forgetPasswordButton}>
+				<TouchableOpacity
+					style={styles.forgetPasswordButton}
+					onPress={handleForgetPassword}
+				>
 					{fontsLoaded && (
 						<Text style={styles.forgetPasswordButtonText}>
 							Forgot Password?
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
 		alignSelf: "flex-end"
 	},
 	forgetPasswordButtonText: {
-		fontFamily: "Roboto-Regular",
+		fontFamily: "Roboto-Medium",
 		fontSize: 12.5,
 		color: theme.colors.secondary
 	},
