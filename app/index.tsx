@@ -7,6 +7,7 @@ import {
 	StyleSheet
 } from "react-native"
 import { Image } from "expo-image"
+import { useRouter } from "expo-router"
 import { useFonts } from "expo-font"
 import Animated, {
 	useSharedValue,
@@ -27,6 +28,8 @@ const backgroundImages: ImageSourcePropType[] = [
 ]
 
 export default function Page() {
+	const router = useRouter()
+
 	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
 	const [nextImageIndex, setNextImageIndex] = useState<number>(1)
 
@@ -90,6 +93,10 @@ export default function Page() {
 		[nextImageIndex]
 	)
 
+	const handleLogin = useCallback((): void => {
+		router.navigate("/login")
+	}, [router])
+
 	return (
 		<View style={styles.container}>
 			<Animated.Image
@@ -128,6 +135,7 @@ export default function Page() {
 					<View style={styles.actionButtonsWrapper}>
 						<TouchableOpacity
 							style={[styles.actionButton, styles.loginButton]}
+							onPress={handleLogin}
 						>
 							{fontsLoaded && (
 								<Text style={styles.actionButtonText}>
