@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import {
 	View,
 	Text,
@@ -8,19 +8,21 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import Feather from "@expo/vector-icons/Feather"
+import InputField from "../../components/input-field/InputField"
+import FormButton from "../../components/form-button/FormButton"
 import { theme } from "../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const [userName, setUserName] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
-	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf"),
 		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
+
+	const handleLogin = useCallback((): void => {}, [])
 
 	return (
 		<View style={styles.container}>
@@ -35,70 +37,30 @@ export default function Page(): React.ReactElement | null {
 				</Text>
 			)}
 			<View style={styles.formContainer}>
-				<View style={styles.inputFieldWrapper}>
+				<InputField
+					title="Email/Number"
+					placeholder="Email or phone number"
+					value={userName}
+					onChangeText={setUserName}
+					secureTextEntry={false}
+				/>
+				<InputField
+					title="Password"
+					placeholder="********"
+					value={password}
+					onChangeText={setPassword}
+					secureTextEntry={true}
+				/>
+				<FormButton title="Login" onPress={handleLogin} />
+				<TouchableOpacity style={styles.forgetPasswordButton}>
 					{fontsLoaded && (
-						<Text style={styles.inputFieldTitleText}>
-							Email/Number
+						<Text style={styles.forgetPasswordButtonText}>
+							Forgot Password?
 						</Text>
 					)}
-					<View style={styles.inputFieldContainer}>
-						<TextInput
-							style={styles.inputField}
-							value={userName}
-							onChangeText={setUserName}
-							placeholder="Email or phone number"
-							placeholderTextColor={"rgba(173, 173, 173, 0.5)"}
-						/>
-					</View>
-				</View>
-				<View style={styles.inputFieldWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.inputFieldTitleText}>Password</Text>
-					)}
-					<View style={styles.inputFieldContainer}>
-						<TextInput
-							style={styles.inputField}
-							value={password}
-							onChangeText={setPassword}
-							placeholder="********"
-							placeholderTextColor={"rgba(173, 173, 173, 0.5)"}
-							secureTextEntry={!isPasswordVisible}
-						/>
-						<TouchableOpacity
-							onPress={() =>
-								setIsPasswordVisible(!isPasswordVisible)
-							}
-						>
-							{isPasswordVisible ? (
-								<Feather
-									name="eye-off"
-									size={15}
-									color="rgba(173, 173, 173, 0.5)"
-								/>
-							) : (
-								<Feather
-									name="eye"
-									size={15}
-									color="rgba(173, 173, 173, 0.5)"
-								/>
-							)}
-						</TouchableOpacity>
-					</View>
-				</View>
-				<TouchableOpacity
-					style={[styles.buttonContainer, styles.loginButton]}
-				>
-					<Text style={styles.loginButtonText}>Login</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={styles.forgetPasswordButton}>
-					<Text style={styles.forgetPasswordButtonText}>
-						Forgot Password?
-					</Text>
 				</TouchableOpacity>
 			</View>
-			<TouchableOpacity
-				style={[styles.buttonContainer, styles.socialLoginButton]}
-			>
+			<TouchableOpacity style={styles.socialLoginButton}>
 				<Image
 					source={require("../../assets/icons/google.svg")}
 					alt="google"
@@ -111,9 +73,7 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				)}
 			</TouchableOpacity>
-			<TouchableOpacity
-				style={[styles.buttonContainer, styles.socialLoginButton]}
-			>
+			<TouchableOpacity style={styles.socialLoginButton}>
 				<Image
 					source={require("../../assets/icons/facebook.svg")}
 					alt="facebook"
@@ -170,47 +130,6 @@ const styles = StyleSheet.create({
 		gap: 10,
 		paddingVertical: 15
 	},
-	inputFieldWrapper: {
-		width: "100%",
-		flexDirection: "column",
-		gap: 7.5
-	},
-	inputFieldTitleText: {
-		fontFamily: "Roboto-Regular",
-		fontSize: 12.5,
-		color: theme.colors.secondary,
-		marginLeft: 7.5
-	},
-	inputFieldContainer: {
-		height: 50,
-		width: "100%",
-		borderWidth: 0.75,
-		borderColor: "rgba(173, 173, 173, 0.5)",
-		borderRadius: 12.5,
-		paddingHorizontal: 15,
-		flexDirection: "row",
-		gap: 5,
-		alignItems: "center"
-	},
-	inputField: {
-		flex: 1,
-		fontSize: 15
-	},
-	buttonContainer: {
-		width: "100%",
-		height: 50,
-		borderRadius: 10
-	},
-	loginButton: {
-		backgroundColor: theme.colors.primary,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	loginButtonText: {
-		fontFamily: "Roboto-Medium",
-		fontSize: 15,
-		color: "white"
-	},
 	forgetPasswordButton: {
 		alignSelf: "flex-end"
 	},
@@ -220,6 +139,9 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary
 	},
 	socialLoginButton: {
+		width: "100%",
+		height: 50,
+		borderRadius: 10,
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 15,

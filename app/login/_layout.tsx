@@ -36,7 +36,8 @@ export default function Layout(): React.ReactElement | null {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: "column"
+		flexDirection: "column",
+		backgroundColor: "white"
 	},
 	headerBackgroundImage: {
 		height: 200,
