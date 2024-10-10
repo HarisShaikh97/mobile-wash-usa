@@ -1,12 +1,14 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
-import BackButton from "../../components/back-button/BackButton"
+import { useRouter } from "expo-router"
 import InputField from "../../components/input-field/InputField"
 import FormButton from "../../components/form-button/FormButton"
 import { theme } from "../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [userName, setUserName] = useState<string>("")
 
 	const [fontsLoaded] = useFonts({
@@ -14,48 +16,36 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSubmit = useCallback((): void => {}, [])
+	const handleSubmit = useCallback((): void => {
+		router.navigate("/forgot-password/verification-code")
+	}, [])
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.headerContainer}>
-				<BackButton />
-			</View>
-			<View style={styles.bodyContainer}>
-				{fontsLoaded && (
-					<Text style={styles.titleText}>Forgot Your Password?</Text>
-				)}
-				{fontsLoaded && (
-					<Text style={styles.descriptionText}>
-						Enter your registered email address or phone number, and
-						we’ll send you a link or code to reset your password.
-					</Text>
-				)}
-				<View style={styles.formContainer}>
-					<InputField
-						title="Email/Number"
-						placeholder="Enter your email or phone number"
-						value={userName}
-						onChangeText={setUserName}
-						secureTextEntry={false}
-					/>
-					<FormButton title="Send" onPress={handleSubmit} />
-				</View>
+		<View style={styles.bodyContainer}>
+			{fontsLoaded && (
+				<Text style={styles.titleText}>Forgot Your Password?</Text>
+			)}
+			{fontsLoaded && (
+				<Text style={styles.descriptionText}>
+					Enter your registered email address or phone number, and
+					we’ll send you a link or code to reset your password.
+				</Text>
+			)}
+			<View style={styles.formContainer}>
+				<InputField
+					title="Email/Number"
+					placeholder="Enter your email or phone number"
+					value={userName}
+					onChangeText={setUserName}
+					secureTextEntry={false}
+				/>
+				<FormButton title="Send" onPress={handleSubmit} />
 			</View>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: "column",
-		backgroundColor: "white"
-	},
-	headerContainer: {
-		paddingHorizontal: 20,
-		paddingVertical: 35
-	},
 	bodyContainer: {
 		flex: 1,
 		flexDirection: "column",
