@@ -1,11 +1,14 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { useRouter } from "expo-router"
 import { useFonts } from "expo-font"
 import FormButton from "../../../components/form-button/FormButton"
 import OTPInput from "../../../components/otp-input/OTPInput"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [OTP, setOTP] = useState<string>("")
 
 	const [fontsLoaded] = useFonts({
@@ -14,7 +17,9 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 
-	const handleSubmit = useCallback((): void => {}, [])
+	const handleSubmit = useCallback((): void => {
+		router.navigate("/forgot-password/change-password")
+	}, [router])
 
 	return (
 		<View style={styles.bodyContainer}>

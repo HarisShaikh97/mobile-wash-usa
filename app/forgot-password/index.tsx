@@ -18,7 +18,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleSubmit = useCallback((): void => {
 		router.navigate("/forgot-password/verification-code")
-	}, [])
+	}, [router])
 
 	return (
 		<View style={styles.bodyContainer}>
