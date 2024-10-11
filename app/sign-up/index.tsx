@@ -36,7 +36,10 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				)}
 				<View style={styles.userRolesOptionsWrapper}>
-					<TouchableOpacity style={styles.userRoleOption}>
+					<TouchableOpacity
+						style={styles.userRoleOption}
+						onPress={handleSelectCustomer}
+					>
 						<Text style={styles.userRoleOptionText}>
 							I am a Customer
 						</Text>
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
 	},
 	headerContainer: {
 		paddingHorizontal: 20,
-		paddingVertical: 35
+		paddingVertical: 50
 	},
 	bodyContainer: {
 		flex: 1,
