@@ -97,6 +97,10 @@ export default function Page(): React.ReactElement | null {
 		router.navigate("/login")
 	}, [router])
 
+	const handleSignUp = useCallback((): void => {
+		router.navigate("/sign-up")
+	}, [router])
+
 	return (
 		<View style={styles.container}>
 			<Animated.Image
@@ -145,6 +149,7 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={[styles.actionButton, styles.signUpButton]}
+							onPress={handleSignUp}
 						>
 							{fontsLoaded && (
 								<Text style={styles.actionButtonText}>

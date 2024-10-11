@@ -20,6 +20,11 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleLogin = useCallback((): void => {}, [])
+
+	const handleSignUp = useCallback((): void => {
+		router.navigate("/sign-up")
+	}, [router])
+
 	const handleForgetPassword = useCallback((): void => {
 		router.navigate("/forgot-password")
 	}, [])
@@ -95,7 +100,7 @@ export default function Page(): React.ReactElement | null {
 						New to Mobile Wash USA?
 					</Text>
 				)}
-				<TouchableOpacity>
+				<TouchableOpacity onPress={handleSignUp}>
 					{fontsLoaded && (
 						<Text
 							style={[styles.signUpText, styles.signUpTextBlue]}
