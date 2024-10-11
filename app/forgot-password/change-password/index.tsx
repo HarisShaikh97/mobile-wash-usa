@@ -3,20 +3,29 @@ import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
+import ResetPasswordSuccessfulModal from "../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const [newPassword, setNewPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSubmit = useCallback((): void => {}, [])
+	const handleSubmit = useCallback((): void => {
+		setOpenModal(!openModal)
+	}, [openModal])
 
 	return (
 		<View style={styles.bodyContainer}>
+			<ResetPasswordSuccessfulModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			{fontsLoaded && (
 				<Text style={styles.titleText}>Change Password</Text>
 			)}
@@ -73,6 +82,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "column",
 		gap: 15,
-		paddingTop: 25
+		paddingTop: 35
 	}
 })
