@@ -40,14 +40,18 @@ export default function Page(): React.ReactElement | null {
 						style={styles.userRoleOption}
 						onPress={handleSelectCustomer}
 					>
-						<Text style={styles.userRoleOptionText}>
-							I am a Customer
-						</Text>
+						{fontsLoaded && (
+							<Text style={styles.userRoleOptionText}>
+								I am a Customer
+							</Text>
+						)}
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.userRoleOption}>
-						<Text style={styles.userRoleOptionText}>
-							I am a Vendor
-						</Text>
+						{fontsLoaded && (
+							<Text style={styles.userRoleOptionText}>
+								I am a Vendor
+							</Text>
+						)}
 					</TouchableOpacity>
 				</View>
 				<Image

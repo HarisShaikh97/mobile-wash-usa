@@ -59,7 +59,7 @@ export default function Page(): React.ReactElement | null {
 					placeholder="**********"
 					value={password}
 					onChangeText={setPassword}
-					secureTextEntry={false}
+					secureTextEntry={true}
 				/>
 				<InputField
 					title="Location"
