@@ -20,6 +20,7 @@ export default function OTPInput({
 					focusedPinCodeContainerStyle: styles.activePinCodeContainer,
 					focusStickStyle: styles.focusStick
 				}}
+				autoFocus={false}
 				onTextChange={onChangeText}
 			/>
 		</View>
