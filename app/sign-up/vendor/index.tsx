@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
+import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
@@ -14,6 +15,10 @@ export default function Page(): React.ReactElement | null {
 	const [phoneNumber, setPhoneNumber] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
 	const [location, setLocation] = useState<string>("")
+	const [businessInformation, setBusinessInformation] = useState<string>("")
+	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
+		null
+	)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -69,6 +74,33 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				<InputField
+					title="Business Information"
+					placeholder="Tell us about your business or the services you provide."
+					value={businessInformation}
+					onChangeText={setBusinessInformation}
+					secureTextEntry={false}
+					multiline={true}
+					type="text"
+				/>
+				<View style={styles.documentInputWrapper}>
+					<InputField
+						title="Upload Documents"
+						placeholder="Insurance, Business License, etc."
+						files={documents}
+						onUploadFile={setDocuments}
+						type="file"
+					/>
+					<View style={styles.documentInputDescriptionTextWrapper}>
+						<View style={styles.bulletMarker} />
+						{fontsLoaded && (
+							<Text style={styles.documentInputDescriptionText}>
+								Upload PDF or Image Documents As Proof Of
+								Business Verification.
+							</Text>
+						)}
+					</View>
+				</View>
 				<InputField
 					title="Location"
 					placeholder="Enter your location"
@@ -177,6 +209,29 @@ const styles = StyleSheet.create({
 		gap: 10,
 		paddingTop: 20,
 		paddingBottom: 35
+	},
+	documentInputWrapper: {
+		width: "100%",
+		flexDirection: "column",
+		gap: 10
+	},
+	bulletMarker: {
+		height: 3.5,
+		width: 3.5,
+		borderRadius: 2.5,
+		backgroundColor: theme.colors.secondary,
+		marginTop: 7.5
+	},
+	documentInputDescriptionTextWrapper: {
+		flexDirection: "row",
+		gap: 10,
+		paddingHorizontal: 25,
+		paddingBottom: 5
+	},
+	documentInputDescriptionText: {
+		fontSize: 11.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
 	},
 	policyAndTermsTextContainer: {
 		width: "100%",

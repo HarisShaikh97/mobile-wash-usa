@@ -46,7 +46,10 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						)}
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.userRoleOption}>
+					<TouchableOpacity
+						style={styles.userRoleOption}
+						onPress={handleSelectVendor}
+					>
 						{fontsLoaded && (
 							<Text style={styles.userRoleOptionText}>
 								I am a Vendor

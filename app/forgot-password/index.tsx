@@ -38,6 +38,8 @@ export default function Page(): React.ReactElement | null {
 					value={userName}
 					onChangeText={setUserName}
 					secureTextEntry={false}
+					multiline={false}
+					type="text"
 				/>
 				<FormButton title="Send" onPress={handleSubmit} />
 			</View>

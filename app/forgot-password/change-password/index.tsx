@@ -41,6 +41,8 @@ export default function Page(): React.ReactElement | null {
 					value={newPassword}
 					onChangeText={setNewPassword}
 					secureTextEntry={true}
+					multiline={false}
+					type="text"
 				/>
 				<InputField
 					title="Confirm Password"
@@ -48,6 +50,8 @@ export default function Page(): React.ReactElement | null {
 					value={confirmPassword}
 					onChangeText={setConfirmPassword}
 					secureTextEntry={true}
+					multiline={false}
+					type="text"
 				/>
 				<FormButton title="Reset Password" onPress={handleSubmit} />
 			</View>

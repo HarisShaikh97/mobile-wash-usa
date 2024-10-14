@@ -48,6 +48,8 @@ export default function Page(): React.ReactElement | null {
 					value={userName}
 					onChangeText={setUserName}
 					secureTextEntry={false}
+					multiline={false}
+					type="text"
 				/>
 				<InputField
 					title="Password"
@@ -55,6 +57,8 @@ export default function Page(): React.ReactElement | null {
 					value={password}
 					onChangeText={setPassword}
 					secureTextEntry={true}
+					multiline={false}
+					type="text"
 				/>
 				<FormButton title="Login" onPress={handleLogin} />
 				<TouchableOpacity
