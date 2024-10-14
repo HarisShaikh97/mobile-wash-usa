@@ -6,6 +6,7 @@ import {
 	Platform,
 	StyleSheet
 } from "react-native"
+import { usePathname } from "expo-router"
 import BackButton from "../../components/back-button/BackButton"
 
 export default function SignUpLayout({
@@ -13,6 +14,8 @@ export default function SignUpLayout({
 }: {
 	children: React.ReactNode
 }): React.ReactElement | null {
+	const pathname = usePathname()
+
 	return (
 		<KeyboardAvoidingView
 			style={styles.scrollViewContainer}
@@ -21,7 +24,11 @@ export default function SignUpLayout({
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.container}>
 					<ImageBackground
-						source={require("../../assets/images/customer-sign-up-header.png")}
+						source={
+							pathname === "/sign-up/customer"
+								? require("../../assets/images/customer-sign-up-header.png")
+								: require("../../assets/images/vendor-sign-up-header.png")
+						}
 						style={styles.headerContainer}
 						resizeMode="stretch"
 					>
