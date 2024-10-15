@@ -19,7 +19,9 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 
-	const handleLogin = useCallback((): void => {}, [])
+	const handleLogin = useCallback((): void => {
+		router.navigate("/home")
+	}, [router])
 
 	const handleSignUp = useCallback((): void => {
 		router.navigate("/sign-up")
@@ -27,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleForgetPassword = useCallback((): void => {
 		router.navigate("/forgot-password")
-	}, [])
+	}, [router])
 
 	return (
 		<View style={styles.container}>
