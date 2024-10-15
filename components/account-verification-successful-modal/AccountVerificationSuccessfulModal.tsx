@@ -11,7 +11,7 @@ interface ResetPasswordModalProps {
 	setOpenModal: (value: boolean) => void
 }
 
-export default function ResetPasswordSuccessfulModal({
+export default function AccountVerificationSuccessfulModal({
 	openModal,
 	setOpenModal
 }: ResetPasswordModalProps): React.ReactElement | null {
@@ -52,17 +52,18 @@ export default function ResetPasswordSuccessfulModal({
 						<View style={styles.modalBodyContainer}>
 							{fontsLoaded && (
 								<Text style={styles.descriptionText}>
-									Your Password Has Been
+									Your Account Has Been
 								</Text>
 							)}
 							{fontsLoaded && (
 								<Text style={styles.titleText}>
-									Successfully Reset!
+									Successfully Verified!
 								</Text>
 							)}
 							{fontsLoaded && (
 								<Text style={styles.descriptionText}>
-									You Can Now Log In With Our New Password
+									You Can Now Log In And Start Using The
+									Platform
 								</Text>
 							)}
 						</View>
