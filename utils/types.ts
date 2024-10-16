@@ -3,6 +3,7 @@ export type HexColor = `#${string}`
 export type ThemeColors = {
 	primary: HexColor
 	secondary: HexColor
+	tertiary: HexColor
 }
 
 export type Theme = {
