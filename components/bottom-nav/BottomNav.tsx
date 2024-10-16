@@ -45,8 +45,9 @@ const styles = StyleSheet.create({
 	bottomNavigationContainer: {
 		height: 85,
 		width: "100%",
-		zIndex: 50,
-		position: "relative"
+		position: "absolute",
+		bottom: 0,
+		zIndex: 100
 	},
 	addButtonContainer: {
 		height: 55,

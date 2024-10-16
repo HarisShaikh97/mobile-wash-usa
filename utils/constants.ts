@@ -1,4 +1,4 @@
-import { Theme, HexColor } from "./types"
+import { Theme, HexColor, Service } from "./types"
 
 export const theme: Theme = {
 	colors: {
@@ -7,3 +7,18 @@ export const theme: Theme = {
 		tertiary: "#1A3D7C" as HexColor
 	}
 }
+
+export const services: Service[] = [
+	{
+		title: "Vehicle Wash & Maintenance",
+		image: require("../assets/images/service-1.png")
+	},
+	{
+		title: "Residential Cleaning",
+		image: require("../assets/images/service-2.png")
+	},
+	{
+		title: "Commercial Services",
+		image: require("../assets/images/service-3.png")
+	}
+]
