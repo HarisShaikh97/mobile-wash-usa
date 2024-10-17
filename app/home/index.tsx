@@ -8,13 +8,82 @@ import {
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import ServiceCard from "../../components/service-card/ServiceCard"
-import { services } from "../../utils/constants"
-import { Service } from "../../utils/types"
+import JobCard from "../../components/job-card/JobCard"
+import { services, theme } from "../../utils/constants"
+import { Service, Job } from "../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	const jobs: Job[] = [
+		{
+			_id: "1",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../assets/images/background1.png"),
+				require("../../assets/images/background2.png"),
+				require("../../assets/images/background3.png"),
+				require("../../assets/images/background4.png")
+			]
+		},
+		{
+			_id: "2",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../assets/images/background1.png"),
+				require("../../assets/images/background2.png"),
+				require("../../assets/images/background3.png"),
+				require("../../assets/images/background4.png")
+			]
+		},
+		{
+			_id: "3",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../assets/images/background1.png"),
+				require("../../assets/images/background2.png"),
+				require("../../assets/images/background3.png"),
+				require("../../assets/images/background4.png")
+			]
+		}
+	]
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf"),
+		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
+		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
 	})
 
 	return (
@@ -82,6 +151,65 @@ export default function Tab(): React.ReactElement | null {
 							)}
 						</View>
 					</ScrollView>
+					<View style={styles.postJobSectionContainer}>
+						{fontsLoaded && (
+							<Text style={styles.jobTitleText}>Post A Job</Text>
+						)}
+						{fontsLoaded && (
+							<Text
+								style={[
+									styles.jobDescriptionText,
+									styles.postJobDescriptionText
+								]}
+							>
+								Quickly post a car wash or maintenance job for
+								vendors to apply to.
+							</Text>
+						)}
+						<TouchableOpacity style={styles.postJobButtonContainer}>
+							{fontsLoaded && (
+								<Text style={styles.postJobButtonText}>
+									Post a New Job
+								</Text>
+							)}
+						</TouchableOpacity>
+					</View>
+					<View style={styles.myJobsSectionContainer}>
+						<View style={styles.myJobsHeaderContainer}>
+							{fontsLoaded && (
+								<Text style={styles.jobTitleText}>My Jobs</Text>
+							)}
+							<View style={styles.activeJobsTextContainer}>
+								{fontsLoaded && (
+									<Text style={styles.jobDescriptionText}>
+										Your Active Jobs
+									</Text>
+								)}
+								<TouchableOpacity>
+									{fontsLoaded && (
+										<Text style={styles.seeAllText}>
+											See All
+										</Text>
+									)}
+								</TouchableOpacity>
+							</View>
+						</View>
+						<View style={styles.jobCardsContainer}>
+							{jobs.map((job: Job): React.ReactElement | null => {
+								return (
+									<JobCard
+										_id={job._id}
+										title={job.title}
+										description={job.description}
+										date={job.date}
+										address={job.address}
+										budget={job.budget}
+										key={job._id}
+									/>
+								)
+							})}
+						</View>
+					</View>
 				</View>
 			</View>
 		</ScrollView>
@@ -167,5 +295,66 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		gap: 10,
 		paddingHorizontal: 25
+	},
+	postJobSectionContainer: {
+		flexDirection: "column",
+		alignItems: "center",
+		marginVertical: 20
+	},
+	jobTitleText: {
+		fontSize: 25,
+		fontFamily: "Montserrat-Bold",
+		color: theme.colors.secondary
+	},
+	jobDescriptionText: {
+		fontSize: 13.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
+	},
+	postJobDescriptionText: {
+		textAlign: "center",
+		width: 265
+	},
+	postJobButtonContainer: {
+		height: 50,
+		width: 175,
+		borderRadius: 10,
+		backgroundColor: theme.colors.primary,
+		marginTop: 15,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	postJobButtonText: {
+		fontSize: 15,
+		fontFamily: "Roboto-Medium",
+		color: "white"
+	},
+	myJobsSectionContainer: {
+		width: "100%",
+		flexDirection: "column",
+		gap: 35,
+		paddingHorizontal: 25,
+		marginTop: 50,
+		marginBottom: 125
+	},
+	myJobsHeaderContainer: {
+		flexDirection: "column"
+	},
+	activeJobsTextContainer: {
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between"
+	},
+	seeAllText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Bold",
+		color: theme.colors.secondary
+	},
+	jobCardsContainer: {
+		width: "100%",
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 10
 	}
 })
