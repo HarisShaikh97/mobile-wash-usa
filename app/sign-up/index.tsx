@@ -26,7 +26,11 @@ export default function Page(): React.ReactElement | null {
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerContainer}>
-				<BackButton />
+				<BackButton
+					color="black"
+					backgroundColor="transparent"
+					borderColor="#F5F5F5"
+				/>
 			</View>
 			<View style={styles.bodyContainer}>
 				{fontsLoaded && <Text style={styles.titleText}>Welcome</Text>}

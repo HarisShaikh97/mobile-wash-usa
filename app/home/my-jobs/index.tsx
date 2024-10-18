@@ -11,6 +11,7 @@ import { useFonts } from "expo-font"
 import BackButton from "../../../components/back-button/BackButton"
 import SearchBar from "../../../components/search-bar/SearchBar"
 import JobCard from "../../../components/job-card/JobCard"
+import NotificationButton from "../../../components/notification-button/NotificationButton"
 import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
@@ -116,16 +117,12 @@ export default function Tab(): React.ReactElement | null {
 		>
 			<View style={styles.container}>
 				<View style={styles.headerContainer}>
-					<BackButton />
-					<TouchableOpacity
-						style={styles.notificationButtonContainer}
-					>
-						<Image
-							source={require("../../../assets/icons/notification-black.svg")}
-							style={styles.notificationIcon}
-							contentFit="contain"
-						/>
-					</TouchableOpacity>
+					<BackButton
+						color="black"
+						backgroundColor="transparent"
+						borderColor="#F5F5F5"
+					/>
+					<NotificationButton theme="dark" />
 				</View>
 				<View style={styles.bodyContainer}>
 					<View style={styles.titleContainer}>
@@ -178,18 +175,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between"
-	},
-	notificationButtonContainer: {
-		height: 32.5,
-		width: 32.5,
-		borderRadius: 5,
-		backgroundColor: "#F5F5F5",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	notificationIcon: {
-		height: 17.5,
-		width: 17.5
 	},
 	bodyContainer: {
 		width: "100%",

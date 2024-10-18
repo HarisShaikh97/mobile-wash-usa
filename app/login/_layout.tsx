@@ -18,7 +18,11 @@ export default function Layout(): React.ReactElement | null {
 				resizeMode="cover"
 			>
 				<View style={styles.headerContainer}>
-					<BackButton />
+					<BackButton
+						color="black"
+						backgroundColor="rgba(255, 255, 255, 0.15)"
+						borderColor="#F5F5F5"
+					/>
 				</View>
 			</ImageBackground>
 			<KeyboardAvoidingView

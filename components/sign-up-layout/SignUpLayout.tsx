@@ -32,7 +32,11 @@ export default function SignUpLayout({
 						style={styles.headerContainer}
 						resizeMode="stretch"
 					>
-						<BackButton />
+						<BackButton
+							color="black"
+							backgroundColor="transparent"
+							borderColor="transparent"
+						/>
 					</ImageBackground>
 					{children}
 				</View>

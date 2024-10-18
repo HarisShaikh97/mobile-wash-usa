@@ -9,6 +9,8 @@ import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import ServiceCard from "../../components/service-card/ServiceCard"
 import JobCard from "../../components/job-card/JobCard"
+import NotificationButton from "../../components/notification-button/NotificationButton"
+import ProfileImageBox from "../../components/profile-image-box/ProfileImageBox"
 import { services, theme } from "../../utils/constants"
 import { Service, Job } from "../../utils/types"
 
@@ -99,22 +101,10 @@ export default function Tab(): React.ReactElement | null {
 				/>
 				<View style={styles.bodyContainer}>
 					<View style={styles.headerContainer}>
-						<TouchableOpacity style={styles.profileButtonContainer}>
-							<Image
-								source={require("../../assets/images/profile.png")}
-								style={styles.profileImage}
-								contentFit="cover"
-							/>
+						<TouchableOpacity>
+							<ProfileImageBox />
 						</TouchableOpacity>
-						<TouchableOpacity
-							style={styles.notificationButtonContainer}
-						>
-							<Image
-								source={require("../../assets/icons/notification.svg")}
-								style={styles.notificationIcon}
-								contentFit="contain"
-							/>
-						</TouchableOpacity>
+						<NotificationButton theme="light" />
 					</View>
 					<View style={styles.welcomeTextWrapper}>
 						{fontsLoaded && (
@@ -243,32 +233,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 		padding: 25
-	},
-	profileButtonContainer: {
-		height: 55,
-		width: 55,
-		borderRadius: 13.5,
-		borderWidth: 1,
-		borderColor: "white",
-		overflow: "hidden",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	profileImage: {
-		height: 60,
-		width: 60
-	},
-	notificationButtonContainer: {
-		height: 32.5,
-		width: 32.5,
-		borderRadius: 5,
-		backgroundColor: "rgba(255, 255, 255, 0.2)",
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	notificationIcon: {
-		height: 17.5,
-		width: 17.5
 	},
 	welcomeTextWrapper: {
 		width: "100%",
