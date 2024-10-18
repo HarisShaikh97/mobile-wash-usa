@@ -7,7 +7,7 @@ export default function Layout(): React.ReactElement | null {
 		<View style={styles.container}>
 			<View style={styles.headerContainer}>
 				<BackButton
-					color="black"
+					color="#000000"
 					backgroundColor="transparent"
 					borderColor="transparent"
 				/>

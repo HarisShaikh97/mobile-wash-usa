@@ -1,11 +1,12 @@
 import { TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import AntDesign from "@expo/vector-icons/AntDesign"
+import { HexColor, RgbaColor } from "../../utils/types"
 
 interface BackButtonProps {
-	color: string
-	backgroundColor: string
-	borderColor: string
+	color: HexColor | RgbaColor | "transparent"
+	backgroundColor: HexColor | RgbaColor | "transparent"
+	borderColor: HexColor | RgbaColor | "transparent"
 }
 
 export default function BackButton({

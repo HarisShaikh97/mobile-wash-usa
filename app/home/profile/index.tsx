@@ -46,9 +46,9 @@ export default function Tab(): React.ReactElement | null {
 				<View style={styles.bodyContainer}>
 					<View style={styles.headerContainer}>
 						<BackButton
-							color="white"
+							color="#ffffff"
 							backgroundColor="rgba(255, 255, 255, 0.15)"
-							borderColor="white"
+							borderColor="#ffffff"
 						/>
 						<NotificationButton theme="dark" />
 					</View>

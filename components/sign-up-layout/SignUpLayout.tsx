@@ -33,7 +33,7 @@ export default function SignUpLayout({
 						resizeMode="stretch"
 					>
 						<BackButton
-							color="black"
+							color="#000000"
 							backgroundColor="transparent"
 							borderColor="transparent"
 						/>

@@ -2,6 +2,8 @@ import { ImageSourcePropType } from "react-native"
 
 export type HexColor = `#${string}`
 
+export type RgbaColor = `rgba(${number}, ${number}, ${number}, ${number})`
+
 export type ThemeColors = {
 	primary: HexColor
 	secondary: HexColor
