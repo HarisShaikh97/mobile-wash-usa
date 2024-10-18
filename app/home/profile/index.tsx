@@ -24,7 +24,6 @@ export default function Tab(): React.ReactElement | null {
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Montserrat-Regular": require("../../../assets/fonts/Montserrat/Montserrat Regular 400.ttf"),
 		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
 		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
