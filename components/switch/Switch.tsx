@@ -1,4 +1,10 @@
-import { Pressable, StyleProp, ViewStyle, StyleSheet } from "react-native"
+import {
+	Pressable,
+	StyleProp,
+	ViewStyle,
+	GestureResponderEvent,
+	StyleSheet
+} from "react-native"
 import Animated, {
 	interpolate,
 	interpolateColor,
@@ -12,7 +18,7 @@ import { theme } from "../../utils/constants"
 
 interface SwitchToggleProps {
 	value: SharedValue<boolean>
-	onPress: () => void
+	onPress: (event: GestureResponderEvent) => void
 	containerStyles?: StyleProp<ViewStyle>
 	duration?: number
 	trackColors?: {
