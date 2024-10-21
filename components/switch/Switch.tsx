@@ -26,7 +26,7 @@ export default function Switch({
 	onPress,
 	containerStyles,
 	duration = 400,
-	trackColors = { on: theme.colors.primary, off: "#000000" }
+	trackColors = { on: theme.colors.primary, off: theme.colors.secondary }
 }: SwitchToggleProps): React.ReactElement | null {
 	const height = useSharedValue(0)
 	const width = useSharedValue(0)
@@ -37,10 +37,9 @@ export default function Switch({
 			[0, 1],
 			[trackColors.off, trackColors.on]
 		)
-		const colorValue = withTiming(color, { duration })
 
 		return {
-			backgroundColor: colorValue,
+			backgroundColor: withTiming(color, { duration }),
 			borderRadius: height.value / 2
 		}
 	})
@@ -51,10 +50,9 @@ export default function Switch({
 			[0, 1],
 			[0, width.value - height.value]
 		)
-		const translateValue = withTiming(moveValue, { duration })
 
 		return {
-			transform: [{ translateX: translateValue }],
+			transform: [{ translateX: withTiming(moveValue, { duration }) }],
 			borderRadius: height.value / 2
 		}
 	})
