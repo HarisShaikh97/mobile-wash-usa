@@ -1,18 +1,10 @@
 import { useCallback } from "react"
-import {
-	View,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
-import BackButton from "../../../components/back-button/BackButton"
-import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
 import Switch from "../../../components/switch/Switch"
 import { theme } from "../../../utils/constants"
@@ -37,253 +29,185 @@ export default function Tab(): React.ReactElement | null {
 	}, [router])
 
 	return (
-		<ScrollView
-			style={styles.scrollContainer}
-			showsVerticalScrollIndicator={false}
-		>
-			<View style={styles.container}>
-				<Image
-					source={require("../../../assets/images/profile-bg.png")}
-					style={styles.bgImage}
-					contentFit="fill"
-				/>
-				<View style={styles.bodyContainer}>
-					<View style={styles.headerContainer}>
-						<BackButton
-							color="#ffffff"
-							backgroundColor="rgba(255, 255, 255, 0.15)"
-							borderColor="#ffffff"
-						/>
-						<NotificationButton theme="dark" />
-					</View>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>Profile</Text>
-					)}
-					<View style={styles.accountSettingsSection}>
+		<View style={styles.accountSettingsSection}>
+			{fontsLoaded && <Text style={styles.headingText}>Account</Text>}
+			<View style={styles.profileTab}>
+				<View style={styles.profileIconWrapper}>
+					<ProfileImageBox />
+					<View style={styles.profileTextWrapper}>
 						{fontsLoaded && (
-							<Text style={styles.headingText}>Account</Text>
+							<Text style={styles.usernameText}>John Doe</Text>
 						)}
-						<View style={styles.profileTab}>
-							<View style={styles.profileIconWrapper}>
-								<ProfileImageBox />
-								<View style={styles.profileTextWrapper}>
-									{fontsLoaded && (
-										<Text style={styles.usernameText}>
-											John Doe
-										</Text>
-									)}
-									{fontsLoaded && (
-										<Text style={styles.personalInfoText}>
-											Personal Info
-										</Text>
-									)}
-								</View>
-							</View>
-							<TouchableOpacity style={styles.nextButton}>
-								<Feather
-									name="chevron-right"
-									size={17.5}
-									color="black"
-								/>
-							</TouchableOpacity>
-						</View>
 						{fontsLoaded && (
-							<Text style={styles.headingText}>Setting</Text>
+							<Text style={styles.personalInfoText}>
+								Personal Info
+							</Text>
 						)}
-						<View style={styles.settingOptionContainer}>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/edit-profile.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Edit Profile
-										</Text>
-									)}
-								</View>
-								<TouchableOpacity style={styles.nextButton}>
-									<Feather
-										name="chevron-right"
-										size={17.5}
-										color="black"
-									/>
-								</TouchableOpacity>
-							</View>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/security.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Security
-										</Text>
-									)}
-								</View>
-								<TouchableOpacity style={styles.nextButton}>
-									<Feather
-										name="chevron-right"
-										size={17.5}
-										color="black"
-									/>
-								</TouchableOpacity>
-							</View>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/account-status.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Account Status
-										</Text>
-									)}
-								</View>
-								<TouchableOpacity style={styles.nextButton}>
-									<Feather
-										name="chevron-right"
-										size={17.5}
-										color="black"
-									/>
-								</TouchableOpacity>
-							</View>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/notification-outline.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Notification
-										</Text>
-									)}
-								</View>
-								<Switch
-									value={notificationsEnabled}
-									onPress={handleUpdatedNotificationStatus}
-									containerStyles={styles.switch}
-									duration={250}
-								/>
-							</View>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/help-and-support.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Help & Support
-										</Text>
-									)}
-								</View>
-								<TouchableOpacity style={styles.nextButton}>
-									<Feather
-										name="chevron-right"
-										size={17.5}
-										color="black"
-									/>
-								</TouchableOpacity>
-							</View>
-							<View style={styles.settingOption}>
-								<View style={styles.settingOptionNameWrapper}>
-									<Image
-										source={require("../../../assets/icons/privacy-policy.svg")}
-										style={styles.settingOptionIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text style={styles.settingOptionText}>
-											Privacy Policy
-										</Text>
-									)}
-								</View>
-								<TouchableOpacity style={styles.nextButton}>
-									<Feather
-										name="chevron-right"
-										size={17.5}
-										color="black"
-									/>
-								</TouchableOpacity>
-							</View>
-						</View>
-						<TouchableOpacity
-							style={styles.logOutButton}
-							onPress={handleLogout}
-						>
-							<Image
-								source={require("../../../assets/icons/logout.svg")}
-								style={styles.settingOptionIcon}
-								contentFit="contain"
-							/>
-							{fontsLoaded && (
-								<Text style={styles.settingOptionText}>
-									Log Out
-								</Text>
-							)}
-						</TouchableOpacity>
 					</View>
 				</View>
+				<TouchableOpacity
+					style={styles.nextButton}
+					onPress={(): void => {
+						router.navigate("/edit-account")
+					}}
+				>
+					<Feather name="chevron-right" size={17.5} color="black" />
+				</TouchableOpacity>
 			</View>
-		</ScrollView>
+			{fontsLoaded && <Text style={styles.headingText}>Setting</Text>}
+			<View style={styles.settingOptionContainer}>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/edit-profile.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Edit Profile
+							</Text>
+						)}
+					</View>
+					<TouchableOpacity
+						style={styles.nextButton}
+						onPress={(): void => {
+							router.navigate("/edit-account")
+						}}
+					>
+						<Feather
+							name="chevron-right"
+							size={17.5}
+							color="black"
+						/>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/security.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Security
+							</Text>
+						)}
+					</View>
+					<TouchableOpacity style={styles.nextButton}>
+						<Feather
+							name="chevron-right"
+							size={17.5}
+							color="black"
+						/>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/account-status.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Account Status
+							</Text>
+						)}
+					</View>
+					<TouchableOpacity style={styles.nextButton}>
+						<Feather
+							name="chevron-right"
+							size={17.5}
+							color="black"
+						/>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/notification-outline.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Notification
+							</Text>
+						)}
+					</View>
+					<Switch
+						value={notificationsEnabled}
+						onPress={handleUpdatedNotificationStatus}
+						containerStyles={styles.switch}
+						duration={250}
+					/>
+				</View>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/help-and-support.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Help & Support
+							</Text>
+						)}
+					</View>
+					<TouchableOpacity style={styles.nextButton}>
+						<Feather
+							name="chevron-right"
+							size={17.5}
+							color="black"
+						/>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.settingOption}>
+					<View style={styles.settingOptionNameWrapper}>
+						<Image
+							source={require("../../../assets/icons/privacy-policy.svg")}
+							style={styles.settingOptionIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.settingOptionText}>
+								Privacy Policy
+							</Text>
+						)}
+					</View>
+					<TouchableOpacity style={styles.nextButton}>
+						<Feather
+							name="chevron-right"
+							size={17.5}
+							color="black"
+						/>
+					</TouchableOpacity>
+				</View>
+				<TouchableOpacity
+					style={styles.logOutButton}
+					onPress={handleLogout}
+				>
+					<Image
+						source={require("../../../assets/icons/logout.svg")}
+						style={styles.settingOptionIcon}
+						contentFit="contain"
+					/>
+					{fontsLoaded && (
+						<Text style={styles.settingOptionText}>Log Out</Text>
+					)}
+				</TouchableOpacity>
+			</View>
+		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	scrollContainer: {
-		flex: 1,
-		backgroundColor: "white"
-	},
-	container: {
-		width: "100%",
-		position: "relative"
-	},
-	bgImage: {
-		height: 300,
-		width: "100%",
-		position: "absolute",
-		top: 0,
-		left: 0,
-		zIndex: -10,
-		backgroundColor: theme.colors.primary
-	},
-	bodyContainer: {
-		width: "100%",
-		zIndex: 10,
-		flexDirection: "column"
-	},
-	headerContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		padding: 25
-	},
-	titleText: {
-		fontSize: 25,
-		fontFamily: "Montserrat-SemiBold",
-		color: "white",
-		alignSelf: "center"
-	},
 	accountSettingsSection: {
-		width: "100%",
-		backgroundColor: "white",
 		flexDirection: "column",
-		gap: 30,
-		borderRadius: 25,
-		paddingHorizontal: 25,
-		paddingTop: 30,
-		paddingBottom: 125,
-		marginTop: 35
+		gap: 30
 	},
 	headingText: {
 		fontSize: 22.5,
@@ -324,7 +248,8 @@ const styles = StyleSheet.create({
 	settingOptionContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 35
+		gap: 35,
+		paddingBottom: 125
 	},
 	settingOption: {
 		width: "100%",

@@ -7,7 +7,7 @@ import {
 	StyleSheet
 } from "react-native"
 import { usePathname } from "expo-router"
-import BackButton from "../../components/back-button/BackButton"
+import BackButton from "../back-button/BackButton"
 
 export default function SignUpLayout({
 	children

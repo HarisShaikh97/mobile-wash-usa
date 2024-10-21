@@ -26,7 +26,7 @@ export default function Layout(): React.ReactElement | null {
 				}}
 			/>
 			<Tabs.Screen
-				name="profile/index"
+				name="profile"
 				options={{
 					title: "Profile"
 				}}
