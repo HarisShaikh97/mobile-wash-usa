@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import {
 	View,
 	ScrollView,
@@ -6,21 +6,25 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
+import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
-import SwitchToggle from "react-native-switch-toggle"
 import Feather from "@expo/vector-icons/Feather"
 import BackButton from "../../../components/back-button/BackButton"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
+import Switch from "../../../components/switch/Switch"
 import { theme } from "../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
 	const router = useRouter()
 
-	const [notificationsEnabled, setNotificationsEnabled] =
-		useState<boolean>(true)
+	const notificationsEnabled = useSharedValue(false)
+
+	const handleUpdatedNotificationStatus = () => {
+		notificationsEnabled.value = !notificationsEnabled.value
+	}
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -163,26 +167,11 @@ export default function Tab(): React.ReactElement | null {
 										</Text>
 									)}
 								</View>
-								<SwitchToggle
-									switchOn={notificationsEnabled}
-									onPress={() =>
-										setNotificationsEnabled((prev) => !prev)
-									}
-									circleColorOff="white"
-									circleColorOn="white"
-									backgroundColorOn={theme.colors.primary}
-									backgroundColorOff="black"
-									containerStyle={{
-										height: 15,
-										width: 30,
-										borderRadius: 10,
-										padding: 2.5
-									}}
-									circleStyle={{
-										height: 10,
-										width: 10,
-										borderRadius: 5
-									}}
+								<Switch
+									value={notificationsEnabled}
+									onPress={handleUpdatedNotificationStatus}
+									containerStyles={styles.switch}
+									duration={250}
 								/>
 							</View>
 							<View style={styles.settingOption}>
@@ -355,6 +344,11 @@ const styles = StyleSheet.create({
 	settingOptionText: {
 		fontSize: 15,
 		fontFamily: "Roboto-Regular"
+	},
+	switch: {
+		width: 30,
+		height: 15,
+		padding: 1.5
 	},
 	logOutButton: {
 		height: 50,
