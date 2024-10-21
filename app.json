@@ -38,6 +38,12 @@
 				{
 					"iCloudContainerEnvironment": "Production"
 				}
+			],
+			[
+				"expo-image-picker",
+				{
+					"photosPermission": "Allow Mobile Wash to access your photos"
+				}
 			]
 		]
 	}
