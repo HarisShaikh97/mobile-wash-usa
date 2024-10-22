@@ -95,7 +95,12 @@ export default function Tab(): React.ReactElement | null {
 							</Text>
 						)}
 					</View>
-					<TouchableOpacity style={styles.nextButton}>
+					<TouchableOpacity
+						style={styles.nextButton}
+						onPress={(): void => {
+							router.navigate("/security")
+						}}
+					>
 						<Feather
 							name="chevron-right"
 							size={17.5}

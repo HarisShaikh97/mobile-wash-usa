@@ -2,10 +2,10 @@ import {
 	View,
 	KeyboardAvoidingView,
 	ScrollView,
-	ImageBackground,
 	Platform,
 	StyleSheet
 } from "react-native"
+import { ImageBackground } from "expo-image"
 import { usePathname } from "expo-router"
 import BackButton from "../back-button/BackButton"
 
@@ -30,7 +30,7 @@ export default function SignUpLayout({
 								: require("../../assets/images/vendor-sign-up-header.png")
 						}
 						style={styles.headerContainer}
-						resizeMode="stretch"
+						contentFit="fill"
 					>
 						<BackButton
 							color="#000000"

@@ -2,10 +2,10 @@ import {
 	View,
 	KeyboardAvoidingView,
 	ScrollView,
-	ImageBackground,
 	Platform,
 	StyleSheet
 } from "react-native"
+import { ImageBackground } from "expo-image"
 import { Slot } from "expo-router"
 import BackButton from "../../components/back-button/BackButton"
 
@@ -15,7 +15,7 @@ export default function Layout(): React.ReactElement | null {
 			<ImageBackground
 				source={require("../../assets/images/login-image.png")}
 				style={styles.headerBackgroundImage}
-				resizeMode="cover"
+				contentFit="cover"
 			>
 				<View style={styles.headerContainer}>
 					<BackButton

@@ -1,9 +1,5 @@
-import {
-	View,
-	ImageBackground,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, TouchableOpacity, StyleSheet } from "react-native"
+import { ImageBackground } from "expo-image"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import NavItem from "../nav-item/NavItem"
@@ -19,7 +15,7 @@ export default function BottomNav({
 		<ImageBackground
 			source={require("../../assets/images/bottom-nav.png")}
 			style={styles.bottomNavigationContainer}
-			resizeMode="stretch"
+			contentFit="fill"
 		>
 			<TouchableOpacity style={styles.addButtonContainer}>
 				<AntDesign name="plus" size={27.5} color="white" />

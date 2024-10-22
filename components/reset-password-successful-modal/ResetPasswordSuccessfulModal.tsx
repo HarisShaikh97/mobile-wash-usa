@@ -1,6 +1,6 @@
 import { useCallback } from "react"
-import { Modal, View, Text, ImageBackground, StyleSheet } from "react-native"
-import { Image } from "expo-image"
+import { Modal, View, Text, StyleSheet } from "react-native"
+import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
@@ -42,7 +42,7 @@ export default function ResetPasswordSuccessfulModal({
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
-						resizeMode="cover"
+						contentFit="cover"
 					>
 						<Image
 							source={require("../../assets/icons/successful.svg")}
