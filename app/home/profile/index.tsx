@@ -51,7 +51,11 @@ export default function Tab(): React.ReactElement | null {
 						router.navigate("/edit-account")
 					}}
 				>
-					<Feather name="chevron-right" size={17.5} color="black" />
+					<Feather
+						name="chevron-right"
+						size={17.5}
+						color={theme.colors.secondary}
+					/>
 				</TouchableOpacity>
 			</View>
 			{fontsLoaded && <Text style={styles.headingText}>Setting</Text>}
@@ -78,7 +82,7 @@ export default function Tab(): React.ReactElement | null {
 						<Feather
 							name="chevron-right"
 							size={17.5}
-							color="black"
+							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -104,7 +108,7 @@ export default function Tab(): React.ReactElement | null {
 						<Feather
 							name="chevron-right"
 							size={17.5}
-							color="black"
+							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -121,11 +125,16 @@ export default function Tab(): React.ReactElement | null {
 							</Text>
 						)}
 					</View>
-					<TouchableOpacity style={styles.nextButton}>
+					<TouchableOpacity
+						style={styles.nextButton}
+						onPress={(): void => {
+							router.navigate("/account-status")
+						}}
+					>
 						<Feather
 							name="chevron-right"
 							size={17.5}
-							color="black"
+							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -166,7 +175,7 @@ export default function Tab(): React.ReactElement | null {
 						<Feather
 							name="chevron-right"
 							size={17.5}
-							color="black"
+							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -187,7 +196,7 @@ export default function Tab(): React.ReactElement | null {
 						<Feather
 							name="chevron-right"
 							size={17.5}
-							color="black"
+							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -273,7 +282,8 @@ const styles = StyleSheet.create({
 	},
 	settingOptionText: {
 		fontSize: 15,
-		fontFamily: "Roboto-Regular"
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
 	},
 	switch: {
 		width: 30,

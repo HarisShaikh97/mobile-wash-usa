@@ -63,7 +63,7 @@ export default function Page(): React.ReactElement | null {
 							<Feather
 								name="chevron-right"
 								size={17.5}
-								color="black"
+								color={theme.colors.secondary}
 							/>
 						</TouchableOpacity>
 					</View>
@@ -77,7 +77,7 @@ export default function Page(): React.ReactElement | null {
 							<Feather
 								name="chevron-right"
 								size={17.5}
-								color="black"
+								color={theme.colors.secondary}
 							/>
 						</TouchableOpacity>
 					</View>
@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
 	},
 	cardTitleText: {
 		fontSize: 15,
-		fontFamily: "Roboto-Medium"
+		fontFamily: "Roboto-Medium",
+		color: theme.colors.secondary
 	},
 	settingOptionContainer: {
 		width: "100%",
@@ -164,7 +165,8 @@ const styles = StyleSheet.create({
 	},
 	settingOptionText: {
 		fontSize: 13.5,
-		fontFamily: "Roboto-Regular"
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
 	},
 	nextButton: {
 		marginRight: 5
