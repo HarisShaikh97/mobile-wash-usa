@@ -11,10 +11,11 @@ import { theme } from "../../utils/constants"
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
-	const notificationsEnabled = useSharedValue(false)
+	const twoFactorAuthenticationEnabled = useSharedValue(false)
 
-	const handleUpdatedNotificationStatus = () => {
-		notificationsEnabled.value = !notificationsEnabled.value
+	const handleTwoFactorAuthenticationStatus = () => {
+		twoFactorAuthenticationEnabled.value =
+			!twoFactorAuthenticationEnabled.value
 	}
 
 	const [fontsLoaded] = useFonts({
@@ -47,8 +48,8 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						)}
 						<Switch
-							value={notificationsEnabled}
-							onPress={handleUpdatedNotificationStatus}
+							value={twoFactorAuthenticationEnabled}
+							onPress={handleTwoFactorAuthenticationStatus}
 							containerStyles={styles.switch}
 							duration={250}
 						/>
