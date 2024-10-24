@@ -1,11 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react"
-import {
-	View,
-	Text,
-	TouchableOpacity,
-	ImageSourcePropType,
-	StyleSheet
-} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useFonts } from "expo-font"
@@ -18,14 +12,7 @@ import Animated, {
 	runOnJS
 } from "react-native-reanimated"
 import { LinearGradient } from "expo-linear-gradient"
-import { theme } from "../utils/constants"
-
-const backgroundImages: ImageSourcePropType[] = [
-	require("../assets/images/background1.png"),
-	require("../assets/images/background2.png"),
-	require("../assets/images/background3.png"),
-	require("../assets/images/background4.png")
-]
+import { theme, backgroundImages } from "../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
