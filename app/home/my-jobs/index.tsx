@@ -1,12 +1,5 @@
 import { useState } from "react"
-import {
-	View,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
-import { Image } from "expo-image"
+import { View, ScrollView, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import BackButton from "../../../components/back-button/BackButton"
 import SearchBar from "../../../components/search-bar/SearchBar"
@@ -136,6 +129,7 @@ export default function Tab(): React.ReactElement | null {
 						)}
 					</View>
 					<SearchBar
+						placeholder="Search"
 						value={searchValue}
 						onChangeText={setSearchValue}
 					/>

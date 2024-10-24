@@ -7,6 +7,7 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import ServiceCard from "../../components/service-card/ServiceCard"
 import JobCard from "../../components/job-card/JobCard"
 import NotificationButton from "../../components/notification-button/NotificationButton"
@@ -15,6 +16,8 @@ import { services, theme } from "../../utils/constants"
 import { Service, Job } from "../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	const router = useRouter()
+
 	const jobs: Job[] = [
 		{
 			_id: "1",
@@ -101,7 +104,11 @@ export default function Tab(): React.ReactElement | null {
 				/>
 				<View style={styles.bodyContainer}>
 					<View style={styles.headerContainer}>
-						<TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/home/profile")
+							}}
+						>
 							<ProfileImageBox />
 						</TouchableOpacity>
 						<NotificationButton theme="light" />

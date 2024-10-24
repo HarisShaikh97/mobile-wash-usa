@@ -2,11 +2,13 @@ import { View, TextInput, StyleSheet } from "react-native"
 import AntDesign from "@expo/vector-icons/AntDesign"
 
 interface SearchBarProps {
+	placeholder: string
 	value: string
 	onChangeText: (text: string) => void
 }
 
 export default function SearchBar({
+	placeholder,
 	value,
 	onChangeText
 }: SearchBarProps): React.ReactElement | null {
@@ -17,7 +19,7 @@ export default function SearchBar({
 				style={styles.inputField}
 				value={value}
 				onChangeText={onChangeText}
-				placeholder="Search"
+				placeholder={placeholder}
 				placeholderTextColor={"#CACACA"}
 			/>
 		</View>
