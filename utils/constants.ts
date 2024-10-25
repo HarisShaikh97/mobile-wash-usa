@@ -1,5 +1,5 @@
 import { ImageSourcePropType } from "react-native"
-import { Theme, HexColor, Service } from "./types"
+import { Theme, HexColor, Service, FAQ } from "./types"
 
 export const theme: Theme = {
 	colors: {
@@ -28,5 +28,20 @@ export const services: Service[] = [
 	{
 		title: "Commercial Services",
 		image: require("../assets/images/service-3.png")
+	}
+]
+
+export const FAQs: FAQ[] = [
+	{
+		question: "How do I create an account?",
+		answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. aliquip ex ea commodo consequat. Duis aute irure dolor."
+	},
+	{
+		question: "How do I reset my password?",
+		answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. aliquip ex ea commodo consequat. Duis aute irure dolor."
+	},
+	{
+		question: "How can I contact a seller?",
+		answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut. aliquip ex ea commodo consequat. Duis aute irure dolor."
 	}
 ]

@@ -34,3 +34,8 @@ export type Job = {
 	budget: number
 	images: ImageSourcePropType[]
 }
+
+export type FAQ = {
+	question: string
+	answer: string
+}

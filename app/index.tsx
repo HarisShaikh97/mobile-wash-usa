@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from "react"
+import { useState, useCallback, useMemo } from "react"
+import { useFocusEffect } from "@react-navigation/native"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
@@ -65,10 +66,16 @@ export default function Page(): React.ReactElement | null {
 		[opacity]
 	)
 
-	useEffect(() => {
-		const intervalId = setInterval(triggerAnimation, 2500)
-		return () => clearInterval(intervalId)
-	}, [triggerAnimation])
+	useFocusEffect(
+		useCallback(() => {
+			const intervalId = setInterval(triggerAnimation, 2500)
+
+			return () => {
+				clearInterval(intervalId)
+				opacity.value = 1
+			}
+		}, [triggerAnimation])
+	)
 
 	const currentImage = useMemo(
 		() => backgroundImages[currentImageIndex],

@@ -130,6 +130,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<SearchBar
 						placeholder="Search"
+						color="#CACACA"
 						value={searchValue}
 						onChangeText={setSearchValue}
 					/>

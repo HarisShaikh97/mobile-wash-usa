@@ -1,26 +1,29 @@
 import { View, TextInput, StyleSheet } from "react-native"
 import AntDesign from "@expo/vector-icons/AntDesign"
+import { RgbaColor, HexColor } from "../../utils/types"
 
 interface SearchBarProps {
 	placeholder: string
+	color: RgbaColor | HexColor
 	value: string
 	onChangeText: (text: string) => void
 }
 
 export default function SearchBar({
 	placeholder,
+	color,
 	value,
 	onChangeText
 }: SearchBarProps): React.ReactElement | null {
 	return (
-		<View style={styles.container}>
-			<AntDesign name="search1" size={15} color="#CACACA" />
+		<View style={[styles.container, { borderColor: color }]}>
+			<AntDesign name="search1" size={15} color={color} />
 			<TextInput
 				style={styles.inputField}
 				value={value}
 				onChangeText={onChangeText}
 				placeholder={placeholder}
-				placeholderTextColor={"#CACACA"}
+				placeholderTextColor={color}
 			/>
 		</View>
 	)
@@ -32,7 +35,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		borderRadius: 10,
 		borderWidth: 1,
-		borderColor: "#F5F5F5",
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 12.5,
