@@ -14,7 +14,7 @@ export default function Layout(): React.ReactElement | null {
 				}}
 			/>
 			<Tabs.Screen
-				name="my-jobs/index"
+				name="my-jobs"
 				options={{
 					title: "My Jobs"
 				}}

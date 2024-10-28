@@ -52,7 +52,7 @@ export default function Page(): React.ReactElement | null {
 						)}
 					</TouchableOpacity>
 				</View>
-				<HorizontalSeparator />
+				<HorizontalSeparator color="#DBDBDB" />
 				<View style={styles.accountActionSection}>
 					{fontsLoaded && (
 						<Text style={styles.cardTitleText}>Delete Account</Text>

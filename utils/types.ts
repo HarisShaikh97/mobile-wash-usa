@@ -39,3 +39,15 @@ export type FAQ = {
 	question: string
 	answer: string
 }
+
+export type Offer = {
+	job_id: Job["_id"]
+	vendor_id: string
+	vendorName: string
+	vendorImage: ImageSourcePropType
+	vendorJobsCompleted: number
+	ratings: number
+	reviews: number
+	amount: number
+	location: string
+}

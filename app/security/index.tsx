@@ -39,7 +39,7 @@ export default function Page(): React.ReactElement | null {
 				{fontsLoaded && (
 					<Text style={styles.cardTitleText}>Security Features</Text>
 				)}
-				<HorizontalSeparator />
+				<HorizontalSeparator color="#DBDBDB" />
 				<View style={styles.settingOptionContainer}>
 					<View style={styles.settingOption}>
 						{fontsLoaded && (

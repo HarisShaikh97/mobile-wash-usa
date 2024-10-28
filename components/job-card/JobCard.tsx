@@ -1,6 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
@@ -21,6 +22,8 @@ export default function JobCard({
 	address,
 	budget
 }: JobCardProps): React.ReactElement | null {
+	const router = useRouter()
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
@@ -104,6 +107,9 @@ export default function JobCard({
 						styles.actionButtonContainer,
 						styles.viewDetailsButton
 					]}
+					onPress={() => {
+						router.navigate(`/home/my-jobs/${_id}`)
+					}}
 				>
 					{fontsLoaded && (
 						<Text

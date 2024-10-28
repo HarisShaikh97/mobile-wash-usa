@@ -39,7 +39,7 @@ export default function Page(): React.ReactElement | null {
 								Contact Support
 							</Text>
 						)}
-						<HorizontalSeparator />
+						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}
@@ -56,7 +56,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							)}
 						</View>
-						<HorizontalSeparator />
+						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}
@@ -73,7 +73,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							)}
 						</View>
-						<HorizontalSeparator />
+						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}

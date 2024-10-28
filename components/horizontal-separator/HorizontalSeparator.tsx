@@ -1,13 +1,19 @@
 import { View, StyleSheet } from "react-native"
+import { RgbaColor, HexColor } from "../../utils/types"
 
-export default function HorizontalSeparator(): React.ReactElement | null {
-	return <View style={styles.horizontalLine} />
+interface HorizontalSeparatorProps {
+	color: RgbaColor | HexColor
+}
+
+export default function HorizontalSeparator({
+	color
+}: HorizontalSeparatorProps): React.ReactElement | null {
+	return <View style={[styles.horizontalLine, { backgroundColor: color }]} />
 }
 
 const styles = StyleSheet.create({
 	horizontalLine: {
 		height: 1,
-		width: "100%",
-		backgroundColor: "#DBDBDB"
+		width: "100%"
 	}
 })
