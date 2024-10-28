@@ -1,24 +1,12 @@
-import {
-	ScrollView,
-	View,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useLocalSearchParams } from "expo-router"
 import { useFonts } from "expo-font"
-import BackButton from "../../../../components/back-button/BackButton"
-import DeleteButton from "../../../../components/delete-button/DeleteButton"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import OfferCard from "../../../../components/offer-card/OfferCard"
-import OffersPopup from "../../../../components/offers-popup/OffersPopup"
 import { theme } from "../../../../utils/constants"
 import { Offer } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const { id } = useLocalSearchParams()
-
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -86,258 +74,186 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
-		<View style={styles.wrapper}>
-			<OffersPopup job_id={`${id}`} />
-			<ScrollView
-				style={styles.scrollView}
-				showsVerticalScrollIndicator={false}
-			>
-				<View style={styles.container}>
-					<View style={styles.headerContainer}>
-						<BackButton
-							color={theme.colors.secondary}
-							backgroundColor="transparent"
-							borderColor="#F5F5F5"
+		<View style={styles.bodyContainer}>
+			<View style={styles.jobTitleSection}>
+				{fontsLoaded && (
+					<Text
+						style={styles.titleText}
+						numberOfLines={2}
+						ellipsizeMode="tail"
+					>
+						Car Wash Service Needed
+					</Text>
+				)}
+				<View style={styles.jobDateTimeWrapper}>
+					<View style={styles.jobDateTimeTextIconWrapper}>
+						<Image
+							source={require("../../../../assets/icons/user.svg")}
+							style={styles.jobDateTimeTextIcon}
+							contentFit="contain"
 						/>
-						<DeleteButton />
+						{fontsLoaded && (
+							<Text style={styles.sectionDescriptionText}>
+								John Doe
+							</Text>
+						)}
 					</View>
-					<View style={styles.bodyContainer}>
-						<View style={styles.jobTitleSection}>
-							{fontsLoaded && (
-								<Text
-									style={styles.titleText}
-									numberOfLines={2}
-									ellipsizeMode="tail"
-								>
-									Car Wash Service Needed
-								</Text>
-							)}
-							<View style={styles.jobDateTimeWrapper}>
-								<View style={styles.jobDateTimeTextIconWrapper}>
-									<Image
-										source={require("../../../../assets/icons/user.svg")}
-										style={styles.jobDateTimeTextIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text
-											style={
-												styles.sectionDescriptionText
-											}
-										>
-											John Doe
-										</Text>
-									)}
-								</View>
-								<View style={styles.circularSeparator} />
-								<View style={styles.jobDateTimeTextIconWrapper}>
-									<Image
-										source={require("../../../../assets/icons/date.svg")}
-										style={styles.jobDateTimeTextIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text
-											style={
-												styles.sectionDescriptionText
-											}
-										>
-											28, Oct 2024
-										</Text>
-									)}
-								</View>
-								<View style={styles.circularSeparator} />
-								<View style={styles.jobDateTimeTextIconWrapper}>
-									<Image
-										source={require("../../../../assets/icons/time.svg")}
-										style={styles.jobDateTimeTextIcon}
-										contentFit="contain"
-									/>
-									{fontsLoaded && (
-										<Text
-											style={
-												styles.sectionDescriptionText
-											}
-										>
-											10am to 1pm
-										</Text>
-									)}
-								</View>
-							</View>
-						</View>
-						<HorizontalSeparator color="#F5F5F5" />
-						<View style={styles.budgetSection}>
-							{fontsLoaded && (
-								<Text style={styles.budgetTitleText}>
-									Budget
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.budgetPriceText}>$500</Text>
-							)}
-						</View>
-						<HorizontalSeparator color="#F5F5F5" />
-						<View style={styles.sectionContainer}>
-							{fontsLoaded && (
-								<Text style={styles.sectionTitleText}>
-									Job Description
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.sectionDescriptionText}>
-									Lorem Ipsum is simply dummy text of the
-									printing and typesetting industry. Lorem
-									Ipsum has been the industry's standard dummy
-									text ever since the 1500s, when an unknown
-									printer took a galley of type and scrambled
-									it to make a type specimen book. Lorem Ipsum
-									is simply dummy text of the printing and
-									typesetting industry. Lorem Ipsum has been
-									the industry's standard dummy text ever
-									since the 1500s, when an unknown printer
-									took a galley of type and scrambled it to
-									make a type specimen book.
-								</Text>
-							)}
-						</View>
-						<HorizontalSeparator color="#F5F5F5" />
-						<View style={styles.sectionContainer}>
-							{fontsLoaded && (
-								<Text style={styles.sectionTitleText}>
-									Location
-								</Text>
-							)}
-							<View style={styles.mapViewWrapper}>
-								{fontsLoaded && (
-									<Text style={styles.locationText}>
-										Overlook Avenue, Belleville, NJ, USA
-									</Text>
-								)}
-								<Image
-									source={require("../../../../assets/images/map.png")}
-									style={styles.mapView}
-									contentFit="cover"
-								/>
-							</View>
-						</View>
-						<View style={styles.gallerySection}>
-							{fontsLoaded && (
-								<Text style={styles.galleryTitleText}>
-									Gallery
-								</Text>
-							)}
-							<View style={styles.galleryImagesWrapper}>
-								<TouchableOpacity
-									style={styles.galleryImageItemContainer}
-								>
-									<Image
-										source={require("../../../../assets/images/background1.png")}
-										style={styles.galleryImage}
-										contentFit="cover"
-									/>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={styles.galleryImageItemContainer}
-								>
-									<Image
-										source={require("../../../../assets/images/background2.png")}
-										style={styles.galleryImage}
-										contentFit="cover"
-									/>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={styles.galleryImageItemContainer}
-								>
-									<Image
-										source={require("../../../../assets/images/background3.png")}
-										style={styles.galleryImage}
-										contentFit="cover"
-									/>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={styles.galleryImageItemContainer}
-								>
-									<ImageBackground
-										source={require("../../../../assets/images/background4.png")}
-										style={styles.galleryImage}
-										contentFit="cover"
-									>
-										<View style={styles.seeMoreButton}>
-											{fontsLoaded && (
-												<Text
-													style={
-														styles.seeMoreButtonText
-													}
-												>
-													see more
-												</Text>
-											)}
-										</View>
-									</ImageBackground>
-								</TouchableOpacity>
-							</View>
-						</View>
-						<HorizontalSeparator color="#F5F5F5" />
-						<View style={styles.offersSection}>
-							{fontsLoaded && (
-								<Text style={styles.offersTitleText}>
-									Offers By Vendors
-								</Text>
-							)}
-							<View style={styles.offerCardsWrapper}>
-								{offers.map(
-									(
-										offer: Offer,
-										index: number
-									): React.ReactElement | null => {
-										return (
-											<OfferCard
-												size="small"
-												vendorId={offer.vendor_id}
-												vendorName={offer.vendorName}
-												vendorImage={offer.vendorImage}
-												vendorJobsCompleted={
-													offer.vendorJobsCompleted
-												}
-												ratings={offer.ratings}
-												reviews={offer.reviews}
-												amount={offer.amount}
-												location={offer.location}
-												key={index}
-											/>
-										)
-									}
-								)}
-							</View>
-						</View>
+					<View style={styles.circularSeparator} />
+					<View style={styles.jobDateTimeTextIconWrapper}>
+						<Image
+							source={require("../../../../assets/icons/date.svg")}
+							style={styles.jobDateTimeTextIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.sectionDescriptionText}>
+								28, Oct 2024
+							</Text>
+						)}
+					</View>
+					<View style={styles.circularSeparator} />
+					<View style={styles.jobDateTimeTextIconWrapper}>
+						<Image
+							source={require("../../../../assets/icons/time.svg")}
+							style={styles.jobDateTimeTextIcon}
+							contentFit="contain"
+						/>
+						{fontsLoaded && (
+							<Text style={styles.sectionDescriptionText}>
+								10am to 1pm
+							</Text>
+						)}
 					</View>
 				</View>
-			</ScrollView>
+			</View>
+			<HorizontalSeparator color="#F5F5F5" />
+			<View style={styles.budgetSection}>
+				{fontsLoaded && (
+					<Text style={styles.budgetTitleText}>Budget</Text>
+				)}
+				{fontsLoaded && (
+					<Text style={styles.budgetPriceText}>$500</Text>
+				)}
+			</View>
+			<HorizontalSeparator color="#F5F5F5" />
+			<View style={styles.sectionContainer}>
+				{fontsLoaded && (
+					<Text style={styles.sectionTitleText}>Job Description</Text>
+				)}
+				{fontsLoaded && (
+					<Text style={styles.sectionDescriptionText}>
+						Lorem Ipsum is simply dummy text of the printing and
+						typesetting industry. Lorem Ipsum has been the
+						industry's standard dummy text ever since the 1500s,
+						when an unknown printer took a galley of type and
+						scrambled it to make a type specimen book. Lorem Ipsum
+						is simply dummy text of the printing and typesetting
+						industry. Lorem Ipsum has been the industry's standard
+						dummy text ever since the 1500s, when an unknown printer
+						took a galley of type and scrambled it to make a type
+						specimen book.
+					</Text>
+				)}
+			</View>
+			<HorizontalSeparator color="#F5F5F5" />
+			<View style={styles.sectionContainer}>
+				{fontsLoaded && (
+					<Text style={styles.sectionTitleText}>Location</Text>
+				)}
+				<View style={styles.mapViewWrapper}>
+					{fontsLoaded && (
+						<Text style={styles.locationText}>
+							Overlook Avenue, Belleville, NJ, USA
+						</Text>
+					)}
+					<Image
+						source={require("../../../../assets/images/map.png")}
+						style={styles.mapView}
+						contentFit="cover"
+					/>
+				</View>
+			</View>
+			<View style={styles.gallerySection}>
+				{fontsLoaded && (
+					<Text style={styles.galleryTitleText}>Gallery</Text>
+				)}
+				<View style={styles.galleryImagesWrapper}>
+					<TouchableOpacity style={styles.galleryImageItemContainer}>
+						<Image
+							source={require("../../../../assets/images/background1.png")}
+							style={styles.galleryImage}
+							contentFit="cover"
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.galleryImageItemContainer}>
+						<Image
+							source={require("../../../../assets/images/background2.png")}
+							style={styles.galleryImage}
+							contentFit="cover"
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.galleryImageItemContainer}>
+						<Image
+							source={require("../../../../assets/images/background3.png")}
+							style={styles.galleryImage}
+							contentFit="cover"
+						/>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.galleryImageItemContainer}>
+						<ImageBackground
+							source={require("../../../../assets/images/background4.png")}
+							style={styles.galleryImage}
+							contentFit="cover"
+						>
+							<View style={styles.seeMoreButton}>
+								{fontsLoaded && (
+									<Text style={styles.seeMoreButtonText}>
+										see more
+									</Text>
+								)}
+							</View>
+						</ImageBackground>
+					</TouchableOpacity>
+				</View>
+			</View>
+			<HorizontalSeparator color="#F5F5F5" />
+			<View style={styles.offersSection}>
+				{fontsLoaded && (
+					<Text style={styles.offersTitleText}>
+						Offers By Vendors
+					</Text>
+				)}
+				<View style={styles.offerCardsWrapper}>
+					{offers.map(
+						(
+							offer: Offer,
+							index: number
+						): React.ReactElement | null => {
+							return (
+								<OfferCard
+									size="small"
+									vendorId={offer.vendor_id}
+									vendorName={offer.vendorName}
+									vendorImage={offer.vendorImage}
+									vendorJobsCompleted={
+										offer.vendorJobsCompleted
+									}
+									ratings={offer.ratings}
+									reviews={offer.reviews}
+									amount={offer.amount}
+									location={offer.location}
+									key={index}
+								/>
+							)
+						}
+					)}
+				</View>
+			</View>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	wrapper: {
-		flex: 1,
-		backgroundColor: "white",
-		position: "relative"
-	},
-	scrollView: {
-		flex: 1,
-		paddingHorizontal: 25
-	},
-	container: {
-		flexDirection: "column",
-		paddingBottom: 200
-	},
-	headerContainer: {
-		width: "100%",
-		paddingVertical: 35,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
-	},
 	bodyContainer: {
 		width: "100%",
 		flexDirection: "column",

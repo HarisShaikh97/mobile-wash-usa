@@ -1,8 +1,6 @@
-import { ScrollView, View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { useLocalSearchParams } from "expo-router"
 import { useFonts } from "expo-font"
-import BackButton from "../../../../../components/back-button/BackButton"
-import NotificationButton from "../../../../../components/notification-button/NotificationButton"
 import OfferCard from "../../../../../components/offer-card/OfferCard"
 import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
@@ -95,73 +93,40 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
-		<ScrollView
-			style={styles.scrollView}
-			showsVerticalScrollIndicator={false}
-		>
-			<View style={styles.container}>
-				<View style={styles.headerContainer}>
-					<BackButton
-						color={theme.colors.secondary}
-						backgroundColor="transparent"
-						borderColor="#F5F5F5"
-					/>
-					<NotificationButton theme="dark" />
-				</View>
-				<View style={styles.bodyContainer}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							You Have {offers.length} Offers
-						</Text>
-					)}
-					<View style={styles.offerCardsWrapper}>
-						{offers.map(
-							(
-								offer: Offer,
-								index: number
-							): React.ReactElement | null => {
-								return (
-									<OfferCard
-										size="large"
-										vendorId={offer.vendor_id}
-										vendorName={offer.vendorName}
-										vendorImage={offer.vendorImage}
-										vendorJobsCompleted={
-											offer.vendorJobsCompleted
-										}
-										ratings={offer.ratings}
-										reviews={offer.reviews}
-										amount={offer.amount}
-										location={offer.location}
-										key={index}
-									/>
-								)
-							}
-						)}
-					</View>
-				</View>
+		<View style={styles.bodyContainer}>
+			{fontsLoaded && (
+				<Text style={styles.titleText}>
+					You Have {offers.length} Offers
+				</Text>
+			)}
+			<View style={styles.offerCardsWrapper}>
+				{offers.map(
+					(
+						offer: Offer,
+						index: number
+					): React.ReactElement | null => {
+						return (
+							<OfferCard
+								size="large"
+								vendorId={offer.vendor_id}
+								vendorName={offer.vendorName}
+								vendorImage={offer.vendorImage}
+								vendorJobsCompleted={offer.vendorJobsCompleted}
+								ratings={offer.ratings}
+								reviews={offer.reviews}
+								amount={offer.amount}
+								location={offer.location}
+								key={index}
+							/>
+						)
+					}
+				)}
 			</View>
-		</ScrollView>
+		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	scrollView: {
-		flex: 1,
-		backgroundColor: "white",
-		paddingHorizontal: 25
-	},
-	container: {
-		flexDirection: "column",
-		paddingBottom: 125
-	},
-	headerContainer: {
-		width: "100%",
-		paddingVertical: 35,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
-	},
 	bodyContainer: {
 		width: "100%",
 		flexDirection: "column",
