@@ -6,6 +6,7 @@ import { theme } from "../../utils/constants"
 import { Offer } from "../../utils/types"
 
 interface OfferCardProps {
+	size: "small" | "large"
 	vendorId: Offer["vendor_id"]
 	vendorName: Offer["vendorName"]
 	vendorImage: Offer["vendorImage"]
@@ -17,6 +18,7 @@ interface OfferCardProps {
 }
 
 export default function OfferCard({
+	size,
 	vendorId,
 	vendorName,
 	vendorImage,
@@ -79,12 +81,56 @@ export default function OfferCard({
 				<View style={styles.ratingsReviewsWrapper}>
 					<Ratings ratings={ratings} />
 					{fontsLoaded && (
-						<Text style={styles.ratingsText}>
+						<Text style={styles.sectionDescriptionText}>
 							{ratings} Of {reviews} Reviews
 						</Text>
 					)}
 				</View>
 			</View>
+			{size === "large" && (
+				<View style={styles.horizontalWrapper}>
+					<View style={styles.jobsCompletedAndLocationContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.sectionTitleText}
+								numberOfLines={1}
+								ellipsizeMode="tail"
+							>
+								Location
+							</Text>
+						)}
+						{fontsLoaded && (
+							<Text
+								style={styles.sectionDescriptionText}
+								numberOfLines={1}
+								ellipsizeMode="tail"
+							>
+								{location}
+							</Text>
+						)}
+					</View>
+					<View style={styles.jobsCompletedAndLocationContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.sectionTitleText}
+								numberOfLines={1}
+								ellipsizeMode="tail"
+							>
+								Jobs Completed
+							</Text>
+						)}
+						{fontsLoaded && (
+							<Text
+								style={styles.sectionDescriptionText}
+								numberOfLines={1}
+								ellipsizeMode="tail"
+							>
+								{vendorJobsCompleted} Jobs Completed
+							</Text>
+						)}
+					</View>
+				</View>
+			)}
 			<View style={styles.horizontalWrapper}>
 				<TouchableOpacity
 					style={[
@@ -190,6 +236,11 @@ const styles = StyleSheet.create({
 		fontFamily: "Roboto-Medium",
 		color: theme.colors.secondary
 	},
+	sectionDescriptionText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
+	},
 	amountText: {
 		fontSize: 22.5,
 		fontFamily: "Roboto-Bold",
@@ -199,11 +250,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 5
-	},
-	ratingsText: {
-		fontSize: 12.5,
-		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary
 	},
 	actionButtonContainer: {
 		height: 50,
@@ -228,5 +274,10 @@ const styles = StyleSheet.create({
 	},
 	acceptOfferButtonText: {
 		color: "white"
+	},
+	jobsCompletedAndLocationContainer: {
+		width: "48.5%",
+		flexDirection: "column",
+		gap: 5
 	}
 })

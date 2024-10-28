@@ -87,7 +87,7 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.wrapper}>
-			<OffersPopup />
+			<OffersPopup job_id={`${id}`} />
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
@@ -292,6 +292,7 @@ export default function Page(): React.ReactElement | null {
 									): React.ReactElement | null => {
 										return (
 											<OfferCard
+												size="small"
 												vendorId={offer.vendor_id}
 												vendorName={offer.vendorName}
 												vendorImage={offer.vendorImage}
@@ -403,7 +404,8 @@ const styles = StyleSheet.create({
 	sectionDescriptionText: {
 		fontSize: 12.5,
 		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary
+		color: theme.colors.secondary,
+		lineHeight: 17.5
 	},
 	mapViewWrapper: {
 		width: "100%",
