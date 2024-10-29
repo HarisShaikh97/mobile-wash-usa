@@ -3,31 +3,31 @@ import { View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
-import BackButton from "../../components/back-button/BackButton"
-import InputField from "../../components/input-field/InputField"
-import FormButton from "../../components/form-button/FormButton"
-import { services, theme } from "../../utils/constants"
-import { SelectOption } from "../../utils/types"
+import BackButton from "../../../components/back-button/BackButton"
+import BudgetInputField from "../../../components/budget-input-field/BudgetInputField"
+import InputField from "../../../components/input-field/InputField"
+import FormButton from "../../../components/form-button/FormButton"
+import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf")
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf")
 	})
 
-	const [jobTitle, setJobTitle] = useState<string>("")
-	const [jobType, setJobType] = useState<SelectOption | null>(null)
-	const [jobDescription, setJobDescription] = useState<string>("")
+	const [location, setLocation] = useState<string>("")
+	const [dateAndTime, setDateAndTime] = useState<string>("")
+	const [budget, setBudget] = useState<number>(0)
 
 	const handleSubmit = useCallback(() => {
-		router.navigate("/add-job/details")
+		router.back()
 	}, [router])
 
 	return (
 		<View style={styles.container}>
 			<ImageBackground
-				source={require("../../assets/images/add-job-header.png")}
+				source={require("../../../assets/images/add-job-header.png")}
 				style={styles.headerBackgroundImage}
 				contentFit="fill"
 			>
@@ -38,39 +38,29 @@ export default function Page(): React.ReactElement | null {
 						borderColor="transparent"
 					/>
 					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							Describe Your Job Needs
-						</Text>
+						<Text style={styles.titleText}>Set Job Details</Text>
 					)}
 				</View>
 			</ImageBackground>
 			<View style={styles.bodyContainer}>
+				<BudgetInputField value={budget} setValue={setBudget} />
 				<InputField
 					type="text"
-					value={jobTitle}
-					onChangeText={setJobTitle}
-					title="Job Title"
+					value={location}
+					onChangeText={setLocation}
+					title="Location"
 					multiline={false}
 					secureTextEntry={false}
-					placeholder="Enter Job Title"
-				/>
-				<InputField
-					type="select"
-					data={services}
-					value={jobType}
-					onChangeValue={setJobType}
-					title="Job Type"
-					placeholder="Select Job Type"
+					placeholder="Set Your Location"
 				/>
 				<InputField
 					type="text"
-					value={jobDescription}
-					onChangeText={setJobDescription}
-					title="Job Description"
-					multiline={true}
+					value={dateAndTime}
+					onChangeText={setDateAndTime}
+					title="Date & Time"
+					multiline={false}
 					secureTextEntry={false}
-					placeholder="Write Job Description"
-					size="large"
+					placeholder="DD/MM/YYYY TT"
 				/>
 				<FormButton title="Next" onPress={handleSubmit} />
 			</View>
@@ -94,8 +84,7 @@ const styles = StyleSheet.create({
 	titleText: {
 		fontSize: 27.5,
 		fontFamily: "Montserrat-Bold",
-		color: theme.colors.secondary,
-		width: 215
+		color: theme.colors.secondary
 	},
 	bodyContainer: {
 		flexDirection: "column",
