@@ -19,6 +19,10 @@ export type Service = {
 	image: ImageSourcePropType
 }
 
+export type SelectOption = {
+	title: string
+}
+
 export type Job = {
 	_id: string
 	title: string

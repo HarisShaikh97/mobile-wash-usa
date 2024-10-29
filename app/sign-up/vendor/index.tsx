@@ -81,6 +81,7 @@ export default function Page(): React.ReactElement | null {
 					onChangeText={setBusinessInformation}
 					secureTextEntry={false}
 					multiline={true}
+					size="small"
 					type="text"
 				/>
 				<View style={styles.documentInputWrapper}>

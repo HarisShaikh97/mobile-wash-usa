@@ -8,7 +8,7 @@ import NotificationButton from "../../../components/notification-button/Notifica
 import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
-export default function Tab(): React.ReactElement | null {
+export default function Page(): React.ReactElement | null {
 	const jobs: Job[] = [
 		{
 			_id: "1",

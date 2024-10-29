@@ -1,5 +1,6 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
+import { useRouter } from "expo-router"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import NavItem from "../nav-item/NavItem"
@@ -11,13 +12,19 @@ export default function BottomNav({
 	navigation,
 	insets
 }: BottomTabBarProps): React.ReactElement | null {
+	const router = useRouter()
 	return (
 		<ImageBackground
 			source={require("../../assets/images/bottom-nav.png")}
 			style={styles.bottomNavigationContainer}
 			contentFit="fill"
 		>
-			<TouchableOpacity style={styles.addButtonContainer}>
+			<TouchableOpacity
+				style={styles.addButtonContainer}
+				onPress={() => {
+					router.navigate("/add-job")
+				}}
+			>
 				<AntDesign name="plus" size={27.5} color="white" />
 			</TouchableOpacity>
 			<View style={styles.navItemsWrapper}>

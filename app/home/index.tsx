@@ -163,7 +163,12 @@ export default function Tab(): React.ReactElement | null {
 								vendors to apply to.
 							</Text>
 						)}
-						<TouchableOpacity style={styles.postJobButtonContainer}>
+						<TouchableOpacity
+							style={styles.postJobButtonContainer}
+							onPress={() => {
+								router.navigate("/add-job")
+							}}
+						>
 							{fontsLoaded && (
 								<Text style={styles.postJobButtonText}>
 									Post a New Job

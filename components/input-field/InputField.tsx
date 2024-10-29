@@ -8,13 +8,20 @@ import {
 } from "react-native"
 import { useFonts } from "expo-font"
 import * as DocumentPicker from "expo-document-picker"
-import Feather from "@expo/vector-icons/Feather"
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
+import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import { theme } from "../../utils/constants"
+import { SelectOption } from "../../utils/types"
 
 interface BaseInputFieldProps {
 	title: string
 	placeholder: string
+}
+
+interface SelectInputFieldProps extends BaseInputFieldProps {
+	type: "select"
+	data: SelectOption[]
+	value: SelectOption | null
+	onChangeValue: (val: SelectOption) => void
 }
 
 interface TextInputFieldProps extends BaseInputFieldProps {
@@ -26,6 +33,7 @@ interface TextInputFieldProps extends BaseInputFieldProps {
 interface TextInputFieldPropsMultiLine extends TextInputFieldProps {
 	secureTextEntry: false
 	multiline: true
+	size: "small" | "large"
 }
 
 interface TextInputFieldPropsSingleLine extends TextInputFieldProps {
@@ -43,6 +51,7 @@ type InputFieldProps =
 	| TextInputFieldPropsMultiLine
 	| TextInputFieldPropsSingleLine
 	| FileInputFieldProps
+	| SelectInputFieldProps
 
 export default function InputField(
 	props: InputFieldProps
@@ -52,9 +61,10 @@ export default function InputField(
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(
 		type === "text" ? !props.secureTextEntry : false
 	)
+	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 
 	const handleFileUpload = useCallback(async () => {
@@ -64,7 +74,6 @@ export default function InputField(
 					type: "*/*",
 					multiple: true
 				})
-				console.log(docRes)
 				props.onUploadFile(docRes)
 			} catch (error) {
 				console.log("Error while selecting file: ", error)
@@ -81,73 +90,105 @@ export default function InputField(
 				style={[
 					styles.inputFieldContainer,
 					type === "text" && props.multiline
-						? styles.inputFieldMultiLine
+						? props.size === "small"
+							? styles.inputFieldMultiLineSmall
+							: styles.inputFieldMultiLineLarge
 						: styles.inputFieldSingleLine
 				]}
 			>
-				{type === "text" ? (
-					<TextInput
-						style={styles.inputField}
-						value={props.value}
-						onChangeText={props.onChangeText}
-						placeholder={placeholder}
-						placeholderTextColor={"rgba(173, 173, 173, 0.94)"}
-						textAlignVertical={props.multiline ? "top" : "auto"}
-						secureTextEntry={!isPasswordVisible}
-						multiline={props.multiline}
-					/>
-				) : (
-					<Text
-						style={styles.fileNameText}
-						numberOfLines={1}
-						ellipsizeMode="tail"
-					>
-						{props.files &&
-						props.files.assets &&
-						props.files.assets.length > 0
-							? props.files.assets.map((item, key) => {
-									return `${item.name}${
-										props.files &&
-										props.files.assets &&
-										props.files.assets.length > 0 &&
-										key < props.files.assets.length - 1
-											? ","
-											: ""
-									}`
-							  })
-							: placeholder}
-					</Text>
-				)}
-				{type === "text" ? (
-					props.secureTextEntry && (
-						<TouchableOpacity
-							onPress={() =>
-								setIsPasswordVisible(!isPasswordVisible)
-							}
-						>
-							{isPasswordVisible ? (
-								<Feather
-									name="eye-off"
-									size={15}
-									color="rgba(173, 173, 173, 0.94)"
-								/>
-							) : (
-								<Feather
-									name="eye"
-									size={15}
-									color="rgba(173, 173, 173, 0.94)"
-								/>
-							)}
-						</TouchableOpacity>
-					)
-				) : (
-					<TouchableOpacity onPress={handleFileUpload}>
-						<MaterialCommunityIcons
-							name="paperclip"
-							size={15}
-							color="rgba(173, 173, 173, 0.94)"
+				<View style={styles.contentWrapper}>
+					{type === "text" ? (
+						<TextInput
+							style={styles.inputField}
+							value={props.value}
+							onChangeText={props.onChangeText}
+							placeholder={placeholder}
+							placeholderTextColor={"rgba(173, 173, 173, 0.94)"}
+							textAlignVertical={props.multiline ? "top" : "auto"}
+							secureTextEntry={!isPasswordVisible}
+							multiline={props.multiline}
 						/>
-					</TouchableOpacity>
+					) : (
+						<Text
+							style={styles.inputFieldText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							{props.type === "file" &&
+							props.files &&
+							props.files.assets &&
+							props.files.assets.length > 0
+								? props.files.assets
+										.map((item) => item.name)
+										.join(", ")
+								: props.type === "select" && props.value
+								? props.value.title
+								: placeholder}
+						</Text>
+					)}
+					{type === "text" ? (
+						props.secureTextEntry && (
+							<TouchableOpacity
+								onPress={() =>
+									setIsPasswordVisible((prev) => !prev)
+								}
+							>
+								<Feather
+									name={isPasswordVisible ? "eye-off" : "eye"}
+									size={15}
+									color="rgba(173, 173, 173, 0.94)"
+								/>
+							</TouchableOpacity>
+						)
+					) : type === "file" ? (
+						<TouchableOpacity onPress={handleFileUpload}>
+							<MaterialCommunityIcons
+								name="paperclip"
+								size={15}
+								color="rgba(173, 173, 173, 0.94)"
+							/>
+						</TouchableOpacity>
+					) : (
+						<TouchableOpacity
+							onPress={() => {
+								setIsOpen((prev) => !prev)
+							}}
+						>
+							<Entypo
+								name={
+									isOpen
+										? "chevron-thin-up"
+										: "chevron-thin-down"
+								}
+								size={15}
+								color="rgba(173, 173, 173, 0.94)"
+							/>
+						</TouchableOpacity>
+					)}
+				</View>
+				{type === "select" && isOpen && (
+					<View style={styles.dropdownContainer}>
+						{props.data.map(
+							(
+								option: SelectOption,
+								index: number
+							): React.ReactElement | null => {
+								return (
+									<TouchableOpacity
+										key={index}
+										onPress={() => {
+											props.onChangeValue(option)
+											setIsOpen(false)
+										}}
+									>
+										<Text style={styles.inputFieldText}>
+											{option.title}
+										</Text>
+									</TouchableOpacity>
+								)
+							}
+						)}
+					</View>
 				)}
 			</View>
 		</View>
@@ -158,10 +199,11 @@ const styles = StyleSheet.create({
 	inputFieldWrapper: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 7.5
+		gap: 7.5,
+		zIndex: 50
 	},
 	inputFieldTitleText: {
-		fontFamily: "Roboto-Regular",
+		fontFamily: "Roboto-Medium",
 		fontSize: 12.5,
 		color: theme.colors.secondary,
 		marginLeft: 7.5
@@ -171,6 +213,10 @@ const styles = StyleSheet.create({
 		borderWidth: 0.75,
 		borderColor: "rgba(173, 173, 173, 0.5)",
 		borderRadius: 12.5,
+		position: "relative"
+	},
+	contentWrapper: {
+		flex: 1,
 		paddingHorizontal: 15,
 		flexDirection: "row",
 		gap: 5,
@@ -179,8 +225,12 @@ const styles = StyleSheet.create({
 	inputFieldSingleLine: {
 		height: 50
 	},
-	inputFieldMultiLine: {
+	inputFieldMultiLineSmall: {
 		height: 100,
+		paddingVertical: 15
+	},
+	inputFieldMultiLineLarge: {
+		height: 200,
 		paddingVertical: 15
 	},
 	inputField: {
@@ -188,9 +238,22 @@ const styles = StyleSheet.create({
 		height: "100%",
 		fontSize: 12.5
 	},
-	fileNameText: {
+	inputFieldText: {
 		flex: 1,
 		fontSize: 12.5,
 		color: "rgba(173, 173, 173, 0.94)"
+	},
+	dropdownContainer: {
+		width: "100%",
+		padding: 15,
+		flexDirection: "column",
+		gap: 10,
+		borderRadius: 10,
+		borderWidth: 0.75,
+		borderColor: "rgba(173, 173, 173, 0.5)",
+		backgroundColor: "white",
+		position: "absolute",
+		top: 50,
+		left: 0
 	}
 })

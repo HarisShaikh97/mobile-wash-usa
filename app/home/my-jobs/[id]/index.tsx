@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
 	seeMoreButton: {
 		height: "100%",
 		width: "100%",
-		backgroundColor: "rgba(0, 0, 0, 0.5)",
+		backgroundColor: "rgba(0, 0, 0, 0.65)",
 		alignItems: "center",
 		justifyContent: "center"
 	},
