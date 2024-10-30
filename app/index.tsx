@@ -1,8 +1,7 @@
 import { useState, useCallback, useMemo } from "react"
-import { useFocusEffect } from "@react-navigation/native"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useRouter } from "expo-router"
+import { useRouter, useFocusEffect } from "expo-router"
 import { useFonts } from "expo-font"
 import Animated, {
 	useSharedValue,
