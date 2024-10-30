@@ -24,7 +24,7 @@ export default function ResetPasswordSuccessfulModal({
 	})
 
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(!openModal)
+		setOpenModal(false)
 		router.navigate("/login")
 	}, [openModal])
 
@@ -42,7 +42,7 @@ export default function ResetPasswordSuccessfulModal({
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
-						contentFit="cover"
+						contentFit="fill"
 					>
 						<Image
 							source={require("../../assets/icons/successful.svg")}
@@ -66,7 +66,11 @@ export default function ResetPasswordSuccessfulModal({
 								</Text>
 							)}
 						</View>
-						<FormButton title="Login" onPress={handleSubmit} />
+						<FormButton
+							theme="dark"
+							title="Login"
+							onPress={handleSubmit}
+						/>
 					</ImageBackground>
 				</View>
 			</View>

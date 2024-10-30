@@ -53,7 +53,11 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton title="Reset Password" onPress={handleSubmit} />
+				<FormButton
+					theme="dark"
+					title="Reset Password"
+					onPress={handleSubmit}
+				/>
 			</View>
 		</View>
 	)

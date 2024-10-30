@@ -41,7 +41,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton title="Send" onPress={handleSubmit} />
+				<FormButton theme="dark" title="Send" onPress={handleSubmit} />
 			</View>
 		</View>
 	)

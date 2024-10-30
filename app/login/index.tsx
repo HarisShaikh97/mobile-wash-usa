@@ -62,7 +62,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton title="Login" onPress={handleLogin} />
+				<FormButton theme="dark" title="Login" onPress={handleLogin} />
 				<TouchableOpacity
 					style={styles.forgetPasswordButton}
 					onPress={handleForgetPassword}

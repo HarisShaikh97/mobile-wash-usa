@@ -5,12 +5,14 @@ import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import FormButton from "../../../components/form-button/FormButton"
+import PaymentInformationModal from "../../../components/payment-information-modal/PaymentInformationModal"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [selectedOption, setSelectedOption] = useState<number>(1)
+	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -20,8 +22,8 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback(() => {
-		// router.navigate("/add-job/details")
-	}, [])
+		setOpenModal(true)
+	}, [setOpenModal])
 
 	return (
 		<ImageBackground
@@ -29,6 +31,11 @@ export default function Page(): React.ReactElement | null {
 			style={styles.container}
 			contentFit="fill"
 		>
+			<PaymentInformationModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				selectedOption={selectedOption}
+			/>
 			<View style={styles.headerContainer}>
 				<BackButton
 					color="#000000"
@@ -150,7 +157,7 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<FormButton title="Next" onPress={handleSubmit} />
+				<FormButton theme="dark" title="Next" onPress={handleSubmit} />
 			</View>
 		</ImageBackground>
 	)

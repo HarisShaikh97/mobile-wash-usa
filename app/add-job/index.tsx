@@ -84,7 +84,11 @@ export default function Page(): React.ReactElement | null {
 							placeholder="Write Job Description"
 							size="large"
 						/>
-						<FormButton title="Next" onPress={handleSubmit} />
+						<FormButton
+							theme="dark"
+							title="Next"
+							onPress={handleSubmit}
+						/>
 					</View>
 				</View>
 			</ScrollView>

@@ -104,7 +104,11 @@ export default function Page(): React.ReactElement | null {
 						)}
 					</View>
 				</View>
-				<FormButton title="Verify Account" onPress={handleSubmit} />
+				<FormButton
+					theme="dark"
+					title="Verify Account"
+					onPress={handleSubmit}
+				/>
 			</View>
 			<View style={styles.policyAndTermsTextWrapper}>
 				{fontsLoaded && (

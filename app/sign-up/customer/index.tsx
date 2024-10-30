@@ -136,7 +136,11 @@ export default function Page(): React.ReactElement | null {
 						)}
 					</View>
 				</View>
-				<FormButton title="Sign Up" onPress={handleSubmit} />
+				<FormButton
+					theme="dark"
+					title="Sign Up"
+					onPress={handleSubmit}
+				/>
 				<View style={styles.loginTextWrapper}>
 					{fontsLoaded && (
 						<Text style={[styles.loginText, styles.loginTextBlack]}>
