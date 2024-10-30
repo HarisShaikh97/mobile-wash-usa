@@ -51,7 +51,7 @@ export default function Page(): React.ReactElement | null {
 	}, [router])
 
 	const handleSubmit = useCallback(() => {
-		// router.back()
+		router.navigate("add-job/review")
 	}, [router])
 
 	return (
