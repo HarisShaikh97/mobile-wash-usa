@@ -1,11 +1,19 @@
 import { useState, useCallback } from "react"
-import { View, Text, StyleSheet } from "react-native"
+import {
+	ScrollView,
+	KeyboardAvoidingView,
+	View,
+	Text,
+	TouchableOpacity,
+	Platform,
+	StyleSheet
+} from "react-native"
 import { ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 import BackButton from "../../../components/back-button/BackButton"
 import BudgetInputField from "../../../components/budget-input-field/BudgetInputField"
-import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
 
@@ -13,62 +21,117 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf")
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 
-	const [location, setLocation] = useState<string>("")
-	const [dateAndTime, setDateAndTime] = useState<string>("")
+	const [dateTime, setDateTime] = useState<Date | null>(null)
 	const [budget, setBudget] = useState<number>(0)
+	const [isDatePickerVisible, setDatePickerVisibility] =
+		useState<boolean>(false)
+
+	const showDatePicker = useCallback(() => {
+		setDatePickerVisibility(true)
+	}, [setDatePickerVisibility])
+
+	const hideDatePicker = useCallback(() => {
+		setDatePickerVisibility(false)
+	}, [setDatePickerVisibility])
+
+	const handleConfirm = useCallback(
+		(date: Date) => {
+			setDateTime(date)
+			hideDatePicker()
+		},
+		[setDateTime, hideDatePicker]
+	)
+
+	const handleSelectLocation = useCallback(() => {
+		router.navigate("/add-job/select-location")
+	}, [router])
 
 	const handleSubmit = useCallback(() => {
-		router.back()
+		// router.back()
 	}, [router])
 
 	return (
-		<View style={styles.container}>
-			<ImageBackground
-				source={require("../../../assets/images/add-job-header.png")}
-				style={styles.headerBackgroundImage}
-				contentFit="fill"
-			>
-				<View style={styles.headerContainer}>
-					<BackButton
-						color="#000000"
-						backgroundColor="#F5F5F5"
-						borderColor="transparent"
+		<KeyboardAvoidingView
+			style={styles.scrollView}
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+		>
+			<ScrollView showsVerticalScrollIndicator={false}>
+				<View style={styles.container}>
+					<DateTimePickerModal
+						isVisible={isDatePickerVisible}
+						mode="datetime"
+						onConfirm={handleConfirm}
+						onCancel={hideDatePicker}
 					/>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>Set Job Details</Text>
-					)}
+					<ImageBackground
+						source={require("../../../assets/images/add-job-header.png")}
+						style={styles.headerBackgroundImage}
+						contentFit="fill"
+					>
+						<View style={styles.headerContainer}>
+							<BackButton
+								color="#000000"
+								backgroundColor="#F5F5F5"
+								borderColor="transparent"
+							/>
+							{fontsLoaded && (
+								<Text style={styles.titleText}>
+									Set Job Details
+								</Text>
+							)}
+						</View>
+					</ImageBackground>
+					<View style={styles.bodyContainer}>
+						<BudgetInputField value={budget} setValue={setBudget} />
+						<View style={styles.inputFieldWrapper}>
+							{fontsLoaded && (
+								<Text style={styles.inputFieldTitleText}>
+									Location
+								</Text>
+							)}
+							<TouchableOpacity
+								style={styles.inputFieldContainer}
+								onPress={handleSelectLocation}
+							>
+								<Text style={styles.inputFieldText}>
+									Select Your Location
+								</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={styles.inputFieldWrapper}>
+							{fontsLoaded && (
+								<Text style={styles.inputFieldTitleText}>
+									Date & Time
+								</Text>
+							)}
+							<TouchableOpacity
+								style={styles.inputFieldContainer}
+								onPress={showDatePicker}
+							>
+								<Text style={styles.inputFieldText}>
+									{dateTime
+										? dateTime.toLocaleString()
+										: "DD/MM/YYYY TT"}
+								</Text>
+							</TouchableOpacity>
+						</View>
+						<FormButton title="Next" onPress={handleSubmit} />
+					</View>
 				</View>
-			</ImageBackground>
-			<View style={styles.bodyContainer}>
-				<BudgetInputField value={budget} setValue={setBudget} />
-				<InputField
-					type="text"
-					value={location}
-					onChangeText={setLocation}
-					title="Location"
-					multiline={false}
-					secureTextEntry={false}
-					placeholder="Set Your Location"
-				/>
-				<InputField
-					type="text"
-					value={dateAndTime}
-					onChangeText={setDateAndTime}
-					title="Date & Time"
-					multiline={false}
-					secureTextEntry={false}
-					placeholder="DD/MM/YYYY TT"
-				/>
-				<FormButton title="Next" onPress={handleSubmit} />
-			</View>
-		</View>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	)
 }
 
 const styles = StyleSheet.create({
+	scrollView: {
+		flex: 1,
+		backgroundColor: "white"
+	},
 	container: {
 		flexDirection: "column"
 	},
@@ -93,5 +156,30 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 25,
 		paddingBottom: 25,
 		gap: 15
+	},
+	inputFieldWrapper: {
+		width: "100%",
+		flexDirection: "column",
+		gap: 7.5,
+		zIndex: 50
+	},
+	inputFieldTitleText: {
+		fontFamily: "Roboto-Medium",
+		fontSize: 12.5,
+		color: theme.colors.secondary,
+		marginLeft: 7.5
+	},
+	inputFieldContainer: {
+		height: 50,
+		width: "100%",
+		borderWidth: 0.75,
+		borderColor: "rgba(173, 173, 173, 0.5)",
+		borderRadius: 12.5,
+		justifyContent: "center",
+		paddingHorizontal: 15
+	},
+	inputFieldText: {
+		fontSize: 12.5,
+		color: "rgba(173, 173, 173, 0.94)"
 	}
 })
