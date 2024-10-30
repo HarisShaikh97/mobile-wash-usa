@@ -1,11 +1,5 @@
 import { useCallback } from "react"
-import {
-	ScrollView,
-	View,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
@@ -22,163 +16,175 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback(() => {
-		// router.navigate("/add-job/details")
-	}, [])
+		router.navigate("/add-job/select-payment-method")
+	}, [router])
 
 	return (
-		<ScrollView
-			style={styles.scrollView}
-			showsVerticalScrollIndicator={false}
-		>
-			<View style={styles.container}>
-				<View style={styles.headerBackgroundImage}>
-					<View style={styles.headerContainer}>
-						<BackButton
-							color="#000000"
-							backgroundColor="transparent"
-							borderColor="#F5F5F5"
-						/>
+		<View style={styles.container}>
+			<View style={styles.headerContainer}>
+				<BackButton
+					color="#000000"
+					backgroundColor="transparent"
+					borderColor="#F5F5F5"
+				/>
+				{fontsLoaded && (
+					<Text style={styles.titleText}>
+						Review Your Job Posting
+					</Text>
+				)}
+			</View>
+			<View style={styles.bodyContainer}>
+				<View style={styles.jobDetailsWrapper}>
+					<View style={styles.jobDetailContainer}>
 						{fontsLoaded && (
-							<Text style={styles.titleText}>
-								Review Your Job Posting
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								Car Wash At Home
 							</Text>
 						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								Vehicle
+							</Text>
+						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								Looking for a thorough exterior and interior car
+								wash for my SUV.
+							</Text>
+						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								$500
+							</Text>
+						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job/details")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								2972 Westheimer Rd. Santa Ana, Illinois 85486
+							</Text>
+						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job/details")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						{fontsLoaded && (
+							<Text
+								style={styles.jobDetailText}
+								numberOfLines={2}
+								ellipsizeMode="tail"
+							>
+								October 5, 2024 at 2:00 PM
+							</Text>
+						)}
+						<TouchableOpacity
+							onPress={() => {
+								router.navigate("/add-job/details")
+							}}
+						>
+							<Image
+								source={require("../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={styles.bodyContainer}>
-					<View style={styles.jobDetailsWrapper}>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>
-									Car Wash At Home
-								</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>
-									Vehicle
-								</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>
-									Looking for a thorough exterior and interior
-									car wash for my SUV.
-								</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>$500</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job/details")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>
-									2972 Westheimer Rd. Santa Ana, Illinois
-									85486
-								</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job/details")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-						<View style={styles.jobDetailContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobDetailText}>
-									October 5, 2024 at 2:00 PM
-								</Text>
-							)}
-							<TouchableOpacity
-								onPress={() => {
-									router.navigate("/add-job/details")
-								}}
-							>
-								<Image
-									source={require("../../../assets/icons/edit.svg")}
-									style={styles.editIcon}
-									contentFit="contain"
-								/>
-							</TouchableOpacity>
-						</View>
-					</View>
-					<FormButton title="Next" onPress={handleSubmit} />
-				</View>
+				<FormButton title="Next" onPress={handleSubmit} />
 			</View>
-		</ScrollView>
+		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	scrollView: {
-		flex: 1,
-		backgroundColor: "white"
-	},
 	container: {
-		flexDirection: "column"
-	},
-	headerBackgroundImage: {
-		width: "100%"
+		flex: 1,
+		flexDirection: "column",
+		backgroundColor: "white"
 	},
 	headerContainer: {
 		padding: 25,
 		flexDirection: "column",
-		gap: 25,
-		backgroundColor: "rgba(255, 255, 255, 0.75)"
+		gap: 25
 	},
 	titleText: {
 		fontSize: 27.5,
@@ -187,11 +193,12 @@ const styles = StyleSheet.create({
 		width: 215
 	},
 	bodyContainer: {
+		flex: 1,
 		flexDirection: "column",
 		alignItems: "center",
+		justifyContent: "space-between",
 		paddingHorizontal: 25,
-		paddingBottom: 25,
-		gap: 25
+		paddingBottom: 25
 	},
 	jobDetailsWrapper: {
 		width: "100%",
