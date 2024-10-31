@@ -120,6 +120,7 @@ export default function Page(): React.ReactElement | null {
 							</TouchableOpacity>
 						</View>
 						<FormButton
+							length="full"
 							theme="dark"
 							title="Next"
 							onPress={handleSubmit}

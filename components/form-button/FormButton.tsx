@@ -3,12 +3,14 @@ import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface FormButtonProps {
+	length: "full" | "half"
 	theme: "light" | "dark"
 	title: string
 	onPress: () => void
 }
 
 export default function FormButton({
+	length,
 	theme,
 	title,
 	onPress
@@ -21,6 +23,9 @@ export default function FormButton({
 		<TouchableOpacity
 			style={[
 				styles.buttonContainer,
+				length === "full"
+					? styles.buttonContainerFull
+					: styles.buttonContainerHalf,
 				theme === "dark"
 					? styles.buttonDarkTheme
 					: styles.buttonLightTheme
@@ -30,7 +35,9 @@ export default function FormButton({
 			{fontsLoaded && (
 				<Text
 					style={[
-						styles.buttonText,
+						length === "full"
+							? styles.buttonText
+							: styles.buttonTextSmall,
 						theme === "dark"
 							? styles.buttonDarkThemeText
 							: styles.buttonLightThemeText
@@ -51,6 +58,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center"
 	},
+	buttonContainerFull: {
+		width: "100%"
+	},
+	buttonContainerHalf: {
+		width: "48.5%"
+	},
 	buttonLightTheme: {
 		backgroundColor: "white",
 		borderWidth: 1,
@@ -62,6 +75,10 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontFamily: "Roboto-Medium",
 		fontSize: 15
+	},
+	buttonTextSmall: {
+		fontFamily: "Roboto-Medium",
+		fontSize: 13.5
 	},
 	buttonLightThemeText: {
 		color: theme.colors.primary

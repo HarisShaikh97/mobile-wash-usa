@@ -64,6 +64,7 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<View style={styles.formContainer}>
 				<InputField
+					length="full"
 					type="text"
 					value={fullName}
 					onChangeText={setFullName}
@@ -73,6 +74,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 				<InputField
+					length="full"
 					type="text"
 					value={phoneNumber}
 					onChangeText={setPhoneNumber}
@@ -82,6 +84,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 				<InputField
+					length="full"
 					type="text"
 					value={email}
 					onChangeText={setEmail}
@@ -91,6 +94,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 				<InputField
+					length="full"
 					type="text"
 					value={location}
 					onChangeText={setLocation}

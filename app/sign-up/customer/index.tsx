@@ -34,6 +34,7 @@ export default function Page(): React.ReactElement | null {
 			{fontsLoaded && <Text style={styles.titleText}>Sign Up</Text>}
 			<View style={styles.formContainer}>
 				<InputField
+					length="full"
 					title="Full Name"
 					placeholder="Enter your full name"
 					value={fullName}
@@ -43,6 +44,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Email"
 					placeholder="Enter your email address"
 					value={email}
@@ -52,6 +54,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Phone Number"
 					placeholder="Enter your phone number"
 					value={phoneNumber}
@@ -61,6 +64,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Password"
 					placeholder="**********"
 					value={password}
@@ -70,6 +74,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Location"
 					placeholder="Enter your location"
 					value={location}
@@ -137,6 +142,7 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 				<FormButton
+					length="full"
 					theme="dark"
 					title="Sign Up"
 					onPress={handleSubmit}

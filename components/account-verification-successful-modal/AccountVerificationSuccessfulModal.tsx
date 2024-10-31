@@ -6,7 +6,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
-interface ResetPasswordModalProps {
+interface AccountVerificationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 }
@@ -14,7 +14,7 @@ interface ResetPasswordModalProps {
 export default function AccountVerificationSuccessfulModal({
 	openModal,
 	setOpenModal
-}: ResetPasswordModalProps): React.ReactElement | null {
+}: AccountVerificationModalProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
@@ -26,7 +26,7 @@ export default function AccountVerificationSuccessfulModal({
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
 		router.navigate("/login")
-	}, [openModal])
+	}, [openModal, router])
 
 	return (
 		<Modal
@@ -68,6 +68,7 @@ export default function AccountVerificationSuccessfulModal({
 							)}
 						</View>
 						<FormButton
+							length="full"
 							theme="dark"
 							title="Login"
 							onPress={handleSubmit}

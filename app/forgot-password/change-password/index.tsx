@@ -36,6 +36,7 @@ export default function Page(): React.ReactElement | null {
 			)}
 			<View style={styles.formContainer}>
 				<InputField
+					length="full"
 					title="New Password"
 					placeholder="Enter your new password"
 					value={newPassword}
@@ -45,6 +46,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Confirm Password"
 					placeholder="Re-enter your new password"
 					value={confirmPassword}
@@ -54,6 +56,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<FormButton
+					length="full"
 					theme="dark"
 					title="Reset Password"
 					onPress={handleSubmit}

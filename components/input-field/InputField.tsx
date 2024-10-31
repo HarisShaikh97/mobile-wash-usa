@@ -15,6 +15,7 @@ import { SelectOption } from "../../utils/types"
 interface BaseInputFieldProps {
 	title: string
 	placeholder: string
+	length: "full" | "half"
 }
 
 interface SelectInputFieldProps extends BaseInputFieldProps {
@@ -82,7 +83,14 @@ export default function InputField(
 	}, [type, props])
 
 	return (
-		<View style={styles.inputFieldWrapper}>
+		<View
+			style={[
+				styles.inputFieldWrapper,
+				props.length === "full"
+					? styles.inputFieldWrapperFull
+					: styles.inputFieldWrapperHalf
+			]}
+		>
 			{fontsLoaded && (
 				<Text style={styles.inputFieldTitleText}>{title}</Text>
 			)}
@@ -197,10 +205,15 @@ export default function InputField(
 
 const styles = StyleSheet.create({
 	inputFieldWrapper: {
-		width: "100%",
 		flexDirection: "column",
 		gap: 7.5,
 		zIndex: 50
+	},
+	inputFieldWrapperFull: {
+		width: "100%"
+	},
+	inputFieldWrapperHalf: {
+		width: "47.5%"
 	},
 	inputFieldTitleText: {
 		fontFamily: "Roboto-Medium",
@@ -213,6 +226,7 @@ const styles = StyleSheet.create({
 		borderWidth: 0.75,
 		borderColor: "rgba(173, 173, 173, 0.5)",
 		borderRadius: 12.5,
+		backgroundColor: "white",
 		position: "relative"
 	},
 	contentWrapper: {

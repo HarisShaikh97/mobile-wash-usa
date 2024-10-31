@@ -27,7 +27,10 @@ export default function PaymentInformationModal({
 
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
-	}, [openModal])
+		router.navigate(
+			selectedOption === 3 ? "/home" : "/add-job/payment-card-details"
+		)
+	}, [openModal, router])
 
 	const handleChangeMethod = useCallback((): void => {
 		setOpenModal(false)
@@ -63,6 +66,7 @@ export default function PaymentInformationModal({
 					)}
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
+							length="full"
 							theme="dark"
 							title={
 								selectedOption === 3
@@ -72,6 +76,7 @@ export default function PaymentInformationModal({
 							onPress={handleProceed}
 						/>
 						<FormButton
+							length="full"
 							theme="light"
 							title="Change Payment Method"
 							onPress={handleChangeMethod}

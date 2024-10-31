@@ -2,15 +2,12 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import FormButton from "../../../components/form-button/FormButton"
 import PaymentInformationModal from "../../../components/payment-information-modal/PaymentInformationModal"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
-
 	const [selectedOption, setSelectedOption] = useState<number>(1)
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -157,7 +154,12 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<FormButton theme="dark" title="Next" onPress={handleSubmit} />
+				<FormButton
+					length="full"
+					theme="dark"
+					title="Select Payment"
+					onPress={handleSubmit}
+				/>
 			</View>
 		</ImageBackground>
 	)

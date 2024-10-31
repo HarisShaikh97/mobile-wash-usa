@@ -58,6 +58,7 @@ export default function Page(): React.ReactElement | null {
 					</ImageBackground>
 					<View style={styles.bodyContainer}>
 						<InputField
+							length="full"
 							type="text"
 							value={jobTitle}
 							onChangeText={setJobTitle}
@@ -67,6 +68,7 @@ export default function Page(): React.ReactElement | null {
 							placeholder="Enter Job Title"
 						/>
 						<InputField
+							length="full"
 							type="select"
 							data={services}
 							value={jobType}
@@ -75,6 +77,7 @@ export default function Page(): React.ReactElement | null {
 							placeholder="Select Job Type"
 						/>
 						<InputField
+							length="full"
 							type="text"
 							value={jobDescription}
 							onChangeText={setJobDescription}
@@ -85,6 +88,7 @@ export default function Page(): React.ReactElement | null {
 							size="large"
 						/>
 						<FormButton
+							length="full"
 							theme="dark"
 							title="Next"
 							onPress={handleSubmit}

@@ -6,15 +6,15 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
-interface ResetPasswordModalProps {
+interface JobPostModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 }
 
-export default function ResetPasswordSuccessfulModal({
+export default function JobPostSuccessfulModal({
 	openModal,
 	setOpenModal
-}: ResetPasswordModalProps): React.ReactElement | null {
+}: JobPostModalProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
@@ -23,9 +23,14 @@ export default function ResetPasswordSuccessfulModal({
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSubmit = useCallback((): void => {
+	const handleGoToDashboard = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/login")
+		router.navigate("/home")
+	}, [openModal, router])
+
+	const handlePostAnotherJob = useCallback((): void => {
+		setOpenModal(false)
+		router.navigate("/add-job")
 	}, [openModal, router])
 
 	return (
@@ -51,27 +56,31 @@ export default function ResetPasswordSuccessfulModal({
 						/>
 						<View style={styles.modalBodyContainer}>
 							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Your Password Has Been
-								</Text>
-							)}
-							{fontsLoaded && (
 								<Text style={styles.titleText}>
-									Successfully Reset!
+									Job Posted Successfully!
 								</Text>
 							)}
 							{fontsLoaded && (
 								<Text style={styles.descriptionText}>
-									You Can Now Log In With Our New Password
+									Your job has been posted, and nearby vendors
+									can now apply!
 								</Text>
 							)}
 						</View>
-						<FormButton
-							length="full"
-							theme="dark"
-							title="Login"
-							onPress={handleSubmit}
-						/>
+						<View style={styles.formButtonsWrapper}>
+							<FormButton
+								length="half"
+								theme="light"
+								title="Go to Dashboard"
+								onPress={handleGoToDashboard}
+							/>
+							<FormButton
+								length="half"
+								theme="dark"
+								title="Post Another Job"
+								onPress={handlePostAnotherJob}
+							/>
+						</View>
 					</ImageBackground>
 				</View>
 			</View>
@@ -95,9 +104,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 30,
-		paddingTop: 50,
-		paddingHorizontal: 50
+		gap: 20,
+		paddingVertical: 50,
+		paddingHorizontal: 35
 	},
 	successfulIcon: {
 		height: 100,
@@ -113,7 +122,8 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary,
 		width: 250,
 		textAlign: "center",
-		paddingTop: 5
+		paddingTop: 5,
+		textTransform: "capitalize"
 	},
 	titleText: {
 		fontSize: 30,
@@ -121,5 +131,12 @@ const styles = StyleSheet.create({
 		color: theme.colors.primary,
 		width: 250,
 		textAlign: "center"
+	},
+	formButtonsWrapper: {
+		flex: 1,
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "flex-end",
+		justifyContent: "space-between"
 	}
 })

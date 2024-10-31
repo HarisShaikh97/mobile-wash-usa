@@ -45,6 +45,7 @@ export default function Page(): React.ReactElement | null {
 			)}
 			<View style={styles.formContainer}>
 				<InputField
+					length="full"
 					title="Email/Number"
 					placeholder="Email or phone number"
 					value={userName}
@@ -54,6 +55,7 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<InputField
+					length="full"
 					title="Password"
 					placeholder="********"
 					value={password}
@@ -62,7 +64,12 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton theme="dark" title="Login" onPress={handleLogin} />
+				<FormButton
+					length="full"
+					theme="dark"
+					title="Login"
+					onPress={handleLogin}
+				/>
 				<TouchableOpacity
 					style={styles.forgetPasswordButton}
 					onPress={handleForgetPassword}

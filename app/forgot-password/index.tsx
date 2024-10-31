@@ -33,6 +33,7 @@ export default function Page(): React.ReactElement | null {
 			)}
 			<View style={styles.formContainer}>
 				<InputField
+					length="full"
 					title="Email/Number"
 					placeholder="Enter your email or phone number"
 					value={userName}
@@ -41,7 +42,12 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton theme="dark" title="Send" onPress={handleSubmit} />
+				<FormButton
+					length="full"
+					theme="dark"
+					title="Send"
+					onPress={handleSubmit}
+				/>
 			</View>
 		</View>
 	)
