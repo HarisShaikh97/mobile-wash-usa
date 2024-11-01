@@ -1,12 +1,18 @@
+import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter, useLocalSearchParams } from "expo-router"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import OfferCard from "../../../../components/offer-card/OfferCard"
 import { theme } from "../../../../utils/constants"
 import { Offer } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	const { id } = useLocalSearchParams()
+
+	const router = useRouter()
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -72,6 +78,10 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		}
 	]
+
+	const handleViewImage = useCallback((): void => {
+		router.navigate(`/job-images/${id}`)
+	}, [router])
 
 	return (
 		<View style={styles.bodyContainer}>
@@ -178,28 +188,40 @@ export default function Page(): React.ReactElement | null {
 					<Text style={styles.galleryTitleText}>Gallery</Text>
 				)}
 				<View style={styles.galleryImagesWrapper}>
-					<TouchableOpacity style={styles.galleryImageItemContainer}>
+					<TouchableOpacity
+						style={styles.galleryImageItemContainer}
+						onPress={handleViewImage}
+					>
 						<Image
 							source={require("../../../../assets/images/background1.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.galleryImageItemContainer}>
+					<TouchableOpacity
+						style={styles.galleryImageItemContainer}
+						onPress={handleViewImage}
+					>
 						<Image
 							source={require("../../../../assets/images/background2.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.galleryImageItemContainer}>
+					<TouchableOpacity
+						style={styles.galleryImageItemContainer}
+						onPress={handleViewImage}
+					>
 						<Image
 							source={require("../../../../assets/images/background3.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.galleryImageItemContainer}>
+					<TouchableOpacity
+						style={styles.galleryImageItemContainer}
+						onPress={handleViewImage}
+					>
 						<ImageBackground
 							source={require("../../../../assets/images/background4.png")}
 							style={styles.galleryImage}
