@@ -20,7 +20,7 @@ export default function Layout(): React.ReactElement | null {
 				}}
 			/>
 			<Tabs.Screen
-				name="messages/index"
+				name="messages"
 				options={{
 					title: "Messages"
 				}}

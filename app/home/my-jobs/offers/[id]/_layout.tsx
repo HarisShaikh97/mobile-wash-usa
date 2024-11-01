@@ -5,8 +5,6 @@ import NotificationButton from "../../../../../components/notification-button/No
 import { theme } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const { id } = useLocalSearchParams()
-
 	return (
 		<ScrollView
 			style={styles.scrollView}

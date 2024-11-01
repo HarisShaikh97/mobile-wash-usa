@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 12.5,
-		paddingHorizontal: 15
+		paddingHorizontal: 15,
+		backgroundColor: "white"
 	},
 	inputField: {
 		flex: 1,
