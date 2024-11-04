@@ -12,6 +12,7 @@ interface ChatCardProps {
 	lastMessage: Chat["lastMessage"]
 	lastMessageTime: Chat["lastMessageTime"]
 	unreadMessages: Chat["unreadMessages"]
+	online: Chat["online"]
 }
 
 export default function ChatCard({
@@ -20,7 +21,8 @@ export default function ChatCard({
 	image,
 	lastMessage,
 	lastMessageTime,
-	unreadMessages
+	unreadMessages,
+	online
 }: ChatCardProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -31,7 +33,12 @@ export default function ChatCard({
 	})
 
 	return (
-		<TouchableOpacity style={styles.container}>
+		<TouchableOpacity
+			style={styles.container}
+			onPress={() => {
+				router.navigate(`/chat/${_id}`)
+			}}
+		>
 			<View style={styles.horizontalWrapper}>
 				<View style={styles.profileImageContainer}>
 					<Image
@@ -39,6 +46,7 @@ export default function ChatCard({
 						style={styles.profileImage}
 						contentFit="cover"
 					/>
+					{online && <View style={styles.onlineMarker} />}
 				</View>
 				<View style={styles.verticalWrapper}>
 					{fontsLoaded && (
@@ -122,7 +130,19 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		borderWidth: 1.5,
 		borderColor: "white",
-		overflow: "hidden"
+		overflow: "hidden",
+		position: "relative"
+	},
+	onlineMarker: {
+		height: 10,
+		width: 10,
+		borderRadius: 5,
+		borderWidth: 1,
+		borderColor: "white",
+		backgroundColor: "#8BC83F",
+		position: "absolute",
+		top: 2.5,
+		right: 2.5
 	},
 	profileImage: {
 		height: "100%",

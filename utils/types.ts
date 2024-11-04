@@ -65,3 +65,10 @@ export type Chat = {
 	lastMessageTime: string
 	unreadMessages: number
 }
+
+export type Message = {
+	_id: string
+	text: string
+	time: string
+	user: string
+}

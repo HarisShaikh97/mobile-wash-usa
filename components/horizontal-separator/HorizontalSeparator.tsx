@@ -14,6 +14,6 @@ export default function HorizontalSeparator({
 const styles = StyleSheet.create({
 	horizontalLine: {
 		height: 1,
-		width: "100%"
+		flexGrow: 1
 	}
 })
