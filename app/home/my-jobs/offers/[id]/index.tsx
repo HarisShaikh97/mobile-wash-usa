@@ -108,6 +108,7 @@ export default function Page(): React.ReactElement | null {
 						return (
 							<OfferCard
 								size="large"
+								JobId={offer.job_id}
 								vendorId={offer.vendor_id}
 								vendorName={offer.vendorName}
 								vendorImage={offer.vendorImage}

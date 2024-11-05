@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
@@ -8,6 +9,7 @@ import { Offer } from "../../utils/types"
 
 interface OfferCardProps {
 	size: "small" | "large"
+	JobId: Offer["job_id"]
 	vendorId: Offer["vendor_id"]
 	vendorName: Offer["vendorName"]
 	vendorImage: Offer["vendorImage"]
@@ -20,6 +22,7 @@ interface OfferCardProps {
 
 export default function OfferCard({
 	size,
+	JobId,
 	vendorId,
 	vendorName,
 	vendorImage,
@@ -37,6 +40,14 @@ export default function OfferCard({
 		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
+
+	const handleSendMessage = useCallback(() => {
+		router.navigate(`/chat/${vendorId}`)
+	}, [router])
+
+	const handleAcceptOffer = useCallback(() => {
+		router.navigate(`/offer-accepted/${JobId}`)
+	}, [router])
 
 	return (
 		<View style={styles.cardContainer}>
@@ -145,6 +156,7 @@ export default function OfferCard({
 						styles.actionButtonContainer,
 						styles.sendMessageButton
 					]}
+					onPress={handleSendMessage}
 				>
 					{fontsLoaded && (
 						<Text
@@ -162,6 +174,7 @@ export default function OfferCard({
 						styles.actionButtonContainer,
 						styles.acceptOfferButton
 					]}
+					onPress={handleAcceptOffer}
 				>
 					{fontsLoaded && (
 						<Text

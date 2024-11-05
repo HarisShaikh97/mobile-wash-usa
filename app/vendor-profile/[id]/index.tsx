@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 	}, [router])
 
 	const handleAcceptOffer = useCallback(() => {
-		router.back()
+		router.navigate(`/offer-accepted/${id}`)
 	}, [router])
 
 	const reviews: Review[] = [
