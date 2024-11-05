@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<ImageBackground
-			source={require("../../../assets/images/settings-bg.png")}
+			source={require("../../../assets/images/screen-bg.png")}
 			style={styles.container}
 			contentFit="fill"
 		>

@@ -386,7 +386,8 @@ const styles = StyleSheet.create({
 	aboutDetailsWrapper: {
 		width: "85%",
 		flexDirection: "column",
-		gap: 15
+		gap: 15,
+		alignSelf: "center"
 	},
 	aboutHeadingText: {
 		fontSize: 17.5,

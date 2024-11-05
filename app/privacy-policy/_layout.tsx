@@ -6,7 +6,7 @@ import BackButton from "../../components/back-button/BackButton"
 export default function Layout(): React.ReactElement | null {
 	return (
 		<ImageBackground
-			source={require("../../assets/images/settings-bg.png")}
+			source={require("../../assets/images/screen-bg.png")}
 			style={styles.bgImage}
 			contentFit="fill"
 		>
