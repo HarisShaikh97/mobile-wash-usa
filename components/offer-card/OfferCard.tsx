@@ -1,6 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import Ratings from "../ratings/Ratings"
 import { theme } from "../../utils/constants"
 import { Offer } from "../../utils/types"
@@ -28,6 +29,8 @@ export default function OfferCard({
 	amount,
 	location
 }: OfferCardProps): React.ReactElement | null {
+	const router = useRouter()
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
@@ -56,7 +59,12 @@ export default function OfferCard({
 						</Text>
 					)}
 				</View>
-				<TouchableOpacity style={styles.viewProfileButton}>
+				<TouchableOpacity
+					style={styles.viewProfileButton}
+					onPress={() => {
+						router.navigate(`/vendor-profile/${vendorId}`)
+					}}
+				>
 					{fontsLoaded && (
 						<Text style={styles.viewProfileButtonText}>
 							View Profile
@@ -79,7 +87,7 @@ export default function OfferCard({
 					</Text>
 				)}
 				<View style={styles.ratingsReviewsWrapper}>
-					<Ratings ratings={ratings} />
+					<Ratings ratings={ratings} size={16.5} />
 					{fontsLoaded && (
 						<Text style={styles.sectionDescriptionText}>
 							{ratings} Of {reviews} Reviews

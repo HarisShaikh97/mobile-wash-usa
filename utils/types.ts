@@ -72,3 +72,12 @@ export type Message = {
 	time: string
 	user: string
 }
+
+export type Review = {
+	vendor_id: string
+	userName: string
+	image: ImageSourcePropType
+	review: string
+	rating: number
+	time: string
+}

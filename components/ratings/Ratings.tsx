@@ -4,10 +4,12 @@ import { Offer } from "../../utils/types"
 
 interface RatingsProps {
 	ratings: Offer["ratings"]
+	size: number
 }
 
 export default function Ratings({
-	ratings
+	ratings,
+	size
 }: RatingsProps): React.ReactElement | null {
 	return (
 		<View style={styles.container}>
@@ -19,7 +21,7 @@ export default function Ratings({
 						? "star-o"
 						: "star-half-o"
 				}
-				size={16.5}
+				size={size}
 				color="#FBBA1D"
 			/>
 			<FontAwesome
@@ -30,7 +32,7 @@ export default function Ratings({
 						? "star-o"
 						: "star-half-o"
 				}
-				size={16.5}
+				size={size}
 				color="#FBBA1D"
 			/>
 			<FontAwesome
@@ -41,7 +43,7 @@ export default function Ratings({
 						? "star-o"
 						: "star-half-o"
 				}
-				size={16.5}
+				size={size}
 				color="#FBBA1D"
 			/>
 			<FontAwesome
@@ -52,7 +54,7 @@ export default function Ratings({
 						? "star-o"
 						: "star-half-o"
 				}
-				size={16.5}
+				size={size}
 				color="#FBBA1D"
 			/>
 			<FontAwesome
@@ -63,7 +65,7 @@ export default function Ratings({
 						? "star-o"
 						: "star-half-o"
 				}
-				size={16.5}
+				size={size}
 				color="#FBBA1D"
 			/>
 		</View>
