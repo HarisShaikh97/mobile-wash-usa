@@ -81,3 +81,11 @@ export type Review = {
 	rating: number
 	time: string
 }
+
+export type Notification = {
+	_id: string
+	type: "message" | "offer" | "security"
+	title: string
+	description: string
+	time: string
+}
