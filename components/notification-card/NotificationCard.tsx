@@ -12,6 +12,7 @@ interface NotificationCardProps {
 	title: Notification["title"]
 	description: Notification["description"]
 	time: Notification["time"]
+	setOpenModal: (value: boolean) => void
 }
 
 export default function NotificationCard({
@@ -19,7 +20,8 @@ export default function NotificationCard({
 	type,
 	title,
 	description,
-	time
+	time,
+	setOpenModal
 }: NotificationCardProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -70,7 +72,11 @@ export default function NotificationCard({
 							</Text>
 						)}
 					</View>
-					<TouchableOpacity>
+					<TouchableOpacity
+						onPress={() => {
+							setOpenModal(true)
+						}}
+					>
 						<Entypo
 							name="dots-three-vertical"
 							size={15}

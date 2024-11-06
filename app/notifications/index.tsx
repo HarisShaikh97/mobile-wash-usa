@@ -1,10 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { useState } from "react"
+import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import NotificationCard from "../../components/notification-card/NotificationCard"
+import NotificationActionsModal from "../../components/notification-actions-modal/NotificationActionsModal"
 import { theme } from "../../utils/constants"
 import { Notification } from "../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	const [openModal, setOpenModal] = useState<boolean>(false)
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
 	})
@@ -37,6 +41,10 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
+			<NotificationActionsModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			{fontsLoaded && <Text style={styles.titleText}>Notifications</Text>}
 			<View style={styles.sectionContainer}>
 				{fontsLoaded && (
@@ -55,6 +63,7 @@ export default function Page(): React.ReactElement | null {
 									title={notification.title}
 									description={notification.description}
 									time={notification.time}
+									setOpenModal={setOpenModal}
 									key={index}
 								/>
 							)
@@ -79,6 +88,7 @@ export default function Page(): React.ReactElement | null {
 									title={notification.title}
 									description={notification.description}
 									time={notification.time}
+									setOpenModal={setOpenModal}
 									key={index}
 								/>
 							)
