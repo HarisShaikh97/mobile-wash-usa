@@ -8,14 +8,22 @@ import {
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
+import { RootState } from "../../../store/store"
 import { services, theme } from "../../../utils/constants"
 import { Service, Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	const { user, isLoading, error } = useSelector(
+		(state: RootState) => state.auth
+	)
+
+	console.log(user, isLoading, error)
+
 	const router = useRouter()
 
 	const jobs: Job[] = [
