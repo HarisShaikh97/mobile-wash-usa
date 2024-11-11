@@ -42,11 +42,11 @@ export default function OfferCard({
 	})
 
 	const handleSendMessage = useCallback(() => {
-		router.navigate(`/chat/${vendorId}`)
+		router.navigate(`/user/chat/${vendorId}`)
 	}, [router])
 
 	const handleAcceptOffer = useCallback(() => {
-		router.navigate(`/offer-accepted/${JobId}`)
+		router.navigate(`/user/offer-accepted/${JobId}`)
 	}, [router])
 
 	return (
@@ -73,7 +73,7 @@ export default function OfferCard({
 				<TouchableOpacity
 					style={styles.viewProfileButton}
 					onPress={() => {
-						router.navigate(`/vendor-profile/${vendorId}`)
+						router.navigate(`/user/vendor-profile/${vendorId}`)
 					}}
 				>
 					{fontsLoaded && (

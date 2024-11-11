@@ -22,7 +22,7 @@ export default function BottomNav({
 			<TouchableOpacity
 				style={styles.addButtonContainer}
 				onPress={() => {
-					router.navigate("/add-job")
+					router.navigate("/user/add-job")
 				}}
 			>
 				<AntDesign name="plus" size={27.5} color="white" />

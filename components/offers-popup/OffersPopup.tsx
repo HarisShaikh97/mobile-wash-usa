@@ -24,7 +24,7 @@ export default function OffersPopup({
 				{fontsLoaded && <Text style={styles.titleText}>Offers</Text>}
 				<TouchableOpacity
 					onPress={() => {
-						router.navigate(`/home/my-jobs/offers/${job_id}`)
+						router.navigate(`/user/home/my-jobs/offers/${job_id}`)
 					}}
 				>
 					{fontsLoaded && (

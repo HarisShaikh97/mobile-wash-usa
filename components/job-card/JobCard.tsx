@@ -108,7 +108,7 @@ export default function JobCard({
 						styles.viewDetailsButton
 					]}
 					onPress={() => {
-						router.navigate(`/home/my-jobs/${_id}`)
+						router.navigate(`/user/home/my-jobs/${_id}`)
 					}}
 				>
 					{fontsLoaded && (

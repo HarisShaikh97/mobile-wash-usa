@@ -29,7 +29,7 @@ export default function ServiceCard({
 		<TouchableOpacity
 			style={styles.cardContainer}
 			onPress={() => {
-				router.navigate("/add-job")
+				router.navigate("/user/add-job")
 			}}
 		>
 			<Image source={image} style={styles.bgImage} contentFit="cover" />

@@ -25,12 +25,12 @@ export default function JobPostSuccessfulModal({
 
 	const handleGoToDashboard = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/home")
+		router.navigate("/user/home")
 	}, [openModal, router])
 
 	const handlePostAnotherJob = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/add-job")
+		router.navigate("/user/add-job")
 	}, [openModal, router])
 
 	return (

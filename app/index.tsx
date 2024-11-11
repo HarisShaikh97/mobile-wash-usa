@@ -87,11 +87,11 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	const handleLogin = useCallback((): void => {
-		router.navigate("/login")
+		router.navigate("/auth/login")
 	}, [router])
 
 	const handleSignUp = useCallback((): void => {
-		router.navigate("/sign-up")
+		router.navigate("/auth/sign-up")
 	}, [router])
 
 	return (

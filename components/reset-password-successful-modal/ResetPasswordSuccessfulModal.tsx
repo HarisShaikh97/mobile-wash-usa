@@ -25,7 +25,7 @@ export default function ResetPasswordSuccessfulModal({
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/login")
+		router.navigate("/auth/login")
 	}, [openModal, router])
 
 	return (

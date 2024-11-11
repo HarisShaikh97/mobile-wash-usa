@@ -28,7 +28,9 @@ export default function PaymentInformationModal({
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
 		router.navigate(
-			selectedOption === 3 ? "/home" : "/add-job/payment-card-details"
+			selectedOption === 3
+				? "/user/home"
+				: "/user/add-job/payment-card-details"
 		)
 	}, [openModal, router])
 

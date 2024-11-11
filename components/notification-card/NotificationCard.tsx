@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import Entypo from "@expo/vector-icons/Entypo"
 import { Notification } from "../../utils/types"
 import { theme } from "../../utils/constants"
