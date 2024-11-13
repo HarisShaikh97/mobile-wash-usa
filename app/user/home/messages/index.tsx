@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import ChatCard from "../../../../components/chat-card/ChatCard"
 import { Chat } from "../../../../utils/types"
 

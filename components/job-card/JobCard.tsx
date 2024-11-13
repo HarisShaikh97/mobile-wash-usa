@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
@@ -23,6 +23,7 @@ export default function JobCard({
 	budget
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -90,38 +91,83 @@ export default function JobCard({
 				</View>
 			</View>
 			<View style={styles.actionButtonsWrapper}>
-				<View style={[styles.actionButtonContainer, styles.statusTab]}>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonsText,
-								styles.statusText
-							]}
-						>
-							In Progress
-						</Text>
-					)}
-				</View>
-				<TouchableOpacity
-					style={[
-						styles.actionButtonContainer,
-						styles.viewDetailsButton
-					]}
-					onPress={() => {
-						router.navigate(`/user/home/my-jobs/${_id}`)
-					}}
-				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonsText,
-								styles.viewDetailsText
-							]}
-						>
-							View Details
-						</Text>
-					)}
-				</TouchableOpacity>
+				{pathname.includes("/user/") ? (
+					<View
+						style={[styles.actionButtonContainer, styles.statusTab]}
+					>
+						{fontsLoaded && (
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextDark
+								]}
+							>
+								In Progress
+							</Text>
+						)}
+					</View>
+				) : (
+					<TouchableOpacity
+						style={[
+							styles.actionButtonContainer,
+							styles.buttonLightBlue
+						]}
+						onPress={() => {
+							router.navigate(`/vendor/home/my-jobs/${_id}`)
+						}}
+					>
+						{fontsLoaded && (
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextDark
+								]}
+							>
+								View
+							</Text>
+						)}
+					</TouchableOpacity>
+				)}
+				{pathname.includes("/user/") ? (
+					<TouchableOpacity
+						style={[
+							styles.actionButtonContainer,
+							styles.buttonDarkBlue
+						]}
+						onPress={() => {
+							router.navigate(`/user/home/my-jobs/${_id}`)
+						}}
+					>
+						{fontsLoaded && (
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextLight
+								]}
+							>
+								View Details
+							</Text>
+						)}
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity
+						style={[
+							styles.actionButtonContainer,
+							styles.buttonDarkBlue
+						]}
+					>
+						{fontsLoaded && (
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextLight
+								]}
+							>
+								Place a bid
+							</Text>
+						)}
+					</TouchableOpacity>
+				)}
 			</View>
 		</View>
 	)
@@ -204,17 +250,20 @@ const styles = StyleSheet.create({
 	statusTab: {
 		backgroundColor: "rgba(255, 107, 44, 0.1)"
 	},
-	viewDetailsButton: {
+	buttonDarkBlue: {
 		backgroundColor: theme.colors.primary
+	},
+	buttonLightBlue: {
+		backgroundColor: "rgba(47, 116, 250, 0.1)"
 	},
 	actionButtonsText: {
 		fontSize: 8.5,
 		fontFamily: "Roboto-Medium"
 	},
-	statusText: {
+	actionButtonsTextDark: {
 		color: theme.colors.secondary
 	},
-	viewDetailsText: {
+	actionButtonsTextLight: {
 		color: "white"
 	}
 })

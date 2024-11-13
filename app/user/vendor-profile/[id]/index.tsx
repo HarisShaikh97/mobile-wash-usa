@@ -28,10 +28,6 @@ export default function Page(): React.ReactElement | null {
 		router.navigate(`/user/chat/${id}`)
 	}, [router])
 
-	const handleAcceptOffer = useCallback(() => {
-		router.navigate(`/user/offer-accepted/${id}`)
-	}, [router])
-
 	const reviews: Review[] = [
 		{
 			vendor_id: "1",
@@ -111,20 +107,12 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
-			<View style={styles.horizontalWrapper}>
-				<FormButton
-					length="half"
-					theme="light"
-					title="Send Message"
-					onPress={handleSendMessage}
-				/>
-				<FormButton
-					length="half"
-					theme="dark"
-					title="Accept Offer"
-					onPress={handleAcceptOffer}
-				/>
-			</View>
+			<FormButton
+				length="half"
+				theme="dark"
+				title="Send Message"
+				onPress={handleSendMessage}
+			/>
 			<View style={styles.tabsWrapper}>
 				<TouchableOpacity
 					style={[
@@ -351,12 +339,6 @@ const styles = StyleSheet.create({
 		fontSize: 11.5,
 		fontFamily: "Montserrat-SemiBold",
 		color: theme.colors.secondary
-	},
-	horizontalWrapper: {
-		width: "85%",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
 	},
 	tabsWrapper: {
 		height: 60,

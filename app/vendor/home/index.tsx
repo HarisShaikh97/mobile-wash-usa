@@ -5,18 +5,25 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { Image } from "expo-image"
+import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
-import ServiceCard from "../../../components/service-card/ServiceCard"
-import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
-import { services, theme } from "../../../utils/constants"
-import { Service, Job } from "../../../utils/types"
+import Ratings from "../../../components/ratings/Ratings"
+import JobCard from "../../../components/job-card/JobCard"
+import { theme } from "../../../utils/constants"
+import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
 	const router = useRouter()
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
+		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
+		"Roboto-Bold": require("../../../assets/fonts/Roboto/Roboto Bold 700.ttf")
+	})
 
 	const jobs: Job[] = [
 		{
@@ -84,13 +91,6 @@ export default function Tab(): React.ReactElement | null {
 		}
 	]
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Bold": require("../../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
-
 	return (
 		<ScrollView
 			style={styles.scrollContainer}
@@ -110,7 +110,7 @@ export default function Tab(): React.ReactElement | null {
 							}}
 						>
 							<ProfileImageBox
-								source={require("../../../assets/images/profile.png")}
+								source={require("../../../assets/images/vendor-profile.png")}
 							/>
 						</TouchableOpacity>
 						<NotificationButton theme="light" />
@@ -118,80 +118,85 @@ export default function Tab(): React.ReactElement | null {
 					<View style={styles.welcomeTextWrapper}>
 						{fontsLoaded && (
 							<Text style={styles.welcomeHeadingText}>
-								Welcome, John
+								Welcome, Michael
 							</Text>
 						)}
 						{fontsLoaded && (
 							<Text style={styles.welcomeDescriptionText}>
-								Find top-rated service providers for your
-								vehicle, home, and business
+								Browse available jobs and offer your top- notch
+								services to customers in need.
 							</Text>
 						)}
 					</View>
-					<ScrollView
-						style={styles.servicesCardsScrollView}
-						horizontal
-						showsHorizontalScrollIndicator={false}
-					>
-						<View style={styles.servicesCardsScrollContainer}>
-							{services.map(
-								(
-									service: Service,
-									index: number
-								): React.ReactElement | null => {
-									return (
-										<ServiceCard
-											title={service.title}
-											image={service.image}
-											key={index}
-										/>
-									)
-								}
-							)}
-						</View>
-					</ScrollView>
-					<View style={styles.postJobSectionContainer}>
-						{fontsLoaded && (
-							<Text style={styles.jobTitleText}>Post A Job</Text>
-						)}
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.jobDescriptionText,
-									styles.postJobDescriptionText
-								]}
+					<View style={styles.statsSectionWrapper}>
+						<View style={styles.verticalWrapper}>
+							<ImageBackground
+								source={require("../../../assets/images/card-bg.png")}
+								style={styles.statsCardContainer}
+								contentFit="fill"
 							>
-								Quickly post a car wash or maintenance job for
-								vendors to apply to.
-							</Text>
-						)}
-						<TouchableOpacity
-							style={styles.postJobButtonContainer}
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
+								{fontsLoaded && (
+									<Text style={styles.statsCardTitleText}>
+										Total Earnings
+									</Text>
+								)}
+								{fontsLoaded && (
+									<Text style={styles.statsCardValueText}>
+										$ 450,750
+									</Text>
+								)}
+							</ImageBackground>
+							<ImageBackground
+								source={require("../../../assets/images/card-bg.png")}
+								style={styles.statsCardContainer}
+								contentFit="fill"
+							>
+								{fontsLoaded && (
+									<Text style={styles.statsCardTitleText}>
+										Jobs Completed
+									</Text>
+								)}
+								{fontsLoaded && (
+									<Text style={styles.statsCardValueText}>
+										+15
+									</Text>
+								)}
+							</ImageBackground>
+						</View>
+						<ImageBackground
+							source={require("../../../assets/images/card-bg.png")}
+							style={styles.statsCardContainer}
+							contentFit="fill"
 						>
 							{fontsLoaded && (
-								<Text style={styles.postJobButtonText}>
-									Post a New Job
+								<Text style={styles.statsCardTitleText}>
+									Overall Rating
 								</Text>
 							)}
-						</TouchableOpacity>
-					</View>
-					<View style={styles.myJobsSectionContainer}>
-						<View style={styles.myJobsHeaderContainer}>
 							{fontsLoaded && (
-								<Text style={styles.jobTitleText}>My Jobs</Text>
+								<Text style={styles.statsCardRatingValueText}>
+									4.5
+								</Text>
 							)}
-							<View style={styles.activeJobsTextContainer}>
+							<Ratings ratings={4.5} size={22.5} />
+							{fontsLoaded && (
+								<Text style={styles.statsCardDescriptionText}>
+									Base on 135 Reviews
+								</Text>
+							)}
+						</ImageBackground>
+					</View>
+					<View style={styles.availableJobsSectionContainer}>
+						<View style={styles.availableJobsHeaderContainer}>
+							<View style={styles.availableJobsTextContainer}>
 								{fontsLoaded && (
-									<Text style={styles.jobDescriptionText}>
-										Your Active Jobs
+									<Text style={styles.jobTitleText}>
+										Available Jobs
 									</Text>
 								)}
 								<TouchableOpacity
 									onPress={() => {
-										router.navigate("/user/home/my-jobs")
+										router.navigate("/vendor/home/my-jobs")
 									}}
 								>
 									{fontsLoaded && (
@@ -244,18 +249,18 @@ const styles = StyleSheet.create({
 	bodyContainer: {
 		width: "100%",
 		zIndex: 10,
-		flexDirection: "column"
+		flexDirection: "column",
+		paddingHorizontal: 25
 	},
 	headerContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		padding: 25
+		paddingVertical: 25
 	},
 	welcomeTextWrapper: {
 		width: "100%",
-		flexDirection: "column",
-		paddingHorizontal: 25
+		flexDirection: "column"
 	},
 	welcomeHeadingText: {
 		fontSize: 30,
@@ -266,63 +271,66 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		fontFamily: "Roboto-Regular",
 		color: "white",
-		width: 275
+		width: 300
 	},
-	servicesCardsScrollView: {
+	statsSectionWrapper: {
+		height: 175,
 		width: "100%",
-		marginVertical: 30
-	},
-	servicesCardsScrollContainer: {
 		flexDirection: "row",
-		alignItems: "center",
-		gap: 10,
-		paddingHorizontal: 25
+		gap: 7.5,
+		marginVertical: 15
 	},
-	postJobSectionContainer: {
+	verticalWrapper: {
+		flex: 1,
 		flexDirection: "column",
+		gap: 7.5
+	},
+	statsCardContainer: {
+		flex: 1,
+		flexDirection: "column",
+		backgroundColor: "white",
+		borderRadius: 17.5,
+		borderWidth: 1,
+		borderColor: "rgba(47, 116, 250, 0.2)",
 		alignItems: "center",
-		marginVertical: 20
+		justifyContent: "center",
+		gap: 5
 	},
-	jobTitleText: {
-		fontSize: 25,
-		fontFamily: "Montserrat-Bold",
-		color: theme.colors.secondary
-	},
-	jobDescriptionText: {
-		fontSize: 13.5,
+	statsCardTitleText: {
+		fontSize: 12.5,
 		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary
+		color: theme.colors.secondary,
+		lineHeight: 15
 	},
-	postJobDescriptionText: {
-		textAlign: "center",
-		width: 265
+	statsCardValueText: {
+		fontSize: 18.5,
+		fontFamily: "Roboto-Bold",
+		color: theme.colors.secondary,
+		lineHeight: 20
 	},
-	postJobButtonContainer: {
-		height: 50,
-		width: 175,
-		borderRadius: 10,
-		backgroundColor: theme.colors.primary,
-		marginTop: 15,
-		alignItems: "center",
-		justifyContent: "center"
+	statsCardRatingValueText: {
+		fontSize: 45,
+		fontFamily: "Roboto-Bold",
+		color: theme.colors.secondary,
+		lineHeight: 50
 	},
-	postJobButtonText: {
-		fontSize: 15,
-		fontFamily: "Roboto-Medium",
-		color: "white"
+	statsCardDescriptionText: {
+		fontSize: 11.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary,
+		lineHeight: 15
 	},
-	myJobsSectionContainer: {
+	availableJobsSectionContainer: {
 		width: "100%",
 		flexDirection: "column",
 		gap: 35,
-		paddingHorizontal: 25,
 		marginTop: 50,
 		marginBottom: 125
 	},
-	myJobsHeaderContainer: {
+	availableJobsHeaderContainer: {
 		flexDirection: "column"
 	},
-	activeJobsTextContainer: {
+	availableJobsTextContainer: {
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
@@ -338,5 +346,10 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center",
 		gap: 10
+	},
+	jobTitleText: {
+		fontSize: 25,
+		fontFamily: "Montserrat-Bold",
+		color: theme.colors.secondary
 	}
 })

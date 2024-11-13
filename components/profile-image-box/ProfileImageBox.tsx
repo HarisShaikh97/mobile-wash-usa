@@ -1,11 +1,17 @@
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, ImageSourcePropType } from "react-native"
 import { Image } from "expo-image"
 
-export default function ProfileImageBox(): React.ReactElement | null {
+interface ProfileImageBoxProps {
+	source: ImageSourcePropType
+}
+
+export default function ProfileImageBox({
+	source
+}: ProfileImageBoxProps): React.ReactElement | null {
 	return (
 		<View style={styles.profileImageContainer}>
 			<Image
-				source={require("../../assets/images/profile.png")}
+				source={source}
 				style={styles.profileImage}
 				contentFit="cover"
 			/>

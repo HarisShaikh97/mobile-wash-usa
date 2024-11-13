@@ -33,7 +33,11 @@ export default function NotificationCard({
 				styles.container,
 				{
 					backgroundColor:
-						theme === "dark" ? "rgba(47, 116, 250, 0.1)" : "white"
+						theme === "dark" ? "rgba(47, 116, 250, 0.1)" : "white",
+					borderColor:
+						theme === "dark"
+							? "transparent"
+							: "rgba(173, 173, 173, 0.1)"
 				}
 			]}
 		>
@@ -117,6 +121,7 @@ const styles = StyleSheet.create({
 	container: {
 		flexGrow: 1,
 		borderRadius: 12.5,
+		borderWidth: 1,
 		padding: 15,
 		flexDirection: "row",
 		gap: 25

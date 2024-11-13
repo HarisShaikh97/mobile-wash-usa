@@ -33,7 +33,9 @@ export default function Tab(): React.ReactElement | null {
 			{fontsLoaded && <Text style={styles.headingText}>Account</Text>}
 			<View style={styles.profileTab}>
 				<View style={styles.profileIconWrapper}>
-					<ProfileImageBox />
+					<ProfileImageBox
+						source={require("../../../../assets/images/profile.png")}
+					/>
 					<View style={styles.profileTextWrapper}>
 						{fontsLoaded && (
 							<Text style={styles.usernameText}>John Doe</Text>
