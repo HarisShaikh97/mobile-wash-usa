@@ -89,3 +89,14 @@ export type Notification = {
 	description: string
 	time: string
 }
+
+export type SignUpData = {
+	full_name: string
+	email: string
+	phone_number: string
+	password: string
+	location: string
+	role: "customer" | "vendor"
+	businessInformation?: string
+	documents?: File[]
+}

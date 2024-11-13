@@ -2,10 +2,13 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
+import { SignUpData } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
@@ -26,9 +29,42 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
+	const { mutate } = useMutation({
+		mutationFn: (data: FormData) => signUp(data),
+		onSuccess: (data) => console.log(data),
+		onError: (err) => console.log(err)
+	})
+
 	const handleSubmit = useCallback((): void => {
-		router.navigate("/auth/sign-up/verification-code")
-	}, [router])
+		const formData = new FormData()
+		formData.append("fullName", fullName)
+		formData.append("email", email)
+		formData.append("phoneNumber", phoneNumber)
+		formData.append("password", password)
+		formData.append("location", location)
+		formData.append("businessInformation", businessInformation)
+
+		if (documents?.assets) {
+			documents.assets.forEach((doc) => {
+				const file = new Blob([doc.uri], {
+					type: "application/octet-stream"
+				})
+				formData.append("documents", file, doc.name || "document")
+			})
+		}
+
+		mutate(formData)
+		// router.navigate("/auth/sign-up/verification-code")
+	}, [
+		router,
+		fullName,
+		email,
+		phoneNumber,
+		password,
+		location,
+		businessInformation,
+		documents
+	])
 
 	const handleLogin = useCallback((): void => {
 		router.navigate("/auth/login")
