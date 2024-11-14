@@ -23,7 +23,7 @@ export default function NotificationButton({
 				}
 			]}
 			onPress={() => {
-				router.navigate("/user/notifications")
+				router.navigate("/notifications")
 			}}
 		>
 			<Image

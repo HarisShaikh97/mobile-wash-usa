@@ -1,18 +1,18 @@
 import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useLocalSearchParams } from "expo-router"
-import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
-import MessageCard from "../../../../components/message-card/MessageCard"
-import { theme } from "../../../../utils/constants"
-import { Message } from "../../../../utils/types"
+import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
+import MessageCard from "../../../components/message-card/MessageCard"
+import { theme } from "../../../utils/constants"
+import { Message } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Bold": require("../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Bold": require("../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
+		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const messages: Message[] = [

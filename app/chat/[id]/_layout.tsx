@@ -12,16 +12,16 @@ import { Image } from "expo-image"
 import { Slot } from "expo-router"
 import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
-import BackButton from "../../../../components/back-button/BackButton"
-import ChatInputField from "../../../../components/chat-input-field/ChatInputField"
-import { theme } from "../../../../utils/constants"
+import BackButton from "../../../components/back-button/BackButton"
+import ChatInputField from "../../../components/chat-input-field/ChatInputField"
+import { theme } from "../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	const [message, setMessage] = useState<string>("")
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
+		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const handleSubmit = useCallback(() => {}, [])
@@ -41,7 +41,7 @@ export default function Layout(): React.ReactElement | null {
 						/>
 						<View style={styles.profileImageContainer}>
 							<Image
-								source={require("../../../../assets/images/vendor-profile.png")}
+								source={require("../../../assets/images/vendor-profile.png")}
 								style={styles.profileImage}
 								contentFit="cover"
 							/>
