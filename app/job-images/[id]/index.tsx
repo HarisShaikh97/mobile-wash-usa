@@ -3,8 +3,8 @@ import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useLocalSearchParams } from "expo-router"
 import AntDesign from "@expo/vector-icons/AntDesign"
-import BackButton from "../../../../components/back-button/BackButton"
-import { backgroundImages } from "../../../../utils/constants"
+import BackButton from "../../../components/back-button/BackButton"
+import { backgroundImages } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
