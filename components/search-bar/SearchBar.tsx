@@ -40,6 +40,7 @@ export default function SearchBar({
 						setOpenFilterModal(true)
 					}}
 				>
+					<View style={styles.activeMarker} />
 					<Image
 						source={require("../../assets/icons/filter.svg")}
 						style={styles.filterIcon}
@@ -81,10 +82,21 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: theme.colors.primary,
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
+		position: "relative"
 	},
 	filterIcon: {
 		height: 30,
 		width: 30
+	},
+	activeMarker: {
+		height: 10,
+		width: 10,
+		borderRadius: 5,
+		backgroundColor: "red",
+		position: "absolute",
+		top: -0.5,
+		right: -0.5,
+		zIndex: 10
 	}
 })
