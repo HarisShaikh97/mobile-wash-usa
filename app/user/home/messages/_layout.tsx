@@ -38,6 +38,7 @@ export default function Layout(): React.ReactElement | null {
 						onChangeText={setSearchValue}
 						placeholder="Search"
 						color="#CACACA"
+						filterEnabled={false}
 					/>
 				</View>
 				<View style={styles.chatsCard}>

@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native"
-import { ImageBackground } from "expo-image"
-import { useRouter } from "expo-router"
+import { ImageBackground, Image } from "expo-image"
+import { useRouter, usePathname } from "expo-router"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import NavItem from "../nav-item/NavItem"
@@ -13,6 +13,8 @@ export default function BottomNav({
 	insets
 }: BottomTabBarProps): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
+
 	return (
 		<ImageBackground
 			source={require("../../assets/images/bottom-nav.png")}
@@ -22,10 +24,20 @@ export default function BottomNav({
 			<TouchableOpacity
 				style={styles.addButtonContainer}
 				onPress={() => {
-					router.navigate("/user/add-job")
+					if (pathname.includes("/user/")) {
+						router.navigate("/user/add-job")
+					}
 				}}
 			>
-				<AntDesign name="plus" size={27.5} color="white" />
+				{pathname.includes("/user/") ? (
+					<AntDesign name="plus" size={27.5} color="white" />
+				) : (
+					<Image
+						source={require("../../assets/icons/search-job.svg")}
+						style={styles.searchJobIcon}
+						contentFit="contain"
+					/>
+				)}
 			</TouchableOpacity>
 			<View style={styles.navItemsWrapper}>
 				{state.routes.map((route, index) => (
@@ -74,5 +86,9 @@ const styles = StyleSheet.create({
 		alignItems: "flex-end",
 		justifyContent: "space-evenly",
 		marginBottom: 15
+	},
+	searchJobIcon: {
+		height: 27.5,
+		width: 27.5
 	}
 })

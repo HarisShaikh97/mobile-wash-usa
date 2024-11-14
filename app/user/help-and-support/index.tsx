@@ -106,6 +106,7 @@ export default function Page(): React.ReactElement | null {
 								color="#CACACA"
 								value={searchValue}
 								onChangeText={setSearchValue}
+								filterEnabled={false}
 							/>
 						</View>
 						<View style={styles.customerVendorTabWrapper}>

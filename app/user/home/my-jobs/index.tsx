@@ -9,6 +9,13 @@ import { theme } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	const [searchValue, setSearchValue] = useState<string>("")
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
+	})
+
 	const jobs: Job[] = [
 		{
 			_id: "1",
@@ -96,13 +103,6 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
-	const [searchValue, setSearchValue] = useState<string>("")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<ScrollView
 			style={styles.scrollView}
@@ -133,6 +133,7 @@ export default function Page(): React.ReactElement | null {
 						color="#CACACA"
 						value={searchValue}
 						onChangeText={setSearchValue}
+						filterEnabled={false}
 					/>
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job: Job): React.ReactElement | null => {
