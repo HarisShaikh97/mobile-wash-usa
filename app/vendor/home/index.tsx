@@ -106,7 +106,7 @@ export default function Tab(): React.ReactElement | null {
 					<View style={styles.headerContainer}>
 						<TouchableOpacity
 							onPress={() => {
-								router.navigate("/user/home/profile")
+								router.navigate("/vendor/home/profile")
 							}}
 						>
 							<ProfileImageBox
