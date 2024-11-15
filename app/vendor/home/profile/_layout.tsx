@@ -1,10 +1,5 @@
-import { Slot } from "expo-router"
-import ProfileLayout from "../../../../components/profile-layout/ProfileLayout"
+import { Stack } from "expo-router"
 
 export default function Layout(): React.ReactElement | null {
-	return (
-		<ProfileLayout title="Profile">
-			<Slot />
-		</ProfileLayout>
-	)
+	return <Stack screenOptions={{ headerShown: false }} />
 }
