@@ -26,6 +26,8 @@ export default function BottomNav({
 				onPress={() => {
 					if (pathname.includes("/user/")) {
 						router.navigate("/user/add-job")
+					} else if (pathname !== "/vendor/available-jobs") {
+						router.navigate("/vendor/available-jobs")
 					}
 				}}
 			>

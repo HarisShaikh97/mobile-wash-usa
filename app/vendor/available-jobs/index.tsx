@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "column",
 		gap: 20,
-		marginBottom: 125
+		marginBottom: 25
 	},
 	titleContainer: {
 		flexDirection: "column",
