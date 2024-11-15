@@ -37,6 +37,7 @@ export type Job = {
 	}
 	budget: number
 	images: ImageSourcePropType[]
+	status: "incoming" | "posted" | "in-progress" | "active"
 }
 
 export type FAQ = {

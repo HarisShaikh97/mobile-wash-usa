@@ -38,7 +38,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "in-progress"
 		},
 		{
 			_id: "2",
@@ -59,7 +60,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "in-progress"
 		},
 		{
 			_id: "3",
@@ -80,7 +82,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "in-progress"
 		}
 	]
 
@@ -212,6 +215,7 @@ export default function Tab(): React.ReactElement | null {
 										date={job.date}
 										address={job.address}
 										budget={job.budget}
+										status={job.status}
 										key={job._id}
 									/>
 								)

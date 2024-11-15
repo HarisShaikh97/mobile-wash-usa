@@ -1,19 +1,20 @@
 import { useState } from "react"
 import { View, ScrollView, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
-import BackButton from "../../../../components/back-button/BackButton"
-import SearchBar from "../../../../components/search-bar/SearchBar"
-import JobCard from "../../../../components/job-card/JobCard"
-import NotificationButton from "../../../../components/notification-button/NotificationButton"
-import { theme } from "../../../../utils/constants"
-import { Job } from "../../../../utils/types"
+import BackButton from "../../../components/back-button/BackButton"
+import SearchBar from "../../../components/search-bar/SearchBar"
+import JobCard from "../../../components/job-card/JobCard"
+import NotificationButton from "../../../components/notification-button/NotificationButton"
+import { theme } from "../../../utils/constants"
+import { Job } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const [searchValue, setSearchValue] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const jobs: Job[] = [
@@ -32,12 +33,12 @@ export default function Page(): React.ReactElement | null {
 			},
 			budget: 500,
 			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
+				require("../../../assets/images/background1.png"),
+				require("../../../assets/images/background2.png"),
+				require("../../../assets/images/background3.png"),
+				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		},
 		{
 			_id: "2",
@@ -54,12 +55,12 @@ export default function Page(): React.ReactElement | null {
 			},
 			budget: 500,
 			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
+				require("../../../assets/images/background1.png"),
+				require("../../../assets/images/background2.png"),
+				require("../../../assets/images/background3.png"),
+				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		},
 		{
 			_id: "3",
@@ -76,12 +77,12 @@ export default function Page(): React.ReactElement | null {
 			},
 			budget: 500,
 			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
+				require("../../../assets/images/background1.png"),
+				require("../../../assets/images/background2.png"),
+				require("../../../assets/images/background3.png"),
+				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		},
 		{
 			_id: "4",
@@ -98,12 +99,12 @@ export default function Page(): React.ReactElement | null {
 			},
 			budget: 500,
 			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
+				require("../../../assets/images/background1.png"),
+				require("../../../assets/images/background2.png"),
+				require("../../../assets/images/background3.png"),
+				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		}
 	]
 
@@ -124,20 +125,21 @@ export default function Page(): React.ReactElement | null {
 				<View style={styles.bodyContainer}>
 					<View style={styles.titleContainer}>
 						{fontsLoaded && (
-							<Text style={styles.titleText}>My Jobs</Text>
+							<Text style={styles.titleText}>Available Jobs</Text>
 						)}
 						{fontsLoaded && (
 							<Text style={styles.descriptionText}>
-								Your Active Jobs
+								Browse and apply nearby
 							</Text>
 						)}
 					</View>
 					<SearchBar
 						placeholder="Search"
-						color="#CACACA"
+						color="#F5F5F5"
 						value={searchValue}
 						onChangeText={setSearchValue}
-						filterEnabled={false}
+						filterEnabled
+						setOpenFilterModal={setOpenModal}
 					/>
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job: Job): React.ReactElement | null => {
@@ -184,7 +186,8 @@ const styles = StyleSheet.create({
 		marginBottom: 125
 	},
 	titleContainer: {
-		flexDirection: "column"
+		flexDirection: "column",
+		alignItems: "center"
 	},
 	titleText: {
 		fontSize: 25,

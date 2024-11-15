@@ -1,5 +1,11 @@
 import { useState } from "react"
-import { View, ScrollView, Text, StyleSheet } from "react-native"
+import {
+	View,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	StyleSheet
+} from "react-native"
 import { useFonts } from "expo-font"
 import BackButton from "../../../../components/back-button/BackButton"
 import SearchBar from "../../../../components/search-bar/SearchBar"
@@ -8,14 +14,10 @@ import NotificationButton from "../../../../components/notification-button/Notif
 import { theme } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
-export default function Page(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+type Tab = "Active" | "Pending" | "Completed"
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
+export default function Page(): React.ReactElement | null {
+	const tabs: Tab[] = ["Active", "Pending", "Completed"]
 
 	const jobs: Job[] = [
 		{
@@ -37,7 +39,8 @@ export default function Page(): React.ReactElement | null {
 				require("../../../../assets/images/background2.png"),
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		},
 		{
 			_id: "2",
@@ -58,7 +61,8 @@ export default function Page(): React.ReactElement | null {
 				require("../../../../assets/images/background2.png"),
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		},
 		{
 			_id: "3",
@@ -79,7 +83,8 @@ export default function Page(): React.ReactElement | null {
 				require("../../../../assets/images/background2.png"),
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		},
 		{
 			_id: "4",
@@ -100,9 +105,19 @@ export default function Page(): React.ReactElement | null {
 				require("../../../../assets/images/background2.png"),
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		}
 	]
+
+	const [searchValue, setSearchValue] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [selectedTab, setSelectedTab] = useState<Tab>(tabs[0])
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
+	})
 
 	return (
 		<ScrollView
@@ -119,16 +134,9 @@ export default function Page(): React.ReactElement | null {
 					<NotificationButton theme="dark" />
 				</View>
 				<View style={styles.bodyContainer}>
-					<View style={styles.titleContainer}>
-						{fontsLoaded && (
-							<Text style={styles.titleText}>Available Jobs</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.descriptionText}>
-								Browse and apply nearby
-							</Text>
-						)}
-					</View>
+					{fontsLoaded && (
+						<Text style={styles.titleText}>My Jobs</Text>
+					)}
 					<SearchBar
 						placeholder="Search"
 						color="#F5F5F5"
@@ -137,6 +145,42 @@ export default function Page(): React.ReactElement | null {
 						filterEnabled
 						setOpenFilterModal={setOpenModal}
 					/>
+					<View style={styles.tabsWrapper}>
+						{tabs.map(
+							(
+								tab: Tab,
+								index: number
+							): React.ReactElement | null => {
+								return (
+									<TouchableOpacity
+										style={[
+											styles.tabContainer,
+											tab === selectedTab
+												? styles.selectedTab
+												: styles.unSelectedTab
+										]}
+										onPress={() => {
+											setSelectedTab(tab)
+										}}
+										key={index}
+									>
+										{fontsLoaded && (
+											<Text
+												style={[
+													styles.tabText,
+													tab === selectedTab
+														? styles.selectedTabText
+														: styles.unSelectedTabText
+												]}
+											>
+												{tab}
+											</Text>
+										)}
+									</TouchableOpacity>
+								)
+							}
+						)}
+					</View>
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job: Job): React.ReactElement | null => {
 							return (
@@ -147,6 +191,7 @@ export default function Page(): React.ReactElement | null {
 									date={job.date}
 									address={job.address}
 									budget={job.budget}
+									status={job.status}
 									key={job._id}
 								/>
 							)
@@ -180,18 +225,9 @@ const styles = StyleSheet.create({
 		gap: 20,
 		marginBottom: 125
 	},
-	titleContainer: {
-		flexDirection: "column",
-		alignItems: "center"
-	},
 	titleText: {
 		fontSize: 25,
 		fontFamily: "Montserrat-Bold",
-		color: theme.colors.secondary
-	},
-	descriptionText: {
-		fontSize: 13.5,
-		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
 	},
 	jobCardsContainer: {
@@ -200,5 +236,36 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		gap: 10,
 		marginTop: 10
+	},
+	tabsWrapper: {
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between"
+	},
+	tabContainer: {
+		height: 45,
+		width: "32%",
+		borderRadius: 8.5,
+		borderWidth: 1,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	selectedTab: {
+		backgroundColor: theme.colors.primary,
+		borderColor: "transparent"
+	},
+	unSelectedTab: {
+		borderColor: theme.colors.primary
+	},
+	tabText: {
+		fontSize: 11.5,
+		fontFamily: "Roboto-Medium"
+	},
+	selectedTabText: {
+		color: "white"
+	},
+	unSelectedTabText: {
+		color: theme.colors.primary
 	}
 })

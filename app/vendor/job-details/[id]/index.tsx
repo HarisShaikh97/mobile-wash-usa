@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
 import { useRouter, useLocalSearchParams } from "expo-router"
-import HorizontalSeparator from "../../../../../components/horizontal-separator/HorizontalSeparator"
-import { theme } from "../../../../../utils/constants"
+import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
+import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
@@ -12,11 +12,11 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Bold": require("../../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
+		"Roboto-Bold": require("../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
+		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
+		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const handleViewImage = useCallback((): void => {
@@ -38,7 +38,7 @@ export default function Page(): React.ReactElement | null {
 				<View style={styles.jobDateTimeWrapper}>
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
-							source={require("../../../../../assets/icons/user.svg")}
+							source={require("../../../../assets/icons/user.svg")}
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
@@ -51,7 +51,7 @@ export default function Page(): React.ReactElement | null {
 					<View style={styles.circularSeparator} />
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
-							source={require("../../../../../assets/icons/date.svg")}
+							source={require("../../../../assets/icons/date.svg")}
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
@@ -64,7 +64,7 @@ export default function Page(): React.ReactElement | null {
 					<View style={styles.circularSeparator} />
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
-							source={require("../../../../../assets/icons/time.svg")}
+							source={require("../../../../assets/icons/time.svg")}
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
@@ -117,7 +117,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					)}
 					<Image
-						source={require("../../../../../assets/images/map.png")}
+						source={require("../../../../assets/images/map.png")}
 						style={styles.mapView}
 						contentFit="cover"
 					/>
@@ -133,7 +133,7 @@ export default function Page(): React.ReactElement | null {
 						onPress={handleViewImage}
 					>
 						<Image
-							source={require("../../../../../assets/images/background1.png")}
+							source={require("../../../../assets/images/background1.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
@@ -143,7 +143,7 @@ export default function Page(): React.ReactElement | null {
 						onPress={handleViewImage}
 					>
 						<Image
-							source={require("../../../../../assets/images/background2.png")}
+							source={require("../../../../assets/images/background2.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
@@ -153,7 +153,7 @@ export default function Page(): React.ReactElement | null {
 						onPress={handleViewImage}
 					>
 						<Image
-							source={require("../../../../../assets/images/background3.png")}
+							source={require("../../../../assets/images/background3.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						/>
@@ -163,7 +163,7 @@ export default function Page(): React.ReactElement | null {
 						onPress={handleViewImage}
 					>
 						<ImageBackground
-							source={require("../../../../../assets/images/background4.png")}
+							source={require("../../../../assets/images/background4.png")}
 							style={styles.galleryImage}
 							contentFit="cover"
 						>

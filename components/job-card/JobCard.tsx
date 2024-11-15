@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter, usePathname } from "expo-router"
+import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
@@ -12,6 +12,7 @@ interface JobCardProps {
 	date: Job["date"]
 	address: Job["address"]
 	budget: Job["budget"]
+	status: Job["status"]
 }
 
 export default function JobCard({
@@ -20,10 +21,10 @@ export default function JobCard({
 	description,
 	date,
 	address,
-	budget
+	budget,
+	status
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
-	const pathname = usePathname()
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -91,7 +92,7 @@ export default function JobCard({
 				</View>
 			</View>
 			<View style={styles.actionButtonsWrapper}>
-				{pathname.includes("/user/") ? (
+				{status === "in-progress" ? (
 					<View
 						style={[styles.actionButtonContainer, styles.statusTab]}
 					>
@@ -107,28 +108,30 @@ export default function JobCard({
 						)}
 					</View>
 				) : (
-					<TouchableOpacity
-						style={[
-							styles.actionButtonContainer,
-							styles.buttonLightBlue
-						]}
-						onPress={() => {
-							router.navigate(`/vendor/home/my-jobs/${_id}`)
-						}}
-					>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.actionButtonsText,
-									styles.actionButtonsTextDark
-								]}
-							>
-								View
-							</Text>
-						)}
-					</TouchableOpacity>
+					status === "incoming" && (
+						<TouchableOpacity
+							style={[
+								styles.actionButtonContainer,
+								styles.buttonLightBlue
+							]}
+							onPress={() => {
+								router.navigate(`/vendor/job-details/${_id}`)
+							}}
+						>
+							{fontsLoaded && (
+								<Text
+									style={[
+										styles.actionButtonsText,
+										styles.actionButtonsTextDark
+									]}
+								>
+									View
+								</Text>
+							)}
+						</TouchableOpacity>
+					)
 				)}
-				{pathname.includes("/user/") ? (
+				{status === "in-progress" ? (
 					<TouchableOpacity
 						style={[
 							styles.actionButtonContainer,
@@ -150,23 +153,25 @@ export default function JobCard({
 						)}
 					</TouchableOpacity>
 				) : (
-					<TouchableOpacity
-						style={[
-							styles.actionButtonContainer,
-							styles.buttonDarkBlue
-						]}
-					>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.actionButtonsText,
-									styles.actionButtonsTextLight
-								]}
-							>
-								Place a bid
-							</Text>
-						)}
-					</TouchableOpacity>
+					status === "incoming" && (
+						<TouchableOpacity
+							style={[
+								styles.actionButtonContainer,
+								styles.buttonDarkBlue
+							]}
+						>
+							{fontsLoaded && (
+								<Text
+									style={[
+										styles.actionButtonsText,
+										styles.actionButtonsTextLight
+									]}
+								>
+									Place a bid
+								</Text>
+							)}
+						</TouchableOpacity>
+					)
 				)}
 			</View>
 		</View>

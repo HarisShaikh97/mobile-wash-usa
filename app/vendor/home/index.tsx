@@ -45,7 +45,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		},
 		{
 			_id: "2",
@@ -66,7 +67,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		},
 		{
 			_id: "3",
@@ -87,7 +89,8 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background2.png"),
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
-			]
+			],
+			status: "incoming"
 		}
 	]
 
@@ -196,7 +199,9 @@ export default function Tab(): React.ReactElement | null {
 								)}
 								<TouchableOpacity
 									onPress={() => {
-										router.navigate("/vendor/home/my-jobs")
+										router.navigate(
+											"/vendor/available-jobs"
+										)
 									}}
 								>
 									{fontsLoaded && (
@@ -217,6 +222,7 @@ export default function Tab(): React.ReactElement | null {
 										date={job.date}
 										address={job.address}
 										budget={job.budget}
+										status={job.status}
 										key={job._id}
 									/>
 								)

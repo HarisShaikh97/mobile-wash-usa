@@ -2,15 +2,16 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
-import { Offer } from "../../utils/types"
 
-interface PlaceBidPopupProps {
-	job_id: Offer["job_id"]
+interface JobActionPopupProps {
+	title: string
+	onPress: () => void
 }
 
-export default function PlaceBidPopup({
-	job_id
-}: PlaceBidPopupProps): React.ReactElement | null {
+export default function JobActionPopup({
+	title,
+	onPress
+}: JobActionPopupProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
@@ -18,11 +19,9 @@ export default function PlaceBidPopup({
 	})
 
 	return (
-		<TouchableOpacity style={styles.wrapper}>
+		<TouchableOpacity style={styles.wrapper} onPress={onPress}>
 			<View style={styles.container}>
-				{fontsLoaded && (
-					<Text style={styles.titleText}>Place a Bid</Text>
-				)}
+				{fontsLoaded && <Text style={styles.titleText}>{title}</Text>}
 			</View>
 		</TouchableOpacity>
 	)
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: "rgba(47, 116, 250, 0.25)",
 		position: "absolute",
-		bottom: 125,
+		bottom: 115,
 		left: "50%",
 		transform: [{ translateX: -112.5 }],
 		zIndex: 50,
