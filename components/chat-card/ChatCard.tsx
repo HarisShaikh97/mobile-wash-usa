@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Chat } from "../../utils/types"
 
@@ -25,6 +25,7 @@ export default function ChatCard({
 	online
 }: ChatCardProps): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -36,7 +37,11 @@ export default function ChatCard({
 		<TouchableOpacity
 			style={styles.container}
 			onPress={() => {
-				router.navigate(`/chat/${_id}`)
+				router.navigate(
+					pathname.includes("/user/")
+						? `/user/chat/${_id}`
+						: `/vendor/chat/${_id}`
+				)
 			}}
 		>
 			<View style={styles.horizontalWrapper}>

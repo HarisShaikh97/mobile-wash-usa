@@ -1,6 +1,6 @@
 import { TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 
 interface NotificationButtonProps {
 	theme: "light" | "dark"
@@ -10,6 +10,7 @@ export default function NotificationButton({
 	theme
 }: NotificationButtonProps): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	return (
 		<TouchableOpacity
@@ -23,7 +24,11 @@ export default function NotificationButton({
 				}
 			]}
 			onPress={() => {
-				router.navigate("/notifications")
+				router.navigate(
+					pathname.includes("/user/")
+						? "/user/notifications"
+						: "/vendor/notifications"
+				)
 			}}
 		>
 			<Image
