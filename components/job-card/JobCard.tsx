@@ -115,7 +115,7 @@ export default function JobCard({
 								styles.buttonLightBlue
 							]}
 							onPress={() => {
-								router.navigate(`/vendor/job-details/${_id}`)
+								router.navigate(`/vendor/home/my-jobs/${_id}`)
 							}}
 						>
 							{fontsLoaded && (

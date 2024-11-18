@@ -1,16 +1,22 @@
 import { ScrollView, View, StyleSheet } from "react-native"
-import { Slot, useLocalSearchParams } from "expo-router"
-import BackButton from "../../../../components/back-button/BackButton"
-import DeleteButton from "../../../../components/delete-button/DeleteButton"
-import JobActionPopup from "../../../../components/job-action-popup/JobActionPopup"
-import { theme } from "../../../../utils/constants"
+import { Slot, useLocalSearchParams, useRouter } from "expo-router"
+import BackButton from "../../../../../components/back-button/BackButton"
+import DeleteButton from "../../../../../components/delete-button/DeleteButton"
+import JobActionPopup from "../../../../../components/job-action-popup/JobActionPopup"
+import { theme } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
+	const router = useRouter()
 
 	return (
 		<View style={styles.wrapper}>
-			<JobActionPopup title="Place a Bid" onPress={() => {}} />
+			<JobActionPopup
+				title="Mark As Completed"
+				onPress={() => {
+					router.navigate("/vendor/job-completion-verification")
+				}}
+			/>
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flexDirection: "column",
-		paddingBottom: 25
+		paddingBottom: 200
 	},
 	headerContainer: {
 		width: "100%",
