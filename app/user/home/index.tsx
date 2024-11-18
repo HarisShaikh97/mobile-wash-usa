@@ -216,6 +216,7 @@ export default function Tab(): React.ReactElement | null {
 										address={job.address}
 										budget={job.budget}
 										status={job.status}
+										showActionButtons
 										key={job._id}
 									/>
 								)

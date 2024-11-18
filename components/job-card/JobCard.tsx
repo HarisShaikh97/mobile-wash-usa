@@ -13,6 +13,7 @@ interface JobCardProps {
 	address: Job["address"]
 	budget: Job["budget"]
 	status: Job["status"]
+	showActionButtons: boolean
 }
 
 export default function JobCard({
@@ -22,7 +23,8 @@ export default function JobCard({
 	date,
 	address,
 	budget,
-	status
+	status,
+	showActionButtons
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -77,6 +79,7 @@ export default function JobCard({
 							</Text>
 						)}
 					</View>
+					<View style={styles.circularSeparator} />
 					<View style={styles.dateAndLocationTextWrapper}>
 						<Image
 							source={require("../../assets/icons/location.svg")}
@@ -91,32 +94,14 @@ export default function JobCard({
 					</View>
 				</View>
 			</View>
-			<View style={styles.actionButtonsWrapper}>
-				{status === "in-progress" ? (
-					<View
-						style={[styles.actionButtonContainer, styles.statusTab]}
-					>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.actionButtonsText,
-									styles.actionButtonsTextDark
-								]}
-							>
-								In Progress
-							</Text>
-						)}
-					</View>
-				) : (
-					status === "incoming" && (
-						<TouchableOpacity
+			{showActionButtons && (
+				<View style={styles.actionButtonsWrapper}>
+					{status === "in-progress" ? (
+						<View
 							style={[
 								styles.actionButtonContainer,
-								styles.buttonLightBlue
+								styles.statusTab
 							]}
-							onPress={() => {
-								router.navigate(`/vendor/home/my-jobs/${_id}`)
-							}}
 						>
 							{fontsLoaded && (
 								<Text
@@ -125,40 +110,45 @@ export default function JobCard({
 										styles.actionButtonsTextDark
 									]}
 								>
-									View
+									In Progress
 								</Text>
 							)}
-						</TouchableOpacity>
-					)
-				)}
-				{status === "in-progress" ? (
-					<TouchableOpacity
-						style={[
-							styles.actionButtonContainer,
-							styles.buttonDarkBlue
-						]}
-						onPress={() => {
-							router.navigate(`/user/home/my-jobs/${_id}`)
-						}}
-					>
-						{fontsLoaded && (
-							<Text
+						</View>
+					) : (
+						status === "incoming" && (
+							<TouchableOpacity
 								style={[
-									styles.actionButtonsText,
-									styles.actionButtonsTextLight
+									styles.actionButtonContainer,
+									styles.buttonLightBlue
 								]}
+								onPress={() => {
+									router.navigate(
+										`/vendor/home/my-jobs/${_id}`
+									)
+								}}
 							>
-								View Details
-							</Text>
-						)}
-					</TouchableOpacity>
-				) : (
-					status === "incoming" && (
+								{fontsLoaded && (
+									<Text
+										style={[
+											styles.actionButtonsText,
+											styles.actionButtonsTextDark
+										]}
+									>
+										View
+									</Text>
+								)}
+							</TouchableOpacity>
+						)
+					)}
+					{status === "in-progress" ? (
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
 								styles.buttonDarkBlue
 							]}
+							onPress={() => {
+								router.navigate(`/user/home/my-jobs/${_id}`)
+							}}
 						>
 							{fontsLoaded && (
 								<Text
@@ -167,13 +157,33 @@ export default function JobCard({
 										styles.actionButtonsTextLight
 									]}
 								>
-									Place a bid
+									View Details
 								</Text>
 							)}
 						</TouchableOpacity>
-					)
-				)}
-			</View>
+					) : (
+						status === "incoming" && (
+							<TouchableOpacity
+								style={[
+									styles.actionButtonContainer,
+									styles.buttonDarkBlue
+								]}
+							>
+								{fontsLoaded && (
+									<Text
+										style={[
+											styles.actionButtonsText,
+											styles.actionButtonsTextLight
+										]}
+									>
+										Place a bid
+									</Text>
+								)}
+							</TouchableOpacity>
+						)
+					)}
+				</View>
+			)}
 		</View>
 	)
 }
@@ -216,6 +226,12 @@ const styles = StyleSheet.create({
 		gap: 7.5,
 		marginVertical: 12.5
 	},
+	circularSeparator: {
+		height: 3,
+		width: 3,
+		borderRadius: 1.5,
+		backgroundColor: theme.colors.primary
+	},
 	dateAndLocationTitleText: {
 		fontSize: 11.5,
 		fontFamily: "Roboto-Medium",
@@ -223,7 +239,7 @@ const styles = StyleSheet.create({
 	},
 	dateAndLocationDetailsContainer: {
 		flexDirection: "row",
-		gap: 15,
+		gap: 10,
 		alignItems: "center"
 	},
 	dateAndLocationTextWrapper: {
