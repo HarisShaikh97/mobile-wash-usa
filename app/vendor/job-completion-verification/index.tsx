@@ -1,0 +1,105 @@
+import { useCallback, useState } from "react"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { useFonts } from "expo-font"
+import FormButton from "../../../components/form-button/FormButton"
+import OTPInput from "../../../components/otp-input/OTPInput"
+import AccountVerificationSuccessfulModal from "../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
+import { theme } from "../../../utils/constants"
+
+export default function Page(): React.ReactElement | null {
+	const [OTP, setOTP] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
+	})
+
+	const handleSubmit = useCallback((): void => {
+		setOpenModal(true)
+	}, [])
+
+	return (
+		<View style={styles.bodyContainer}>
+			<AccountVerificationSuccessfulModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
+			{fontsLoaded && (
+				<Text style={styles.titleText}>
+					Job Completion Verification
+				</Text>
+			)}
+			{fontsLoaded && (
+				<Text
+					style={[
+						styles.descriptionText,
+						styles.descriptionTextLarge
+					]}
+				>
+					Please enter the OTP code provided by the customer to
+					confirm the completion of the job.
+				</Text>
+			)}
+			<View style={styles.formContainer}>
+				<OTPInput onChangeText={setOTP} />
+				<FormButton
+					length="full"
+					theme="dark"
+					title="Submit"
+					onPress={handleSubmit}
+				/>
+			</View>
+			{fontsLoaded && (
+				<Text
+					style={[
+						styles.descriptionText,
+						styles.descriptionTextSmall
+					]}
+				>
+					Once you enter the correct OTP, the job will be marked as
+					complete, and payment will be processed if applicable.
+				</Text>
+			)}
+		</View>
+	)
+}
+
+const styles = StyleSheet.create({
+	bodyContainer: {
+		flex: 1,
+		flexDirection: "column",
+		alignItems: "center",
+		paddingHorizontal: 25,
+		gap: 25
+	},
+	titleText: {
+		fontFamily: "Montserrat-Bold",
+		fontSize: 30,
+		color: theme.colors.secondary,
+		textAlign: "center",
+		width: 265,
+		lineHeight: 32.5
+	},
+	descriptionText: {
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary,
+		textAlign: "center",
+		lineHeight: 20
+	},
+	descriptionTextLarge: {
+		fontSize: 16.5,
+		width: 265
+	},
+	descriptionTextSmall: {
+		fontSize: 15,
+		width: 325
+	},
+	formContainer: {
+		width: "100%",
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 25,
+		paddingHorizontal: 20
+	}
+})

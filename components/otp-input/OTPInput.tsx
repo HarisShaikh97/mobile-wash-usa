@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 		marginTop: 15
 	},
 	pinCodeContainer: {
-		height: 45,
-		width: 45,
+		height: 50,
+		width: 50,
 		borderRadius: 12.5,
 		borderWidth: 1.5,
 		borderColor: "#E1E1E1",
