@@ -1,12 +1,16 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
+import AccountActionModal from "../../../components/account-action-modal/AccountActionModal"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
+
+	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [type, setType] = useState<"delete" | "deactivate">("delete")
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -14,12 +18,27 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
+	const handleDeleteAccount = useCallback(() => {
+		setType("delete")
+		setOpenModal(true)
+	}, [setType, setOpenModal])
+
+	const handleDeactivateAccount = useCallback(() => {
+		setType("deactivate")
+		setOpenModal(true)
+	}, [setType, setOpenModal])
+
 	const handleCancel = useCallback(() => {
 		router.back()
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			<AccountActionModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				type={type}
+			/>
 			{fontsLoaded && (
 				<Text style={styles.titleText}>Manage Your Account Status</Text>
 			)}
@@ -44,7 +63,10 @@ export default function Page(): React.ReactElement | null {
 							again.
 						</Text>
 					)}
-					<TouchableOpacity style={styles.accountActionButton}>
+					<TouchableOpacity
+						style={styles.accountActionButton}
+						onPress={handleDeactivateAccount}
+					>
 						{fontsLoaded && (
 							<Text style={styles.accountActionButtonText}>
 								Deactivate Account
@@ -63,7 +85,10 @@ export default function Page(): React.ReactElement | null {
 							be erased, and this action cannot be undone.
 						</Text>
 					)}
-					<TouchableOpacity style={styles.accountActionButton}>
+					<TouchableOpacity
+						style={styles.accountActionButton}
+						onPress={handleDeleteAccount}
+					>
 						{fontsLoaded && (
 							<Text style={styles.accountActionButtonText}>
 								Delete Account

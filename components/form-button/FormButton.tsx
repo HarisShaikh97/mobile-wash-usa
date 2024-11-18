@@ -4,7 +4,7 @@ import { theme } from "../../utils/constants"
 
 interface FormButtonProps {
 	length: "full" | "half"
-	theme: "light" | "dark" | "danger"
+	theme: "light" | "dark" | "danger" | "black"
 	title: string
 	onPress: () => void
 }
@@ -30,7 +30,9 @@ export default function FormButton({
 					? styles.buttonDarkTheme
 					: theme === "light"
 					? styles.buttonLightTheme
-					: theme === "danger" && styles.buttonDangerTheme
+					: theme === "danger"
+					? styles.buttonDangerTheme
+					: theme === "black" && styles.buttonBlackTheme
 			]}
 			onPress={onPress}
 		>
@@ -44,7 +46,9 @@ export default function FormButton({
 							? styles.buttonDarkThemeText
 							: theme === "light"
 							? styles.buttonLightThemeText
-							: theme === "danger" && styles.buttonDangerThemeText
+							: theme === "danger"
+							? styles.buttonDangerThemeText
+							: theme === "black" && styles.buttonDarkThemeText
 					]}
 				>
 					{title}
@@ -80,6 +84,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		borderWidth: 1,
 		borderColor: "#DC3545"
+	},
+	buttonBlackTheme: {
+		backgroundColor: "black"
 	},
 	buttonText: {
 		fontFamily: "Roboto-Medium",
