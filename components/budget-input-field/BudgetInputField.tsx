@@ -1,5 +1,11 @@
 import { useCallback } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	StyleSheet
+} from "react-native"
 import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import { theme } from "../../utils/constants"
@@ -14,7 +20,6 @@ export default function BudgetInputField({
 	setValue
 }: BudgetInputFieldProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
 		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
 	})
 
@@ -27,50 +32,44 @@ export default function BudgetInputField({
 	}, [setValue])
 
 	return (
-		<View style={styles.inputFieldWrapper}>
+		<View style={styles.inputFieldContainer}>
+			<TouchableOpacity
+				style={styles.updateButtonContainer}
+				onPress={handleDecrement}
+			>
+				<Entypo name="minus" size={15} color={theme.colors.primary} />
+			</TouchableOpacity>
 			{fontsLoaded && (
-				<Text style={styles.inputFieldTitleText}>Budget</Text>
+				<View style={styles.valueTextWrapper}>
+					<Text style={styles.valueText}>$</Text>
+					<TextInput
+						style={styles.valueText}
+						value={value.toString()}
+						onChangeText={(text) => {
+							if (text === "") {
+								setValue(0)
+							} else {
+								const numericValue = parseFloat(text)
+								if (!isNaN(numericValue)) {
+									setValue(numericValue)
+								}
+							}
+						}}
+						keyboardType="numeric"
+					/>
+				</View>
 			)}
-			<View style={styles.inputFieldContainer}>
-				<TouchableOpacity
-					style={styles.updateButtonContainer}
-					onPress={handleDecrement}
-				>
-					<Entypo
-						name="minus"
-						size={15}
-						color={theme.colors.primary}
-					/>
-				</TouchableOpacity>
-				{fontsLoaded && <Text style={styles.valueText}>${value}</Text>}
-				<TouchableOpacity
-					style={styles.updateButtonContainer}
-					onPress={handleIncrement}
-				>
-					<Entypo
-						name="plus"
-						size={15}
-						color={theme.colors.primary}
-					/>
-				</TouchableOpacity>
-			</View>
+			<TouchableOpacity
+				style={styles.updateButtonContainer}
+				onPress={handleIncrement}
+			>
+				<Entypo name="plus" size={15} color={theme.colors.primary} />
+			</TouchableOpacity>
 		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	inputFieldWrapper: {
-		width: "100%",
-		flexDirection: "column",
-		gap: 7.5,
-		zIndex: 50
-	},
-	inputFieldTitleText: {
-		fontFamily: "Roboto-Medium",
-		fontSize: 12.5,
-		color: theme.colors.secondary,
-		marginLeft: 7.5
-	},
 	inputFieldContainer: {
 		height: 100,
 		width: "100%",
@@ -90,7 +89,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center"
 	},
+	valueTextWrapper: {
+		flexDirection: "row",
+		alignItems: "center"
+	},
 	valueText: {
+		flexGrow: 0,
 		fontSize: 30,
 		fontFamily: "Roboto-Bold",
 		color: theme.colors.primary

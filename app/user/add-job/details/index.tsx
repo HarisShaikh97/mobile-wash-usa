@@ -86,7 +86,17 @@ export default function Page(): React.ReactElement | null {
 						</View>
 					</ImageBackground>
 					<View style={styles.bodyContainer}>
-						<BudgetInputField value={budget} setValue={setBudget} />
+						<View style={styles.inputFieldWrapper}>
+							{fontsLoaded && (
+								<Text style={styles.inputFieldTitleText}>
+									Budget
+								</Text>
+							)}
+							<BudgetInputField
+								value={budget}
+								setValue={setBudget}
+							/>
+						</View>
 						<View style={styles.inputFieldWrapper}>
 							{fontsLoaded && (
 								<Text style={styles.inputFieldTitleText}>
