@@ -101,3 +101,5 @@ export type SignUpData = {
 	businessInformation?: string
 	documents?: File[]
 }
+
+export type PaymentOptions = "card" | "paypal" | "pod"

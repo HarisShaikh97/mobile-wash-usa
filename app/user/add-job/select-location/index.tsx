@@ -1,5 +1,5 @@
-import { View, TouchableOpacity, StyleSheet } from "react-native"
-import { ImageBackground, Image } from "expo-image"
+import { View, StyleSheet } from "react-native"
+import { ImageBackground } from "expo-image"
 import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Page(): React.ReactElement | null {
@@ -16,13 +16,6 @@ export default function Page(): React.ReactElement | null {
 					borderColor="#F5F5F5"
 				/>
 			</View>
-			<TouchableOpacity style={styles.locationButton}>
-				<Image
-					source={require("../../../../assets/icons/location-target.svg")}
-					style={styles.locationButtonImage}
-					contentFit="contain"
-				/>
-			</TouchableOpacity>
 		</ImageBackground>
 	)
 }
@@ -30,26 +23,10 @@ export default function Page(): React.ReactElement | null {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: "column",
-		position: "relative"
+		flexDirection: "column"
 	},
 	headerContainer: {
 		paddingHorizontal: 20,
 		paddingVertical: 35
-	},
-	locationButton: {
-		height: 35,
-		width: 35,
-		backgroundColor: "white",
-		borderRadius: 5,
-		position: "absolute",
-		right: 15,
-		bottom: 250,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	locationButtonImage: {
-		height: 22.5,
-		width: 22.5
 	}
 })

@@ -22,7 +22,7 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSendMessage = useCallback(() => {
+	const handleEditProfile = useCallback(() => {
 		// router.navigate(`/user/chat/${id}`)
 	}, [router])
 
@@ -109,7 +109,7 @@ export default function Page(): React.ReactElement | null {
 				length="half"
 				theme="dark"
 				title="Edit Profile"
-				onPress={handleSendMessage}
+				onPress={handleEditProfile}
 			/>
 			<View style={styles.tabsWrapper}>
 				<TouchableOpacity

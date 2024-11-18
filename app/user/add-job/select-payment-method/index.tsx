@@ -6,9 +6,10 @@ import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import PaymentInformationModal from "../../../../components/payment-information-modal/PaymentInformationModal"
 import { theme } from "../../../../utils/constants"
+import { PaymentOptions } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const [selectedOption, setSelectedOption] = useState<number>(1)
+	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
@@ -62,7 +63,7 @@ export default function Page(): React.ReactElement | null {
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
-								setSelectedOption(1)
+								setSelectedOption("card")
 							}}
 						>
 							<View style={styles.paymentOptionTitleWrapper}>
@@ -80,12 +81,12 @@ export default function Page(): React.ReactElement | null {
 							<View
 								style={[
 									styles.checkBox,
-									selectedOption === 1
+									selectedOption === "card"
 										? styles.checkboxChecked
 										: styles.checkboxUnChecked
 								]}
 							>
-								{selectedOption === 1 && (
+								{selectedOption === "card" && (
 									<View style={styles.checkboxInnerCircle} />
 								)}
 							</View>
@@ -93,7 +94,7 @@ export default function Page(): React.ReactElement | null {
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
-								setSelectedOption(2)
+								setSelectedOption("paypal")
 							}}
 						>
 							<View style={styles.paymentOptionTitleWrapper}>
@@ -111,12 +112,12 @@ export default function Page(): React.ReactElement | null {
 							<View
 								style={[
 									styles.checkBox,
-									selectedOption === 2
+									selectedOption === "paypal"
 										? styles.checkboxChecked
 										: styles.checkboxUnChecked
 								]}
 							>
-								{selectedOption === 2 && (
+								{selectedOption === "paypal" && (
 									<View style={styles.checkboxInnerCircle} />
 								)}
 							</View>
@@ -124,7 +125,7 @@ export default function Page(): React.ReactElement | null {
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
-								setSelectedOption(3)
+								setSelectedOption("pod")
 							}}
 						>
 							<View style={styles.paymentOptionTitleWrapper}>
@@ -142,12 +143,12 @@ export default function Page(): React.ReactElement | null {
 							<View
 								style={[
 									styles.checkBox,
-									selectedOption === 3
+									selectedOption === "pod"
 										? styles.checkboxChecked
 										: styles.checkboxUnChecked
 								]}
 							>
-								{selectedOption === 3 && (
+								{selectedOption === "pod" && (
 									<View style={styles.checkboxInnerCircle} />
 								)}
 							</View>

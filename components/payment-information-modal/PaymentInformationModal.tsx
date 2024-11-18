@@ -5,11 +5,12 @@ import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
+import { PaymentOptions } from "../../utils/types"
 
 interface PaymentInformationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
-	selectedOption: number
+	selectedOption: PaymentOptions
 }
 
 export default function PaymentInformationModal({
@@ -28,7 +29,7 @@ export default function PaymentInformationModal({
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
 		router.navigate(
-			selectedOption === 3
+			selectedOption === "pod"
 				? "/user/home"
 				: "/user/add-job/payment-card-details"
 		)
@@ -55,13 +56,13 @@ export default function PaymentInformationModal({
 				>
 					{fontsLoaded && (
 						<Text style={styles.titleText}>
-							{selectedOption === 3 ? "Cash" : "Online"} Payment
-							Information
+							{selectedOption === "pod" ? "Cash" : "Online"}{" "}
+							Payment Information
 						</Text>
 					)}
 					{fontsLoaded && (
 						<Text style={styles.descriptionText}>
-							{selectedOption === 3
+							{selectedOption === "pod"
 								? "You’ve selected to pay the vendor in cash upon job completion. Please ensure the correct amount is ready when the service provider arrives."
 								: "The system supports pre-payments, where customers pay through the app. Funds are securely held and will only be released to the vendor after you confirm job completion using an OTP."}
 						</Text>
@@ -71,7 +72,7 @@ export default function PaymentInformationModal({
 							length="full"
 							theme="dark"
 							title={
-								selectedOption === 3
+								selectedOption === "pod"
 									? "Confirm and Post Job"
 									: "Proceed with Payment"
 							}
