@@ -8,7 +8,6 @@ import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
-import { SignUpData } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()

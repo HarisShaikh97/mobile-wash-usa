@@ -23,7 +23,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleEditProfile = useCallback(() => {
-		// router.navigate(`/user/chat/${id}`)
+		router.navigate(`/vendor/edit-account`)
 	}, [router])
 
 	const reviews: Review[] = [
