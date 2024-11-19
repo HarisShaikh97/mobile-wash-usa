@@ -33,7 +33,7 @@ export default function SearchBar({
 					placeholderTextColor={"#CACACA"}
 				/>
 			</View>
-			{filterEnabled && setOpenFilterModal && (
+			{filterEnabled && setOpenFilterModal ? (
 				<TouchableOpacity
 					style={styles.filterButton}
 					onPress={() => {
@@ -47,6 +47,8 @@ export default function SearchBar({
 						contentFit="contain"
 					/>
 				</TouchableOpacity>
+			) : (
+				<View style={styles.emptyView} />
 			)}
 		</View>
 	)
@@ -73,8 +75,11 @@ const styles = StyleSheet.create({
 	},
 	inputField: {
 		height: "100%",
-		flexShrink: 1,
+		flexGrow: 1,
 		fontSize: 12.5
+	},
+	emptyView: {
+		width: 15
 	},
 	filterButton: {
 		height: "100%",
