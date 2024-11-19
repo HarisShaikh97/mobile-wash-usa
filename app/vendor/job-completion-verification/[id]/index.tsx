@@ -1,29 +1,30 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
-import FormButton from "../../../components/form-button/FormButton"
-import OTPInput from "../../../components/otp-input/OTPInput"
-import AccountVerificationSuccessfulModal from "../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
-import { theme } from "../../../utils/constants"
+import FormButton from "../../../../components/form-button/FormButton"
+import OTPInput from "../../../../components/otp-input/OTPInput"
+import JobCompletionSuccessfulModal from "../../../../components/job-completion-successful-modal/JobCompletionSuccessfulModal"
+import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false)
+	const [openInvalidModal, setOpenInvalidModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true)
-	}, [])
+		setOpenSuccessModal(true)
+	}, [setOpenSuccessModal, setOpenInvalidModal])
 
 	return (
 		<View style={styles.bodyContainer}>
-			<AccountVerificationSuccessfulModal
-				openModal={openModal}
-				setOpenModal={setOpenModal}
+			<JobCompletionSuccessfulModal
+				openModal={openSuccessModal}
+				setOpenModal={setOpenSuccessModal}
 			/>
 			{fontsLoaded && (
 				<Text style={styles.titleText}>
