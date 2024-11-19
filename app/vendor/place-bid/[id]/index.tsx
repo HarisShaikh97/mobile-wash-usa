@@ -5,6 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router"
 import JobCard from "../../../../components/job-card/JobCard"
 import BudgetInputField from "../../../../components/budget-input-field/BudgetInputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import BidSubmittedModal from "../../../../components/bid-submitted-modal/BidSubmittedModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -13,6 +14,7 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [bidAmount, setBidAmount] = useState<number>(0)
+	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -20,8 +22,8 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmitBid = useCallback((): void => {
-		router.back()
-	}, [router])
+		setOpenModal(true)
+	}, [setOpenModal])
 
 	const handleCancel = useCallback((): void => {
 		router.back()
@@ -29,6 +31,10 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
+			<BidSubmittedModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			{fontsLoaded && <Text style={styles.titleText}>place a bid</Text>}
 			<JobCard
 				_id={id[0]}
