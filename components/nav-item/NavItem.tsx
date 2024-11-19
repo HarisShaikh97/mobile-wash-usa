@@ -58,7 +58,7 @@ export default function NavItem({
 		return iconMap[label as keyof typeof iconMap]
 	}, [label, iconMap])
 
-	const onPress = useCallback(() => {
+	const onPress = useCallback((): void => {
 		const event = navigation.emit({
 			type: "tabPress",
 			target: route.key,
@@ -70,7 +70,7 @@ export default function NavItem({
 		}
 	}, [isFocused, navigation, route.key, route.name, route.params])
 
-	const onLongPress = useCallback(() => {
+	const onLongPress = useCallback((): void => {
 		navigation.emit({
 			type: "tabLongPress",
 			target: route.key

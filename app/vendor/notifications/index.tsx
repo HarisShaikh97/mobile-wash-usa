@@ -52,10 +52,7 @@ export default function Page(): React.ReactElement | null {
 				)}
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
-						(
-							notification: Notification,
-							index: number
-						): React.ReactElement | null => {
+						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
 									theme={index % 2 === 0 ? "dark" : "light"}
@@ -77,10 +74,7 @@ export default function Page(): React.ReactElement | null {
 				)}
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
-						(
-							notification: Notification,
-							index: number
-						): React.ReactElement | null => {
+						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
 									theme={index % 2 === 0 ? "dark" : "light"}

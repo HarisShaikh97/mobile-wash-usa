@@ -11,7 +11,6 @@ import { AntDesign, Feather, Ionicons, Entypo } from "@expo/vector-icons"
 import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
 import SearchBar from "../../../components/search-bar/SearchBar"
 import { theme, FAQs } from "../../../utils/constants"
-import { FAQ } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
@@ -135,10 +134,7 @@ export default function Page(): React.ReactElement | null {
 						</View>
 						<View style={styles.faqsWrapper}>
 							{FAQs.map(
-								(
-									item: FAQ,
-									index: number
-								): React.ReactElement | null => {
+								(item, index): React.ReactElement | null => {
 									return (
 										<View
 											style={styles.faqItemContainer}

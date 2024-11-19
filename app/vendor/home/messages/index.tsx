@@ -98,22 +98,20 @@ export default function Tab(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
-			{chats.map(
-				(chat: Chat, index: number): React.ReactElement | null => {
-					return (
-						<ChatCard
-							_id={chat._id}
-							fullName={chat.fullName}
-							image={chat.image}
-							lastMessage={chat.lastMessage}
-							lastMessageTime={chat.lastMessageTime}
-							unreadMessages={chat.unreadMessages}
-							online={chat.online}
-							key={index}
-						/>
-					)
-				}
-			)}
+			{chats.map((chat, index): React.ReactElement | null => {
+				return (
+					<ChatCard
+						_id={chat._id}
+						fullName={chat.fullName}
+						image={chat.image}
+						lastMessage={chat.lastMessage}
+						lastMessageTime={chat.lastMessageTime}
+						unreadMessages={chat.unreadMessages}
+						online={chat.online}
+						key={index}
+					/>
+				)
+			})}
 		</View>
 	)
 }

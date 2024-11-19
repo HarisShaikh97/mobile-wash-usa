@@ -1,6 +1,5 @@
 import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface ChatInputFieldProps {
@@ -14,11 +13,6 @@ export default function ChatInputField({
 	onChangeText,
 	onSubmit
 }: ChatInputFieldProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
-
 	return (
 		<View style={styles.inputFieldContainer}>
 			<TouchableOpacity>
@@ -35,7 +29,10 @@ export default function ChatInputField({
 				placeholder="Say something"
 				placeholderTextColor={"rgba(51, 51, 51, 0.3)"}
 			/>
-			<TouchableOpacity style={styles.sendButtonContainer}>
+			<TouchableOpacity
+				style={styles.sendButtonContainer}
+				onPress={onSubmit}
+			>
 				<Image
 					source={require("../../assets/icons/send.svg")}
 					style={styles.sendIcon}

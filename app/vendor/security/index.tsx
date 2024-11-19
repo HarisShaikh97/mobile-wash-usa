@@ -24,11 +24,11 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSave = useCallback(() => {
+	const handleSave = useCallback((): void => {
 		router.back()
 	}, [router])
 
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back()
 	}, [router])
 

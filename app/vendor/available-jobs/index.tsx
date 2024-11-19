@@ -142,7 +142,7 @@ export default function Page(): React.ReactElement | null {
 						setOpenFilterModal={setOpenModal}
 					/>
 					<View style={styles.jobCardsContainer}>
-						{jobs.map((job: Job): React.ReactElement | null => {
+						{jobs.map((job): React.ReactElement | null => {
 							return (
 								<JobCard
 									_id={job._id}

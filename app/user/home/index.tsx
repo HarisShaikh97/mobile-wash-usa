@@ -138,10 +138,7 @@ export default function Tab(): React.ReactElement | null {
 					>
 						<View style={styles.servicesCardsScrollContainer}>
 							{services.map(
-								(
-									service: Service,
-									index: number
-								): React.ReactElement | null => {
+								(service, index): React.ReactElement | null => {
 									return (
 										<ServiceCard
 											title={service.title}
@@ -206,7 +203,7 @@ export default function Tab(): React.ReactElement | null {
 							</View>
 						</View>
 						<View style={styles.jobCardsContainer}>
-							{jobs.map((job: Job): React.ReactElement | null => {
+							{jobs.map((job): React.ReactElement | null => {
 								return (
 									<JobCard
 										_id={job._id}

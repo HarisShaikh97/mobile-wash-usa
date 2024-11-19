@@ -49,7 +49,7 @@ export default function Tab(): React.ReactElement | null {
 				</View>
 				<TouchableOpacity
 					style={styles.nextButton}
-					onPress={(): void => {
+					onPress={() => {
 						router.navigate("/user/edit-account")
 					}}
 				>
@@ -77,7 +77,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
-						onPress={(): void => {
+						onPress={() => {
 							router.navigate("/user/edit-account")
 						}}
 					>
@@ -103,7 +103,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
-						onPress={(): void => {
+						onPress={() => {
 							router.navigate("/user/security")
 						}}
 					>
@@ -129,7 +129,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
-						onPress={(): void => {
+						onPress={() => {
 							router.navigate("/user/account-status")
 						}}
 					>
@@ -175,7 +175,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
-						onPress={(): void => {
+						onPress={() => {
 							router.navigate("/user/help-and-support")
 						}}
 					>
@@ -201,7 +201,7 @@ export default function Tab(): React.ReactElement | null {
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
-						onPress={(): void => {
+						onPress={() => {
 							router.navigate("/user/privacy-policy")
 						}}
 					>

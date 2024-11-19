@@ -146,43 +146,38 @@ export default function Page(): React.ReactElement | null {
 						setOpenFilterModal={setOpenModal}
 					/>
 					<View style={styles.tabsWrapper}>
-						{tabs.map(
-							(
-								tab: Tab,
-								index: number
-							): React.ReactElement | null => {
-								return (
-									<TouchableOpacity
-										style={[
-											styles.tabContainer,
-											tab === selectedTab
-												? styles.selectedTab
-												: styles.unSelectedTab
-										]}
-										onPress={() => {
-											setSelectedTab(tab)
-										}}
-										key={index}
-									>
-										{fontsLoaded && (
-											<Text
-												style={[
-													styles.tabText,
-													tab === selectedTab
-														? styles.selectedTabText
-														: styles.unSelectedTabText
-												]}
-											>
-												{tab}
-											</Text>
-										)}
-									</TouchableOpacity>
-								)
-							}
-						)}
+						{tabs.map((tab, index): React.ReactElement | null => {
+							return (
+								<TouchableOpacity
+									style={[
+										styles.tabContainer,
+										tab === selectedTab
+											? styles.selectedTab
+											: styles.unSelectedTab
+									]}
+									onPress={() => {
+										setSelectedTab(tab)
+									}}
+									key={index}
+								>
+									{fontsLoaded && (
+										<Text
+											style={[
+												styles.tabText,
+												tab === selectedTab
+													? styles.selectedTabText
+													: styles.unSelectedTabText
+											]}
+										>
+											{tab}
+										</Text>
+									)}
+								</TouchableOpacity>
+							)
+						})}
 					</View>
 					<View style={styles.jobCardsWrapper}>
-						{jobs.map((job: Job): React.ReactElement | null => {
+						{jobs.map((job): React.ReactElement | null => {
 							return (
 								<JobCard
 									_id={job._id}

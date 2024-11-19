@@ -66,10 +66,10 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	useFocusEffect(
-		useCallback(() => {
+		useCallback((): (() => void) => {
 			const intervalId = setInterval(triggerAnimation, 2500)
 
-			return () => {
+			return (): void => {
 				clearInterval(intervalId)
 				opacity.value = 1
 			}

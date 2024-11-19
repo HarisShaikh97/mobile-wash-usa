@@ -23,11 +23,11 @@ export default function BudgetInputField({
 		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
 	})
 
-	const handleIncrement = useCallback(() => {
+	const handleIncrement = useCallback((): void => {
 		setValue((prev) => prev + 1)
 	}, [setValue])
 
-	const handleDecrement = useCallback(() => {
+	const handleDecrement = useCallback((): void => {
 		setValue((prev) => (prev === 0 ? prev : prev - 1))
 	}, [setValue])
 

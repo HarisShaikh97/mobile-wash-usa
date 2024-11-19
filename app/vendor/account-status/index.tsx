@@ -18,17 +18,17 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleDeleteAccount = useCallback(() => {
+	const handleDeleteAccount = useCallback((): void => {
 		setType("delete")
 		setOpenModal(true)
 	}, [setType, setOpenModal])
 
-	const handleDeactivateAccount = useCallback(() => {
+	const handleDeactivateAccount = useCallback((): void => {
 		setType("deactivate")
 		setOpenModal(true)
 	}, [setType, setOpenModal])
 
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back()
 	}, [router])
 

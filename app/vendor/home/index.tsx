@@ -213,7 +213,7 @@ export default function Tab(): React.ReactElement | null {
 							</View>
 						</View>
 						<View style={styles.jobCardsContainer}>
-							{jobs.map((job: Job): React.ReactElement | null => {
+							{jobs.map((job): React.ReactElement | null => {
 								return (
 									<JobCard
 										_id={job._id}

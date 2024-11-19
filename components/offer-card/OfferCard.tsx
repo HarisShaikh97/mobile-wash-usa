@@ -41,11 +41,11 @@ export default function OfferCard({
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSendMessage = useCallback(() => {
+	const handleSendMessage = useCallback((): void => {
 		router.navigate(`/user/chat/${vendorId}`)
 	}, [router])
 
-	const handleAcceptOffer = useCallback(() => {
+	const handleAcceptOffer = useCallback((): void => {
 		router.navigate(`/user/offer-accepted/${JobId}`)
 	}, [router])
 

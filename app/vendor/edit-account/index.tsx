@@ -40,11 +40,11 @@ export default function Page(): React.ReactElement | null {
 		}
 	}, [setNewImage])
 
-	const handleSave = useCallback(() => {
+	const handleSave = useCallback((): void => {
 		router.back()
 	}, [router])
 
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back()
 	}, [router])
 

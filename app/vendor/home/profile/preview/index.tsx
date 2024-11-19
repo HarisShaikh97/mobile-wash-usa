@@ -22,7 +22,7 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleEditProfile = useCallback(() => {
+	const handleEditProfile = useCallback((): void => {
 		router.navigate(`/vendor/edit-account`)
 	}, [router])
 
@@ -252,10 +252,7 @@ export default function Page(): React.ReactElement | null {
 					</View>
 					<View style={styles.reviewCardsWrapper}>
 						{reviews.map(
-							(
-								review: Review,
-								index: number
-							): React.ReactElement | null => {
+							(review, index): React.ReactElement | null => {
 								return (
 									<ReviewCard
 										vendor_id={review.vendor_id}

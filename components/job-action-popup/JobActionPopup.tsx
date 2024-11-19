@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 
 interface JobActionPopupProps {
@@ -12,8 +11,6 @@ export default function JobActionPopup({
 	title,
 	onPress
 }: JobActionPopupProps): React.ReactElement | null {
-	const router = useRouter()
-
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
 	})

@@ -81,22 +81,17 @@ export default function Page(): React.ReactElement | null {
 				)}
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
-			{messages.map(
-				(
-					message: Message,
-					index: number
-				): React.ReactElement | null => {
-					return (
-						<MessageCard
-							_id={message._id}
-							text={message.text}
-							time={message.time}
-							user={message.user}
-							key={index}
-						/>
-					)
-				}
-			)}
+			{messages.map((message, index): React.ReactElement | null => {
+				return (
+					<MessageCard
+						_id={message._id}
+						text={message.text}
+						time={message.time}
+						user={message.user}
+						key={index}
+					/>
+				)
+			})}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
 				{fontsLoaded && (
@@ -104,22 +99,17 @@ export default function Page(): React.ReactElement | null {
 				)}
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
-			{messages.map(
-				(
-					message: Message,
-					index: number
-				): React.ReactElement | null => {
-					return (
-						<MessageCard
-							_id={message._id}
-							text={message.text}
-							time={message.time}
-							user={message.user}
-							key={index}
-						/>
-					)
-				}
-			)}
+			{messages.map((message, index): React.ReactElement | null => {
+				return (
+					<MessageCard
+						_id={message._id}
+						text={message.text}
+						time={message.time}
+						user={message.user}
+						key={index}
+					/>
+				)
+			})}
 		</View>
 	)
 }

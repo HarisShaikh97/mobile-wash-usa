@@ -100,28 +100,23 @@ export default function Page(): React.ReactElement | null {
 				</Text>
 			)}
 			<View style={styles.offerCardsWrapper}>
-				{offers.map(
-					(
-						offer: Offer,
-						index: number
-					): React.ReactElement | null => {
-						return (
-							<OfferCard
-								size="large"
-								JobId={offer.job_id}
-								vendorId={offer.vendor_id}
-								vendorName={offer.vendorName}
-								vendorImage={offer.vendorImage}
-								vendorJobsCompleted={offer.vendorJobsCompleted}
-								ratings={offer.ratings}
-								reviews={offer.reviews}
-								amount={offer.amount}
-								location={offer.location}
-								key={index}
-							/>
-						)
-					}
-				)}
+				{offers.map((offer, index): React.ReactElement | null => {
+					return (
+						<OfferCard
+							size="large"
+							JobId={offer.job_id}
+							vendorId={offer.vendor_id}
+							vendorName={offer.vendorName}
+							vendorImage={offer.vendorImage}
+							vendorJobsCompleted={offer.vendorJobsCompleted}
+							ratings={offer.ratings}
+							reviews={offer.reviews}
+							amount={offer.amount}
+							location={offer.location}
+							key={index}
+						/>
+					)
+				})}
 			</View>
 		</View>
 	)
