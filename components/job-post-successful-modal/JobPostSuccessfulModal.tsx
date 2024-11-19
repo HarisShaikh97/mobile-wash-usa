@@ -53,6 +53,7 @@ export default function JobPostSuccessfulModal({
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
+							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
 							{fontsLoaded && (

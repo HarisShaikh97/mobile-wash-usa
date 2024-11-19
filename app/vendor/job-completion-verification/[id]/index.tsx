@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import JobCompletionSuccessfulModal from "../../../../components/job-completion-successful-modal/JobCompletionSuccessfulModal"
+import InvalidOTPModal from "../../../../components/invalid-otp-modal/InvalidOTPModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -17,7 +18,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback((): void => {
-		setOpenSuccessModal(true)
+		setOpenInvalidModal(true)
 	}, [setOpenSuccessModal, setOpenInvalidModal])
 
 	return (
@@ -25,6 +26,10 @@ export default function Page(): React.ReactElement | null {
 			<JobCompletionSuccessfulModal
 				openModal={openSuccessModal}
 				setOpenModal={setOpenSuccessModal}
+			/>
+			<InvalidOTPModal
+				openModal={openInvalidModal}
+				setOpenModal={setOpenInvalidModal}
 			/>
 			{fontsLoaded && (
 				<Text style={styles.titleText}>

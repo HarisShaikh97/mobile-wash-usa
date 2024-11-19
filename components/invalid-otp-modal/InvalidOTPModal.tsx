@@ -2,21 +2,18 @@ import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
-interface ResetPasswordModalProps {
+interface InvalidOTPModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 }
 
-export default function ResetPasswordSuccessfulModal({
+export default function InvalidOTPModal({
 	openModal,
 	setOpenModal
-}: ResetPasswordModalProps): React.ReactElement | null {
-	const router = useRouter()
-
+}: InvalidOTPModalProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
@@ -25,8 +22,7 @@ export default function ResetPasswordSuccessfulModal({
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/auth/login")
-	}, [openModal, router])
+	}, [openModal])
 
 	return (
 		<Modal
@@ -45,34 +41,32 @@ export default function ResetPasswordSuccessfulModal({
 						contentFit="fill"
 					>
 						<Image
-							source={require("../../assets/icons/successful.svg")}
+							source={require("../../assets/icons/invalid.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
 							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Your Password Has Been
-								</Text>
-							)}
-							{fontsLoaded && (
 								<Text style={styles.titleText}>
-									Successfully Reset!
+									Invalid OTP
 								</Text>
 							)}
 							{fontsLoaded && (
 								<Text style={styles.descriptionText}>
-									You Can Now Log In With Our New Password
+									The OTP you entered is incorrect. Please try
+									again.
 								</Text>
 							)}
 						</View>
-						<FormButton
-							length="full"
-							theme="dark"
-							title="Login"
-							onPress={handleSubmit}
-						/>
+						<View style={styles.formButtonsWrapper}>
+							<FormButton
+								length="full"
+								theme="black"
+								title="Retry"
+								onPress={handleSubmit}
+							/>
+						</View>
 					</ImageBackground>
 				</View>
 			</View>
@@ -87,7 +81,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		height: 450,
+		height: 425,
 		borderTopLeftRadius: 35,
 		borderTopRightRadius: 35,
 		backgroundColor: "white"
@@ -96,9 +90,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 30,
-		paddingTop: 50,
-		paddingHorizontal: 50
+		gap: 20,
+		paddingVertical: 50,
+		paddingHorizontal: 35
 	},
 	successfulIcon: {
 		height: 100,
@@ -112,15 +106,21 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		fontFamily: "Montserrat-Medium",
 		color: theme.colors.secondary,
-		width: 250,
 		textAlign: "center",
-		paddingTop: 5
+		paddingTop: 5,
+		textTransform: "capitalize"
 	},
 	titleText: {
 		fontSize: 30,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.primary,
+		color: theme.colors.secondary,
 		width: 250,
 		textAlign: "center"
+	},
+	formButtonsWrapper: {
+		flex: 1,
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "flex-end"
 	}
 })
