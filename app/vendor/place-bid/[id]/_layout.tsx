@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		height: 185,
 		width: "100%",
-		zIndex: -10,
 		opacity: 0.25
 	}
 })

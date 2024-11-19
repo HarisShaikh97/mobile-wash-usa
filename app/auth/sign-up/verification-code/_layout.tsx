@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
 		height: 350,
 		position: "absolute",
 		left: 0,
-		bottom: 0,
-		zIndex: -10
+		bottom: 0
 	}
 })

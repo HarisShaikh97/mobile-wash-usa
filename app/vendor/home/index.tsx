@@ -250,8 +250,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		position: "absolute",
 		top: 0,
-		left: 0,
-		zIndex: -10
+		left: 0
 	},
 	bodyContainer: {
 		width: "100%",

@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
 		right: 0,
 		bottom: 0,
 		height: 150,
-		width: 135,
-		zIndex: -10
+		width: 135
 	}
 })

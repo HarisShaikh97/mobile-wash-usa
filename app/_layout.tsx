@@ -1,5 +1,6 @@
 import { View, StatusBar, StyleSheet } from "react-native"
 import { Stack } from "expo-router"
+import * as NavigationBar from "expo-navigation-bar"
 import { Provider } from "react-redux"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useReactQueryDevTools } from "@dev-plugins/react-query"
@@ -9,6 +10,8 @@ const queryClient = new QueryClient()
 
 export default function Layout(): React.ReactElement | null {
 	useReactQueryDevTools(queryClient)
+
+	NavigationBar.setVisibilityAsync("hidden")
 
 	return (
 		<QueryClientProvider client={queryClient}>

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 	},
 	headerContainer: {
 		paddingHorizontal: 20,
-		paddingVertical: 50
+		paddingVertical: 35
 	},
 	bodyContainer: {
 		flex: 1,
@@ -109,8 +109,7 @@ const styles = StyleSheet.create({
 		height: 300,
 		position: "absolute",
 		left: 0,
-		bottom: 0,
-		zIndex: -10
+		bottom: 0
 	},
 	userRolesOptionsWrapper: {
 		flexDirection: "column",

@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		left: 0,
-		zIndex: -10,
 		backgroundColor: theme.colors.primary
 	},
 	bodyContainer: {

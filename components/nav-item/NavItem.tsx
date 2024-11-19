@@ -82,7 +82,7 @@ export default function NavItem({
 			accessibilityRole="button"
 			accessibilityState={isFocused ? { selected: true } : {}}
 			accessibilityLabel={options.tabBarAccessibilityLabel}
-			testID={options.tabBarTestID}
+			testID={options.tabBarButtonTestID}
 			onPress={onPress}
 			onLongPress={onLongPress}
 			style={[
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
 		width: 100
 	},
 	secondNavItemContainer: {
-		marginRight: 30
+		paddingRight: 30
 	},
 	thirdNavItemContainer: {
-		marginLeft: 30
+		paddingLeft: 30
 	},
 	titleText: {
 		fontSize: 8.5,
