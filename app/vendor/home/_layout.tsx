@@ -4,7 +4,7 @@ import BottomNav from "../../../components/bottom-nav/BottomNav"
 export default function Layout(): React.ReactElement | null {
 	return (
 		<Tabs
-			screenOptions={{ headerShown: false, animation: "shift" }}
+			screenOptions={{ headerShown: false }}
 			tabBar={(props) => <BottomNav {...props} />}
 		>
 			<Tabs.Screen
