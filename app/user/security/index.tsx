@@ -107,10 +107,5 @@ const styles = StyleSheet.create({
 	},
 	nextButton: {
 		marginRight: 5
-	},
-	switch: {
-		width: 30,
-		height: 15,
-		padding: 1.5
 	}
 })
