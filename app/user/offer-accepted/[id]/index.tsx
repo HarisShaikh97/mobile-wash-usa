@@ -1,7 +1,8 @@
+import { useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
-import { useLocalSearchParams } from "expo-router"
+import { useLocalSearchParams, useRouter } from "expo-router"
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import FormButton from "../../../../components/form-button/FormButton"
@@ -9,6 +10,7 @@ import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
+	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -16,6 +18,10 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
 		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
+
+	const handleSubmit = useCallback((): void => {
+		router.navigate(`/user/rating-and-review/${id}`)
+	}, [router])
 
 	return (
 		<View style={styles.container}>
@@ -161,7 +167,7 @@ export default function Page(): React.ReactElement | null {
 				length="full"
 				theme="light"
 				title="Download Receipt"
-				onPress={() => {}}
+				onPress={handleSubmit}
 			/>
 		</View>
 	)
