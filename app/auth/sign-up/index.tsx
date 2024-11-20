@@ -109,13 +109,15 @@ const styles = StyleSheet.create({
 		height: 300,
 		position: "absolute",
 		left: 0,
-		bottom: 0
+		bottom: 0,
+		zIndex: 0
 	},
 	userRolesOptionsWrapper: {
 		flexDirection: "column",
 		alignItems: "center",
 		gap: 10,
-		marginTop: 50
+		marginTop: 50,
+		zIndex: 10
 	},
 	userRoleOption: {
 		height: 100,

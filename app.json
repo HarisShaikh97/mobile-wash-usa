@@ -3,7 +3,6 @@
 		"name": "mobile-wash-usa",
 		"slug": "mobile-wash-usa",
 		"version": "1.0.0",
-		"newArchEnabled": true,
 		"scheme": "mobile-wash-usa-app-scheme",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",

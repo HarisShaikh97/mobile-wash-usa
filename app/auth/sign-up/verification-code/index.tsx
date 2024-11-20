@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center",
 		paddingHorizontal: 25,
-		gap: 10
+		gap: 10,
+		zIndex: 10
 	},
 	titleText: {
 		fontFamily: "Montserrat-Bold",
