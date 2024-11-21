@@ -22,7 +22,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback(() => {
-		// router.navigate("/vendor/home")
+		router.navigate("/vendor/payment/paypal-account/verify")
 	}, [router])
 
 	return (
