@@ -121,6 +121,32 @@ export default function Tab(): React.ReactElement | null {
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
+								source={require("../../../../assets/icons/card2.svg")}
+								style={styles.settingOptionIcon}
+								contentFit="contain"
+							/>
+							{fontsLoaded && (
+								<Text style={styles.settingOptionText}>
+									Payment Details
+								</Text>
+							)}
+						</View>
+						<TouchableOpacity
+							style={styles.nextButton}
+							onPress={() => {
+								router.navigate("/vendor/payment")
+							}}
+						>
+							<Feather
+								name="chevron-right"
+								size={17.5}
+								color={theme.colors.secondary}
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.settingOption}>
+						<View style={styles.settingOptionNameWrapper}>
+							<Image
 								source={require("../../../../assets/icons/account-status.svg")}
 								style={styles.settingOptionIcon}
 								contentFit="contain"

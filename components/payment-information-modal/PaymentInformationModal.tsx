@@ -2,7 +2,6 @@ import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 import { PaymentOptions } from "../../utils/types"
@@ -11,29 +10,20 @@ interface PaymentInformationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 	selectedOption: PaymentOptions
+	handleProceed: () => void
 }
 
 export default function PaymentInformationModal({
 	openModal,
 	setOpenModal,
-	selectedOption
+	selectedOption,
+	handleProceed
 }: PaymentInformationModalProps): React.ReactElement | null {
-	const router = useRouter()
-
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
-
-	const handleProceed = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate(
-			selectedOption === "pod"
-				? "/user/home"
-				: "/user/add-job/payment-card-details"
-		)
-	}, [openModal, router])
 
 	const handleChangeMethod = useCallback((): void => {
 		setOpenModal(false)

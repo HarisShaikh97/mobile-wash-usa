@@ -65,7 +65,7 @@ export default function FormButton({
 const styles = StyleSheet.create({
 	buttonContainer: {
 		height: 50,
-		borderRadius: 10,
+		borderRadius: 12.5,
 		alignItems: "center",
 		justifyContent: "center"
 	},

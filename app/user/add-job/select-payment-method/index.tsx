@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import PaymentInformationModal from "../../../../components/payment-information-modal/PaymentInformationModal"
@@ -9,6 +10,8 @@ import { theme } from "../../../../utils/constants"
 import { PaymentOptions } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -18,6 +21,15 @@ export default function Page(): React.ReactElement | null {
 		"Montserrat-Medium": require("../../../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
 		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
+
+	const handleProceed = useCallback((): void => {
+		setOpenModal(false)
+		router.navigate(
+			selectedOption === "pod"
+				? "/user/home"
+				: "/user/add-job/payment-card-details"
+		)
+	}, [openModal, router])
 
 	const handleSubmit = useCallback(() => {
 		setOpenModal(true)
@@ -33,6 +45,7 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				selectedOption={selectedOption}
+				handleProceed={handleProceed}
 			/>
 			<View style={styles.headerContainer}>
 				<BackButton
