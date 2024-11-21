@@ -15,7 +15,6 @@ export default function InvalidOTPModal({
 	setOpenModal
 }: InvalidOTPModalProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
@@ -42,7 +41,7 @@ export default function InvalidOTPModal({
 					>
 						<Image
 							source={require("../../assets/icons/invalid.svg")}
-							style={styles.successfulIcon}
+							style={styles.invalidIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 50,
 		paddingHorizontal: 35
 	},
-	successfulIcon: {
+	invalidIcon: {
 		height: 100,
 		width: 100
 	},
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
 	},
 	descriptionText: {
 		fontSize: 15,
-		fontFamily: "Montserrat-Medium",
+		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary,
 		textAlign: "center",
 		paddingTop: 5,
@@ -115,7 +114,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Montserrat-SemiBold",
 		color: theme.colors.secondary,
 		width: 250,
-		textAlign: "center"
+		textAlign: "center",
+		textTransform: "capitalize"
 	},
 	formButtonsWrapper: {
 		flex: 1,

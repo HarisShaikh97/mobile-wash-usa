@@ -6,25 +6,24 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
-interface JobCompletionSuccessfulModalProps {
+interface FeedbackConfirmationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 }
 
-export default function JobCompletionSuccessfulModal({
+export default function FeedbackConfirmationModal({
 	openModal,
 	setOpenModal
-}: JobCompletionSuccessfulModalProps): React.ReactElement | null {
+}: FeedbackConfirmationModalProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
+		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
 	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/vendor/home")
+		router.navigate("/user/home")
 	}, [openModal, router])
 
 	return (
@@ -44,29 +43,23 @@ export default function JobCompletionSuccessfulModal({
 						contentFit="fill"
 					>
 						<Image
-							source={require("../../assets/icons/successful.svg")}
-							style={styles.successfulIcon}
+							source={require("../../assets/icons/star.svg")}
+							style={styles.starIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
 							{fontsLoaded && (
 								<Text style={styles.titleText}>
-									Job Completed Successfully!
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Thank you! The OTP was verified, and the job
-									has been marked as complete.
+									Thank you for your feedback!
 								</Text>
 							)}
 						</View>
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
-								theme="dark"
-								title="Okay"
+								theme="gray"
+								title="Close"
 								onPress={handleSubmit}
 							/>
 						</View>
@@ -84,7 +77,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		height: 425,
+		height: 375,
 		borderTopLeftRadius: 35,
 		borderTopRightRadius: 35,
 		backgroundColor: "white"
@@ -97,7 +90,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 50,
 		paddingHorizontal: 35
 	},
-	successfulIcon: {
+	starIcon: {
 		height: 100,
 		width: 100
 	},
@@ -105,18 +98,10 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center"
 	},
-	descriptionText: {
-		fontSize: 15,
-		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary,
-		textAlign: "center",
-		paddingTop: 5,
-		textTransform: "capitalize"
-	},
 	titleText: {
 		fontSize: 30,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.primary,
+		color: "#FBBA1D",
 		width: 250,
 		textAlign: "center",
 		textTransform: "capitalize"

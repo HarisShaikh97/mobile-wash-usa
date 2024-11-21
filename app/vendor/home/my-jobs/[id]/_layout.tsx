@@ -12,9 +12,9 @@ export default function Layout(): React.ReactElement | null {
 	return (
 		<View style={styles.wrapper}>
 			<JobActionPopup
-				title="Place a Bid"
+				title="Mark As Completed"
 				onPress={() => {
-					router.navigate(`/vendor/place-bid/${id}`)
+					router.navigate(`/vendor/job-completion-verification/${id}`)
 				}}
 			/>
 			<ScrollView

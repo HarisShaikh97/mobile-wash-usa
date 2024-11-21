@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useFonts } from "expo-font"
@@ -6,6 +6,7 @@ import { useLocalSearchParams } from "expo-router"
 import RatingsInput from "../../../../components/ratings-input/RatingsInput"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import FeedbackConfirmationModal from "../../../../components/feedback-confirmation-modal/FeedbackConfirmationModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -13,6 +14,7 @@ export default function Page(): React.ReactElement | null {
 
 	const [ratings, setRatings] = useState<number>(0)
 	const [review, setReview] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -21,8 +23,16 @@ export default function Page(): React.ReactElement | null {
 		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
+	const handleSubmit = useCallback((): void => {
+		setOpenModal(true)
+	}, [setOpenModal])
+
 	return (
 		<View style={styles.container}>
+			<FeedbackConfirmationModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			<Image
 				source={require("../../../../assets/icons/successful.svg")}
 				style={styles.checkIcon}
@@ -74,7 +84,7 @@ export default function Page(): React.ReactElement | null {
 				length="full"
 				theme="dark"
 				title="Submit"
-				onPress={() => {}}
+				onPress={handleSubmit}
 			/>
 		</View>
 	)
