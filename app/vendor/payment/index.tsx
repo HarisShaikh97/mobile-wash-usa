@@ -20,7 +20,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback(() => {
-		// setOpenModal(true)
+		router.navigate("/vendor/payment/card-details")
 	}, [router])
 
 	return (
