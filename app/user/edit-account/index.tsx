@@ -36,7 +36,7 @@ export default function Page(): React.ReactElement | null {
 	}, [setNewImage])
 
 	const handleSave = useCallback(() => {
-		router.back()
+		router.navigate("/user/email-verification")
 	}, [router])
 
 	const handleCancel = useCallback(() => {

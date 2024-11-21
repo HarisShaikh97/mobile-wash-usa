@@ -18,7 +18,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true)
-	}, [])
+	}, [setOpenModal])
 
 	return (
 		<View style={styles.bodyContainer}>
