@@ -2,29 +2,32 @@ import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useFonts } from "expo-font"
+import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
-import { PaymentOptions } from "../../utils/types"
 
-interface PaymentInformationModalProps {
+interface PayPalAccountStatusModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
-	selectedOption: PaymentOptions
-	handleProceed: () => void
+	status: "success" | "invalid"
 }
 
-export default function PaymentInformationModal({
+export default function PayPalAccountStatusModal({
 	openModal,
 	setOpenModal,
-	selectedOption,
-	handleProceed
-}: PaymentInformationModalProps): React.ReactElement | null {
+	status
+}: PayPalAccountStatusModalProps): React.ReactElement | null {
+	const router = useRouter()
+
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleChangeMethod = useCallback((): void => {
+	const handleSubmit = useCallback((): void => {
+		if (status === "success") {
+			router.navigate("/vendor/home")
+		}
 		setOpenModal(false)
 	}, [setOpenModal])
 
@@ -44,36 +47,32 @@ export default function PaymentInformationModal({
 					contentFit="fill"
 				>
 					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							{selectedOption === "pod" ? "Cash" : "Online"}{" "}
-							Payment Information
+						<Text
+							style={[
+								styles.titleText,
+								status === "success"
+									? styles.successTitleText
+									: styles.invalidTitleText
+							]}
+						>
+							{status === "success"
+								? "PayPal Account Linked!"
+								: "Invalid Confirmation Code"}
 						</Text>
 					)}
 					{fontsLoaded && (
 						<Text style={styles.descriptionText}>
-							{selectedOption === "pod"
-								? "You’ve selected to pay the vendor in cash upon job completion. Please ensure the correct amount is ready when the service provider arrives."
-								: "The system supports pre-payments, where customers pay through the app. Funds are securely held and will only be released to the vendor after you confirm job completion using an OTP."}
+							{status === "success"
+								? "Your PayPal account has been successfully linked. You can now receive payments directly to your PayPal account."
+								: "The confirmation code you entered is incorrect. Please check your email and try again."}
 						</Text>
 					)}
-					<View style={styles.actionButtonsWrapper}>
-						<FormButton
-							length="full"
-							theme="dark"
-							title={
-								selectedOption === "pod"
-									? "Confirm and Post Job"
-									: "Proceed with Payment"
-							}
-							onPress={handleProceed}
-						/>
-						<FormButton
-							length="full"
-							theme="light"
-							title="Change Payment Method"
-							onPress={handleChangeMethod}
-						/>
-					</View>
+					<FormButton
+						length="half"
+						theme="dark"
+						title={status === "success" ? "Ok" : "Resend Code"}
+						onPress={handleSubmit}
+					/>
 				</ImageBackground>
 			</View>
 		</Modal>
@@ -94,16 +93,21 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 10,
+		gap: 15,
 		padding: 25
 	},
 	titleText: {
 		fontSize: 27.5,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.primary,
 		textAlign: "center",
 		lineHeight: 30,
 		paddingTop: 25
+	},
+	successTitleText: {
+		color: theme.colors.primary
+	},
+	invalidTitleText: {
+		color: "#DC3545"
 	},
 	descriptionText: {
 		fontSize: 15,
@@ -113,12 +117,5 @@ const styles = StyleSheet.create({
 		lineHeight: 22.5,
 		maxWidth: 300,
 		textTransform: "capitalize"
-	},
-	actionButtonsWrapper: {
-		width: "100%",
-		flexDirection: "column",
-		alignItems: "center",
-		gap: 10,
-		marginTop: 35
 	}
 })

@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
-import { useRouter } from "expo-router"
 import FormButton from "../../../../../components/form-button/FormButton"
 import OTPInput from "../../../../../components/otp-input/OTPInput"
+import PayPalAccountStatusModal from "../../../../../components/paypal-account-status-modal/PayPalAccountStatusModal"
 import { theme } from "../../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
 	const [OTP, setOTP] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [status, setStatus] = useState<"success" | "invalid">("success")
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -17,11 +18,17 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback((): void => {
-		router.navigate("/vendor/home")
-	}, [router])
+		setStatus("success")
+		setOpenModal(true)
+	}, [setOpenModal, setStatus])
 
 	return (
 		<View style={styles.bodyContainer}>
+			<PayPalAccountStatusModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				status={status}
+			/>
 			{fontsLoaded && (
 				<Text style={styles.titleText}>
 					Confirm Your PayPal Account
