@@ -11,29 +11,36 @@ import { theme } from "../../../../utils/constants"
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
-	const [cardNumber, setCardNumber] = useState<string>("")
-	const [expiryDate, setExpiryDate] = useState<string>("")
-	const [CVC, setCVC] = useState<string>("")
-	const [cardHolderName, setCardHolderName] = useState<string>("")
+	const [email, setEmail] = useState<string>("")
+	const [confirmEmail, setConfirmEmail] = useState<string>("")
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Light": require("../../../../assets/fonts/Roboto/Roboto Light 300.ttf"),
+		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf"),
 		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 
 	const handleSubmit = useCallback(() => {
-		router.navigate("/vendor/home")
+		// router.navigate("/vendor/home")
 	}, [router])
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.formContainer}>
-				{fontsLoaded && (
-					<Text style={styles.titleText}>
-						Enter your card details
-					</Text>
-				)}
+				<View style={styles.titleWrapper}>
+					{fontsLoaded && (
+						<Text style={styles.titleText}>
+							Link your PayPal account
+						</Text>
+					)}
+					{fontsLoaded && (
+						<Text style={styles.descriptionText}>
+							To receive payments for your services, please select
+							your preferred payment method.
+						</Text>
+					)}
+				</View>
 				<View style={styles.formHeaderContainer}>
 					<View style={styles.paymentMethodWrapper}>
 						{fontsLoaded && (
@@ -69,65 +76,24 @@ export default function Page(): React.ReactElement | null {
 							)}
 						</TouchableOpacity>
 					</View>
-					<View style={styles.cardContainer}>
-						<View style={styles.cardTextWrapper}>
-							{fontsLoaded && (
-								<Text style={styles.cardTitleText}>
-									Credit or Debit card
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.cardDescriptionText}>
-									Online payment
-								</Text>
-							)}
-						</View>
-						<Image
-							source={require("../../../../assets/icons/master-card.svg")}
-							style={styles.cardIcon}
-							contentFit="contain"
-						/>
-					</View>
 				</View>
 				<InputField
 					length="full"
 					type="text"
-					title="Card Number"
-					placeholder="0000 0000 0000 0000"
-					value={cardNumber}
-					onChangeText={setCardNumber}
+					title="Email"
+					placeholder="PayPal email"
+					value={email}
+					onChangeText={setEmail}
 					secureTextEntry={false}
 					multiline={false}
 				/>
-				<View style={styles.inputFieldsWrapper}>
-					<InputField
-						length="half"
-						type="text"
-						title="Expiry Date"
-						placeholder="MM/YY"
-						value={expiryDate}
-						onChangeText={setExpiryDate}
-						secureTextEntry={false}
-						multiline={false}
-					/>
-					<InputField
-						length="half"
-						type="text"
-						title="CVC"
-						placeholder="000"
-						value={CVC}
-						onChangeText={setCVC}
-						secureTextEntry={false}
-						multiline={false}
-					/>
-				</View>
 				<InputField
 					length="full"
 					type="text"
-					title="Card Holder Name"
-					placeholder="Full name"
-					value={cardHolderName}
-					onChangeText={setCardHolderName}
+					title="Confirm Email"
+					placeholder="PayPal email"
+					value={confirmEmail}
+					onChangeText={setConfirmEmail}
 					secureTextEntry={false}
 					multiline={false}
 				/>
@@ -135,7 +101,7 @@ export default function Page(): React.ReactElement | null {
 			<FormButton
 				length="full"
 				theme="dark"
-				title="Confirm Payment"
+				title="Link PayPal"
 				onPress={handleSubmit}
 			/>
 		</View>
@@ -157,6 +123,11 @@ const styles = StyleSheet.create({
 		gap: 25,
 		paddingHorizontal: 15
 	},
+	titleWrapper: {
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 5
+	},
 	titleText: {
 		fontSize: 27.5,
 		fontFamily: "Montserrat-Bold",
@@ -165,6 +136,13 @@ const styles = StyleSheet.create({
 		lineHeight: 30,
 		textTransform: "capitalize",
 		width: 235
+	},
+	descriptionText: {
+		fontSize: 13.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary,
+		width: 285,
+		textAlign: "center"
 	},
 	formHeaderContainer: {
 		width: "100%",
@@ -191,38 +169,5 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 7.5
-	},
-	cardContainer: {
-		height: 75,
-		width: "100%",
-		borderRadius: 10,
-		backgroundColor: theme.colors.secondary,
-		paddingHorizontal: 20,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
-	},
-	cardIcon: {
-		height: 25,
-		width: 25
-	},
-	cardTextWrapper: {
-		flexDirection: "column"
-	},
-	cardTitleText: {
-		fontSize: 13.5,
-		fontFamily: "Roboto-Medium",
-		color: "white"
-	},
-	cardDescriptionText: {
-		fontSize: 12.5,
-		fontFamily: "Roboto-Light",
-		color: "white"
-	},
-	inputFieldsWrapper: {
-		width: "100%",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
 	}
 })

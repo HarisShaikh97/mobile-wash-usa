@@ -19,7 +19,6 @@ export default function Page(): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
 		"Roboto-Light": require("../../../../assets/fonts/Roboto/Roboto Light 300.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf"),
 		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
 	})
 

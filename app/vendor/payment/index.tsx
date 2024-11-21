@@ -20,8 +20,12 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmit = useCallback(() => {
-		router.navigate("/vendor/payment/card-details")
-	}, [router])
+		if (selectedOption === "card") {
+			router.navigate("/vendor/payment/card-details")
+		} else if (selectedOption === "paypal") {
+			router.navigate("/vendor/payment/paypal-account")
+		}
+	}, [router, selectedOption])
 
 	return (
 		<View style={styles.container}>
