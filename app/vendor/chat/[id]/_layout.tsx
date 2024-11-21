@@ -14,23 +14,44 @@ import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import BackButton from "../../../../components/back-button/BackButton"
 import ChatInputField from "../../../../components/chat-input-field/ChatInputField"
+import ChatActionsModal from "../../../../components/chat-actions-modal/ChatActionsModal"
+import DeleteChatConfirmationModal from "../../../../components/delete-chat-confirmation-modal/DeleteChatConfirmationModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	const [message, setMessage] = useState<string>("")
+	const [openChatActionModal, setOpenChatActionModal] =
+		useState<boolean>(false)
+	const [
+		openDeleteChatConfirmationModal,
+		setOpenDeleteChatConfirmationModal
+	] = useState<boolean>(false)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
 		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleSubmit = useCallback(() => {}, [])
+	const handleOpenChatActionModal = useCallback((): void => {
+		setOpenChatActionModal(true)
+	}, [setOpenChatActionModal])
+
+	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
 		<KeyboardAvoidingView
 			style={styles.container}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+			<ChatActionsModal
+				openModal={openChatActionModal}
+				setOpenModal={setOpenChatActionModal}
+				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
+			/>
+			<DeleteChatConfirmationModal
+				openModal={openDeleteChatConfirmationModal}
+				setOpenModal={setOpenDeleteChatConfirmationModal}
+			/>
 			<View style={styles.bodyContainer}>
 				<View style={styles.headerContainer}>
 					<View style={styles.horizontalWrapper}>
@@ -58,7 +79,10 @@ export default function Layout(): React.ReactElement | null {
 							)}
 						</View>
 					</View>
-					<TouchableOpacity style={styles.optionsButton}>
+					<TouchableOpacity
+						style={styles.optionsButton}
+						onPress={handleOpenChatActionModal}
+					>
 						<Entypo
 							name="dots-three-vertical"
 							size={15}

@@ -4,24 +4,27 @@ import { Image } from "expo-image"
 import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
-interface NotificationActionsModalProps {
+interface ChatActionsModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	setOpenDeleteChatModal: (value: boolean) => void
 }
 
-export default function NotificationActionsModal({
+export default function ChatActionsModal({
 	openModal,
-	setOpenModal
-}: NotificationActionsModalProps): React.ReactElement | null {
+	setOpenModal,
+	setOpenDeleteChatModal
+}: ChatActionsModalProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
-	const handleDeleteNotification = useCallback((): void => {
+	const handleDeleteChat = useCallback((): void => {
 		setOpenModal(false)
+		setOpenDeleteChatModal(true)
 	}, [openModal])
 
-	const handleTurnOffNotifications = useCallback((): void => {
+	const handleReportChat = useCallback((): void => {
 		setOpenModal(false)
 	}, [openModal])
 
@@ -43,7 +46,7 @@ export default function NotificationActionsModal({
 								styles.actionButtonContainer,
 								styles.deleteButton
 							]}
-							onPress={handleDeleteNotification}
+							onPress={handleDeleteChat}
 						>
 							<Image
 								source={require("../../assets/icons/delete2.svg")}
@@ -64,12 +67,12 @@ export default function NotificationActionsModal({
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
-								styles.turnOffNotificationsButton
+								styles.reportChatButton
 							]}
-							onPress={handleTurnOffNotifications}
+							onPress={handleReportChat}
 						>
 							<Image
-								source={require("../../assets/icons/notification-off.svg")}
+								source={require("../../assets/icons/warning.svg")}
 								style={styles.actionButtonIcon}
 								contentFit="contain"
 							/>
@@ -77,10 +80,10 @@ export default function NotificationActionsModal({
 								<Text
 									style={[
 										styles.actionButtonText,
-										styles.notificationsOffButtonText
+										styles.reportChatButtonText
 									]}
 								>
-									Turn off notifications
+									Report Chat
 								</Text>
 							)}
 						</TouchableOpacity>
@@ -139,13 +142,13 @@ const styles = StyleSheet.create({
 	deleteButtonText: {
 		color: theme.colors.secondary
 	},
-	notificationsOffButtonText: {
+	reportChatButtonText: {
 		color: "white"
 	},
 	deleteButton: {
 		backgroundColor: "#F5F5F5"
 	},
-	turnOffNotificationsButton: {
+	reportChatButton: {
 		backgroundColor: theme.colors.primary
 	}
 })
