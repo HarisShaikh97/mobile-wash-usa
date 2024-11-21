@@ -6,6 +6,7 @@ import JobCard from "../../../../components/job-card/JobCard"
 import BudgetInputField from "../../../../components/budget-input-field/BudgetInputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import BidSubmittedModal from "../../../../components/bid-submitted-modal/BidSubmittedModal"
+import AccountErrorModal from "../../../../components/account-error-modal/AccountErrorModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -14,7 +15,14 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [bidAmount, setBidAmount] = useState<number>(0)
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false)
+	const [openErrorModal, setOpenErrorModal] = useState<boolean>(false)
+	const [errorType, setErrorType] = useState<
+		| "verification-pending"
+		| "verification-rejected"
+		| "payment-required"
+		| null
+	>(null)
 
 	const [fontsLoaded] = useFonts({
 		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
@@ -22,8 +30,9 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	const handleSubmitBid = useCallback((): void => {
-		setOpenModal(true)
-	}, [setOpenModal])
+		setErrorType("verification-pending")
+		setOpenErrorModal(true)
+	}, [setOpenSuccessModal])
 
 	const handleCancel = useCallback((): void => {
 		router.back()
@@ -32,9 +41,16 @@ export default function Page(): React.ReactElement | null {
 	return (
 		<View style={styles.container}>
 			<BidSubmittedModal
-				openModal={openModal}
-				setOpenModal={setOpenModal}
+				openModal={openSuccessModal}
+				setOpenModal={setOpenSuccessModal}
 			/>
+			{errorType && (
+				<AccountErrorModal
+					openModal={openErrorModal}
+					setOpenModal={setOpenErrorModal}
+					type={errorType}
+				/>
+			)}
 			{fontsLoaded && <Text style={styles.titleText}>place a bid</Text>}
 			<JobCard
 				_id={id[0]}

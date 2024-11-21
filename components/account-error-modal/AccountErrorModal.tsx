@@ -5,32 +5,37 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
-interface AccountActionModalProps {
+interface AccountErrorModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
-	type: "delete" | "deactivate"
+	type: "verification-pending" | "verification-rejected" | "payment-required"
 }
 
-export default function AccountActionModal({
+export default function AccountErrorModal({
 	openModal,
 	setOpenModal,
 	type
-}: AccountActionModalProps): React.ReactElement | null {
+}: AccountErrorModalProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
+		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
 		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
 	})
 
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
-		router.navigate("/")
+		if (type === "payment-required") {
+			router.navigate("/vendor/payment")
+		} else {
+			router.back()
+		}
 	}, [openModal, router])
 
 	const handleCancel = useCallback((): void => {
 		setOpenModal(false)
-	}, [openModal])
+		router.back()
+	}, [openModal, router])
 
 	return (
 		<Modal
@@ -44,30 +49,45 @@ export default function AccountActionModal({
 			<View style={styles.modalWrapper}>
 				<View style={styles.modalContainer}>
 					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							This is a permanent action.
+						<Text
+							style={[
+								styles.titleText,
+								type === "verification-pending"
+									? styles.titleTextVerificationPending
+									: type === "verification-rejected"
+									? styles.titleTextVerificationRejected
+									: styles.titleTextPaymentRequired
+							]}
+						>
+							{type === "verification-pending"
+								? "Verification Pending"
+								: type === "verification-rejected"
+								? "Verification Required"
+								: "Payment Method Required"}
 						</Text>
 					)}
 					{fontsLoaded && (
 						<Text style={styles.descriptionText}>
-							{type === "deactivate"
-								? "You can choose to deactivate your account temporarily or delete it permanently. Please select an option below."
-								: "Permanently delete your account. All your data will be erased, and this action cannot be undone."}
+							{type === "verification-pending"
+								? "Your account is not yet verified. The admin is currently reviewing your documents. If you need assistance, please contact support."
+								: type === "verification-rejected"
+								? "Your submitted documents have been rejected. Please upload the required documents again to proceed with job applications."
+								: "You are verified, but you need to add a payment method to proceed with job applications."}
 						</Text>
 					)}
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
-							theme="black"
+							theme="light"
 							title="Cancel"
 							length="half"
 							onPress={handleCancel}
 						/>
 						<FormButton
-							theme="danger"
+							theme="dark"
 							title={
-								type === "deactivate"
-									? "Deactivate Account"
-									: "Delete Account"
+								type === "payment-required"
+									? "Add Payment Method"
+									: "Contact Support"
 							}
 							length="half"
 							onPress={handleProceed}
@@ -94,24 +114,34 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 15,
-		padding: 25
+		paddingVertical: 25,
+		paddingHorizontal: 15
 	},
 	titleText: {
 		maxWidth: 275,
 		fontSize: 27.5,
-		fontFamily: "Montserrat-Bold",
+		fontFamily: "Montserrat-SemiBold",
 		textAlign: "center",
 		textTransform: "capitalize",
 		letterSpacing: 0,
 		lineHeight: 30,
-		color: "#DC3545",
 		marginTop: 10
 	},
+	titleTextVerificationPending: {
+		color: "#FBBA1D"
+	},
+	titleTextVerificationRejected: {
+		color: "#DC3545"
+	},
+	titleTextPaymentRequired: {
+		color: "#EF6C00"
+	},
 	descriptionText: {
-		maxWidth: 300,
+		maxWidth: 350,
 		fontSize: 15,
 		fontFamily: "Roboto-Regular",
 		textAlign: "center",
+		textTransform: "capitalize",
 		color: theme.colors.secondary
 	},
 	actionButtonsWrapper: {
