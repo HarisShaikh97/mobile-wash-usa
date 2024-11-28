@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
@@ -15,12 +14,6 @@ export default function Page(): React.ReactElement | null {
 	const [password, setPassword] = useState<string>("")
 	const [location, setLocation] = useState<string>("")
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-Medium": require("../../../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleSubmit = useCallback((): void => {
 		router.navigate("/auth/sign-up/verification-code")
 	}, [router])
@@ -31,7 +24,7 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
-			{fontsLoaded && <Text style={styles.titleText}>Sign Up</Text>}
+			<Text style={styles.titleText}>Sign Up</Text>
 			<View style={styles.formContainer}>
 				<InputField
 					length="full"
@@ -84,61 +77,51 @@ export default function Page(): React.ReactElement | null {
 					type="text"
 				/>
 				<View style={styles.policyAndTermsTextContainer}>
-					{fontsLoaded && (
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.policyAndTermsTextBlack
+						]}
+					>
+						By signing up, you agree to our
+					</Text>
+					<View style={styles.policyAndTermsTextWrapper}>
+						<TouchableOpacity>
+							<Text
+								style={[
+									styles.policyAndTermsText,
+									styles.policyAndTermsLinkText
+								]}
+							>
+								Terms of Service
+							</Text>
+						</TouchableOpacity>
 						<Text
 							style={[
 								styles.policyAndTermsText,
 								styles.policyAndTermsTextBlack
 							]}
 						>
-							By signing up, you agree to our
+							{" and "}
 						</Text>
-					)}
-					<View style={styles.policyAndTermsTextWrapper}>
 						<TouchableOpacity>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.policyAndTermsText,
-										styles.policyAndTermsLinkText
-									]}
-								>
-									Terms of Service
-								</Text>
-							)}
-						</TouchableOpacity>
-						{fontsLoaded && (
 							<Text
 								style={[
 									styles.policyAndTermsText,
-									styles.policyAndTermsTextBlack
+									styles.policyAndTermsLinkText
 								]}
 							>
-								{" and "}
+								Privacy Policy
 							</Text>
-						)}
-						<TouchableOpacity>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.policyAndTermsText,
-										styles.policyAndTermsLinkText
-									]}
-								>
-									Privacy Policy
-								</Text>
-							)}
 						</TouchableOpacity>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsTextBlack
-								]}
-							>
-								.
-							</Text>
-						)}
+						<Text
+							style={[
+								styles.policyAndTermsText,
+								styles.policyAndTermsTextBlack
+							]}
+						>
+							.
+						</Text>
 					</View>
 				</View>
 				<FormButton
@@ -148,19 +131,13 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 				<View style={styles.loginTextWrapper}>
-					{fontsLoaded && (
-						<Text style={[styles.loginText, styles.loginTextBlack]}>
-							Already have an account?
-						</Text>
-					)}
+					<Text style={[styles.loginText, styles.loginTextBlack]}>
+						Already have an account?
+					</Text>
 					<TouchableOpacity onPress={handleLogin}>
-						{fontsLoaded && (
-							<Text
-								style={[styles.loginText, styles.loginTextBlue]}
-							>
-								Login
-							</Text>
-						)}
+						<Text style={[styles.loginText, styles.loginTextBlue]}>
+							Login
+						</Text>
 					</TouchableOpacity>
 				</View>
 			</View>

@@ -6,14 +6,13 @@ import {
 	StyleSheet
 } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
 import { services, theme } from "../../../utils/constants"
-import { Service, Job } from "../../../utils/types"
+import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
 	const router = useRouter()
@@ -87,13 +86,6 @@ export default function Tab(): React.ReactElement | null {
 		}
 	]
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Bold": require("../../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
-
 	return (
 		<ScrollView
 			style={styles.scrollContainer}
@@ -119,17 +111,13 @@ export default function Tab(): React.ReactElement | null {
 						<NotificationButton theme="light" />
 					</View>
 					<View style={styles.welcomeTextWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.welcomeHeadingText}>
-								Welcome, John
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.welcomeDescriptionText}>
-								Find top-rated service providers for your
-								vehicle, home, and business
-							</Text>
-						)}
+						<Text style={styles.welcomeHeadingText}>
+							Welcome, John
+						</Text>
+						<Text style={styles.welcomeDescriptionText}>
+							Find top-rated service providers for your vehicle,
+							home, and business
+						</Text>
 					</View>
 					<ScrollView
 						style={styles.servicesCardsScrollView}
@@ -151,54 +139,42 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 					</ScrollView>
 					<View style={styles.postJobSectionContainer}>
-						{fontsLoaded && (
-							<Text style={styles.jobTitleText}>Post A Job</Text>
-						)}
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.jobDescriptionText,
-									styles.postJobDescriptionText
-								]}
-							>
-								Quickly post a car wash or maintenance job for
-								vendors to apply to.
-							</Text>
-						)}
+						<Text style={styles.jobTitleText}>Post A Job</Text>
+						<Text
+							style={[
+								styles.jobDescriptionText,
+								styles.postJobDescriptionText
+							]}
+						>
+							Quickly post a car wash or maintenance job for
+							vendors to apply to.
+						</Text>
 						<TouchableOpacity
 							style={styles.postJobButtonContainer}
 							onPress={() => {
 								router.navigate("/user/add-job")
 							}}
 						>
-							{fontsLoaded && (
-								<Text style={styles.postJobButtonText}>
-									Post a New Job
-								</Text>
-							)}
+							<Text style={styles.postJobButtonText}>
+								Post a New Job
+							</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={styles.myJobsSectionContainer}>
 						<View style={styles.myJobsHeaderContainer}>
-							{fontsLoaded && (
-								<Text style={styles.jobTitleText}>My Jobs</Text>
-							)}
+							<Text style={styles.jobTitleText}>My Jobs</Text>
 							<View style={styles.activeJobsTextContainer}>
-								{fontsLoaded && (
-									<Text style={styles.jobDescriptionText}>
-										Your Active Jobs
-									</Text>
-								)}
+								<Text style={styles.jobDescriptionText}>
+									Your Active Jobs
+								</Text>
 								<TouchableOpacity
 									onPress={() => {
 										router.navigate("/user/home/my-jobs")
 									}}
 								>
-									{fontsLoaded && (
-										<Text style={styles.seeAllText}>
-											See All
-										</Text>
-									)}
+									<Text style={styles.seeAllText}>
+										See All
+									</Text>
 								</TouchableOpacity>
 							</View>
 						</View>

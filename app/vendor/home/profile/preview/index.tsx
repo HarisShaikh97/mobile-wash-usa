@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import Ratings from "../../../../../components/ratings/Ratings"
 import FormButton from "../../../../../components/form-button/FormButton"
@@ -13,14 +12,6 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [selectedTab, setSelectedTab] = useState<"about" | "rating">("about")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Bold": require("../../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleEditProfile = useCallback((): void => {
 		router.navigate(`/vendor/edit-account`)
@@ -78,31 +69,19 @@ export default function Page(): React.ReactElement | null {
 					contentFit="cover"
 				/>
 			</View>
-			{fontsLoaded && (
-				<Text style={styles.userNameText}>Michael Guzzi</Text>
-			)}
+			<Text style={styles.userNameText}>Michael Guzzi</Text>
 			<View style={styles.statsWrapper}>
 				<View style={styles.statsCardContainer}>
-					{fontsLoaded && (
-						<Text style={styles.statsQuantityText}>4.5</Text>
-					)}
+					<Text style={styles.statsQuantityText}>4.5</Text>
 					<Ratings ratings={4.5} size={15} />
 				</View>
 				<View style={styles.statsCardContainer}>
-					{fontsLoaded && (
-						<Text style={styles.statsQuantityText}>135</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.statsTitleText}>Reviews</Text>
-					)}
+					<Text style={styles.statsQuantityText}>135</Text>
+					<Text style={styles.statsTitleText}>Reviews</Text>
 				</View>
 				<View style={styles.statsCardContainer}>
-					{fontsLoaded && (
-						<Text style={styles.statsQuantityText}>15</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.statsTitleText}>Jobs Done</Text>
-					)}
+					<Text style={styles.statsQuantityText}>15</Text>
+					<Text style={styles.statsTitleText}>Jobs Done</Text>
 				</View>
 			</View>
 			<FormButton
@@ -126,9 +105,7 @@ export default function Page(): React.ReactElement | null {
 						setSelectedTab("about")
 					}}
 				>
-					{fontsLoaded && (
-						<Text style={styles.tabTitleText}>About</Text>
-					)}
+					<Text style={styles.tabTitleText}>About</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
@@ -144,27 +121,20 @@ export default function Page(): React.ReactElement | null {
 						setSelectedTab("rating")
 					}}
 				>
-					{fontsLoaded && (
-						<Text style={styles.tabTitleText}>Rating</Text>
-					)}
+					<Text style={styles.tabTitleText}>Rating</Text>
 				</TouchableOpacity>
 			</View>
 			{selectedTab === "about" ? (
 				<View style={styles.tabSectionContainer}>
 					<View style={styles.aboutDetailsWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.aboutHeadingText}>
-								About The Vendor
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.aboutDescriptionText}>
-								Michael Guzzi specializes in high-quality
-								vehicle detailing with 5 years of experience in
-								providing car wash, wax, and interior cleaning
-								services.
-							</Text>
-						)}
+						<Text style={styles.aboutHeadingText}>
+							About The Vendor
+						</Text>
+						<Text style={styles.aboutDescriptionText}>
+							Michael Guzzi specializes in high-quality vehicle
+							detailing with 5 years of experience in providing
+							car wash, wax, and interior cleaning services.
+						</Text>
 					</View>
 					<View style={styles.aboutDetailsWrapper}>
 						<View style={styles.vendorDetailsContainer}>
@@ -174,18 +144,12 @@ export default function Page(): React.ReactElement | null {
 								contentFit="contain"
 							/>
 							<View style={styles.vendorTextWrapper}>
-								{fontsLoaded && (
-									<Text
-										style={styles.vendorDetailsHeadingText}
-									>
-										From
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.vendorDetailText}>
-										California, United States
-									</Text>
-								)}
+								<Text style={styles.vendorDetailsHeadingText}>
+									From
+								</Text>
+								<Text style={styles.vendorDetailText}>
+									California, United States
+								</Text>
 							</View>
 						</View>
 						<View style={styles.vendorDetailsContainer}>
@@ -195,18 +159,12 @@ export default function Page(): React.ReactElement | null {
 								contentFit="contain"
 							/>
 							<View style={styles.vendorTextWrapper}>
-								{fontsLoaded && (
-									<Text
-										style={styles.vendorDetailsHeadingText}
-									>
-										Member Since
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.vendorDetailText}>
-										Oct 2023
-									</Text>
-								)}
+								<Text style={styles.vendorDetailsHeadingText}>
+									Member Since
+								</Text>
+								<Text style={styles.vendorDetailText}>
+									Oct 2023
+								</Text>
 							</View>
 						</View>
 						<View style={styles.vendorDetailsContainer}>
@@ -216,18 +174,10 @@ export default function Page(): React.ReactElement | null {
 								contentFit="contain"
 							/>
 							<View style={styles.vendorTextWrapper}>
-								{fontsLoaded && (
-									<Text
-										style={styles.vendorDetailsHeadingText}
-									>
-										Jobs Completed
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.vendorDetailText}>
-										15
-									</Text>
-								)}
+								<Text style={styles.vendorDetailsHeadingText}>
+									Jobs Completed
+								</Text>
+								<Text style={styles.vendorDetailText}>15</Text>
 							</View>
 						</View>
 					</View>
@@ -235,20 +185,14 @@ export default function Page(): React.ReactElement | null {
 			) : (
 				<View style={styles.tabSectionContainer}>
 					<View style={styles.ratingsWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.ratingsHeadingText}>
-								Overall Rating
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.ratingsValueText}>4.5</Text>
-						)}
+						<Text style={styles.ratingsHeadingText}>
+							Overall Rating
+						</Text>
+						<Text style={styles.ratingsValueText}>4.5</Text>
 						<Ratings ratings={4.5} size={35} />
-						{fontsLoaded && (
-							<Text style={styles.ratingsDescriptionText}>
-								Base on 135 Reviews
-							</Text>
-						)}
+						<Text style={styles.ratingsDescriptionText}>
+							Base on 135 Reviews
+						</Text>
 					</View>
 					<View style={styles.reviewCardsWrapper}>
 						{reviews.map(

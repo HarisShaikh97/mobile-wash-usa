@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
@@ -9,12 +8,6 @@ import { theme } from "../../../../utils/constants"
 export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true)
@@ -26,82 +19,66 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>Verify Your Account</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					A verification code has been sent to your email/phone.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Verify Your Account</Text>
+			<Text style={styles.descriptionText}>
+				A verification code has been sent to your email/phone.
+			</Text>
 			<View style={styles.formContainer}>
 				<OTPInput onChangeText={setOTP} />
 				<View style={styles.policyAndTermsTextContainer}>
-					{fontsLoaded && (
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.policyAndTermsTextBlack
+						]}
+					>
+						By verifying your account, you agree to
+					</Text>
+					<View style={styles.policyAndTermsTextWrapper}>
 						<Text
 							style={[
 								styles.policyAndTermsText,
 								styles.policyAndTermsTextBlack
 							]}
 						>
-							By verifying your account, you agree to
+							{"our "}
 						</Text>
-					)}
-					<View style={styles.policyAndTermsTextWrapper}>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsTextBlack
-								]}
-							>
-								{"our "}
-							</Text>
-						)}
 						<TouchableOpacity>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.policyAndTermsText,
-										styles.policyAndTermsLinkText
-									]}
-								>
-									Terms of Service
-								</Text>
-							)}
-						</TouchableOpacity>
-						{fontsLoaded && (
 							<Text
 								style={[
 									styles.policyAndTermsText,
-									styles.policyAndTermsTextBlack
+									styles.policyAndTermsLinkText
 								]}
 							>
-								{" and "}
+								Terms of Service
 							</Text>
-						)}
+						</TouchableOpacity>
+						<Text
+							style={[
+								styles.policyAndTermsText,
+								styles.policyAndTermsTextBlack
+							]}
+						>
+							{" and "}
+						</Text>
 						<TouchableOpacity>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.policyAndTermsText,
-										styles.policyAndTermsLinkText
-									]}
-								>
-									Privacy Policy
-								</Text>
-							)}
-						</TouchableOpacity>
-						{fontsLoaded && (
 							<Text
 								style={[
 									styles.policyAndTermsText,
-									styles.policyAndTermsTextBlack
+									styles.policyAndTermsLinkText
 								]}
 							>
-								.
+								Privacy Policy
 							</Text>
-						)}
+						</TouchableOpacity>
+						<Text
+							style={[
+								styles.policyAndTermsText,
+								styles.policyAndTermsTextBlack
+							]}
+						>
+							.
+						</Text>
 					</View>
 				</View>
 				<FormButton
@@ -112,27 +89,20 @@ export default function Page(): React.ReactElement | null {
 				/>
 			</View>
 			<View style={styles.policyAndTermsTextWrapper}>
-				{fontsLoaded && (
+				<Text
+					style={[styles.policyAndTermsText, styles.resendCodeText]}
+				>
+					Don’t receive code ?
+				</Text>
+				<TouchableOpacity>
 					<Text
 						style={[
 							styles.policyAndTermsText,
-							styles.resendCodeText
+							styles.policyAndTermsLinkText
 						]}
 					>
-						Don’t receive code ?
+						{"	Re-send"}
 					</Text>
-				)}
-				<TouchableOpacity>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.policyAndTermsText,
-								styles.policyAndTermsLinkText
-							]}
-						>
-							{"	Re-send"}
-						</Text>
-					)}
 				</TouchableOpacity>
 			</View>
 		</View>

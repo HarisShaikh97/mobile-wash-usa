@@ -7,7 +7,6 @@ import {
 	StyleSheet
 } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import BackButton from "../back-button/BackButton"
 import NotificationButton from "../notification-button/NotificationButton"
 import { theme } from "../../utils/constants"
@@ -21,10 +20,6 @@ export default function ProfileLayout({
 	children,
 	title
 }: ProfileLayoutProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
-
 	return (
 		<KeyboardAvoidingView
 			style={styles.scrollContainer}
@@ -46,9 +41,7 @@ export default function ProfileLayout({
 							/>
 							<NotificationButton theme="dark" />
 						</View>
-						{fontsLoaded && (
-							<Text style={styles.titleText}>{title}</Text>
-						)}
+						<Text style={styles.titleText}>{title}</Text>
 						<View style={styles.accountSettingsCard}>
 							{children}
 						</View>

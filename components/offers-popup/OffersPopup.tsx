@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Offer } from "../../utils/types"
@@ -13,23 +12,16 @@ export default function OffersPopup({
 }: OffersPopupProps): React.ReactElement | null {
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf")
-	})
-
 	return (
 		<View style={styles.wrapper}>
 			<View style={styles.container}>
-				{fontsLoaded && <Text style={styles.titleText}>Offers</Text>}
+				<Text style={styles.titleText}>Offers</Text>
 				<TouchableOpacity
 					onPress={() => {
 						router.navigate(`/user/home/my-jobs/offers/${job_id}`)
 					}}
 				>
-					{fontsLoaded && (
-						<Text style={styles.seeAllText}>See All</Text>
-					)}
+					<Text style={styles.seeAllText}>See All</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

@@ -1,7 +1,6 @@
 import { useMemo, useCallback } from "react"
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import { RouteProp } from "@react-navigation/native"
 import { theme } from "../../utils/constants"
@@ -18,10 +17,6 @@ export default function NavItem({
 	route,
 	index
 }: NavItemProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
-
 	const options = useMemo(() => {
 		return descriptors[route.key].options
 	}, [descriptors, route.key])
@@ -97,18 +92,16 @@ export default function NavItem({
 				style={styles.navIcon}
 				contentFit="contain"
 			/>
-			{fontsLoaded && (
-				<Text
-					style={[
-						styles.titleText,
-						isFocused
-							? styles.selectedTitleText
-							: styles.UnSelectedTitleText
-					]}
-				>
-					{typeof label === "string" ? label : ""}
-				</Text>
-			)}
+			<Text
+				style={[
+					styles.titleText,
+					isFocused
+						? styles.selectedTitleText
+						: styles.UnSelectedTitleText
+				]}
+			>
+				{typeof label === "string" ? label : ""}
+			</Text>
 		</TouchableOpacity>
 	)
 }

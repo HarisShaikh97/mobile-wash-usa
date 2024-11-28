@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import * as ImagePicker from "expo-image-picker"
 import { DocumentPickerResult } from "expo-document-picker"
@@ -21,10 +20,6 @@ export default function Page(): React.ReactElement | null {
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
 	)
-
-	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const pickImage = useCallback(async (): Promise<void> => {
 		let result: ImagePicker.ImagePickerResult =
@@ -120,12 +115,10 @@ export default function Page(): React.ReactElement | null {
 					/>
 					<View style={styles.documentInputDescriptionTextWrapper}>
 						<View style={styles.bulletMarker} />
-						{fontsLoaded && (
-							<Text style={styles.documentInputDescriptionText}>
-								Upload PDF or Image Documents As Proof Of
-								Business Verification.
-							</Text>
-						)}
+						<Text style={styles.documentInputDescriptionText}>
+							Upload PDF or Image Documents As Proof Of Business
+							Verification.
+						</Text>
 					</View>
 				</View>
 				<InputField
@@ -147,16 +140,14 @@ export default function Page(): React.ReactElement | null {
 					]}
 					onPress={handleCancel}
 				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.cancelButtonText
-							]}
-						>
-							Cancel
-						</Text>
-					)}
+					<Text
+						style={[
+							styles.actionButtonText,
+							styles.cancelButtonText
+						]}
+					>
+						Cancel
+					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
@@ -165,16 +156,11 @@ export default function Page(): React.ReactElement | null {
 					]}
 					onPress={handleSave}
 				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.saveButtonText
-							]}
-						>
-							Save
-						</Text>
-					)}
+					<Text
+						style={[styles.actionButtonText, styles.saveButtonText]}
+					>
+						Save
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

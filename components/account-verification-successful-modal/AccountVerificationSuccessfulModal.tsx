@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -16,12 +15,6 @@ export default function AccountVerificationSuccessfulModal({
 	setOpenModal
 }: AccountVerificationModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
@@ -50,22 +43,15 @@ export default function AccountVerificationSuccessfulModal({
 							alt="icon"
 						/>
 						<View style={styles.modalBodyContainer}>
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Your Account Has Been
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Successfully Verified!
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									You Can Now Log In And Start Using The
-									Platform
-								</Text>
-							)}
+							<Text style={styles.descriptionText}>
+								Your Account Has Been
+							</Text>
+							<Text style={styles.titleText}>
+								Successfully Verified!
+							</Text>
+							<Text style={styles.descriptionText}>
+								You Can Now Log In And Start Using The Platform
+							</Text>
 						</View>
 						<FormButton
 							length="full"

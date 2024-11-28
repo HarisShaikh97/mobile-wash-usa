@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import InputField from "../input-field/InputField"
 import RangeInput from "../range-input/RangeInput"
 import { theme, services } from "../../utils/constants"
@@ -22,12 +21,6 @@ export default function JobsFilterModal({
 	const [sortType, setSortType] = useState<SelectOption | null>(null)
 	const [minValue, setMinValue] = useState<number>(20)
 	const [maxValue, setMaxValue] = useState<number>(LIMIT)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const sortOptions: SelectOption[] = [
 		{
@@ -58,20 +51,16 @@ export default function JobsFilterModal({
 					contentFit="fill"
 				>
 					<View style={styles.modalHeaderContainer}>
-						{fontsLoaded && (
-							<Text style={styles.titleText}>Filter</Text>
-						)}
+						<Text style={styles.titleText}>Filter</Text>
 						<TouchableOpacity
 							style={styles.filterButtonContainer}
 							onPress={() => {
 								setOpenModal(false)
 							}}
 						>
-							{fontsLoaded && (
-								<Text style={styles.filterButtonContainerText}>
-									Reset
-								</Text>
-							)}
+							<Text style={styles.filterButtonContainerText}>
+								Reset
+							</Text>
 						</TouchableOpacity>
 					</View>
 					<View style={styles.formContainer}>

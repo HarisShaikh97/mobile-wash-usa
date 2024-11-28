@@ -8,7 +8,6 @@ import {
 	StyleSheet
 } from "react-native"
 import { ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import InputField from "../../../components/input-field/InputField"
@@ -18,10 +17,6 @@ import { SelectOption } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf")
-	})
 
 	const [jobTitle, setJobTitle] = useState<string>("")
 	const [jobType, setJobType] = useState<SelectOption | null>(null)
@@ -49,11 +44,9 @@ export default function Page(): React.ReactElement | null {
 								backgroundColor="#F5F5F5"
 								borderColor="transparent"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Describe Your Job Needs
-								</Text>
-							)}
+							<Text style={styles.titleText}>
+								Describe Your Job Needs
+							</Text>
 						</View>
 					</ImageBackground>
 					<View style={styles.bodyContainer}>

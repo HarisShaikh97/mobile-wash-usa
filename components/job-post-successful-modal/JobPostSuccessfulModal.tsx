@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -16,12 +15,6 @@ export default function JobPostSuccessfulModal({
 	setOpenModal
 }: JobPostModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleGoToDashboard = useCallback((): void => {
 		setOpenModal(false)
@@ -56,17 +49,13 @@ export default function JobPostSuccessfulModal({
 							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Job Posted Successfully!
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Your job has been posted, and nearby vendors
-									can now apply!
-								</Text>
-							)}
+							<Text style={styles.titleText}>
+								Job Posted Successfully!
+							</Text>
+							<Text style={styles.descriptionText}>
+								Your job has been posted, and nearby vendors can
+								now apply!
+							</Text>
 						</View>
 						<View style={styles.formButtonsWrapper}>
 							<FormButton

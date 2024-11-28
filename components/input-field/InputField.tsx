@@ -6,7 +6,6 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { useFonts } from "expo-font"
 import * as DocumentPicker from "expo-document-picker"
 import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import { theme } from "../../utils/constants"
@@ -65,10 +64,6 @@ export default function InputField(
 	)
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
-	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
-
 	const handleFileUpload = useCallback(async () => {
 		if (type === "file") {
 			try {
@@ -93,9 +88,7 @@ export default function InputField(
 				{ zIndex: props.zIndex || 0 }
 			]}
 		>
-			{fontsLoaded && (
-				<Text style={styles.inputFieldTitleText}>{title}</Text>
-			)}
+			<Text style={styles.inputFieldTitleText}>{title}</Text>
 			<View
 				style={[
 					styles.inputFieldContainer,

@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useLocalSearchParams } from "expo-router"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import MessageCard from "../../../../components/message-card/MessageCard"
@@ -8,12 +7,6 @@ import { Message } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Bold": require("../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const messages: Message[] = [
 		{
@@ -52,33 +45,27 @@ export default function Page(): React.ReactElement | null {
 		<View style={styles.bodyContainer}>
 			<View style={styles.jobCard}>
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text
-							style={styles.jobTitleText}
-							numberOfLines={2}
-							ellipsizeMode="tail"
-						>
-							Car Wash Service Needed
-						</Text>
-					)}
-					{fontsLoaded && <Text style={styles.amountText}>$500</Text>}
-				</View>
-				{fontsLoaded && (
 					<Text
-						style={styles.jobDescriptionText}
+						style={styles.jobTitleText}
 						numberOfLines={2}
 						ellipsizeMode="tail"
 					>
-						Full exterior and interior wash needed for SUV.
-						Preferably before noon...
+						Car Wash Service Needed
 					</Text>
-				)}
+					<Text style={styles.amountText}>$500</Text>
+				</View>
+				<Text
+					style={styles.jobDescriptionText}
+					numberOfLines={2}
+					ellipsizeMode="tail"
+				>
+					Full exterior and interior wash needed for SUV. Preferably
+					before noon...
+				</Text>
 			</View>
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
-				{fontsLoaded && (
-					<Text style={styles.chatSectionTitleText}>Yesterday</Text>
-				)}
+				<Text style={styles.chatSectionTitleText}>Yesterday</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
 			{messages.map((message, index): React.ReactElement | null => {
@@ -94,9 +81,7 @@ export default function Page(): React.ReactElement | null {
 			})}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
-				{fontsLoaded && (
-					<Text style={styles.chatSectionTitleText}>Today</Text>
-				)}
+				<Text style={styles.chatSectionTitleText}>Today</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
 			{messages.map((message, index): React.ReactElement | null => {

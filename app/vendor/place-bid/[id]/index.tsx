@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import JobCard from "../../../../components/job-card/JobCard"
 import BudgetInput from "../../../../components/budget-input/BudgetInput"
@@ -24,11 +23,6 @@ export default function Page(): React.ReactElement | null {
 		| null
 	>(null)
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Bold": require("../../../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
-
 	const handleSubmitBid = useCallback((): void => {
 		setErrorType("verification-pending")
 		setOpenErrorModal(true)
@@ -51,7 +45,7 @@ export default function Page(): React.ReactElement | null {
 					type={errorType}
 				/>
 			)}
-			{fontsLoaded && <Text style={styles.titleText}>place a bid</Text>}
+			<Text style={styles.titleText}>place a bid</Text>
 			<JobCard
 				_id={id[0]}
 				title="Car Wash Service Needed"
@@ -63,11 +57,7 @@ export default function Page(): React.ReactElement | null {
 				showActionButtons={false}
 			/>
 			<View style={styles.bidAmountWrapper}>
-				{fontsLoaded && (
-					<Text style={styles.bidAmountTitleText}>
-						Your Bid Amount
-					</Text>
-				)}
+				<Text style={styles.bidAmountTitleText}>Your Bid Amount</Text>
 				<BudgetInput value={bidAmount} setValue={setBidAmount} />
 			</View>
 			<View style={styles.actionButtonsWrapper}>

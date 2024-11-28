@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
@@ -12,12 +11,6 @@ export default function Page(): React.ReactElement | null {
 
 	const [userName, setUserName] = useState<string>("")
 	const [password, setPassword] = useState<string>("")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const handleLogin = useCallback((): void => {
 		router.navigate("/vendor/home")
@@ -33,16 +26,12 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
-			{fontsLoaded && (
-				<Text style={styles.titleText} numberOfLines={2}>
-					Welcome Back!
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					Please log in to your account
-				</Text>
-			)}
+			<Text style={styles.titleText} numberOfLines={2}>
+				Welcome Back!
+			</Text>
+			<Text style={styles.descriptionText}>
+				Please log in to your account
+			</Text>
 			<View style={styles.formContainer}>
 				<InputField
 					length="full"
@@ -74,11 +63,9 @@ export default function Page(): React.ReactElement | null {
 					style={styles.forgetPasswordButton}
 					onPress={handleForgetPassword}
 				>
-					{fontsLoaded && (
-						<Text style={styles.forgetPasswordButtonText}>
-							Forgot Password?
-						</Text>
-					)}
+					<Text style={styles.forgetPasswordButtonText}>
+						Forgot Password?
+					</Text>
 				</TouchableOpacity>
 			</View>
 			<TouchableOpacity style={styles.socialLoginButton}>
@@ -88,11 +75,9 @@ export default function Page(): React.ReactElement | null {
 					style={styles.socialIcon}
 					contentFit="contain"
 				/>
-				{fontsLoaded && (
-					<Text style={styles.socialLoginButtonText}>
-						Continue With Google
-					</Text>
-				)}
+				<Text style={styles.socialLoginButtonText}>
+					Continue With Google
+				</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.socialLoginButton}>
 				<Image
@@ -101,26 +86,18 @@ export default function Page(): React.ReactElement | null {
 					style={styles.socialIcon}
 					contentFit="contain"
 				/>
-				{fontsLoaded && (
-					<Text style={styles.socialLoginButtonText}>
-						Continue With Facebook
-					</Text>
-				)}
+				<Text style={styles.socialLoginButtonText}>
+					Continue With Facebook
+				</Text>
 			</TouchableOpacity>
 			<View style={styles.signUpTextWrapper}>
-				{fontsLoaded && (
-					<Text style={[styles.signUpText, styles.signUpTextBlack]}>
-						New to Mobile Wash USA?
-					</Text>
-				)}
+				<Text style={[styles.signUpText, styles.signUpTextBlack]}>
+					New to Mobile Wash USA?
+				</Text>
 				<TouchableOpacity onPress={handleSignUp}>
-					{fontsLoaded && (
-						<Text
-							style={[styles.signUpText, styles.signUpTextBlue]}
-						>
-							Sign Up
-						</Text>
-					)}
+					<Text style={[styles.signUpText, styles.signUpTextBlue]}>
+						Sign Up
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

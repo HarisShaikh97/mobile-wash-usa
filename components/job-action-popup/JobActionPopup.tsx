@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface JobActionPopupProps {
@@ -11,14 +10,10 @@ export default function JobActionPopup({
 	title,
 	onPress
 }: JobActionPopupProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
-
 	return (
 		<TouchableOpacity style={styles.wrapper} onPress={onPress}>
 			<View style={styles.container}>
-				{fontsLoaded && <Text style={styles.titleText}>{title}</Text>}
+				<Text style={styles.titleText}>{title}</Text>
 			</View>
 		</TouchableOpacity>
 	)

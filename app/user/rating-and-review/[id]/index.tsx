@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useLocalSearchParams } from "expo-router"
 import RatingsInput from "../../../../components/ratings-input/RatingsInput"
 import InputField from "../../../../components/input-field/InputField"
@@ -15,13 +14,6 @@ export default function Page(): React.ReactElement | null {
 	const [ratings, setRatings] = useState<number>(0)
 	const [review, setReview] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Bold": require("../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true)
@@ -38,34 +30,24 @@ export default function Page(): React.ReactElement | null {
 				style={styles.checkIcon}
 				contentFit="contain"
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>
-					Your Job Has Been Completed!
-				</Text>
-			)}
+			<Text style={styles.titleText}>Your Job Has Been Completed!</Text>
 			<View style={styles.jobCardContainer}>
-				{fontsLoaded && (
-					<Text
-						style={styles.jobTitleText}
-						numberOfLines={2}
-						ellipsizeMode="tail"
-					>
-						Car Wash Service Needed
-					</Text>
-				)}
-				{fontsLoaded && <Text style={styles.budgetText}>$500</Text>}
+				<Text
+					style={styles.jobTitleText}
+					numberOfLines={2}
+					ellipsizeMode="tail"
+				>
+					Car Wash Service Needed
+				</Text>
+				<Text style={styles.budgetText}>$500</Text>
 			</View>
-			{fontsLoaded && (
-				<Text style={styles.experienceTitleText}>
-					How was your experience?
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					Your feedback helps us ensure quality service. Rate and
-					review below.
-				</Text>
-			)}
+			<Text style={styles.experienceTitleText}>
+				How was your experience?
+			</Text>
+			<Text style={styles.descriptionText}>
+				Your feedback helps us ensure quality service. Rate and review
+				below.
+			</Text>
 			<RatingsInput size={35} ratings={ratings} setRatings={setRatings} />
 			<View style={styles.reviewBoxWrapper}>
 				<InputField

@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import JobCompletionSuccessfulModal from "../../../../components/job-completion-successful-modal/JobCompletionSuccessfulModal"
@@ -11,11 +10,6 @@ export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("")
 	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false)
 	const [openInvalidModal, setOpenInvalidModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenInvalidModal(true)
@@ -31,22 +25,11 @@ export default function Page(): React.ReactElement | null {
 				openModal={openInvalidModal}
 				setOpenModal={setOpenInvalidModal}
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>
-					Job Completion Verification
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text
-					style={[
-						styles.descriptionText,
-						styles.descriptionTextLarge
-					]}
-				>
-					Please enter the OTP code provided by the customer to
-					confirm the completion of the job.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Job Completion Verification</Text>
+			<Text style={[styles.descriptionText, styles.descriptionTextLarge]}>
+				Please enter the OTP code provided by the customer to confirm
+				the completion of the job.
+			</Text>
 			<View style={styles.formContainer}>
 				<OTPInput onChangeText={setOTP} />
 				<FormButton
@@ -56,17 +39,10 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 			</View>
-			{fontsLoaded && (
-				<Text
-					style={[
-						styles.descriptionText,
-						styles.descriptionTextSmall
-					]}
-				>
-					Once you enter the correct OTP, the job will be marked as
-					complete, and payment will be processed if applicable.
-				</Text>
-			)}
+			<Text style={[styles.descriptionText, styles.descriptionTextSmall]}>
+				Once you enter the correct OTP, the job will be marked as
+				complete, and payment will be processed if applicable.
+			</Text>
 		</View>
 	)
 }

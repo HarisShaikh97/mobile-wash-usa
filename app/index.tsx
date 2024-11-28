@@ -2,7 +2,6 @@ import { useState, useCallback, useMemo } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter, useFocusEffect } from "expo-router"
-import { useFonts } from "expo-font"
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
@@ -21,12 +20,6 @@ export default function Page(): React.ReactElement | null {
 	const [nextImageIndex, setNextImageIndex] = useState<number>(1)
 
 	const opacity = useSharedValue<number>(1)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const updateCurrentImageIndex = useCallback((): void => {
 		setCurrentImageIndex(
@@ -117,45 +110,29 @@ export default function Page(): React.ReactElement | null {
 					end={{ x: 0, y: 0.75 }}
 					style={styles.backgroundGradient}
 				>
-					{fontsLoaded && (
-						<Text style={styles.salutationText}>
-							Let’s Get Started
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText} numberOfLines={4}>
-							Please Log In Or Sign Up To Find The Best Service
-							Providers For All Your Vehicle, Residential, And
-							Commercial Wash And Maintenance Needs.
-						</Text>
-					)}
+					<Text style={styles.salutationText}>Let’s Get Started</Text>
+					<Text style={styles.descriptionText} numberOfLines={4}>
+						Please Log In Or Sign Up To Find The Best Service
+						Providers For All Your Vehicle, Residential, And
+						Commercial Wash And Maintenance Needs.
+					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<TouchableOpacity
 							style={[styles.actionButton, styles.loginButton]}
 							onPress={handleLogin}
 						>
-							{fontsLoaded && (
-								<Text style={styles.actionButtonText}>
-									Login
-								</Text>
-							)}
+							<Text style={styles.actionButtonText}>Login</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={[styles.actionButton, styles.signUpButton]}
 							onPress={handleSignUp}
 						>
-							{fontsLoaded && (
-								<Text style={styles.actionButtonText}>
-									Sign Up
-								</Text>
-							)}
+							<Text style={styles.actionButtonText}>Sign Up</Text>
 						</TouchableOpacity>
 					</View>
-					{fontsLoaded && (
-						<Text style={styles.socialLoginText}>
-							Or Via Google And Facebook
-						</Text>
-					)}
+					<Text style={styles.socialLoginText}>
+						Or Via Google And Facebook
+					</Text>
 					<View style={styles.socialLoginButtonsWrapper}>
 						<TouchableOpacity style={styles.socialLoginButton}>
 							<Image

@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import Ratings from "../ratings/Ratings"
 import { theme } from "../../utils/constants"
 import { Review } from "../../utils/types"
@@ -24,25 +23,18 @@ export default function ReviewCard({
 	time,
 	alignSelf
 }: ReviewCardProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<View style={[styles.cardContainer, { alignSelf: alignSelf }]}>
 			<Image
-				source={require("../../assets/images/profile2.png")}
+				source={image}
 				style={styles.profileImage}
 				contentFit="cover"
 			/>
 			<View style={styles.reviewDetailsContainer}>
-				{fontsLoaded && (
-					<Text style={styles.userNameText}>{userName}</Text>
-				)}
-				{fontsLoaded && <Text style={styles.reviewText}>{review}</Text>}
+				<Text style={styles.userNameText}>{userName}</Text>
+				<Text style={styles.reviewText}>{review}</Text>
 				<Ratings ratings={rating} size={15} />
-				{fontsLoaded && <Text style={styles.reviewText}>{time}</Text>}
+				<Text style={styles.reviewText}>{time}</Text>
 			</View>
 		</View>
 	)

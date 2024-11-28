@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter, useLocalSearchParams } from "expo-router"
 import HorizontalSeparator from "../../../../../components/horizontal-separator/HorizontalSeparator"
 import OfferCard from "../../../../../components/offer-card/OfferCard"
@@ -12,14 +11,6 @@ export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
 
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Bold": require("../../../../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const offers: Offer[] = [
 		{
@@ -86,15 +77,13 @@ export default function Page(): React.ReactElement | null {
 	return (
 		<View style={styles.bodyContainer}>
 			<View style={styles.jobTitleSection}>
-				{fontsLoaded && (
-					<Text
-						style={styles.titleText}
-						numberOfLines={2}
-						ellipsizeMode="tail"
-					>
-						Car Wash Service Needed
-					</Text>
-				)}
+				<Text
+					style={styles.titleText}
+					numberOfLines={2}
+					ellipsizeMode="tail"
+				>
+					Car Wash Service Needed
+				</Text>
 				<View style={styles.jobDateTimeWrapper}>
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
@@ -102,11 +91,9 @@ export default function Page(): React.ReactElement | null {
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.sectionDescriptionText}>
-								John Doe
-							</Text>
-						)}
+						<Text style={styles.sectionDescriptionText}>
+							John Doe
+						</Text>
 					</View>
 					<View style={styles.circularSeparator} />
 					<View style={styles.jobDateTimeTextIconWrapper}>
@@ -115,11 +102,9 @@ export default function Page(): React.ReactElement | null {
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.sectionDescriptionText}>
-								28, Oct 2024
-							</Text>
-						)}
+						<Text style={styles.sectionDescriptionText}>
+							28, Oct 2024
+						</Text>
 					</View>
 					<View style={styles.circularSeparator} />
 					<View style={styles.jobDateTimeTextIconWrapper}>
@@ -128,54 +113,39 @@ export default function Page(): React.ReactElement | null {
 							style={styles.jobDateTimeTextIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.sectionDescriptionText}>
-								10am to 1pm
-							</Text>
-						)}
+						<Text style={styles.sectionDescriptionText}>
+							10am to 1pm
+						</Text>
 					</View>
 				</View>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
 			<View style={styles.budgetSection}>
-				{fontsLoaded && (
-					<Text style={styles.budgetTitleText}>Budget</Text>
-				)}
-				{fontsLoaded && (
-					<Text style={styles.budgetPriceText}>$500</Text>
-				)}
+				<Text style={styles.budgetTitleText}>Budget</Text>
+				<Text style={styles.budgetPriceText}>$500</Text>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
 			<View style={styles.sectionContainer}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>Job Description</Text>
-				)}
-				{fontsLoaded && (
-					<Text style={styles.sectionDescriptionText}>
-						Lorem Ipsum is simply dummy text of the printing and
-						typesetting industry. Lorem Ipsum has been the
-						industry's standard dummy text ever since the 1500s,
-						when an unknown printer took a galley of type and
-						scrambled it to make a type specimen book. Lorem Ipsum
-						is simply dummy text of the printing and typesetting
-						industry. Lorem Ipsum has been the industry's standard
-						dummy text ever since the 1500s, when an unknown printer
-						took a galley of type and scrambled it to make a type
-						specimen book.
-					</Text>
-				)}
+				<Text style={styles.sectionTitleText}>Job Description</Text>
+				<Text style={styles.sectionDescriptionText}>
+					Lorem Ipsum is simply dummy text of the printing and
+					typesetting industry. Lorem Ipsum has been the industry's
+					standard dummy text ever since the 1500s, when an unknown
+					printer took a galley of type and scrambled it to make a
+					type specimen book. Lorem Ipsum is simply dummy text of the
+					printing and typesetting industry. Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s, when an
+					unknown printer took a galley of type and scrambled it to
+					make a type specimen book.
+				</Text>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
 			<View style={styles.sectionContainer}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>Location</Text>
-				)}
+				<Text style={styles.sectionTitleText}>Location</Text>
 				<View style={styles.mapViewWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.locationText}>
-							Overlook Avenue, Belleville, NJ, USA
-						</Text>
-					)}
+					<Text style={styles.locationText}>
+						Overlook Avenue, Belleville, NJ, USA
+					</Text>
 					<Image
 						source={require("../../../../../assets/images/map.png")}
 						style={styles.mapView}
@@ -184,9 +154,7 @@ export default function Page(): React.ReactElement | null {
 				</View>
 			</View>
 			<View style={styles.gallerySection}>
-				{fontsLoaded && (
-					<Text style={styles.galleryTitleText}>Gallery</Text>
-				)}
+				<Text style={styles.galleryTitleText}>Gallery</Text>
 				<View style={styles.galleryImagesWrapper}>
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
@@ -228,11 +196,9 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						>
 							<View style={styles.seeMoreButton}>
-								{fontsLoaded && (
-									<Text style={styles.seeMoreButtonText}>
-										see more
-									</Text>
-								)}
+								<Text style={styles.seeMoreButtonText}>
+									see more
+								</Text>
 							</View>
 						</ImageBackground>
 					</TouchableOpacity>
@@ -240,11 +206,7 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
 			<View style={styles.offersSection}>
-				{fontsLoaded && (
-					<Text style={styles.offersTitleText}>
-						Offers By Vendors
-					</Text>
-				)}
+				<Text style={styles.offersTitleText}>Offers By Vendors</Text>
 				<View style={styles.offerCardsWrapper}>
 					{offers.map((offer, index): React.ReactElement | null => {
 						return (

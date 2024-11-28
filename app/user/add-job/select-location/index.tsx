@@ -7,17 +7,12 @@ import {
 	StyleSheet
 } from "react-native"
 import { ImageBackground, Image } from "expo-image"
-import { useFonts } from "expo-font"
 import BackButton from "../../../../components/back-button/BackButton"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const [location, setLocation] = useState<string>("")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../../../assets/fonts/Montserrat/Montserrat Medium 500.ttf")
-	})
 
 	return (
 		<ImageBackground
@@ -39,14 +34,12 @@ export default function Page(): React.ReactElement | null {
 						style={styles.locationIcon}
 						contentFit="contain"
 					/>
-					{fontsLoaded && (
-						<TextInput
-							value={location}
-							onChangeText={setLocation}
-							placeholder="California, USA"
-							style={styles.textField}
-						/>
-					)}
+					<TextInput
+						value={location}
+						onChangeText={setLocation}
+						placeholder="California, USA"
+						style={styles.textField}
+					/>
 				</View>
 				{location.length > 0 && (
 					<View style={styles.searchResultsList}>
@@ -57,11 +50,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.locationIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.textField}>
-									Current Location
-								</Text>
-							)}
+							<Text style={styles.textField}>
+								Current Location
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.horizontalWrapper}>
 							<Image
@@ -69,11 +60,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.locationIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.textField}>
-									California, USA
-								</Text>
-							)}
+							<Text style={styles.textField}>
+								California, USA
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.horizontalWrapper}>
 							<Image
@@ -81,11 +70,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.locationIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.textField}>
-									California, USA
-								</Text>
-							)}
+							<Text style={styles.textField}>
+								California, USA
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.horizontalWrapper}>
 							<Image
@@ -93,11 +80,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.locationIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.textField}>
-									California, USA
-								</Text>
-							)}
+							<Text style={styles.textField}>
+								California, USA
+							</Text>
 						</TouchableOpacity>
 					</View>
 				)}

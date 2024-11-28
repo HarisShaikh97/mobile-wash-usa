@@ -6,7 +6,6 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { useFonts } from "expo-font"
 import BackButton from "../../../../components/back-button/BackButton"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import SearchBar from "../../../../components/search-bar/SearchBar"
@@ -114,11 +113,6 @@ export default function Page(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false)
 	const [selectedTab, setSelectedTab] = useState<Tab>(tabs[0])
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
-
 	return (
 		<ScrollView
 			style={styles.scrollView}
@@ -134,9 +128,7 @@ export default function Page(): React.ReactElement | null {
 					<NotificationButton theme="dark" />
 				</View>
 				<View style={styles.bodyContainer}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>My Jobs</Text>
-					)}
+					<Text style={styles.titleText}>My Jobs</Text>
 					<SearchBar
 						placeholder="Search"
 						color="#F5F5F5"
@@ -160,18 +152,16 @@ export default function Page(): React.ReactElement | null {
 									}}
 									key={index}
 								>
-									{fontsLoaded && (
-										<Text
-											style={[
-												styles.tabText,
-												tab === selectedTab
-													? styles.selectedTabText
-													: styles.unSelectedTabText
-											]}
-										>
-											{tab}
-										</Text>
-									)}
+									<Text
+										style={[
+											styles.tabText,
+											tab === selectedTab
+												? styles.selectedTabText
+												: styles.unSelectedTabText
+										]}
+									>
+										{tab}
+									</Text>
 								</TouchableOpacity>
 							)
 						})}

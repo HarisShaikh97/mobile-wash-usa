@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Chat } from "../../utils/types"
@@ -27,12 +26,6 @@ export default function ChatCard({
 	const router = useRouter()
 	const pathname = usePathname()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Light": require("../../assets/fonts/Roboto/Roboto Light 300.ttf")
-	})
-
 	return (
 		<TouchableOpacity
 			style={styles.container}
@@ -54,24 +47,20 @@ export default function ChatCard({
 					{online && <View style={styles.onlineMarker} />}
 				</View>
 				<View style={styles.verticalWrapper}>
-					{fontsLoaded && (
-						<Text
-							style={styles.userNameText}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							{fullName}
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={styles.lastMessageText}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							{lastMessage}
-						</Text>
-					)}
+					<Text
+						style={styles.userNameText}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						{fullName}
+					</Text>
+					<Text
+						style={styles.lastMessageText}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						{lastMessage}
+					</Text>
 				</View>
 			</View>
 			<View
@@ -80,22 +69,18 @@ export default function ChatCard({
 					styles.verticallyCenteredWrapper
 				]}
 			>
-				{fontsLoaded && (
-					<Text
-						style={styles.lastMessageTimeText}
-						numberOfLines={1}
-						ellipsizeMode="tail"
-					>
-						{lastMessageTime}
-					</Text>
-				)}
+				<Text
+					style={styles.lastMessageTimeText}
+					numberOfLines={1}
+					ellipsizeMode="tail"
+				>
+					{lastMessageTime}
+				</Text>
 				{unreadMessages > 0 ? (
 					<View style={styles.unreadMessagesContainer}>
-						{fontsLoaded && (
-							<Text style={styles.unreadMessagesCount}>
-								{unreadMessages}
-							</Text>
-						)}
+						<Text style={styles.unreadMessagesCount}>
+							{unreadMessages}
+						</Text>
 					</View>
 				) : (
 					<View style={styles.emptyView} />

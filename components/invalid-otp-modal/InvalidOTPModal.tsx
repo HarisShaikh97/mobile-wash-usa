@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
@@ -14,11 +13,6 @@ export default function InvalidOTPModal({
 	openModal,
 	setOpenModal
 }: InvalidOTPModalProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
 	}, [openModal])
@@ -46,17 +40,11 @@ export default function InvalidOTPModal({
 							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Invalid OTP
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									The OTP you entered is incorrect. Please try
-									again.
-								</Text>
-							)}
+							<Text style={styles.titleText}>Invalid OTP</Text>
+							<Text style={styles.descriptionText}>
+								The OTP you entered is incorrect. Please try
+								again.
+							</Text>
 						</View>
 						<View style={styles.formButtonsWrapper}>
 							<FormButton

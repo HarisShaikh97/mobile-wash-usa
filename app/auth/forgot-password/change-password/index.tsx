@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
@@ -10,11 +9,6 @@ export default function Page(): React.ReactElement | null {
 	const [newPassword, setNewPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(!openModal)
@@ -26,14 +20,10 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>Change Password</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					Create a new password below to access your account.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Change Password</Text>
+			<Text style={styles.descriptionText}>
+				Create a new password below to access your account.
+			</Text>
 			<View style={styles.formContainer}>
 				<InputField
 					length="full"

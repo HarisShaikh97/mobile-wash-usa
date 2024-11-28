@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
@@ -11,13 +10,6 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Montserrat-Medium": require("../../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback(() => {
 		if (selectedOption === "card") {
@@ -31,19 +23,15 @@ export default function Page(): React.ReactElement | null {
 		<View style={styles.container}>
 			<View style={styles.formContainer}>
 				<View style={styles.titleWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							Select Your Payment Method
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText}>
-							To receive payments for your services, please select
-							your preferred payment method.
-						</Text>
-					)}
+					<Text style={styles.titleText}>
+						Select Your Payment Method
+					</Text>
+					<Text style={styles.descriptionText}>
+						To receive payments for your services, please select
+						your preferred payment method.
+					</Text>
 				</View>
-				{fontsLoaded && <Text style={styles.headingText}>Options</Text>}
+				<Text style={styles.headingText}>Options</Text>
 				<View style={styles.paymentOptionsWrapper}>
 					<TouchableOpacity
 						style={styles.paymentOptionContainer}
@@ -57,11 +45,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.paymentOptionIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.paymentOptionTitleText}>
-									Credit Card/Debit Card
-								</Text>
-							)}
+							<Text style={styles.paymentOptionTitleText}>
+								Credit Card/Debit Card
+							</Text>
 						</View>
 						<View
 							style={[
@@ -88,11 +74,9 @@ export default function Page(): React.ReactElement | null {
 								style={styles.paymentOptionIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.paymentOptionTitleText}>
-									Paypal
-								</Text>
-							)}
+							<Text style={styles.paymentOptionTitleText}>
+								Paypal
+							</Text>
 						</View>
 						<View
 							style={[

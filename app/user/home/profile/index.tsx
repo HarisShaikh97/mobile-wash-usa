@@ -2,7 +2,6 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
 import ProfileImageBox from "../../../../components/profile-image-box/ProfileImageBox"
@@ -18,33 +17,23 @@ export default function Tab(): React.ReactElement | null {
 		notificationsEnabled.value = !notificationsEnabled.value
 	}
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
-
 	const handleLogout = useCallback((): void => {
 		router.navigate("/")
 	}, [router])
 
 	return (
 		<View style={styles.accountSettingsSection}>
-			{fontsLoaded && <Text style={styles.headingText}>Account</Text>}
+			<Text style={styles.headingText}>Account</Text>
 			<View style={styles.profileTab}>
 				<View style={styles.profileIconWrapper}>
 					<ProfileImageBox
 						source={require("../../../../assets/images/profile.png")}
 					/>
 					<View style={styles.profileTextWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.usernameText}>John Doe</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.personalInfoText}>
-								Personal Info
-							</Text>
-						)}
+						<Text style={styles.usernameText}>John Doe</Text>
+						<Text style={styles.personalInfoText}>
+							Personal Info
+						</Text>
 					</View>
 				</View>
 				<TouchableOpacity
@@ -60,7 +49,7 @@ export default function Tab(): React.ReactElement | null {
 					/>
 				</TouchableOpacity>
 			</View>
-			{fontsLoaded && <Text style={styles.headingText}>Setting</Text>}
+			<Text style={styles.headingText}>Setting</Text>
 			<View style={styles.settingOptionContainer}>
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
@@ -69,11 +58,9 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Edit Profile
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Edit Profile
+						</Text>
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
@@ -95,11 +82,7 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Security
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>Security</Text>
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
@@ -121,11 +104,9 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Account Status
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Account Status
+						</Text>
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
@@ -147,11 +128,9 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Notification
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Notification
+						</Text>
 					</View>
 					<Switch
 						value={notificationsEnabled}
@@ -167,11 +146,9 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Help & Support
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Help & Support
+						</Text>
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
@@ -193,11 +170,9 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Privacy Policy
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Privacy Policy
+						</Text>
 					</View>
 					<TouchableOpacity
 						style={styles.nextButton}
@@ -221,9 +196,7 @@ export default function Tab(): React.ReactElement | null {
 						style={styles.settingOptionIcon}
 						contentFit="contain"
 					/>
-					{fontsLoaded && (
-						<Text style={styles.settingOptionText}>Log Out</Text>
-					)}
+					<Text style={styles.settingOptionText}>Log Out</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

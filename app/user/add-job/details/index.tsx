@@ -9,7 +9,6 @@ import {
 	StyleSheet
 } from "react-native"
 import { ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import BackButton from "../../../../components/back-button/BackButton"
@@ -19,11 +18,6 @@ import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const [dateTime, setDateTime] = useState<Date | null>(null)
 	const [budget, setBudget] = useState<number>(0)
@@ -78,28 +72,22 @@ export default function Page(): React.ReactElement | null {
 								backgroundColor="#F5F5F5"
 								borderColor="transparent"
 							/>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Set Job Details
-								</Text>
-							)}
+							<Text style={styles.titleText}>
+								Set Job Details
+							</Text>
 						</View>
 					</ImageBackground>
 					<View style={styles.bodyContainer}>
 						<View style={styles.inputFieldWrapper}>
-							{fontsLoaded && (
-								<Text style={styles.inputFieldTitleText}>
-									Budget
-								</Text>
-							)}
+							<Text style={styles.inputFieldTitleText}>
+								Budget
+							</Text>
 							<BudgetInput value={budget} setValue={setBudget} />
 						</View>
 						<View style={styles.inputFieldWrapper}>
-							{fontsLoaded && (
-								<Text style={styles.inputFieldTitleText}>
-									Location
-								</Text>
-							)}
+							<Text style={styles.inputFieldTitleText}>
+								Location
+							</Text>
 							<TouchableOpacity
 								style={styles.inputFieldContainer}
 								onPress={handleSelectLocation}
@@ -110,11 +98,9 @@ export default function Page(): React.ReactElement | null {
 							</TouchableOpacity>
 						</View>
 						<View style={styles.inputFieldWrapper}>
-							{fontsLoaded && (
-								<Text style={styles.inputFieldTitleText}>
-									Date & Time
-								</Text>
-							)}
+							<Text style={styles.inputFieldTitleText}>
+								Date & Time
+							</Text>
 							<TouchableOpacity
 								style={styles.inputFieldContainer}
 								onPress={showDatePicker}

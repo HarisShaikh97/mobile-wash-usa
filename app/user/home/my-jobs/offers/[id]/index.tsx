@@ -1,16 +1,11 @@
 import { View, Text, StyleSheet } from "react-native"
 import { useLocalSearchParams } from "expo-router"
-import { useFonts } from "expo-font"
 import OfferCard from "../../../../../../components/offer-card/OfferCard"
 import { theme } from "../../../../../../utils/constants"
 import { Offer } from "../../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf")
-	})
 
 	const offers: Offer[] = [
 		{
@@ -94,11 +89,9 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>
-					You Have {offers.length} Offers
-				</Text>
-			)}
+			<Text style={styles.titleText}>
+				You Have {offers.length} Offers
+			</Text>
 			<View style={styles.offerCardsWrapper}>
 				{offers.map((offer, index): React.ReactElement | null => {
 					return (

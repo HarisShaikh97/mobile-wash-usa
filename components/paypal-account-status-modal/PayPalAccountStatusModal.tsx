@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -18,11 +17,6 @@ export default function PayPalAccountStatusModal({
 	status
 }: PayPalAccountStatusModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		if (status === "success") {
@@ -46,27 +40,23 @@ export default function PayPalAccountStatusModal({
 					style={styles.modalContainer}
 					contentFit="fill"
 				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.titleText,
-								status === "success"
-									? styles.successTitleText
-									: styles.invalidTitleText
-							]}
-						>
-							{status === "success"
-								? "PayPal Account Linked!"
-								: "Invalid Confirmation Code"}
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText}>
-							{status === "success"
-								? "Your PayPal account has been successfully linked. You can now receive payments directly to your PayPal account."
-								: "The confirmation code you entered is incorrect. Please check your email and try again."}
-						</Text>
-					)}
+					<Text
+						style={[
+							styles.titleText,
+							status === "success"
+								? styles.successTitleText
+								: styles.invalidTitleText
+						]}
+					>
+						{status === "success"
+							? "PayPal Account Linked!"
+							: "Invalid Confirmation Code"}
+					</Text>
+					<Text style={styles.descriptionText}>
+						{status === "success"
+							? "Your PayPal account has been successfully linked. You can now receive payments directly to your PayPal account."
+							: "The confirmation code you entered is incorrect. Please check your email and try again."}
+					</Text>
 					<FormButton
 						length="half"
 						theme="dark"

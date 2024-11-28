@@ -1,6 +1,5 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -17,11 +16,6 @@ export default function AccountErrorModal({
 	type
 }: AccountErrorModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
@@ -48,33 +42,29 @@ export default function AccountErrorModal({
 		>
 			<View style={styles.modalWrapper}>
 				<View style={styles.modalContainer}>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.titleText,
-								type === "verification-pending"
-									? styles.titleTextVerificationPending
-									: type === "verification-rejected"
-									? styles.titleTextVerificationRejected
-									: styles.titleTextPaymentRequired
-							]}
-						>
-							{type === "verification-pending"
-								? "Verification Pending"
+					<Text
+						style={[
+							styles.titleText,
+							type === "verification-pending"
+								? styles.titleTextVerificationPending
 								: type === "verification-rejected"
-								? "Verification Required"
-								: "Payment Method Required"}
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText}>
-							{type === "verification-pending"
-								? "Your account is not yet verified. The admin is currently reviewing your documents. If you need assistance, please contact support."
-								: type === "verification-rejected"
-								? "Your submitted documents have been rejected. Please upload the required documents again to proceed with job applications."
-								: "You are verified, but you need to add a payment method to proceed with job applications."}
-						</Text>
-					)}
+								? styles.titleTextVerificationRejected
+								: styles.titleTextPaymentRequired
+						]}
+					>
+						{type === "verification-pending"
+							? "Verification Pending"
+							: type === "verification-rejected"
+							? "Verification Required"
+							: "Payment Method Required"}
+					</Text>
+					<Text style={styles.descriptionText}>
+						{type === "verification-pending"
+							? "Your account is not yet verified. The admin is currently reviewing your documents. If you need assistance, please contact support."
+							: type === "verification-rejected"
+							? "Your submitted documents have been rejected. Please upload the required documents again to proceed with job applications."
+							: "You are verified, but you need to add a payment method to proceed with job applications."}
+					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
 							theme="light"

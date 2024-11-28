@@ -6,7 +6,6 @@ import {
 	StyleSheet
 } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
@@ -17,13 +16,6 @@ import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Bold": require("../../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
 
 	const jobs: Job[] = [
 		{
@@ -119,17 +111,13 @@ export default function Tab(): React.ReactElement | null {
 						<NotificationButton theme="light" />
 					</View>
 					<View style={styles.welcomeTextWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.welcomeHeadingText}>
-								Welcome, Michael
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.welcomeDescriptionText}>
-								Browse available jobs and offer your top- notch
-								services to customers in need.
-							</Text>
-						)}
+						<Text style={styles.welcomeHeadingText}>
+							Welcome, Michael
+						</Text>
+						<Text style={styles.welcomeDescriptionText}>
+							Browse available jobs and offer your top- notch
+							services to customers in need.
+						</Text>
 					</View>
 					<View style={styles.statsSectionWrapper}>
 						<View style={styles.verticalWrapper}>
@@ -138,32 +126,24 @@ export default function Tab(): React.ReactElement | null {
 								style={styles.statsCardContainer}
 								contentFit="fill"
 							>
-								{fontsLoaded && (
-									<Text style={styles.statsCardTitleText}>
-										Total Earnings
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.statsCardValueText}>
-										$ 450,750
-									</Text>
-								)}
+								<Text style={styles.statsCardTitleText}>
+									Total Earnings
+								</Text>
+								<Text style={styles.statsCardValueText}>
+									$ 450,750
+								</Text>
 							</ImageBackground>
 							<ImageBackground
 								source={require("../../../assets/images/card-bg.png")}
 								style={styles.statsCardContainer}
 								contentFit="fill"
 							>
-								{fontsLoaded && (
-									<Text style={styles.statsCardTitleText}>
-										Jobs Completed
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.statsCardValueText}>
-										+15
-									</Text>
-								)}
+								<Text style={styles.statsCardTitleText}>
+									Jobs Completed
+								</Text>
+								<Text style={styles.statsCardValueText}>
+									+15
+								</Text>
 							</ImageBackground>
 						</View>
 						<ImageBackground
@@ -171,32 +151,24 @@ export default function Tab(): React.ReactElement | null {
 							style={styles.statsCardContainer}
 							contentFit="fill"
 						>
-							{fontsLoaded && (
-								<Text style={styles.statsCardTitleText}>
-									Overall Rating
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.statsCardRatingValueText}>
-									4.5
-								</Text>
-							)}
+							<Text style={styles.statsCardTitleText}>
+								Overall Rating
+							</Text>
+							<Text style={styles.statsCardRatingValueText}>
+								4.5
+							</Text>
 							<Ratings ratings={4.5} size={22.5} />
-							{fontsLoaded && (
-								<Text style={styles.statsCardDescriptionText}>
-									Base on 135 Reviews
-								</Text>
-							)}
+							<Text style={styles.statsCardDescriptionText}>
+								Base on 135 Reviews
+							</Text>
 						</ImageBackground>
 					</View>
 					<View style={styles.availableJobsSectionContainer}>
 						<View style={styles.availableJobsHeaderContainer}>
 							<View style={styles.availableJobsTextContainer}>
-								{fontsLoaded && (
-									<Text style={styles.jobTitleText}>
-										Available Jobs
-									</Text>
-								)}
+								<Text style={styles.jobTitleText}>
+									Available Jobs
+								</Text>
 								<TouchableOpacity
 									onPress={() => {
 										router.navigate(
@@ -204,11 +176,9 @@ export default function Tab(): React.ReactElement | null {
 										)
 									}}
 								>
-									{fontsLoaded && (
-										<Text style={styles.seeAllText}>
-											See All
-										</Text>
-									)}
+									<Text style={styles.seeAllText}>
+										See All
+									</Text>
 								</TouchableOpacity>
 							</View>
 						</View>

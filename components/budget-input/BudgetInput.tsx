@@ -6,7 +6,6 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import { theme } from "../../utils/constants"
 
@@ -19,10 +18,6 @@ export default function BudgetInput({
 	value,
 	setValue
 }: BudgetInputProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
-	})
-
 	const handleIncrement = useCallback((): void => {
 		setValue((prev) => prev + 1)
 	}, [setValue])
@@ -39,26 +34,24 @@ export default function BudgetInput({
 			>
 				<Entypo name="minus" size={15} color={theme.colors.primary} />
 			</TouchableOpacity>
-			{fontsLoaded && (
-				<View style={styles.valueTextWrapper}>
-					<Text style={styles.valueText}>$</Text>
-					<TextInput
-						style={styles.valueText}
-						value={value.toString()}
-						onChangeText={(text) => {
-							if (text === "") {
-								setValue(0)
-							} else {
-								const numericValue = parseFloat(text)
-								if (!isNaN(numericValue)) {
-									setValue(numericValue)
-								}
+			<View style={styles.valueTextWrapper}>
+				<Text style={styles.valueText}>$</Text>
+				<TextInput
+					style={styles.valueText}
+					value={value.toString()}
+					onChangeText={(text) => {
+						if (text === "") {
+							setValue(0)
+						} else {
+							const numericValue = parseFloat(text)
+							if (!isNaN(numericValue)) {
+								setValue(numericValue)
 							}
-						}}
-						keyboardType="numeric"
-					/>
-				</View>
-			)}
+						}
+					}}
+					keyboardType="numeric"
+				/>
+			</View>
 			<TouchableOpacity
 				style={styles.updateButtonContainer}
 				onPress={handleIncrement}

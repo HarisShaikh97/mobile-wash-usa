@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
 import AccountActionModal from "../../../components/account-action-modal/AccountActionModal"
@@ -11,12 +10,6 @@ export default function Page(): React.ReactElement | null {
 
 	const [openModal, setOpenModal] = useState<boolean>(false)
 	const [type, setType] = useState<"delete" | "deactivate">("delete")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleDeleteAccount = useCallback(() => {
 		setType("delete")
@@ -39,61 +32,42 @@ export default function Page(): React.ReactElement | null {
 				setOpenModal={setOpenModal}
 				type={type}
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>Manage Your Account Status</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					You can choose to deactivate your account temporarily or
-					delete it permanently. Please select an option below.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Manage Your Account Status</Text>
+			<Text style={styles.descriptionText}>
+				You can choose to deactivate your account temporarily or delete
+				it permanently. Please select an option below.
+			</Text>
 			<View style={styles.accountActionsCard}>
 				<View style={styles.accountActionSection}>
-					{fontsLoaded && (
-						<Text style={styles.cardTitleText}>
-							Deactivate Account
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.cardDescriptionText}>
-							Temporarily deactivate your account. You won’t be
-							able to access it, but all your data will remain
-							saved. You can reactivate at any time by logging in
-							again.
-						</Text>
-					)}
+					<Text style={styles.cardTitleText}>Deactivate Account</Text>
+					<Text style={styles.cardDescriptionText}>
+						Temporarily deactivate your account. You won’t be able
+						to access it, but all your data will remain saved. You
+						can reactivate at any time by logging in again.
+					</Text>
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeactivateAccount}
 					>
-						{fontsLoaded && (
-							<Text style={styles.accountActionButtonText}>
-								Deactivate Account
-							</Text>
-						)}
+						<Text style={styles.accountActionButtonText}>
+							Deactivate Account
+						</Text>
 					</TouchableOpacity>
 				</View>
 				<HorizontalSeparator color="#DBDBDB" />
 				<View style={styles.accountActionSection}>
-					{fontsLoaded && (
-						<Text style={styles.cardTitleText}>Delete Account</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.cardDescriptionText}>
-							Permanently delete your account. All your data will
-							be erased, and this action cannot be undone.
-						</Text>
-					)}
+					<Text style={styles.cardTitleText}>Delete Account</Text>
+					<Text style={styles.cardDescriptionText}>
+						Permanently delete your account. All your data will be
+						erased, and this action cannot be undone.
+					</Text>
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeleteAccount}
 					>
-						{fontsLoaded && (
-							<Text style={styles.accountActionButtonText}>
-								Delete Account
-							</Text>
-						)}
+						<Text style={styles.accountActionButtonText}>
+							Delete Account
+						</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -101,9 +75,7 @@ export default function Page(): React.ReactElement | null {
 				style={styles.cancelButtonContainer}
 				onPress={handleCancel}
 			>
-				{fontsLoaded && (
-					<Text style={styles.cancelButtonText}>Cancel</Text>
-				)}
+				<Text style={styles.cancelButtonText}>Cancel</Text>
 			</TouchableOpacity>
 		</View>
 	)

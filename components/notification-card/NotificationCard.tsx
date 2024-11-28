@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import { Notification } from "../../utils/types"
 import { theme } from "../../utils/constants"
@@ -22,11 +21,6 @@ export default function NotificationCard({
 	time,
 	setOpenModal
 }: NotificationCardProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<View
 			style={[
@@ -55,25 +49,18 @@ export default function NotificationCard({
 			<View style={styles.notificationDetailsWrapper}>
 				<View style={styles.horizontalWrapper}>
 					<View style={styles.verticalWrapper}>
-						{fontsLoaded && (
-							<Text
-								style={styles.titleText}
-								numberOfLines={1}
-								ellipsizeMode="tail"
-							>
-								{title}
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.textSmall,
-									styles.descriptionText
-								]}
-							>
-								{description}
-							</Text>
-						)}
+						<Text
+							style={styles.titleText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							{title}
+						</Text>
+						<Text
+							style={[styles.textSmall, styles.descriptionText]}
+						>
+							{description}
+						</Text>
 					</View>
 					<TouchableOpacity
 						onPress={() => {
@@ -92,25 +79,21 @@ export default function NotificationCard({
 						<View />
 					) : (
 						<TouchableOpacity style={styles.viewButtonContainer}>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.textSmall,
-										styles.viewButtonText
-									]}
-								>
-									{type === "message"
-										? "View Message"
-										: "View Bid"}
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.textSmall,
+									styles.viewButtonText
+								]}
+							>
+								{type === "message"
+									? "View Message"
+									: "View Bid"}
+							</Text>
 						</TouchableOpacity>
 					)}
-					{fontsLoaded && (
-						<Text style={[styles.textSmall, styles.timeText]}>
-							{time}
-						</Text>
-					)}
+					<Text style={[styles.textSmall, styles.timeText]}>
+						{time}
+					</Text>
 				</View>
 			</View>
 		</View>

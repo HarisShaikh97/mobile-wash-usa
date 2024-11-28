@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import Ratings from "../ratings/Ratings"
 import { theme } from "../../utils/constants"
@@ -34,13 +33,6 @@ export default function OfferCard({
 }: OfferCardProps): React.ReactElement | null {
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleSendMessage = useCallback((): void => {
 		router.navigate(`/user/chat/${vendorId}`)
 	}, [router])
@@ -60,15 +52,13 @@ export default function OfferCard({
 							contentFit="cover"
 						/>
 					</View>
-					{fontsLoaded && (
-						<Text
-							style={styles.vendorNameText}
-							numberOfLines={2}
-							ellipsizeMode="tail"
-						>
-							{vendorName}
-						</Text>
-					)}
+					<Text
+						style={styles.vendorNameText}
+						numberOfLines={2}
+						ellipsizeMode="tail"
+					>
+						{vendorName}
+					</Text>
 				</View>
 				<TouchableOpacity
 					style={styles.viewProfileButton}
@@ -76,77 +66,57 @@ export default function OfferCard({
 						router.navigate(`/user/vendor-profile/${vendorId}`)
 					}}
 				>
-					{fontsLoaded && (
-						<Text style={styles.viewProfileButtonText}>
-							View Profile
-						</Text>
-					)}
+					<Text style={styles.viewProfileButtonText}>
+						View Profile
+					</Text>
 				</TouchableOpacity>
 			</View>
 			<View style={styles.horizontalWrapper}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>Bid Amount</Text>
-				)}
-				{fontsLoaded && (
-					<Text style={styles.amountText}>${amount}</Text>
-				)}
+				<Text style={styles.sectionTitleText}>Bid Amount</Text>
+				<Text style={styles.amountText}>${amount}</Text>
 			</View>
 			<View style={styles.verticalWrapper}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>
-						About The Vendor
-					</Text>
-				)}
+				<Text style={styles.sectionTitleText}>About The Vendor</Text>
 				<View style={styles.ratingsReviewsWrapper}>
 					<Ratings ratings={ratings} size={16.5} />
-					{fontsLoaded && (
-						<Text style={styles.sectionDescriptionText}>
-							{ratings} Of {reviews} Reviews
-						</Text>
-					)}
+					<Text style={styles.sectionDescriptionText}>
+						{ratings} Of {reviews} Reviews
+					</Text>
 				</View>
 			</View>
 			{size === "large" && (
 				<View style={styles.horizontalWrapper}>
 					<View style={styles.jobsCompletedAndLocationContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.sectionTitleText}
-								numberOfLines={1}
-								ellipsizeMode="tail"
-							>
-								Location
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text
-								style={styles.sectionDescriptionText}
-								numberOfLines={1}
-								ellipsizeMode="tail"
-							>
-								{location}
-							</Text>
-						)}
+						<Text
+							style={styles.sectionTitleText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							Location
+						</Text>
+						<Text
+							style={styles.sectionDescriptionText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							{location}
+						</Text>
 					</View>
 					<View style={styles.jobsCompletedAndLocationContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.sectionTitleText}
-								numberOfLines={1}
-								ellipsizeMode="tail"
-							>
-								Jobs Completed
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text
-								style={styles.sectionDescriptionText}
-								numberOfLines={1}
-								ellipsizeMode="tail"
-							>
-								{vendorJobsCompleted} Jobs Completed
-							</Text>
-						)}
+						<Text
+							style={styles.sectionTitleText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							Jobs Completed
+						</Text>
+						<Text
+							style={styles.sectionDescriptionText}
+							numberOfLines={1}
+							ellipsizeMode="tail"
+						>
+							{vendorJobsCompleted} Jobs Completed
+						</Text>
 					</View>
 				</View>
 			)}
@@ -158,16 +128,14 @@ export default function OfferCard({
 					]}
 					onPress={handleSendMessage}
 				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.sendMessageButtonText
-							]}
-						>
-							Send Message
-						</Text>
-					)}
+					<Text
+						style={[
+							styles.actionButtonText,
+							styles.sendMessageButtonText
+						]}
+					>
+						Send Message
+					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={[
@@ -176,16 +144,14 @@ export default function OfferCard({
 					]}
 					onPress={handleAcceptOffer}
 				>
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.acceptOfferButtonText
-							]}
-						>
-							Accept Offer
-						</Text>
-					)}
+					<Text
+						style={[
+							styles.actionButtonText,
+							styles.acceptOfferButtonText
+						]}
+					>
+						Accept Offer
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

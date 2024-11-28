@@ -6,38 +6,27 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { useFonts } from "expo-font"
 import { AntDesign, Feather, Ionicons, Entypo } from "@expo/vector-icons"
 import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
 import SearchBar from "../../../components/search-bar/SearchBar"
 import { theme, FAQs } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const [searchValue, setSearchValue] = useState<string>("")
 	const [currentFaqIndex, setCurrentFaqIndex] = useState<number | null>(null)
 
 	return (
 		<View style={styles.container}>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>Help & Support</Text>
-			)}
+			<Text style={styles.titleText}>Help & Support</Text>
 			<ScrollView
 				style={styles.helpSupportCard}
 				showsVerticalScrollIndicator={false}
 			>
 				<View style={styles.helpSupportCardScrollContainer}>
 					<View style={styles.contactSupportSection}>
-						{fontsLoaded && (
-							<Text style={styles.cardTitleText}>
-								Contact Support
-							</Text>
-						)}
+						<Text style={styles.cardTitleText}>
+							Contact Support
+						</Text>
 						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
 							<View
@@ -49,11 +38,9 @@ export default function Page(): React.ReactElement | null {
 									color="white"
 								/>
 							</View>
-							{fontsLoaded && (
-								<Text style={styles.contactSupportOptionText}>
-									Chat with us
-								</Text>
-							)}
+							<Text style={styles.contactSupportOptionText}>
+								Chat with us
+							</Text>
 						</View>
 						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
@@ -66,11 +53,9 @@ export default function Page(): React.ReactElement | null {
 									color="white"
 								/>
 							</View>
-							{fontsLoaded && (
-								<Text style={styles.contactSupportOptionText}>
-									Email us
-								</Text>
-							)}
+							<Text style={styles.contactSupportOptionText}>
+								Email us
+							</Text>
 						</View>
 						<HorizontalSeparator color="#DBDBDB" />
 						<View style={styles.contactSupportOptionContainer}>
@@ -83,22 +68,16 @@ export default function Page(): React.ReactElement | null {
 									color="white"
 								/>
 							</View>
-							{fontsLoaded && (
-								<Text style={styles.contactSupportOptionText}>
-									Call us
-								</Text>
-							)}
+							<Text style={styles.contactSupportOptionText}>
+								Call us
+							</Text>
 						</View>
 					</View>
 					<View style={styles.faqSection}>
-						{fontsLoaded && (
-							<Text style={styles.cardTitleText}>FAQ</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.cardDescriptionText}>
-								Find answer to your problem using this app.
-							</Text>
-						)}
+						<Text style={styles.cardTitleText}>FAQ</Text>
+						<Text style={styles.cardDescriptionText}>
+							Find answer to your problem using this app.
+						</Text>
 						<View style={styles.searchBarWrapper}>
 							<SearchBar
 								placeholder="Try find “how to”"
@@ -110,27 +89,23 @@ export default function Page(): React.ReactElement | null {
 						</View>
 						<View style={styles.customerVendorTabWrapper}>
 							<View style={styles.customerTab}>
-								{fontsLoaded && (
-									<Text
-										style={[
-											styles.customerVendorText,
-											styles.customerText
-										]}
-									>
-										Customer
-									</Text>
-								)}
-							</View>
-							{fontsLoaded && (
 								<Text
 									style={[
 										styles.customerVendorText,
-										styles.vendorText
+										styles.customerText
 									]}
 								>
-									Vendor
+									Customer
 								</Text>
-							)}
+							</View>
+							<Text
+								style={[
+									styles.customerVendorText,
+									styles.vendorText
+								]}
+							>
+								Vendor
+							</Text>
 						</View>
 						<View style={styles.faqsWrapper}>
 							{FAQs.map(
@@ -153,15 +128,13 @@ export default function Page(): React.ReactElement | null {
 													)
 												}}
 											>
-												{fontsLoaded && (
-													<Text
-														style={
-															styles.faqItemHeaderText
-														}
-													>
-														{item.question}
-													</Text>
-												)}
+												<Text
+													style={
+														styles.faqItemHeaderText
+													}
+												>
+													{item.question}
+												</Text>
 												<Entypo
 													name={
 														currentFaqIndex ===
@@ -181,15 +154,13 @@ export default function Page(): React.ReactElement | null {
 														styles.faqItemDescriptionTextContainer
 													}
 												>
-													{fontsLoaded && (
-														<Text
-															style={
-																styles.faqItemDescriptionText
-															}
-														>
-															{item.answer}
-														</Text>
-													)}
+													<Text
+														style={
+															styles.faqItemDescriptionText
+														}
+													>
+														{item.answer}
+													</Text>
 												</View>
 											)}
 										</View>

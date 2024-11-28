@@ -1,19 +1,12 @@
 import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSelectCustomer = useCallback((): void => {
 		router.navigate("/auth/sign-up/customer")
@@ -33,32 +26,26 @@ export default function Page(): React.ReactElement | null {
 				/>
 			</View>
 			<View style={styles.bodyContainer}>
-				{fontsLoaded && <Text style={styles.titleText}>Welcome</Text>}
-				{fontsLoaded && (
-					<Text style={styles.descriptionText}>
-						Are you a Customer or a Vendor?
-					</Text>
-				)}
+				<Text style={styles.titleText}>Welcome</Text>
+				<Text style={styles.descriptionText}>
+					Are you a Customer or a Vendor?
+				</Text>
 				<View style={styles.userRolesOptionsWrapper}>
 					<TouchableOpacity
 						style={styles.userRoleOption}
 						onPress={handleSelectCustomer}
 					>
-						{fontsLoaded && (
-							<Text style={styles.userRoleOptionText}>
-								I am a Customer
-							</Text>
-						)}
+						<Text style={styles.userRoleOptionText}>
+							I am a Customer
+						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.userRoleOption}
 						onPress={handleSelectVendor}
 					>
-						{fontsLoaded && (
-							<Text style={styles.userRoleOptionText}>
-								I am a Vendor
-							</Text>
-						)}
+						<Text style={styles.userRoleOptionText}>
+							I am a Vendor
+						</Text>
 					</TouchableOpacity>
 				</View>
 				<Image

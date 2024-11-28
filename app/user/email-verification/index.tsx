@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import FormButton from "../../../components/form-button/FormButton"
 import OTPInput from "../../../components/otp-input/OTPInput"
 import { theme } from "../../../utils/constants"
@@ -8,27 +7,15 @@ import { theme } from "../../../utils/constants"
 export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("")
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
 		<View style={styles.bodyContainer}>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>
-					Enter the Verification Code
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					A 5-digit code has been sent to your email. Please enter the
-					code below to Change your email.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Enter the Verification Code</Text>
+			<Text style={styles.descriptionText}>
+				A 5-digit code has been sent to your email. Please enter the
+				code below to Change your email.
+			</Text>
 			<View style={styles.formContainer}>
 				<OTPInput onChangeText={setOTP} />
 				<FormButton
@@ -38,27 +25,23 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 				<View style={styles.policyAndTermsTextWrapper}>
-					{fontsLoaded && (
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.resendCodeText
+						]}
+					>
+						Don’t receive code ?
+					</Text>
+					<TouchableOpacity>
 						<Text
 							style={[
 								styles.policyAndTermsText,
-								styles.resendCodeText
+								styles.policyAndTermsLinkText
 							]}
 						>
-							Don’t receive code ?
+							{"	Re-send"}
 						</Text>
-					)}
-					<TouchableOpacity>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsLinkText
-								]}
-							>
-								{"	Re-send"}
-							</Text>
-						)}
 					</TouchableOpacity>
 				</View>
 			</View>

@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 import { PaymentOptions } from "../../utils/types"
@@ -19,11 +18,6 @@ export default function PaymentInformationModal({
 	selectedOption,
 	handleProceed
 }: PaymentInformationModalProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleChangeMethod = useCallback((): void => {
 		setOpenModal(false)
 	}, [setOpenModal])
@@ -43,19 +37,15 @@ export default function PaymentInformationModal({
 					style={styles.modalContainer}
 					contentFit="fill"
 				>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							{selectedOption === "pod" ? "Cash" : "Online"}{" "}
-							Payment Information
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText}>
-							{selectedOption === "pod"
-								? "You’ve selected to pay the vendor in cash upon job completion. Please ensure the correct amount is ready when the service provider arrives."
-								: "The system supports pre-payments, where customers pay through the app. Funds are securely held and will only be released to the vendor after you confirm job completion using an OTP."}
-						</Text>
-					)}
+					<Text style={styles.titleText}>
+						{selectedOption === "pod" ? "Cash" : "Online"} Payment
+						Information
+					</Text>
+					<Text style={styles.descriptionText}>
+						{selectedOption === "pod"
+							? "You’ve selected to pay the vendor in cash upon job completion. Please ensure the correct amount is ready when the service provider arrives."
+							: "The system supports pre-payments, where customers pay through the app. Funds are securely held and will only be released to the vendor after you confirm job completion using an OTP."}
+					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
 							length="full"

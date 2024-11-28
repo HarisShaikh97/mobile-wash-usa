@@ -1,10 +1,8 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
-import { theme } from "../../utils/constants"
 
 interface FeedbackConfirmationModalProps {
 	openModal: boolean
@@ -16,10 +14,6 @@ export default function FeedbackConfirmationModal({
 	setOpenModal
 }: FeedbackConfirmationModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
@@ -49,11 +43,9 @@ export default function FeedbackConfirmationModal({
 							contentFit="contain"
 						/>
 						<View style={styles.modalBodyContainer}>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Thank you for your feedback!
-								</Text>
-							)}
+							<Text style={styles.titleText}>
+								Thank you for your feedback!
+							</Text>
 						</View>
 						<View style={styles.formButtonsWrapper}>
 							<FormButton

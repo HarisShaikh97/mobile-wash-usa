@@ -1,5 +1,4 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface FormButtonProps {
@@ -15,10 +14,6 @@ export default function FormButton({
 	title,
 	onPress
 }: FormButtonProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
-
 	return (
 		<TouchableOpacity
 			style={[
@@ -38,26 +33,24 @@ export default function FormButton({
 			]}
 			onPress={onPress}
 		>
-			{fontsLoaded && (
-				<Text
-					style={[
-						length === "full"
-							? styles.buttonText
-							: styles.buttonTextSmall,
-						theme === "dark"
-							? styles.buttonDarkThemeText
-							: theme === "light"
-							? styles.buttonLightThemeText
-							: theme === "danger"
-							? styles.buttonDangerThemeText
-							: theme === "black"
-							? styles.buttonDarkThemeText
-							: theme === "gray" && styles.buttonGrayThemeText
-					]}
-				>
-					{title}
-				</Text>
-			)}
+			<Text
+				style={[
+					length === "full"
+						? styles.buttonText
+						: styles.buttonTextSmall,
+					theme === "dark"
+						? styles.buttonDarkThemeText
+						: theme === "light"
+						? styles.buttonLightThemeText
+						: theme === "danger"
+						? styles.buttonDangerThemeText
+						: theme === "black"
+						? styles.buttonDarkThemeText
+						: theme === "gray" && styles.buttonGrayThemeText
+				]}
+			>
+				{title}
+			</Text>
 		</TouchableOpacity>
 	)
 }

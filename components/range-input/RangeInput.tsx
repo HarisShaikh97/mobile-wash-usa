@@ -1,16 +1,7 @@
-import { useCallback } from "react"
-import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
-import { useFonts } from "expo-font"
+import { View, Text, StyleSheet } from "react-native"
 import Animated, {
 	useSharedValue,
-	useAnimatedStyle,
-	runOnJS
+	useAnimatedStyle
 } from "react-native-reanimated"
 import {
 	GestureDetector,
@@ -39,10 +30,6 @@ export default function RangeInput({
 }: RangeInputProps): React.ReactElement | null {
 	const handleMinPosition = useSharedValue(0)
 	const handleMaxPosition = useSharedValue(280)
-
-	const [fontsLoaded] = useFonts({
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const animatedMinStyle = useAnimatedStyle(() => {
 		return {
@@ -90,31 +77,25 @@ export default function RangeInput({
 
 	return (
 		<GestureHandlerRootView style={styles.sliderWrapper}>
-			{fontsLoaded && (
-				<Text style={[styles.minMaxText, styles.inputFieldTitleText]}>
-					Budget range
-				</Text>
-			)}
+			<Text style={[styles.minMaxText, styles.inputFieldTitleText]}>
+				Budget range
+			</Text>
 			<View style={styles.minMaxSectionWrapper}>
 				<View style={styles.minMaxItemWrapper}>
-					{fontsLoaded && <Text style={styles.minMaxText}>Min</Text>}
+					<Text style={styles.minMaxText}>Min</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						{fontsLoaded && (
-							<Text style={styles.minMaxQuantityText}>
-								{minValue}
-							</Text>
-						)}
+						<Text style={styles.minMaxQuantityText}>
+							{minValue}
+						</Text>
 					</View>
 				</View>
 				<View style={styles.separator} />
 				<View style={styles.minMaxItemWrapper}>
-					{fontsLoaded && <Text style={styles.minMaxText}>Max</Text>}
+					<Text style={styles.minMaxText}>Max</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						{fontsLoaded && (
-							<Text style={styles.minMaxQuantityText}>
-								{maxValue}
-							</Text>
-						)}
+						<Text style={styles.minMaxQuantityText}>
+							{maxValue}
+						</Text>
 					</View>
 				</View>
 			</View>

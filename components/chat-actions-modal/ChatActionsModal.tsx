@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface ChatActionsModalProps {
@@ -15,10 +14,6 @@ export default function ChatActionsModal({
 	setOpenModal,
 	setOpenDeleteChatModal
 }: ChatActionsModalProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleDeleteChat = useCallback((): void => {
 		setOpenModal(false)
 		setOpenDeleteChatModal(true)
@@ -53,16 +48,14 @@ export default function ChatActionsModal({
 								style={styles.actionButtonIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.actionButtonText,
-										styles.deleteButtonText
-									]}
-								>
-									Delete
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.actionButtonText,
+									styles.deleteButtonText
+								]}
+							>
+								Delete
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={[
@@ -76,16 +69,14 @@ export default function ChatActionsModal({
 								style={styles.actionButtonIcon}
 								contentFit="contain"
 							/>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.actionButtonText,
-										styles.reportChatButtonText
-									]}
-								>
-									Report Chat
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.actionButtonText,
+									styles.reportChatButtonText
+								]}
+							>
+								Report Chat
+							</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

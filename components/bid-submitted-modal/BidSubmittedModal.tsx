@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -16,12 +15,6 @@ export default function BidSubmittedModal({
 	setOpenModal
 }: BidSubmittedModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleGoToDashboard = useCallback((): void => {
 		setOpenModal(false)
@@ -55,19 +48,12 @@ export default function BidSubmittedModal({
 							alt="icon"
 						/>
 						<View style={styles.modalBodyContainer}>
-							{fontsLoaded && (
-								<Text style={styles.titleText}>
-									Bid Submitted!
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.descriptionText}>
-									Your bid for Car Wash Service Needed has
-									been sent successfully. The customer will
-									review your offer and respond soon. Stay
-									tuned for updates!
-								</Text>
-							)}
+							<Text style={styles.titleText}>Bid Submitted!</Text>
+							<Text style={styles.descriptionText}>
+								Your bid for Car Wash Service Needed has been
+								sent successfully. The customer will review your
+								offer and respond soon. Stay tuned for updates!
+							</Text>
 						</View>
 						<View style={styles.formButtonsWrapper}>
 							<FormButton

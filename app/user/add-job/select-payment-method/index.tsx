@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
@@ -14,13 +13,6 @@ export default function Page(): React.ReactElement | null {
 
 	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Montserrat-Medium": require("../../../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
@@ -57,21 +49,15 @@ export default function Page(): React.ReactElement | null {
 			<View style={styles.bodyContainer}>
 				<View style={styles.formContainer}>
 					<View style={styles.titleWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.titleText}>
-								Select Your Payment Method
-							</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.descriptionText}>
-								To post this job, please select your preferred
-								payment method.
-							</Text>
-						)}
+						<Text style={styles.titleText}>
+							Select Your Payment Method
+						</Text>
+						<Text style={styles.descriptionText}>
+							To post this job, please select your preferred
+							payment method.
+						</Text>
 					</View>
-					{fontsLoaded && (
-						<Text style={styles.headingText}>Options</Text>
-					)}
+					<Text style={styles.headingText}>Options</Text>
 					<View style={styles.paymentOptionsWrapper}>
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
@@ -85,11 +71,9 @@ export default function Page(): React.ReactElement | null {
 									style={styles.paymentOptionIcon}
 									contentFit="contain"
 								/>
-								{fontsLoaded && (
-									<Text style={styles.paymentOptionTitleText}>
-										Credit Card/Debit Card
-									</Text>
-								)}
+								<Text style={styles.paymentOptionTitleText}>
+									Credit Card/Debit Card
+								</Text>
 							</View>
 							<View
 								style={[
@@ -116,11 +100,9 @@ export default function Page(): React.ReactElement | null {
 									style={styles.paymentOptionIcon}
 									contentFit="contain"
 								/>
-								{fontsLoaded && (
-									<Text style={styles.paymentOptionTitleText}>
-										Paypal
-									</Text>
-								)}
+								<Text style={styles.paymentOptionTitleText}>
+									Paypal
+								</Text>
 							</View>
 							<View
 								style={[
@@ -147,11 +129,9 @@ export default function Page(): React.ReactElement | null {
 									style={styles.paymentOptionIcon}
 									contentFit="contain"
 								/>
-								{fontsLoaded && (
-									<Text style={styles.paymentOptionTitleText}>
-										Pay On Delivery
-									</Text>
-								)}
+								<Text style={styles.paymentOptionTitleText}>
+									Pay On Delivery
+								</Text>
 							</View>
 							<View
 								style={[

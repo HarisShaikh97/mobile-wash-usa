@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 import { Message } from "../../utils/types"
 
@@ -16,11 +15,6 @@ export default function MessageCard({
 	time,
 	user
 }: MessageCardProps): React.ReactElement | null {
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Regular": require("../../assets/fonts/Montserrat/Montserrat Regular 400.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<View
 			style={[
@@ -34,37 +28,29 @@ export default function MessageCard({
 				}
 			]}
 		>
-			{fontsLoaded && (
-				<Text
-					style={[
-						styles.messageText,
-						{
-							color:
-								user === "Self"
-									? "white"
-									: theme.colors.secondary
-						}
-					]}
-				>
-					{text}
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text
-					style={[
-						styles.timeText,
-						{
-							color:
-								user === "Self"
-									? "white"
-									: theme.colors.secondary,
-							textAlign: user === "Self" ? "right" : "left"
-						}
-					]}
-				>
-					{time}
-				</Text>
-			)}
+			<Text
+				style={[
+					styles.messageText,
+					{
+						color:
+							user === "Self" ? "white" : theme.colors.secondary
+					}
+				]}
+			>
+				{text}
+			</Text>
+			<Text
+				style={[
+					styles.timeText,
+					{
+						color:
+							user === "Self" ? "white" : theme.colors.secondary,
+						textAlign: user === "Self" ? "right" : "left"
+					}
+				]}
+			>
+				{time}
+			</Text>
 		</View>
 	)
 }

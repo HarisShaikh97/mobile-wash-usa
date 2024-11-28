@@ -1,5 +1,4 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
 import HorizontalSeparator from "../../../components/horizontal-separator/HorizontalSeparator"
@@ -8,27 +7,17 @@ import { theme } from "../../../utils/constants"
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<View style={styles.container}>
-			{fontsLoaded && <Text style={styles.titleText}>Security</Text>}
+			<Text style={styles.titleText}>Security</Text>
 			<View style={styles.featuresCard}>
-				{fontsLoaded && (
-					<Text style={styles.cardTitleText}>Security Features</Text>
-				)}
+				<Text style={styles.cardTitleText}>Security Features</Text>
 				<HorizontalSeparator color="#DBDBDB" />
 				<View style={styles.settingOptionContainer}>
 					<View style={styles.settingOption}>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Password Reset
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Password Reset
+						</Text>
 						<TouchableOpacity
 							style={styles.nextButton}
 							onPress={() => {
@@ -43,11 +32,9 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.settingOption}>
-						{fontsLoaded && (
-							<Text style={styles.settingOptionText}>
-								Report Abuse
-							</Text>
-						)}
+						<Text style={styles.settingOptionText}>
+							Report Abuse
+						</Text>
 						<TouchableOpacity style={styles.nextButton}>
 							<Feather
 								name="chevron-right"

@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
@@ -28,44 +27,29 @@ export default function JobCard({
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-		"Roboto-Medium": require("../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	return (
 		<View style={styles.cardContainer}>
 			<View style={styles.jobTitleContainer}>
-				{fontsLoaded && (
-					<Text
-						style={styles.jobTitleText}
-						numberOfLines={2}
-						ellipsizeMode="tail"
-					>
-						{title}
-					</Text>
-				)}
-				{fontsLoaded && (
-					<Text style={styles.budgetText}>${budget}</Text>
-				)}
-			</View>
-			{fontsLoaded && (
 				<Text
-					style={styles.descriptionText}
+					style={styles.jobTitleText}
 					numberOfLines={2}
 					ellipsizeMode="tail"
 				>
-					{description}
+					{title}
 				</Text>
-			)}
+				<Text style={styles.budgetText}>${budget}</Text>
+			</View>
+			<Text
+				style={styles.descriptionText}
+				numberOfLines={2}
+				ellipsizeMode="tail"
+			>
+				{description}
+			</Text>
 			<View style={styles.dateAndLocationSection}>
-				{fontsLoaded && (
-					<Text style={styles.dateAndLocationTitleText}>
-						Date And Location
-					</Text>
-				)}
+				<Text style={styles.dateAndLocationTitleText}>
+					Date And Location
+				</Text>
 				<View style={styles.dateAndLocationDetailsContainer}>
 					<View style={styles.dateAndLocationTextWrapper}>
 						<Image
@@ -73,11 +57,9 @@ export default function JobCard({
 							style={styles.dateAndLocationIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.dateAndLocationDetailsText}>
-								{date}
-							</Text>
-						)}
+						<Text style={styles.dateAndLocationDetailsText}>
+							{date}
+						</Text>
 					</View>
 					<View style={styles.circularSeparator} />
 					<View style={styles.dateAndLocationTextWrapper}>
@@ -86,11 +68,9 @@ export default function JobCard({
 							style={styles.dateAndLocationIcon}
 							contentFit="contain"
 						/>
-						{fontsLoaded && (
-							<Text style={styles.dateAndLocationDetailsText}>
-								{address}
-							</Text>
-						)}
+						<Text style={styles.dateAndLocationDetailsText}>
+							{address}
+						</Text>
 					</View>
 				</View>
 			</View>
@@ -103,16 +83,14 @@ export default function JobCard({
 								styles.statusTab
 							]}
 						>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.actionButtonsText,
-										styles.actionButtonsTextDark
-									]}
-								>
-									In Progress
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextDark
+								]}
+							>
+								In Progress
+							</Text>
 						</View>
 					) : (
 						status === "incoming" && (
@@ -127,16 +105,14 @@ export default function JobCard({
 									)
 								}}
 							>
-								{fontsLoaded && (
-									<Text
-										style={[
-											styles.actionButtonsText,
-											styles.actionButtonsTextDark
-										]}
-									>
-										View
-									</Text>
-								)}
+								<Text
+									style={[
+										styles.actionButtonsText,
+										styles.actionButtonsTextDark
+									]}
+								>
+									View
+								</Text>
 							</TouchableOpacity>
 						)
 					)}
@@ -150,16 +126,14 @@ export default function JobCard({
 								router.navigate(`/user/home/my-jobs/${_id}`)
 							}}
 						>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.actionButtonsText,
-										styles.actionButtonsTextLight
-									]}
-								>
-									View Details
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.actionButtonsText,
+									styles.actionButtonsTextLight
+								]}
+							>
+								View Details
+							</Text>
 						</TouchableOpacity>
 					) : (
 						status === "incoming" && (
@@ -172,16 +146,14 @@ export default function JobCard({
 									router.navigate(`/vendor/place-bid/${_id}`)
 								}}
 							>
-								{fontsLoaded && (
-									<Text
-										style={[
-											styles.actionButtonsText,
-											styles.actionButtonsTextLight
-										]}
-									>
-										Place a bid
-									</Text>
-								)}
+								<Text
+									style={[
+										styles.actionButtonsText,
+										styles.actionButtonsTextLight
+									]}
+								>
+									Place a bid
+								</Text>
 							</TouchableOpacity>
 						)
 					)}

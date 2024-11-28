@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { View, ScrollView, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import BackButton from "../../../components/back-button/BackButton"
 import SearchBar from "../../../components/search-bar/SearchBar"
 import JobCard from "../../../components/job-card/JobCard"
@@ -12,11 +11,6 @@ import { Job } from "../../../utils/types"
 export default function Page(): React.ReactElement | null {
 	const [searchValue, setSearchValue] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const jobs: Job[] = [
 		{
@@ -129,14 +123,10 @@ export default function Page(): React.ReactElement | null {
 				</View>
 				<View style={styles.bodyContainer}>
 					<View style={styles.titleContainer}>
-						{fontsLoaded && (
-							<Text style={styles.titleText}>Available Jobs</Text>
-						)}
-						{fontsLoaded && (
-							<Text style={styles.descriptionText}>
-								Browse and apply nearby
-							</Text>
-						)}
+						<Text style={styles.titleText}>Available Jobs</Text>
+						<Text style={styles.descriptionText}>
+							Browse and apply nearby
+						</Text>
 					</View>
 					<SearchBar
 						placeholder="Search"

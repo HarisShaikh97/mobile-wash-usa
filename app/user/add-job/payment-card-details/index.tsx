@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useFonts } from "expo-font"
 import Feather from "@expo/vector-icons/Feather"
 import BackButton from "../../../../components/back-button/BackButton"
 import InputField from "../../../../components/input-field/InputField"
@@ -15,12 +14,6 @@ export default function Page(): React.ReactElement | null {
 	const [CVC, setCVC] = useState<string>("")
 	const [cardHolderName, setCardHolderName] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Light": require("../../../../assets/fonts/Roboto/Roboto Light 300.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const handleSubmit = useCallback(() => {
 		setOpenModal(true)
@@ -45,21 +38,17 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<View style={styles.bodyContainer}>
 				<View style={styles.formContainer}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>Payment</Text>
-					)}
+					<Text style={styles.titleText}>Payment</Text>
 					<View style={styles.formHeaderContainer}>
 						<View style={styles.paymentMethodWrapper}>
-							{fontsLoaded && (
-								<Text
-									style={[
-										styles.paymentMethodText,
-										styles.paymentMethodTextBlack
-									]}
-								>
-									Method of payment
-								</Text>
-							)}
+							<Text
+								style={[
+									styles.paymentMethodText,
+									styles.paymentMethodTextBlack
+								]}
+							>
+								Method of payment
+							</Text>
 							<TouchableOpacity
 								style={styles.changeButtonContainer}
 							>
@@ -68,30 +57,24 @@ export default function Page(): React.ReactElement | null {
 									size={15}
 									color={theme.colors.primary}
 								/>
-								{fontsLoaded && (
-									<Text
-										style={[
-											styles.paymentMethodText,
-											styles.paymentMethodTextBlue
-										]}
-									>
-										Change
-									</Text>
-								)}
+								<Text
+									style={[
+										styles.paymentMethodText,
+										styles.paymentMethodTextBlue
+									]}
+								>
+									Change
+								</Text>
 							</TouchableOpacity>
 						</View>
 						<View style={styles.cardContainer}>
 							<View style={styles.cardTextWrapper}>
-								{fontsLoaded && (
-									<Text style={styles.cardTitleText}>
-										Credit or Debit card
-									</Text>
-								)}
-								{fontsLoaded && (
-									<Text style={styles.cardDescriptionText}>
-										Online payment
-									</Text>
-								)}
+								<Text style={styles.cardTitleText}>
+									Credit or Debit card
+								</Text>
+								<Text style={styles.cardDescriptionText}>
+									Online payment
+								</Text>
 							</View>
 							<Image
 								source={require("../../../../assets/icons/master-card.svg")}

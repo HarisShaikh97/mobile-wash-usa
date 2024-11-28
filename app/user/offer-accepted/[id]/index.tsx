@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
@@ -12,13 +11,6 @@ export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
-
 	const handleSubmit = useCallback((): void => {
 		router.navigate(`/user/rating-and-review/${id}`)
 	}, [router])
@@ -28,38 +20,26 @@ export default function Page(): React.ReactElement | null {
 			<View style={styles.checkIconContainer}>
 				<FontAwesome6 name="check" size={30} color="white" />
 			</View>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>Offer Accepted!</Text>
-			)}
+			<Text style={styles.titleText}>Offer Accepted!</Text>
 			<View style={styles.otpBox}>
-				{fontsLoaded && (
-					<Text style={styles.otpHeadingText}>Generated OTP</Text>
-				)}
-				{fontsLoaded && <Text style={styles.otpValueText}>123456</Text>}
-				{fontsLoaded && (
-					<Text style={styles.descriptionText}>
-						Is Your OTP For Job Confirmation
-					</Text>
-				)}
-			</View>
-			{fontsLoaded && (
-				<Text style={[styles.descriptionText, styles.instructionText]}>
-					Once the job is completed, please provide the OTP to verify
-					and confirm job completion.
+				<Text style={styles.otpHeadingText}>Generated OTP</Text>
+				<Text style={styles.otpValueText}>123456</Text>
+				<Text style={styles.descriptionText}>
+					Is Your OTP For Job Confirmation
 				</Text>
-			)}
+			</View>
+			<Text style={[styles.descriptionText, styles.instructionText]}>
+				Once the job is completed, please provide the OTP to verify and
+				confirm job completion.
+			</Text>
 			<View style={styles.jobReceiptContainer}>
 				<HorizontalSeparator color="#F5F5F5" />
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>
-							Payment method
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>
+						Payment method
+					</Text>
 					<View style={styles.cardDetailsWrapper}>
-						{fontsLoaded && (
-							<Text style={styles.receiptHeadingText}>9949</Text>
-						)}
+						<Text style={styles.receiptHeadingText}>9949</Text>
 						<Image
 							source={require("../../../../assets/icons/master-card.svg")}
 							style={styles.cardIcon}
@@ -69,98 +49,72 @@ export default function Page(): React.ReactElement | null {
 				</View>
 				<HorizontalSeparator color="#F5F5F5" />
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>
-							Job Title:
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.descriptionText,
-								styles.receiptDetailsText
-							]}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							Car Wash At Home
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>Job Title:</Text>
+					<Text
+						style={[
+							styles.descriptionText,
+							styles.receiptDetailsText
+						]}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						Car Wash At Home
+					</Text>
 				</View>
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>
-							Date & Time:
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.descriptionText,
-								styles.receiptDetailsText
-							]}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							October 5, 2024 02:00 PM
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>Date & Time:</Text>
+					<Text
+						style={[
+							styles.descriptionText,
+							styles.receiptDetailsText
+						]}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						October 5, 2024 02:00 PM
+					</Text>
 				</View>
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>Location:</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.descriptionText,
-								styles.receiptDetailsText
-							]}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							234 Elm Street, Los Angeles, CA
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>Location:</Text>
+					<Text
+						style={[
+							styles.descriptionText,
+							styles.receiptDetailsText
+						]}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						234 Elm Street, Los Angeles, CA
+					</Text>
 				</View>
 				<HorizontalSeparator color="#F5F5F5" />
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>
-							Vendor Name:
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.descriptionText,
-								styles.receiptDetailsText
-							]}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							Michael Guzzi
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>Vendor Name:</Text>
+					<Text
+						style={[
+							styles.descriptionText,
+							styles.receiptDetailsText
+						]}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						Michael Guzzi
+					</Text>
 				</View>
 				<View style={styles.horizontalWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.receiptHeadingText}>
-							Agreed Budget:
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text
-							style={[
-								styles.descriptionText,
-								styles.receiptDetailsText
-							]}
-							numberOfLines={1}
-							ellipsizeMode="tail"
-						>
-							$450
-						</Text>
-					)}
+					<Text style={styles.receiptHeadingText}>
+						Agreed Budget:
+					</Text>
+					<Text
+						style={[
+							styles.descriptionText,
+							styles.receiptDetailsText
+						]}
+						numberOfLines={1}
+						ellipsizeMode="tail"
+					>
+						$450
+					</Text>
 				</View>
 			</View>
 			<FormButton

@@ -1,6 +1,5 @@
 import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
@@ -17,11 +16,6 @@ export default function AccountActionModal({
 	type
 }: AccountActionModalProps): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false)
@@ -43,18 +37,14 @@ export default function AccountActionModal({
 		>
 			<View style={styles.modalWrapper}>
 				<View style={styles.modalContainer}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>
-							This is a permanent action.
-						</Text>
-					)}
-					{fontsLoaded && (
-						<Text style={styles.descriptionText}>
-							{type === "deactivate"
-								? "You can choose to deactivate your account temporarily or delete it permanently. Please select an option below."
-								: "Permanently delete your account. All your data will be erased, and this action cannot be undone."}
-						</Text>
-					)}
+					<Text style={styles.titleText}>
+						This is a permanent action.
+					</Text>
+					<Text style={styles.descriptionText}>
+						{type === "deactivate"
+							? "You can choose to deactivate your account temporarily or delete it permanently. Please select an option below."
+							: "Permanently delete your account. All your data will be erased, and this action cannot be undone."}
+					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
 							theme="black"

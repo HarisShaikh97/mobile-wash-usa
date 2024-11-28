@@ -2,17 +2,12 @@ import { useState } from "react"
 import { ScrollView, View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { Slot } from "expo-router"
-import { useFonts } from "expo-font"
 import BackButton from "../../../../components/back-button/BackButton"
 import SearchBar from "../../../../components/search-bar/SearchBar"
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	const [searchValue, setSearchValue] = useState<string>("")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
 
 	return (
 		<View style={styles.container}>
@@ -30,9 +25,7 @@ export default function Layout(): React.ReactElement | null {
 					/>
 				</View>
 				<View style={styles.titleWrapper}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>All Chats</Text>
-					)}
+					<Text style={styles.titleText}>All Chats</Text>
 					<SearchBar
 						value={searchValue}
 						onChangeText={setSearchValue}

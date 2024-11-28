@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import NotificationCard from "../../../components/notification-card/NotificationCard"
 import NotificationActionsModal from "../../../components/notification-actions-modal/NotificationActionsModal"
 import { theme } from "../../../utils/constants"
@@ -8,10 +7,6 @@ import { Notification } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
 
 	const notifications: Notification[] = [
 		{
@@ -45,11 +40,9 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 			/>
-			{fontsLoaded && <Text style={styles.titleText}>Notifications</Text>}
+			<Text style={styles.titleText}>Notifications</Text>
 			<View style={styles.sectionContainer}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>Today</Text>
-				)}
+				<Text style={styles.sectionTitleText}>Today</Text>
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
@@ -69,9 +62,7 @@ export default function Page(): React.ReactElement | null {
 				</View>
 			</View>
 			<View style={styles.sectionContainer}>
-				{fontsLoaded && (
-					<Text style={styles.sectionTitleText}>Yesterday</Text>
-				)}
+				<Text style={styles.sectionTitleText}>Yesterday</Text>
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {

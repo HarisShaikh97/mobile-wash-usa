@@ -10,7 +10,6 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { Slot } from "expo-router"
-import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import BackButton from "../../../../components/back-button/BackButton"
 import ChatInputField from "../../../../components/chat-input-field/ChatInputField"
@@ -26,11 +25,6 @@ export default function Layout(): React.ReactElement | null {
 		openDeleteChatConfirmationModal,
 		setOpenDeleteChatConfirmationModal
 	] = useState<boolean>(false)
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-		"Roboto-Regular": require("../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleOpenChatActionModal = useCallback((): void => {
 		setOpenChatActionModal(true)
@@ -69,14 +63,10 @@ export default function Layout(): React.ReactElement | null {
 							<View style={styles.onlineMarker} />
 						</View>
 						<View style={styles.verticalWrapper}>
-							{fontsLoaded && (
-								<Text style={styles.vendorNameText}>
-									Michael Guzzi
-								</Text>
-							)}
-							{fontsLoaded && (
-								<Text style={styles.onlineText}>Online</Text>
-							)}
+							<Text style={styles.vendorNameText}>
+								Michael Guzzi
+							</Text>
+							<Text style={styles.onlineText}>Online</Text>
 						</View>
 					</View>
 					<TouchableOpacity

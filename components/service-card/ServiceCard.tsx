@@ -7,7 +7,6 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
-import { useFonts } from "expo-font"
 import { theme } from "../../utils/constants"
 
 interface ServiceCardProps {
@@ -21,10 +20,6 @@ export default function ServiceCard({
 }: ServiceCardProps): React.ReactElement | null {
 	const router = useRouter()
 
-	const [fontsLoaded] = useFonts({
-		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf")
-	})
-
 	return (
 		<TouchableOpacity
 			style={styles.cardContainer}
@@ -35,9 +30,7 @@ export default function ServiceCard({
 			<Image source={image} style={styles.bgImage} contentFit="cover" />
 			<View style={styles.bodyContainer}>
 				<View style={styles.textContainer}>
-					{fontsLoaded && (
-						<Text style={styles.titleText}>{title}</Text>
-					)}
+					<Text style={styles.titleText}>{title}</Text>
 				</View>
 			</View>
 		</TouchableOpacity>

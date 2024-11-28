@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useFonts } from "expo-font"
 import FormButton from "../../../../../components/form-button/FormButton"
 import OTPInput from "../../../../../components/otp-input/OTPInput"
 import PayPalAccountStatusModal from "../../../../../components/paypal-account-status-modal/PayPalAccountStatusModal"
@@ -10,12 +9,6 @@ export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 	const [status, setStatus] = useState<"success" | "invalid">("success")
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-		"Roboto-Regular": require("../../../../../assets/fonts/Roboto/Roboto 400.ttf")
-	})
 
 	const handleSubmit = useCallback((): void => {
 		setStatus("success")
@@ -29,18 +22,12 @@ export default function Page(): React.ReactElement | null {
 				setOpenModal={setOpenModal}
 				status={status}
 			/>
-			{fontsLoaded && (
-				<Text style={styles.titleText}>
-					Confirm Your PayPal Account
-				</Text>
-			)}
-			{fontsLoaded && (
-				<Text style={styles.descriptionText}>
-					We’ve sent a confirmation code to your PayPal email. Please
-					check your inbox and enter the code below to verify your
-					account.
-				</Text>
-			)}
+			<Text style={styles.titleText}>Confirm Your PayPal Account</Text>
+			<Text style={styles.descriptionText}>
+				We’ve sent a confirmation code to your PayPal email. Please
+				check your inbox and enter the code below to verify your
+				account.
+			</Text>
 			<View style={styles.formContainer}>
 				<OTPInput onChangeText={setOTP} />
 				<FormButton
@@ -50,27 +37,23 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 				<View style={styles.policyAndTermsTextWrapper}>
-					{fontsLoaded && (
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.resendCodeText
+						]}
+					>
+						Don’t receive code ?
+					</Text>
+					<TouchableOpacity>
 						<Text
 							style={[
 								styles.policyAndTermsText,
-								styles.resendCodeText
+								styles.policyAndTermsLinkText
 							]}
 						>
-							Don’t receive code ?
+							{"	Re-send"}
 						</Text>
-					)}
-					<TouchableOpacity>
-						{fontsLoaded && (
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsLinkText
-								]}
-							>
-								{"	Re-send"}
-							</Text>
-						)}
 					</TouchableOpacity>
 				</View>
 			</View>

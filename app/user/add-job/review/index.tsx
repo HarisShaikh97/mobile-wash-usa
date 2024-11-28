@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
@@ -9,11 +8,6 @@ import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
-
-	const [fontsLoaded] = useFonts({
-		"Montserrat-Bold": require("../../../../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-		"Roboto-Medium": require("../../../../assets/fonts/Roboto/Roboto Medium 500.ttf")
-	})
 
 	const handleSubmit = useCallback(() => {
 		router.navigate("/user/add-job/select-payment-method")
@@ -27,24 +21,18 @@ export default function Page(): React.ReactElement | null {
 					backgroundColor="transparent"
 					borderColor="#F5F5F5"
 				/>
-				{fontsLoaded && (
-					<Text style={styles.titleText}>
-						Review Your Job Posting
-					</Text>
-				)}
+				<Text style={styles.titleText}>Review Your Job Posting</Text>
 			</View>
 			<View style={styles.bodyContainer}>
 				<View style={styles.jobDetailsWrapper}>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								Car Wash At Home
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							Car Wash At Home
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job")
@@ -58,15 +46,13 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								Vehicle
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							Vehicle
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job")
@@ -80,16 +66,14 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								Looking for a thorough exterior and interior car
-								wash for my SUV.
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							Looking for a thorough exterior and interior car
+							wash for my SUV.
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job")
@@ -103,15 +87,13 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								$500
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							$500
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job/details")
@@ -125,15 +107,13 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								2972 Westheimer Rd. Santa Ana, Illinois 85486
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							2972 Westheimer Rd. Santa Ana, Illinois 85486
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job/details")
@@ -147,15 +127,13 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 					<View style={styles.jobDetailContainer}>
-						{fontsLoaded && (
-							<Text
-								style={styles.jobDetailText}
-								numberOfLines={2}
-								ellipsizeMode="tail"
-							>
-								October 5, 2024 at 2:00 PM
-							</Text>
-						)}
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
+						>
+							October 5, 2024 at 2:00 PM
+						</Text>
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/add-job/details")
