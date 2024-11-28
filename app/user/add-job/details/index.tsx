@@ -13,7 +13,7 @@ import { useFonts } from "expo-font"
 import { useRouter } from "expo-router"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
 import BackButton from "../../../../components/back-button/BackButton"
-import BudgetInputField from "../../../../components/budget-input-field/BudgetInputField"
+import BudgetInput from "../../../../components/budget-input/BudgetInput"
 import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
@@ -92,10 +92,7 @@ export default function Page(): React.ReactElement | null {
 									Budget
 								</Text>
 							)}
-							<BudgetInputField
-								value={budget}
-								setValue={setBudget}
-							/>
+							<BudgetInput value={budget} setValue={setBudget} />
 						</View>
 						<View style={styles.inputFieldWrapper}>
 							{fontsLoaded && (

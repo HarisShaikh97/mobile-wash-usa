@@ -1,0 +1,159 @@
+import { useState, useCallback } from "react"
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { Image, ImageBackground } from "expo-image"
+import { useFonts } from "expo-font"
+import InputField from "../input-field/InputField"
+import RangeInput from "../range-input/RangeInput"
+import { theme, services } from "../../utils/constants"
+import { SelectOption } from "../../utils/types"
+
+const LIMIT = 700
+
+interface JobsFilterModalProps {
+	openModal: boolean
+	setOpenModal: (value: boolean) => void
+}
+
+export default function JobsFilterModal({
+	openModal,
+	setOpenModal
+}: JobsFilterModalProps): React.ReactElement | null {
+	const [jobType, setJobType] = useState<SelectOption | null>(null)
+	const [sortType, setSortType] = useState<SelectOption | null>(null)
+	const [minValue, setMinValue] = useState<number>(20)
+	const [maxValue, setMaxValue] = useState<number>(LIMIT)
+
+	const [fontsLoaded] = useFonts({
+		"Montserrat-Medium": require("../../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
+		"Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
+		"Roboto-Regular": require("../../assets/fonts/Roboto/Roboto 400.ttf")
+	})
+
+	const sortOptions: SelectOption[] = [
+		{
+			title: "Most Popular"
+		},
+		{
+			title: "Near By"
+		}
+	]
+
+	const handleApplyFilter = useCallback((): void => {
+		setOpenModal(false)
+	}, [openModal])
+
+	return (
+		<Modal
+			animationType="slide"
+			transparent
+			visible={openModal}
+			onRequestClose={() => {
+				setOpenModal(false)
+			}}
+		>
+			<View style={styles.modalWrapper}>
+				<ImageBackground
+					source={require("../../assets/images/modal-background.png")}
+					style={styles.modalContainer}
+					contentFit="fill"
+				>
+					<View style={styles.modalHeaderContainer}>
+						{fontsLoaded && (
+							<Text style={styles.titleText}>Filter</Text>
+						)}
+						<TouchableOpacity
+							style={styles.filterButtonContainer}
+							onPress={() => {
+								setOpenModal(false)
+							}}
+						>
+							{fontsLoaded && (
+								<Text style={styles.filterButtonContainerText}>
+									Reset
+								</Text>
+							)}
+						</TouchableOpacity>
+					</View>
+					<View style={styles.formContainer}>
+						<InputField
+							length="full"
+							type="select"
+							data={services}
+							value={jobType}
+							onChangeValue={setJobType}
+							title="Job Type"
+							placeholder="Select Job Type"
+							zIndex={2}
+						/>
+						<InputField
+							length="full"
+							type="select"
+							data={sortOptions}
+							value={sortType}
+							onChangeValue={setSortType}
+							title="Sort By"
+							placeholder="Sort By"
+							zIndex={1}
+						/>
+						<RangeInput
+							limit={LIMIT}
+							minValue={minValue}
+							setMinValue={setMinValue}
+							maxValue={maxValue}
+							setMaxValue={setMaxValue}
+						/>
+					</View>
+				</ImageBackground>
+			</View>
+		</Modal>
+	)
+}
+
+const styles = StyleSheet.create({
+	modalWrapper: {
+		flex: 1,
+		justifyContent: "flex-end",
+		backgroundColor: "rgba(0, 0, 0, 0.65)"
+	},
+	modalContainer: {
+		borderTopLeftRadius: 35,
+		borderTopRightRadius: 35,
+		backgroundColor: "white",
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 20,
+		padding: 25
+	},
+	modalHeaderContainer: {
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between"
+	},
+	titleText: {
+		fontSize: 15,
+		fontFamily: "Montserrat-SemiBold",
+		color: theme.colors.secondary
+	},
+	filterButtonContainer: {
+		height: 30,
+		width: 75,
+		borderRadius: 8.5,
+		borderWidth: 1,
+		borderColor: "#ADADAD",
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	filterButtonContainerText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Regular",
+		color: "#ADADAD"
+	},
+	formContainer: {
+		width: "100%",
+		flexDirection: "column",
+		gap: 10,
+		paddingTop: 20,
+		paddingBottom: 35
+	}
+})

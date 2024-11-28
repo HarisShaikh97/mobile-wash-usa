@@ -16,6 +16,7 @@ interface BaseInputFieldProps {
 	title: string
 	placeholder: string
 	length: "full" | "half"
+	zIndex?: number
 }
 
 interface SelectInputFieldProps extends BaseInputFieldProps {
@@ -88,7 +89,8 @@ export default function InputField(
 				styles.inputFieldWrapper,
 				props.length === "full"
 					? styles.inputFieldWrapperFull
-					: styles.inputFieldWrapperHalf
+					: styles.inputFieldWrapperHalf,
+				{ zIndex: props.zIndex || 0 }
 			]}
 		>
 			{fontsLoaded && (
@@ -206,8 +208,7 @@ export default function InputField(
 const styles = StyleSheet.create({
 	inputFieldWrapper: {
 		flexDirection: "column",
-		gap: 7.5,
-		zIndex: 50
+		gap: 7.5
 	},
 	inputFieldWrapperFull: {
 		width: "100%"
@@ -268,6 +269,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		position: "absolute",
 		top: 50,
-		left: 0
+		left: 0,
+		zIndex: 100
 	}
 })

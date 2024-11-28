@@ -82,7 +82,7 @@ export default function NavItem({
 			accessibilityRole="button"
 			accessibilityState={isFocused ? { selected: true } : {}}
 			accessibilityLabel={options.tabBarAccessibilityLabel}
-			testID={options.tabBarButtonTestID}
+			testID={options.tabBarTestID}
 			onPress={onPress}
 			onLongPress={onLongPress}
 			style={[

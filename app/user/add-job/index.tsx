@@ -75,6 +75,7 @@ export default function Page(): React.ReactElement | null {
 							onChangeValue={setJobType}
 							title="Job Type"
 							placeholder="Select Job Type"
+							zIndex={1}
 						/>
 						<InputField
 							length="full"

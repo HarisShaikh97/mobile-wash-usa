@@ -10,15 +10,15 @@ import { useFonts } from "expo-font"
 import Entypo from "@expo/vector-icons/Entypo"
 import { theme } from "../../utils/constants"
 
-interface BudgetInputFieldProps {
+interface BudgetInputProps {
 	value: number
 	setValue: (val: number | ((prev: number) => number)) => void
 }
 
-export default function BudgetInputField({
+export default function BudgetInput({
 	value,
 	setValue
-}: BudgetInputFieldProps): React.ReactElement | null {
+}: BudgetInputProps): React.ReactElement | null {
 	const [fontsLoaded] = useFonts({
 		"Roboto-Bold": require("../../assets/fonts/Roboto/Roboto Bold 700.ttf")
 	})

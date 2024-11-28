@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import { useFonts } from "expo-font"
 import { useLocalSearchParams, useRouter } from "expo-router"
 import JobCard from "../../../../components/job-card/JobCard"
-import BudgetInputField from "../../../../components/budget-input-field/BudgetInputField"
+import BudgetInput from "../../../../components/budget-input/BudgetInput"
 import FormButton from "../../../../components/form-button/FormButton"
 import BidSubmittedModal from "../../../../components/bid-submitted-modal/BidSubmittedModal"
 import AccountErrorModal from "../../../../components/account-error-modal/AccountErrorModal"
@@ -68,7 +68,7 @@ export default function Page(): React.ReactElement | null {
 						Your Bid Amount
 					</Text>
 				)}
-				<BudgetInputField value={bidAmount} setValue={setBidAmount} />
+				<BudgetInput value={bidAmount} setValue={setBidAmount} />
 			</View>
 			<View style={styles.actionButtonsWrapper}>
 				<FormButton
