@@ -1,108 +1,144 @@
-import { View, Text, StyleSheet } from "react-native"
+import { useMemo } from "react"
+import { View, Text, TextInput, StyleSheet } from "react-native"
 import Animated, {
-	useSharedValue,
-	useAnimatedStyle
+	SharedValue,
+	useAnimatedStyle,
+	useAnimatedProps
 } from "react-native-reanimated"
-import {
-	GestureDetector,
-	Gesture,
-	GestureHandlerRootView
-} from "react-native-gesture-handler"
+import { GestureDetector, Gesture } from "react-native-gesture-handler"
 import { theme } from "../../utils/constants"
 
-const THUMB_SIZE = 20
-const TRACK_BAR_LENGTH = 300
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 
 interface RangeInputProps {
+	title: string
+	trackBarLength: number
+	thumbSize: number
 	limit: number
-	minValue: number
-	setMinValue: (val: number | ((prev: number) => number)) => void
-	maxValue: number
-	setMaxValue: (val: number | ((prev: number) => number)) => void
+	minPosition: SharedValue<number>
+	maxPosition: SharedValue<number>
 }
 
 export default function RangeInput({
+	title,
+	trackBarLength,
+	thumbSize,
 	limit,
-	minValue,
-	setMinValue,
-	maxValue,
-	setMaxValue
+	minPosition,
+	maxPosition
 }: RangeInputProps): React.ReactElement | null {
-	const handleMinPosition = useSharedValue(0)
-	const handleMaxPosition = useSharedValue(280)
-
 	const animatedMinStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ translateX: handleMinPosition.value }]
+			transform: [{ translateX: minPosition.value }]
 		}
-	}, [handleMinPosition.value])
+	}, [minPosition.value])
 
 	const animatedMaxStyle = useAnimatedStyle(() => {
 		return {
-			transform: [{ translateX: handleMaxPosition.value }]
+			transform: [{ translateX: maxPosition.value }]
 		}
-	}, [handleMaxPosition.value])
+	}, [maxPosition.value])
 
 	const animatedProgressStyle = useAnimatedStyle(() => {
 		return {
-			left: handleMinPosition.value,
-			width:
-				handleMaxPosition.value + THUMB_SIZE - handleMinPosition.value
+			left: minPosition.value,
+			width: maxPosition.value + thumbSize - minPosition.value
+		}
+	}, [minPosition.value, maxPosition.value, thumbSize])
+
+	const gestureMin = useMemo(
+		() =>
+			Gesture.Pan().onUpdate((event) => {
+				const newMinPosition =
+					minPosition.value + event.x - thumbSize / 2
+
+				if (
+					newMinPosition < maxPosition.value - thumbSize &&
+					newMinPosition >= 0
+				) {
+					minPosition.value = newMinPosition
+				}
+			}),
+		[minPosition, maxPosition, thumbSize]
+	)
+
+	const gestureMax = useMemo(
+		() =>
+			Gesture.Pan().onUpdate((event) => {
+				const newMaxPosition =
+					maxPosition.value + event.x - thumbSize / 2
+
+				if (
+					newMaxPosition > minPosition.value + thumbSize &&
+					newMaxPosition <= trackBarLength - thumbSize
+				) {
+					maxPosition.value = newMaxPosition
+				}
+			}),
+		[minPosition, maxPosition, thumbSize, trackBarLength]
+	)
+
+	const minAnimatedProps = useAnimatedProps(() => {
+		return {
+			text: `${Math.floor((minPosition.value * limit) / trackBarLength)}`,
+			defaultValue: `${Math.floor(
+				(minPosition.value * limit) / trackBarLength
+			)}`
 		}
 	})
 
-	const gestureMin = Gesture.Pan().onUpdate((event) => {
-		const newMinPosition =
-			handleMinPosition.value + event.x - THUMB_SIZE / 2
-
-		if (
-			newMinPosition < handleMaxPosition.value - THUMB_SIZE &&
-			newMinPosition >= 0
-		) {
-			handleMinPosition.value = newMinPosition
-		}
-	})
-
-	const gestureMax = Gesture.Pan().onUpdate((event) => {
-		const newMaxPosition =
-			handleMaxPosition.value + event.x - THUMB_SIZE / 2
-
-		if (
-			newMaxPosition > handleMinPosition.value + THUMB_SIZE &&
-			newMaxPosition <= TRACK_BAR_LENGTH - THUMB_SIZE
-		) {
-			handleMaxPosition.value = newMaxPosition
+	const maxAnimatedProps = useAnimatedProps(() => {
+		return {
+			text: `${Math.ceil(
+				(maxPosition.value * limit) / (trackBarLength - thumbSize)
+			)}`,
+			defaultValue: `${Math.ceil(
+				(maxPosition.value * limit) / (trackBarLength - thumbSize)
+			)}`
 		}
 	})
 
 	return (
-		<GestureHandlerRootView style={styles.sliderWrapper}>
+		<View style={styles.sliderWrapper}>
 			<Text style={[styles.minMaxText, styles.inputFieldTitleText]}>
-				Budget range
+				{title}
 			</Text>
 			<View style={styles.minMaxSectionWrapper}>
 				<View style={styles.minMaxItemWrapper}>
 					<Text style={styles.minMaxText}>Min</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						<Text style={styles.minMaxQuantityText}>
-							{minValue}
-						</Text>
+						<AnimatedTextInput
+							animatedProps={minAnimatedProps}
+							style={styles.minMaxQuantityText}
+							editable={false}
+						/>
 					</View>
 				</View>
 				<View style={styles.separator} />
 				<View style={styles.minMaxItemWrapper}>
 					<Text style={styles.minMaxText}>Max</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						<Text style={styles.minMaxQuantityText}>
-							{maxValue}
-						</Text>
+						<AnimatedTextInput
+							animatedProps={maxAnimatedProps}
+							style={styles.minMaxQuantityText}
+							editable={false}
+						/>
 					</View>
 				</View>
 			</View>
-			<View style={styles.sliderTrackBar}>
+			<View style={[styles.sliderTrackBar, { width: trackBarLength }]}>
 				<GestureDetector gesture={gestureMin}>
 					<Animated.View
-						style={[styles.sliderThumb, animatedMinStyle]}
+						style={[
+							styles.sliderThumb,
+							{
+								height: thumbSize,
+								width: thumbSize,
+								borderRadius: thumbSize / 2,
+								top: -((thumbSize - 5) / 2)
+							},
+							animatedMinStyle
+						]}
 					/>
 				</GestureDetector>
 				<Animated.View
@@ -110,11 +146,20 @@ export default function RangeInput({
 				/>
 				<GestureDetector gesture={gestureMax}>
 					<Animated.View
-						style={[styles.sliderThumb, animatedMaxStyle]}
+						style={[
+							styles.sliderThumb,
+							{
+								height: thumbSize,
+								width: thumbSize,
+								borderRadius: thumbSize / 2,
+								top: -((thumbSize - 5) / 2)
+							},
+							animatedMaxStyle
+						]}
 					/>
 				</GestureDetector>
 			</View>
-		</GestureHandlerRootView>
+		</View>
 	)
 }
 
@@ -123,6 +168,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "column",
 		gap: 25,
+		marginBottom: 15,
 		zIndex: 0
 	},
 	inputFieldTitleText: {
@@ -130,7 +176,6 @@ const styles = StyleSheet.create({
 	},
 	sliderTrackBar: {
 		height: 5,
-		width: TRACK_BAR_LENGTH,
 		borderRadius: 2.5,
 		backgroundColor: "#F5F5F5",
 		position: "relative",
@@ -144,12 +189,8 @@ const styles = StyleSheet.create({
 		top: 0
 	},
 	sliderThumb: {
-		height: THUMB_SIZE,
-		width: THUMB_SIZE,
-		borderRadius: THUMB_SIZE / 2,
 		backgroundColor: theme.colors.primary,
 		position: "absolute",
-		top: -((THUMB_SIZE - 5) / 2),
 		zIndex: 10
 	},
 	minMaxSectionWrapper: {
@@ -175,7 +216,8 @@ const styles = StyleSheet.create({
 	minMaxQuantityText: {
 		fontSize: 16.5,
 		fontFamily: "Roboto-Medium",
-		color: theme.colors.primary
+		color: theme.colors.primary,
+		textAlign: "center"
 	},
 	minMaxText: {
 		fontFamily: "Roboto-Medium",

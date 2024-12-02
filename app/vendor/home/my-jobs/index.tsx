@@ -10,6 +10,7 @@ import BackButton from "../../../../components/back-button/BackButton"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import SearchBar from "../../../../components/search-bar/SearchBar"
 import JobCard from "../../../../components/job-card/JobCard"
+import JobsFilterModal from "../../../../components/jobs-filter-modal/JobsFilterModal"
 import { theme } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
@@ -118,6 +119,10 @@ export default function Page(): React.ReactElement | null {
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			<JobsFilterModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			<View style={styles.container}>
 				<View style={styles.headerContainer}>
 					<BackButton

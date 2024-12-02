@@ -1,12 +1,17 @@
 import { useState, useCallback } from "react"
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { Image, ImageBackground } from "expo-image"
+import { ImageBackground, Image } from "expo-image"
+import { useSharedValue } from "react-native-reanimated"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 import InputField from "../input-field/InputField"
 import RangeInput from "../range-input/RangeInput"
+import FormButton from "../form-button/FormButton"
 import { theme, services } from "../../utils/constants"
 import { SelectOption } from "../../utils/types"
 
 const LIMIT = 700
+const THUMB_SIZE = 20
+const TRACK_BAR_LENGTH = 300
 
 interface JobsFilterModalProps {
 	openModal: boolean
@@ -17,10 +22,14 @@ export default function JobsFilterModal({
 	openModal,
 	setOpenModal
 }: JobsFilterModalProps): React.ReactElement | null {
+	const minPosition = useSharedValue(0)
+	const maxPosition = useSharedValue(280)
+
 	const [jobType, setJobType] = useState<SelectOption | null>(null)
 	const [sortType, setSortType] = useState<SelectOption | null>(null)
-	const [minValue, setMinValue] = useState<number>(20)
+	const [minValue, setMinValue] = useState<number>(0)
 	const [maxValue, setMaxValue] = useState<number>(LIMIT)
+	const [location, setLocation] = useState<string>("")
 
 	const sortOptions: SelectOption[] = [
 		{
@@ -32,6 +41,12 @@ export default function JobsFilterModal({
 	]
 
 	const handleApplyFilter = useCallback((): void => {
+		setMinValue(Math.floor((minPosition.value * LIMIT) / TRACK_BAR_LENGTH))
+		setMaxValue(
+			Math.ceil(
+				(maxPosition.value * LIMIT) / (TRACK_BAR_LENGTH - THUMB_SIZE)
+			)
+		)
 		setOpenModal(false)
 	}, [openModal])
 
@@ -44,7 +59,7 @@ export default function JobsFilterModal({
 				setOpenModal(false)
 			}}
 		>
-			<View style={styles.modalWrapper}>
+			<GestureHandlerRootView style={styles.modalWrapper}>
 				<ImageBackground
 					source={require("../../assets/images/modal-background.png")}
 					style={styles.modalContainer}
@@ -85,15 +100,37 @@ export default function JobsFilterModal({
 							zIndex={1}
 						/>
 						<RangeInput
+							title="Budget Range"
 							limit={LIMIT}
-							minValue={minValue}
-							setMinValue={setMinValue}
-							maxValue={maxValue}
-							setMaxValue={setMaxValue}
+							thumbSize={THUMB_SIZE}
+							trackBarLength={TRACK_BAR_LENGTH}
+							minPosition={minPosition}
+							maxPosition={maxPosition}
+						/>
+						<InputField
+							length="full"
+							title="Location"
+							placeholder="Search your location"
+							value={location}
+							onChangeText={setLocation}
+							secureTextEntry={false}
+							multiline={false}
+							type="text"
+						/>
+						<Image
+							source={require("../../assets/images/map.png")}
+							style={styles.mapView}
+							contentFit="cover"
 						/>
 					</View>
+					<FormButton
+						title="Apply Filter"
+						onPress={handleApplyFilter}
+						theme="dark"
+						length="full"
+					/>
 				</ImageBackground>
-			</View>
+			</GestureHandlerRootView>
 		</Modal>
 	)
 }
@@ -110,7 +147,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 20,
 		padding: 25
 	},
 	modalHeaderContainer: {
@@ -144,5 +180,11 @@ const styles = StyleSheet.create({
 		gap: 10,
 		paddingTop: 20,
 		paddingBottom: 35
+	},
+	mapView: {
+		height: 125,
+		width: "100%",
+		borderRadius: 10,
+		overflow: "hidden"
 	}
 })
