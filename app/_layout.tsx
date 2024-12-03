@@ -18,8 +18,6 @@ export default function Layout(): React.ReactElement | null {
 
 	useReactQueryDevTools(queryClient)
 
-	NavigationBar.setVisibilityAsync("hidden")
-
 	const onLayoutRootView = useCallback(async () => {
 		if (appIsReady) {
 			await SplashScreen.hideAsync()
@@ -29,6 +27,8 @@ export default function Layout(): React.ReactElement | null {
 	useEffect(() => {
 		;(async () => {
 			try {
+				await NavigationBar.setVisibilityAsync("hidden")
+
 				await Font.loadAsync({
 					"Montserrat-Black": require("../assets/fonts/Montserrat/Montserrat Black 900.ttf"),
 					"Montserrat-ExtraBold": require("../assets/fonts/Montserrat/Montserrat ExtraBold 800.ttf"),
