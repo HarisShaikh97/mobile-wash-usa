@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
 		width: "47.5%"
 	},
 	inputFieldTitleText: {
-		fontFamily: "Roboto-Medium",
+		fontFamily: "Roboto-Regular",
 		fontSize: 12.5,
 		color: theme.colors.secondary,
 		marginLeft: 7.5

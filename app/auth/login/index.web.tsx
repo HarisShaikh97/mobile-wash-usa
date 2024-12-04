@@ -26,12 +26,12 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.titleText} numberOfLines={2}>
-				Welcome Back!
-			</Text>
-			<Text style={styles.descriptionText}>
-				Please log in to your account
-			</Text>
+			<View style={styles.titleWrapper}>
+				<Text style={styles.titleText}>Welcome Back!</Text>
+				<Text style={styles.descriptionText}>
+					Please log in to your account
+				</Text>
+			</View>
 			<View style={styles.formContainer}>
 				<InputField
 					length="full"
@@ -53,43 +53,45 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
-				<FormButton
-					length="full"
-					theme="dark"
-					title="Login"
-					onPress={handleLogin}
-				/>
-				<TouchableOpacity
-					style={styles.forgetPasswordButton}
-					onPress={handleForgetPassword}
-				>
-					<Text style={styles.forgetPasswordButtonText}>
-						Forgot Password?
+			</View>
+			<FormButton
+				length="full"
+				theme="dark"
+				title="Login"
+				onPress={handleLogin}
+			/>
+			<TouchableOpacity
+				style={styles.forgetPasswordButton}
+				onPress={handleForgetPassword}
+			>
+				<Text style={styles.forgetPasswordButtonText}>
+					Forgot Password?
+				</Text>
+			</TouchableOpacity>
+			<View style={styles.socialLoginButtonsWrapper}>
+				<TouchableOpacity style={styles.socialLoginButton}>
+					<Image
+						source={require("../../../assets/icons/google.svg")}
+						alt="google"
+						style={styles.socialIcon}
+						contentFit="contain"
+					/>
+					<Text style={styles.socialLoginButtonText}>
+						Continue With Google
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={styles.socialLoginButton}>
+					<Image
+						source={require("../../../assets/icons/facebook.svg")}
+						alt="facebook"
+						style={styles.socialIcon}
+						contentFit="contain"
+					/>
+					<Text style={styles.socialLoginButtonText}>
+						Continue With Facebook
 					</Text>
 				</TouchableOpacity>
 			</View>
-			<TouchableOpacity style={styles.socialLoginButton}>
-				<Image
-					source={require("../../../assets/icons/google.svg")}
-					alt="google"
-					style={styles.socialIcon}
-					contentFit="contain"
-				/>
-				<Text style={styles.socialLoginButtonText}>
-					Continue With Google
-				</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.socialLoginButton}>
-				<Image
-					source={require("../../../assets/icons/facebook.svg")}
-					alt="facebook"
-					style={styles.socialIcon}
-					contentFit="contain"
-				/>
-				<Text style={styles.socialLoginButtonText}>
-					Continue With Facebook
-				</Text>
-			</TouchableOpacity>
 			<View style={styles.signUpTextWrapper}>
 				<Text style={[styles.signUpText, styles.signUpTextBlack]}>
 					New to Mobile Wash USA?
@@ -107,44 +109,56 @@ export default function Page(): React.ReactElement | null {
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: "column",
-		paddingHorizontal: 35,
-		paddingVertical: 15,
-		gap: 10
+		alignItems: "center",
+		gap: 15
+	},
+	titleWrapper: {
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 2.5
 	},
 	titleText: {
-		width: 200,
 		fontFamily: "Montserrat-Bold",
-		fontSize: 35,
+		fontSize: 40,
 		color: theme.colors.secondary,
-		textTransform: "capitalize"
+		textTransform: "capitalize",
+		letterSpacing: 0.5
 	},
 	descriptionText: {
 		fontFamily: "Roboto-Regular",
-		fontSize: 13.5,
+		fontSize: 17.5,
 		color: theme.colors.secondary
 	},
 	formContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 10,
-		paddingVertical: 15
+		gap: 15,
+		paddingTop: 35,
+		paddingBottom: 15
 	},
 	forgetPasswordButton: {
-		alignSelf: "flex-end"
+		alignSelf: "flex-end",
+		marginRight: 25
 	},
 	forgetPasswordButtonText: {
 		fontFamily: "Roboto-Medium",
-		fontSize: 12.5,
+		fontSize: 13.5,
 		color: theme.colors.secondary
 	},
+	socialLoginButtonsWrapper: {
+		flexDirection: "column",
+		alignItems: "center",
+		gap: 10,
+		paddingTop: 20
+	},
 	socialLoginButton: {
-		width: "100%",
+		width: 325,
 		height: 50,
-		borderRadius: 10,
+		borderRadius: 12.5,
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 15,
-		paddingLeft: "17.5%",
+		paddingLeft: "20%",
 		borderWidth: 0.75,
 		borderColor: "rgba(173, 173, 173, 0.5)"
 	},
@@ -162,10 +176,10 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 10,
-		marginTop: 15
+		marginTop: 10
 	},
 	signUpText: {
-		fontSize: 12.5,
+		fontSize: 15,
 		fontFamily: "Roboto-Medium"
 	},
 	signUpTextBlack: {

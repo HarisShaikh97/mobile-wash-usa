@@ -33,6 +33,7 @@ export default function SignUpLayout({
 						contentFit="fill"
 					>
 						<BackButton
+							size="small"
 							color="#000000"
 							backgroundColor="transparent"
 							borderColor="transparent"

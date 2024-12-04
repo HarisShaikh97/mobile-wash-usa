@@ -40,6 +40,7 @@ export default function Page(): React.ReactElement | null {
 					>
 						<View style={styles.headerContainer}>
 							<BackButton
+								size="small"
 								color="#000000"
 								backgroundColor="#F5F5F5"
 								borderColor="transparent"
