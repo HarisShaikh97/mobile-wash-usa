@@ -134,30 +134,34 @@ export default function Page(): React.ReactElement | null {
 						Or Via Google And Facebook
 					</Text>
 					<View style={styles.buttonsWrapper}>
-						<BlurView
-							intensity={18}
-							tint="light"
-							style={styles.socialLoginButton}
-						>
-							<Image
-								source={require("../assets/icons/google.svg")}
-								alt="google"
-								style={styles.socialIcon}
-								contentFit="contain"
-							/>
-						</BlurView>
-						<BlurView
-							intensity={18}
-							tint="light"
-							style={styles.socialLoginButton}
-						>
-							<Image
-								source={require("../assets/icons/facebook.svg")}
-								alt="google"
-								style={styles.socialIcon}
-								contentFit="contain"
-							/>
-						</BlurView>
+						<TouchableOpacity>
+							<BlurView
+								intensity={18}
+								tint="light"
+								style={styles.socialLoginButton}
+							>
+								<Image
+									source={require("../assets/icons/google.svg")}
+									alt="google"
+									style={styles.socialIcon}
+									contentFit="contain"
+								/>
+							</BlurView>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<BlurView
+								intensity={18}
+								tint="light"
+								style={styles.socialLoginButton}
+							>
+								<Image
+									source={require("../assets/icons/facebook.svg")}
+									alt="google"
+									style={styles.socialIcon}
+									contentFit="contain"
+								/>
+							</BlurView>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>
