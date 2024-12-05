@@ -65,86 +65,94 @@ export default function Page(): React.ReactElement | null {
 	return (
 		<View style={styles.bodyContainer}>
 			<Text style={styles.titleText}>Sign Up</Text>
-			<View style={styles.formContainer}>
-				<InputField
-					length="full"
-					title="Full Name"
-					placeholder="Enter your full name"
-					value={fullName}
-					onChangeText={setFullName}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				<InputField
-					length="full"
-					title="Email"
-					placeholder="Enter your email address"
-					value={email}
-					onChangeText={setEmail}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				<InputField
-					length="full"
-					title="Phone Number"
-					placeholder="Enter your phone number"
-					value={phoneNumber}
-					onChangeText={setPhoneNumber}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				<InputField
-					length="full"
-					title="Password"
-					placeholder="**********"
-					value={password}
-					onChangeText={setPassword}
-					secureTextEntry={true}
-					multiline={false}
-					type="text"
-				/>
-				<InputField
-					length="full"
-					title="Business Information"
-					placeholder="Tell us about your business or the services you provide."
-					value={businessInformation}
-					onChangeText={setBusinessInformation}
-					secureTextEntry={false}
-					multiline={true}
-					size="small"
-					type="text"
-				/>
-				<View style={styles.documentInputWrapper}>
+			<View style={styles.formsWrapper}>
+				<View style={styles.formContainer}>
 					<InputField
 						length="full"
-						title="Upload Documents"
-						placeholder="Insurance, Business License, etc."
-						files={documents}
-						onUploadFile={setDocuments}
-						type="file"
+						title="Full Name"
+						placeholder="Enter your full name"
+						value={fullName}
+						onChangeText={setFullName}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
 					/>
-					<View style={styles.documentInputDescriptionTextWrapper}>
-						<View style={styles.bulletMarker} />
-						<Text style={styles.documentInputDescriptionText}>
-							Upload PDF or Image Documents As Proof Of Business
-							Verification.
-						</Text>
-					</View>
+					<InputField
+						length="full"
+						title="Email"
+						placeholder="Enter your email address"
+						value={email}
+						onChangeText={setEmail}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+					<InputField
+						length="full"
+						title="Phone Number"
+						placeholder="Enter your phone number"
+						value={phoneNumber}
+						onChangeText={setPhoneNumber}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+					<InputField
+						length="full"
+						title="Password"
+						placeholder="**********"
+						value={password}
+						onChangeText={setPassword}
+						secureTextEntry={true}
+						multiline={false}
+						type="text"
+					/>
 				</View>
-				<InputField
-					length="full"
-					title="Location"
-					placeholder="Enter your location"
-					value={location}
-					onChangeText={setLocation}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				<View style={styles.policyAndTermsTextContainer}>
+				<View style={styles.formContainer}>
+					<InputField
+						length="full"
+						title="Business Information"
+						placeholder="Tell us about your business or the services you provide."
+						value={businessInformation}
+						onChangeText={setBusinessInformation}
+						secureTextEntry={false}
+						multiline={true}
+						size="small"
+						type="text"
+					/>
+					<View style={styles.documentInputWrapper}>
+						<InputField
+							length="full"
+							title="Upload Documents"
+							placeholder="Insurance, Business License, etc."
+							files={documents}
+							onUploadFile={setDocuments}
+							type="file"
+						/>
+						<View
+							style={styles.documentInputDescriptionTextWrapper}
+						>
+							<View style={styles.bulletMarker} />
+							<Text style={styles.documentInputDescriptionText}>
+								Upload PDF or Image Documents As Proof Of
+								Business Verification.
+							</Text>
+						</View>
+					</View>
+					<InputField
+						length="full"
+						title="Location"
+						placeholder="Enter your location"
+						value={location}
+						onChangeText={setLocation}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+				</View>
+			</View>
+			<View style={styles.policyAndTermsTextContainer}>
+				<View style={styles.policyAndTermsTextWrapper}>
 					<Text
 						style={[
 							styles.policyAndTermsText,
@@ -153,61 +161,63 @@ export default function Page(): React.ReactElement | null {
 					>
 						By signing up, you agree to our
 					</Text>
-					<View style={styles.policyAndTermsTextWrapper}>
-						<TouchableOpacity>
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsLinkText
-								]}
-							>
-								Terms of Service
-							</Text>
-						</TouchableOpacity>
+					<TouchableOpacity>
 						<Text
 							style={[
 								styles.policyAndTermsText,
-								styles.policyAndTermsTextBlack
+								styles.policyAndTermsLinkText
 							]}
 						>
-							{" and "}
+							{" Terms of Service"}
 						</Text>
-						<TouchableOpacity>
-							<Text
-								style={[
-									styles.policyAndTermsText,
-									styles.policyAndTermsLinkText
-								]}
-							>
-								Privacy Policy
-							</Text>
-						</TouchableOpacity>
-						<Text
-							style={[
-								styles.policyAndTermsText,
-								styles.policyAndTermsTextBlack
-							]}
-						>
-							.
-						</Text>
-					</View>
+					</TouchableOpacity>
 				</View>
+				<View style={styles.policyAndTermsTextWrapper}>
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.policyAndTermsTextBlack
+						]}
+					>
+						{" and "}
+					</Text>
+					<TouchableOpacity>
+						<Text
+							style={[
+								styles.policyAndTermsText,
+								styles.policyAndTermsLinkText
+							]}
+						>
+							Privacy Policy
+						</Text>
+					</TouchableOpacity>
+					<Text
+						style={[
+							styles.policyAndTermsText,
+							styles.policyAndTermsTextBlack
+						]}
+					>
+						.
+					</Text>
+				</View>
+			</View>
+			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"
 					theme="dark"
 					title="Sign Up"
 					onPress={handleSubmit}
 				/>
-				<View style={styles.loginTextWrapper}>
-					<Text style={[styles.loginText, styles.loginTextBlack]}>
-						Already have an account?
+			</View>
+			<View style={styles.loginTextWrapper}>
+				<Text style={[styles.loginText, styles.loginTextBlack]}>
+					Already have an account?
+				</Text>
+				<TouchableOpacity onPress={handleLogin}>
+					<Text style={[styles.loginText, styles.loginTextBlue]}>
+						Login
 					</Text>
-					<TouchableOpacity onPress={handleLogin}>
-						<Text style={[styles.loginText, styles.loginTextBlue]}>
-							Login
-						</Text>
-					</TouchableOpacity>
-				</View>
+				</TouchableOpacity>
 			</View>
 		</View>
 	)
@@ -215,23 +225,28 @@ export default function Page(): React.ReactElement | null {
 
 const styles = StyleSheet.create({
 	bodyContainer: {
+		width: "100%",
 		flexDirection: "column",
 		alignItems: "center",
-		paddingHorizontal: 35,
-		gap: 10
+		gap: 25
 	},
 	titleText: {
 		fontFamily: "Montserrat-Bold",
-		fontSize: 30,
+		fontSize: 40,
 		color: theme.colors.secondary,
-		textAlign: "center"
+		textAlign: "center",
+		textTransform: "capitalize"
+	},
+	formsWrapper: {
+		width: "100%",
+		flexDirection: "row",
+		gap: 25,
+		justifyContent: "space-between"
 	},
 	formContainer: {
-		width: "100%",
+		flex: 1,
 		flexDirection: "column",
-		gap: 10,
-		paddingTop: 20,
-		paddingBottom: 35
+		gap: 25
 	},
 	documentInputWrapper: {
 		width: "100%",
@@ -243,7 +258,7 @@ const styles = StyleSheet.create({
 		width: 3.5,
 		borderRadius: 2.5,
 		backgroundColor: theme.colors.secondary,
-		marginTop: 7.5
+		marginTop: 5
 	},
 	documentInputDescriptionTextWrapper: {
 		flexDirection: "row",
@@ -259,33 +274,34 @@ const styles = StyleSheet.create({
 	policyAndTermsTextContainer: {
 		width: "100%",
 		flexDirection: "column",
-		paddingBottom: 10,
-		paddingHorizontal: 10
+		alignItems: "center",
+		paddingTop: 10
 	},
 	policyAndTermsTextWrapper: {
 		flexDirection: "row",
 		alignItems: "center"
 	},
 	policyAndTermsText: {
-		fontSize: 13.5
+		fontSize: 15,
+		fontFamily: "Roboto-Medium"
 	},
 	policyAndTermsTextBlack: {
-		color: theme.colors.secondary,
-		fontFamily: "Roboto-Regular"
+		color: theme.colors.secondary
 	},
 	policyAndTermsLinkText: {
-		color: theme.colors.primary,
-		fontFamily: "Roboto-Medium"
+		color: theme.colors.primary
+	},
+	formButtonWrapper: {
+		width: "40%"
 	},
 	loginTextWrapper: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 10,
-		marginTop: 15
+		gap: 10
 	},
 	loginText: {
-		fontSize: 13.5,
+		fontSize: 15,
 		fontFamily: "Roboto-Medium"
 	},
 	loginTextBlack: {
