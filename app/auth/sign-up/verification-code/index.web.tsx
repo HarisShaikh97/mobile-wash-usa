@@ -2,6 +2,7 @@ import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
+import AccountVerificationSuccessfulWebModal from "../../../../components/account-verification-successful-web-modal/AccountVerificationSuccessfulWebModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -14,6 +15,10 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
+			<AccountVerificationSuccessfulWebModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+			/>
 			<Text style={styles.titleText}>Verify Your Account</Text>
 			<Text style={styles.descriptionText}>
 				A verification code has been sent to your email/phone.
