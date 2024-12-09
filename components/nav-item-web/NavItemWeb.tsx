@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from "react"
-import { TouchableOpacity, Text, StyleSheet } from "react-native"
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import { RouteProp } from "@react-navigation/native"
@@ -10,7 +10,7 @@ interface NavItemProps extends BottomTabBarProps {
 	index: number
 }
 
-export default function NavItem({
+export default function NavItemWeb({
 	state,
 	descriptors,
 	navigation,
@@ -82,46 +82,60 @@ export default function NavItem({
 			onLongPress={onLongPress}
 			style={[
 				styles.navItemContainer,
-				index === 1 && styles.secondNavItemContainer,
-				index === 2 && styles.thirdNavItemContainer
+				isFocused ? styles.selectedNavItem : styles.unSelectedNavItem
 			]}
 			key={route.name}
 		>
-			<Image
-				source={iconSource}
-				style={styles.navIcon}
-				contentFit="contain"
-			/>
-			<Text
-				style={[
-					styles.titleText,
-					isFocused
-						? styles.selectedTitleText
-						: styles.unSelectedTitleText
-				]}
-			>
-				{typeof label === "string" ? label : ""}
-			</Text>
+			<View style={styles.navItemTitleContainer}>
+				<Image
+					source={iconSource}
+					style={styles.navIcon}
+					contentFit="contain"
+				/>
+				<Text
+					style={[
+						styles.titleText,
+						isFocused
+							? styles.selectedTitleText
+							: styles.unSelectedTitleText
+					]}
+				>
+					{typeof label === "string" ? label : ""}
+				</Text>
+			</View>
+			{isFocused && <View style={styles.verticalBar} />}
 		</TouchableOpacity>
 	)
 }
 
 const styles = StyleSheet.create({
 	navItemContainer: {
-		flexDirection: "column",
-		gap: 3.5,
+		flexDirection: "row",
 		alignItems: "center",
-		width: 100
+		height: 65,
+		width: "100%",
+		borderRadius: 12.5,
+		borderWidth: 1,
+		paddingHorizontal: 5
 	},
-	secondNavItemContainer: {
-		paddingRight: 30
+	selectedNavItem: {
+		backgroundColor: "#F3F8FE",
+		borderColor: "transparent"
 	},
-	thirdNavItemContainer: {
-		paddingLeft: 30
+	unSelectedNavItem: {
+		backgroundColor: "white",
+		borderColor: "#F5F5F5"
+	},
+	navItemTitleContainer: {
+		flex: 1,
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 12.5,
+		paddingLeft: 10
 	},
 	titleText: {
-		fontSize: 8.5,
-		fontFamily: "Montserrat-SemiBold"
+		fontSize: 16.5,
+		fontFamily: "Roboto-Regular"
 	},
 	selectedTitleText: {
 		color: theme.colors.primary
@@ -132,5 +146,11 @@ const styles = StyleSheet.create({
 	navIcon: {
 		height: 20,
 		width: 20
+	},
+	verticalBar: {
+		height: 32.5,
+		width: 4,
+		borderRadius: 2,
+		backgroundColor: theme.colors.primary
 	}
 })
