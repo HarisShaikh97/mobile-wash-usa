@@ -27,7 +27,7 @@ export default function Layout(): React.ReactElement | null {
 							backgroundColor="rgba(255, 255, 255, 0.15)"
 							borderColor="#ffffff"
 						/>
-						<NotificationButton theme="dark" />
+						<NotificationButton theme="dark" mode="app" />
 					</View>
 					<View style={styles.profileCard}>
 						<Slot />

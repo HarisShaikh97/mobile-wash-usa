@@ -131,7 +131,7 @@ export default function Page(): React.ReactElement | null {
 						backgroundColor="transparent"
 						borderColor="#F5F5F5"
 					/>
-					<NotificationButton theme="dark" />
+					<NotificationButton theme="dark" mode="app" />
 				</View>
 				<View style={styles.bodyContainer}>
 					<Text style={styles.titleText}>My Jobs</Text>
@@ -184,6 +184,7 @@ export default function Page(): React.ReactElement | null {
 									budget={job.budget}
 									status={job.status}
 									showActionButtons
+									mode="app"
 									key={job._id}
 								/>
 							)

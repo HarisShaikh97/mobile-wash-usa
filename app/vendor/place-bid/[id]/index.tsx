@@ -55,6 +55,7 @@ export default function Page(): React.ReactElement | null {
 				budget={500}
 				status="incoming"
 				showActionButtons={false}
+				mode="app"
 			/>
 			<View style={styles.bidAmountWrapper}>
 				<Text style={styles.bidAmountTitleText}>Your Bid Amount</Text>

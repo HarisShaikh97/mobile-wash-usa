@@ -106,9 +106,10 @@ export default function Tab(): React.ReactElement | null {
 						>
 							<ProfileImageBox
 								source={require("../../../assets/images/vendor-profile.png")}
+								mode="app"
 							/>
 						</TouchableOpacity>
-						<NotificationButton theme="light" />
+						<NotificationButton theme="light" mode="app" />
 					</View>
 					<View style={styles.welcomeTextWrapper}>
 						<Text style={styles.welcomeHeadingText}>
@@ -194,6 +195,7 @@ export default function Tab(): React.ReactElement | null {
 										budget={job.budget}
 										status={job.status}
 										showActionButtons
+										mode="app"
 										key={job._id}
 									/>
 								)

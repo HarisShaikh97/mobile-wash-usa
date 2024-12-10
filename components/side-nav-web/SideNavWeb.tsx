@@ -1,10 +1,10 @@
+import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { ImageBackground, Image } from "expo-image"
-import { useRouter, usePathname } from "expo-router"
+import { useRouter } from "expo-router"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
-import AntDesign from "@expo/vector-icons/AntDesign"
 import NavItemWeb from "../nav-item-web/NavItemWeb"
-import { theme } from "../../utils/constants"
+import { theme, WEB_SIDE_NAV_WIDTH } from "../../utils/constants"
 
 export default function SideNavWeb({
 	state,
@@ -13,7 +13,10 @@ export default function SideNavWeb({
 	insets
 }: BottomTabBarProps): React.ReactElement | null {
 	const router = useRouter()
-	const pathname = usePathname()
+
+	const handleLogout = useCallback((): void => {
+		router.navigate("/")
+	}, [router])
 
 	return (
 		<View style={styles.sideNavWrapper}>
@@ -40,7 +43,10 @@ export default function SideNavWeb({
 						/>
 					))}
 				</View>
-				<TouchableOpacity style={styles.navItemContainer}>
+				<TouchableOpacity
+					style={styles.navItemContainer}
+					onPress={handleLogout}
+				>
 					<Image
 						source={require("../../assets/icons/logout-blue.svg")}
 						style={styles.navIcon}
@@ -56,16 +62,17 @@ export default function SideNavWeb({
 const styles = StyleSheet.create({
 	sideNavWrapper: {
 		height: "100%",
-		width: 385,
+		width: WEB_SIDE_NAV_WIDTH,
 		position: "absolute",
 		top: 0,
 		left: 0,
 		zIndex: 100,
-		padding: 25
+		paddingVertical: 25,
+		paddingLeft: 27.5
 	},
 	sideNavContainer: {
 		flex: 1,
-		borderRadius: 20,
+		borderRadius: 22.5,
 		backgroundColor: "white",
 		flexDirection: "column",
 		padding: 17.5,

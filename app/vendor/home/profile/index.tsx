@@ -30,6 +30,7 @@ export default function Tab(): React.ReactElement | null {
 					<View style={styles.profileIconWrapper}>
 						<ProfileImageBox
 							source={require("../../../../assets/images/vendor-profile.png")}
+							mode="app"
 						/>
 						<View style={styles.profileTextWrapper}>
 							<Text style={styles.usernameText}>

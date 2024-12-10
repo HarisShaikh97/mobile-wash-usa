@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		borderRadius: 12.5,
 		borderWidth: 1,
-		paddingHorizontal: 5
+		paddingHorizontal: 6.5
 	},
 	selectedNavItem: {
 		backgroundColor: "#F3F8FE",

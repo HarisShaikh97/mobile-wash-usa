@@ -18,7 +18,7 @@ export default function Layout(): React.ReactElement | null {
 						backgroundColor="transparent"
 						borderColor="#F5F5F5"
 					/>
-					<NotificationButton theme="dark" />
+					<NotificationButton theme="dark" mode="app" />
 				</View>
 				<Slot />
 			</View>

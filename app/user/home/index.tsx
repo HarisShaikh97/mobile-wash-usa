@@ -25,7 +25,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -47,7 +47,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -69,7 +69,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -106,9 +106,10 @@ export default function Tab(): React.ReactElement | null {
 						>
 							<ProfileImageBox
 								source={require("../../../assets/images/profile.png")}
+								mode="app"
 							/>
 						</TouchableOpacity>
-						<NotificationButton theme="light" />
+						<NotificationButton theme="light" mode="app" />
 					</View>
 					<View style={styles.welcomeTextWrapper}>
 						<Text style={styles.welcomeHeadingText}>
@@ -131,6 +132,7 @@ export default function Tab(): React.ReactElement | null {
 										<ServiceCard
 											title={service.title}
 											image={service.image}
+											mode="app"
 											key={index}
 										/>
 									)
@@ -190,6 +192,7 @@ export default function Tab(): React.ReactElement | null {
 										budget={job.budget}
 										status={job.status}
 										showActionButtons
+										mode="app"
 										key={job._id}
 									/>
 								)

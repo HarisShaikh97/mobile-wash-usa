@@ -13,6 +13,7 @@ interface JobCardProps {
 	budget: Job["budget"]
 	status: Job["status"]
 	showActionButtons: boolean
+	mode: "web" | "app"
 }
 
 export default function JobCard({
@@ -23,15 +24,28 @@ export default function JobCard({
 	address,
 	budget,
 	status,
-	showActionButtons
+	showActionButtons,
+	mode
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
 
 	return (
-		<View style={styles.cardContainer}>
+		<View
+			style={[
+				styles.cardContainer,
+				mode === "app"
+					? styles.cardContainerApp
+					: styles.cardContainerWeb
+			]}
+		>
 			<View style={styles.jobTitleContainer}>
 				<Text
-					style={styles.jobTitleText}
+					style={[
+						styles.jobTitleText,
+						mode === "app"
+							? styles.jobTitleTextApp
+							: styles.jobTitleTextWeb
+					]}
 					numberOfLines={2}
 					ellipsizeMode="tail"
 				>
@@ -40,35 +54,74 @@ export default function JobCard({
 				<Text style={styles.budgetText}>${budget}</Text>
 			</View>
 			<Text
-				style={styles.descriptionText}
-				numberOfLines={2}
+				style={[
+					styles.descriptionText,
+					mode === "app"
+						? styles.descriptionTextApp
+						: styles.descriptionTextWeb
+				]}
+				numberOfLines={mode === "app" ? 2 : 3}
 				ellipsizeMode="tail"
 			>
 				{description}
 			</Text>
-			<View style={styles.dateAndLocationSection}>
+			<View
+				style={[
+					styles.dateAndLocationSection,
+					mode === "app"
+						? styles.dateAndLocationSectionApp
+						: styles.dateAndLocationSectionWeb
+				]}
+			>
 				<Text style={styles.dateAndLocationTitleText}>
 					Date And Location
 				</Text>
-				<View style={styles.dateAndLocationDetailsContainer}>
+				<View
+					style={[
+						styles.dateAndLocationDetailsContainer,
+						mode === "app"
+							? styles.dateAndLocationDetailsContainerApp
+							: styles.dateAndLocationDetailsContainerWeb
+					]}
+				>
 					<View style={styles.dateAndLocationTextWrapper}>
 						<Image
 							source={require("../../assets/icons/date.svg")}
 							style={styles.dateAndLocationIcon}
 							contentFit="contain"
 						/>
-						<Text style={styles.dateAndLocationDetailsText}>
+						<Text
+							style={[
+								styles.dateAndLocationDetailsText,
+								mode === "app"
+									? styles.dateAndLocationDetailsTextApp
+									: styles.dateAndLocationDetailsTextWeb
+							]}
+						>
 							{date}
 						</Text>
 					</View>
-					<View style={styles.circularSeparator} />
+					<View
+						style={
+							mode === "app"
+								? styles.circularSeparatorSmall
+								: styles.circularSeparatorLarge
+						}
+					/>
 					<View style={styles.dateAndLocationTextWrapper}>
 						<Image
 							source={require("../../assets/icons/location.svg")}
 							style={styles.dateAndLocationIcon}
 							contentFit="contain"
 						/>
-						<Text style={styles.dateAndLocationDetailsText}>
+						<Text
+							style={[
+								styles.dateAndLocationDetailsText,
+								mode === "app"
+									? styles.dateAndLocationDetailsTextApp
+									: styles.dateAndLocationDetailsTextWeb
+							]}
+						>
 							{address}
 						</Text>
 					</View>
@@ -80,12 +133,17 @@ export default function JobCard({
 						<View
 							style={[
 								styles.actionButtonContainer,
+								mode === "app"
+									? styles.actionButtonContainerApp
+									: styles.actionButtonContainerWeb,
 								styles.statusTab
 							]}
 						>
 							<Text
 								style={[
-									styles.actionButtonsText,
+									mode === "app"
+										? styles.actionButtonsTextApp
+										: styles.actionButtonsTextWeb,
 									styles.actionButtonsTextDark
 								]}
 							>
@@ -97,6 +155,9 @@ export default function JobCard({
 							<TouchableOpacity
 								style={[
 									styles.actionButtonContainer,
+									mode === "app"
+										? styles.actionButtonContainerApp
+										: styles.actionButtonContainerWeb,
 									styles.buttonLightBlue
 								]}
 								onPress={() => {
@@ -107,7 +168,9 @@ export default function JobCard({
 							>
 								<Text
 									style={[
-										styles.actionButtonsText,
+										mode === "app"
+											? styles.actionButtonsTextApp
+											: styles.actionButtonsTextWeb,
 										styles.actionButtonsTextDark
 									]}
 								>
@@ -120,6 +183,9 @@ export default function JobCard({
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
+								mode === "app"
+									? styles.actionButtonContainerApp
+									: styles.actionButtonContainerWeb,
 								styles.buttonDarkBlue
 							]}
 							onPress={() => {
@@ -128,7 +194,9 @@ export default function JobCard({
 						>
 							<Text
 								style={[
-									styles.actionButtonsText,
+									mode === "app"
+										? styles.actionButtonsTextApp
+										: styles.actionButtonsTextWeb,
 									styles.actionButtonsTextLight
 								]}
 							>
@@ -140,6 +208,9 @@ export default function JobCard({
 							<TouchableOpacity
 								style={[
 									styles.actionButtonContainer,
+									mode === "app"
+										? styles.actionButtonContainerApp
+										: styles.actionButtonContainerWeb,
 									styles.buttonDarkBlue
 								]}
 								onPress={() => {
@@ -148,7 +219,9 @@ export default function JobCard({
 							>
 								<Text
 									style={[
-										styles.actionButtonsText,
+										mode === "app"
+											? styles.actionButtonsTextApp
+											: styles.actionButtonsTextWeb,
 										styles.actionButtonsTextLight
 									]}
 								>
@@ -165,14 +238,23 @@ export default function JobCard({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		width: "100%",
+		flexGrow: 1,
+		flexShrink: 1,
+		width: "auto",
+		backgroundColor: "white",
+		flexDirection: "column"
+	},
+	cardContainerApp: {
 		borderRadius: 15,
 		borderWidth: 1,
 		borderColor: "#F5F5F5",
-		backgroundColor: "white",
 		padding: 15,
-		flexDirection: "column",
 		gap: 5
+	},
+	cardContainerWeb: {
+		borderRadius: 15,
+		padding: 25,
+		gap: 15
 	},
 	jobTitleContainer: {
 		width: "100%",
@@ -181,10 +263,16 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between"
 	},
 	jobTitleText: {
-		fontSize: 15,
 		fontFamily: "Montserrat-Bold",
-		width: 150,
 		color: theme.colors.secondary
+	},
+	jobTitleTextApp: {
+		fontSize: 15,
+		maxWidth: 150
+	},
+	jobTitleTextWeb: {
+		fontSize: 22.5,
+		maxWidth: 250
 	},
 	budgetText: {
 		fontSize: 22.5,
@@ -192,20 +280,38 @@ const styles = StyleSheet.create({
 		color: theme.colors.primary
 	},
 	descriptionText: {
-		width: 250,
-		fontSize: 12,
 		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
+	},
+	descriptionTextApp: {
+		maxWidth: 250,
+		fontSize: 12
+	},
+	descriptionTextWeb: {
+		maxWidth: 375,
+		fontSize: 15
 	},
 	dateAndLocationSection: {
 		flexDirection: "column",
 		gap: 7.5,
 		marginVertical: 12.5
 	},
-	circularSeparator: {
+	dateAndLocationSectionApp: {
+		gap: 7.5
+	},
+	dateAndLocationSectionWeb: {
+		gap: 15
+	},
+	circularSeparatorSmall: {
 		height: 3,
 		width: 3,
 		borderRadius: 1.5,
+		backgroundColor: theme.colors.primary
+	},
+	circularSeparatorLarge: {
+		height: 5,
+		width: 5,
+		borderRadius: 2.5,
 		backgroundColor: theme.colors.primary
 	},
 	dateAndLocationTitleText: {
@@ -215,18 +321,28 @@ const styles = StyleSheet.create({
 	},
 	dateAndLocationDetailsContainer: {
 		flexDirection: "row",
-		gap: 10,
 		alignItems: "center"
+	},
+	dateAndLocationDetailsContainerApp: {
+		gap: 10
+	},
+	dateAndLocationDetailsContainerWeb: {
+		gap: 25
 	},
 	dateAndLocationTextWrapper: {
 		flexDirection: "row",
-		gap: 5,
+		gap: 6.5,
 		alignItems: "center"
 	},
 	dateAndLocationDetailsText: {
-		fontSize: 11.5,
 		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
+	},
+	dateAndLocationDetailsTextApp: {
+		fontSize: 11.5
+	},
+	dateAndLocationDetailsTextWeb: {
+		fontSize: 13.5
 	},
 	dateAndLocationIcon: {
 		height: 12.5,
@@ -238,11 +354,17 @@ const styles = StyleSheet.create({
 		gap: 10
 	},
 	actionButtonContainer: {
-		height: 25,
-		width: 100,
 		borderRadius: 7.5,
 		alignItems: "center",
 		justifyContent: "center"
+	},
+	actionButtonContainerApp: {
+		height: 25,
+		width: 100
+	},
+	actionButtonContainerWeb: {
+		height: 35,
+		width: 135
 	},
 	statusTab: {
 		backgroundColor: "rgba(255, 107, 44, 0.1)"
@@ -253,9 +375,13 @@ const styles = StyleSheet.create({
 	buttonLightBlue: {
 		backgroundColor: "rgba(47, 116, 250, 0.1)"
 	},
-	actionButtonsText: {
-		fontSize: 8.5,
-		fontFamily: "Roboto-Medium"
+	actionButtonsTextApp: {
+		fontFamily: "Roboto-Medium",
+		fontSize: 8.5
+	},
+	actionButtonsTextWeb: {
+		fontFamily: "Roboto-Regular",
+		fontSize: 11.5
 	},
 	actionButtonsTextDark: {
 		color: theme.colors.secondary

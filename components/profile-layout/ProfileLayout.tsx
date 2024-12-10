@@ -40,7 +40,7 @@ export default function ProfileLayout({
 								backgroundColor="rgba(255, 255, 255, 0.15)"
 								borderColor="#ffffff"
 							/>
-							<NotificationButton theme="dark" />
+							<NotificationButton theme="dark" mode="app" />
 						</View>
 						<Text style={styles.titleText}>{title}</Text>
 						<View style={styles.accountSettingsCard}>
