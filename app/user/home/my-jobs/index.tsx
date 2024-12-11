@@ -129,6 +129,7 @@ export default function Page(): React.ReactElement | null {
 						value={searchValue}
 						onChangeText={setSearchValue}
 						filterEnabled={false}
+						mode="app"
 					/>
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job): React.ReactElement | null => {

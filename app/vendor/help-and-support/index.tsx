@@ -85,6 +85,7 @@ export default function Page(): React.ReactElement | null {
 								value={searchValue}
 								onChangeText={setSearchValue}
 								filterEnabled={false}
+								mode="app"
 							/>
 						</View>
 						<View style={styles.customerVendorTabWrapper}>

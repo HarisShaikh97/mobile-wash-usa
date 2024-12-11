@@ -5,7 +5,7 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { Image, ImageBackground } from "expo-image"
+import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"

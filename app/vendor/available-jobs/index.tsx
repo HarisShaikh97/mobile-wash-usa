@@ -136,6 +136,7 @@ export default function Page(): React.ReactElement | null {
 						onChangeText={setSearchValue}
 						filterEnabled
 						setOpenFilterModal={setOpenModal}
+						mode="app"
 					/>
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job): React.ReactElement | null => {

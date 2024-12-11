@@ -11,6 +11,7 @@ interface SearchBarProps {
 	onChangeText: (text: string) => void
 	filterEnabled: boolean
 	setOpenFilterModal?: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function SearchBar({
@@ -19,10 +20,17 @@ export default function SearchBar({
 	value,
 	onChangeText,
 	filterEnabled,
-	setOpenFilterModal
+	setOpenFilterModal,
+	mode
 }: SearchBarProps): React.ReactElement | null {
 	return (
-		<View style={[styles.container, { borderColor: color }]}>
+		<View
+			style={[
+				styles.container,
+				mode === "app" ? styles.containerApp : styles.containerWeb,
+				{ borderColor: mode === "app" ? color : "transparent" }
+			]}
+		>
 			<View style={styles.inputFieldWrapper}>
 				<AntDesign name="search1" size={15} color="#CACACA" />
 				<TextInput
@@ -64,6 +72,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		gap: 10,
 		backgroundColor: "white"
+	},
+	containerApp: {
+		height: 50,
+		width: "100%",
+		borderRadius: 10,
+		borderWidth: 1
+	},
+	containerWeb: {
+		height: 60,
+		width: 365,
+		borderRadius: 10
 	},
 	inputFieldWrapper: {
 		height: "100%",

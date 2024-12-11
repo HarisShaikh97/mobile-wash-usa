@@ -142,6 +142,7 @@ export default function Page(): React.ReactElement | null {
 						onChangeText={setSearchValue}
 						filterEnabled
 						setOpenFilterModal={setOpenModal}
+						mode="app"
 					/>
 					<View style={styles.tabsWrapper}>
 						{tabs.map((tab, index): React.ReactElement | null => {

@@ -33,6 +33,7 @@ export default function Layout(): React.ReactElement | null {
 						placeholder="Search"
 						color="#CACACA"
 						filterEnabled={false}
+						mode="app"
 					/>
 				</View>
 				<View style={styles.chatsCard}>
