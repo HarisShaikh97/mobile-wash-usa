@@ -1,13 +1,5 @@
 import { useState } from "react"
-import {
-	View,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
-import { ImageBackground } from "expo-image"
-import { useRouter } from "expo-router"
+import { View, ScrollView, Text, StyleSheet } from "react-native"
 import JobCard from "../../../../components/job-card/JobCard"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../../components/profile-card-web/ProfileCardWeb"
@@ -16,8 +8,6 @@ import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
-	const router = useRouter()
-
 	const [searchValue, setSearchValue] = useState<string>("")
 
 	const jobs: Job[] = [
