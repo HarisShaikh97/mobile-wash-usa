@@ -75,6 +75,7 @@ export default function Page(): React.ReactElement | null {
 						text={message.text}
 						time={message.time}
 						user={message.user}
+						mode="app"
 						key={index}
 					/>
 				)
@@ -91,6 +92,7 @@ export default function Page(): React.ReactElement | null {
 						text={message.text}
 						time={message.time}
 						user={message.user}
+						mode="app"
 						key={index}
 					/>
 				)

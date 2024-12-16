@@ -1,5 +1,7 @@
+import { useState, useCallback } from "react"
 import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
+import * as ImagePicker from "expo-image-picker"
 import { theme } from "../../utils/constants"
 
 interface ChatInputFieldProps {
@@ -13,9 +15,25 @@ export default function ChatInputField({
 	onChangeText,
 	onSubmit
 }: ChatInputFieldProps): React.ReactElement | null {
+	const [newImage, setNewImage] = useState<string | null>(null)
+
+	const pickImage = useCallback(async (): Promise<void> => {
+		let result: ImagePicker.ImagePickerResult =
+			await ImagePicker.launchImageLibraryAsync({
+				mediaTypes: ImagePicker.MediaTypeOptions.All,
+				quality: 1
+			})
+
+		if (!result.canceled && result.assets && result.assets.length > 0) {
+			setNewImage(result.assets[0].uri)
+		} else {
+			console.log("No image selected or operation canceled!")
+		}
+	}, [setNewImage])
+
 	return (
 		<View style={styles.inputFieldContainer}>
-			<TouchableOpacity>
+			<TouchableOpacity onPress={pickImage}>
 				<Image
 					source={require("../../assets/icons/camera.svg")}
 					style={styles.cameraIcon}

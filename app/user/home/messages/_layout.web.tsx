@@ -1,4 +1,4 @@
-import { ScrollView, View, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import { Slot } from "expo-router"
 import { WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 

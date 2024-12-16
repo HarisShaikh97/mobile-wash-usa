@@ -7,18 +7,23 @@ interface MessageCardProps {
 	text: Message["text"]
 	time: Message["time"]
 	user: Message["user"]
+	mode: "web" | "app"
 }
 
 export default function MessageCard({
 	_id,
 	text,
 	time,
-	user
+	user,
+	mode
 }: MessageCardProps): React.ReactElement | null {
 	return (
 		<View
 			style={[
 				styles.cardContainer,
+				mode === "app"
+					? styles.cardContainerApp
+					: styles.cardContainerWeb,
 				{
 					backgroundColor:
 						user === "Self" ? theme.colors.primary : "#F5F5F5",
@@ -31,6 +36,9 @@ export default function MessageCard({
 			<Text
 				style={[
 					styles.messageText,
+					mode === "app"
+						? styles.messageTextApp
+						: styles.messageTextWeb,
 					{
 						color:
 							user === "Self" ? "white" : theme.colors.secondary
@@ -57,17 +65,28 @@ export default function MessageCard({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		width: "70%",
 		borderTopLeftRadius: 10,
 		borderTopRightRadius: 10,
 		padding: 15,
 		flexDirection: "column"
 	},
+	cardContainerApp: {
+		width: "70%"
+	},
+	cardContainerWeb: {
+		width: 325
+	},
 	messageText: {
-		fontSize: 11.5,
 		fontFamily: "Roboto-Regular",
-		lineHeight: 17.5,
 		paddingVertical: 5
+	},
+	messageTextApp: {
+		fontSize: 11.5,
+		lineHeight: 17.5
+	},
+	messageTextWeb: {
+		fontSize: 13.5,
+		lineHeight: 18.5
 	},
 	timeText: {
 		fontSize: 10,

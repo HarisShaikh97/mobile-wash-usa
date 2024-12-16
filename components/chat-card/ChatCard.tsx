@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Chat } from "../../utils/types"
 
-interface ChatCardProps {
+interface ChatCardBaseProps {
 	_id: Chat["_id"]
 	fullName: Chat["fullName"]
 	image: Chat["image"]
@@ -14,52 +14,89 @@ interface ChatCardProps {
 	online: Chat["online"]
 }
 
-export default function ChatCard({
-	_id,
-	fullName,
-	image,
-	lastMessage,
-	lastMessageTime,
-	unreadMessages,
-	online
-}: ChatCardProps): React.ReactElement | null {
+interface ChatCardAppProps extends ChatCardBaseProps {
+	mode: "app"
+}
+
+interface ChatCardWebProps extends ChatCardBaseProps {
+	mode: "web"
+	selectedChat: Chat["_id"]
+	setSelectedChat: (val: Chat["_id"]) => void
+}
+
+type ChatCardProps = ChatCardAppProps | ChatCardWebProps
+
+export default function ChatCard(
+	props: ChatCardProps
+): React.ReactElement | null {
 	const router = useRouter()
 	const pathname = usePathname()
 
 	return (
 		<TouchableOpacity
-			style={styles.container}
+			style={[
+				styles.container,
+				props.mode === "web"
+					? styles.containerWeb
+					: styles.containerApp,
+				props.mode === "web" && props._id === props.selectedChat
+					? styles.containerSelected
+					: styles.containerUnSelected
+			]}
 			onPress={() => {
-				router.navigate(
-					pathname.includes("/user/")
-						? `/user/chat/${_id}`
-						: `/vendor/chat/${_id}`
-				)
+				if (props.mode === "web") {
+					props.setSelectedChat(props._id)
+				} else {
+					router.navigate(
+						pathname.includes("/user/")
+							? `/user/chat/${props._id}`
+							: `/vendor/chat/${props._id}`
+					)
+				}
 			}}
 		>
 			<View style={styles.horizontalWrapper}>
-				<View style={styles.profileImageContainer}>
+				<View
+					style={[
+						styles.profileImageContainer,
+						props.mode === "web"
+							? styles.profileImageContainerWeb
+							: styles.profileImageContainerApp
+					]}
+				>
 					<Image
-						source={image}
+						source={props.image}
 						style={styles.profileImage}
 						contentFit="cover"
 					/>
-					{online && <View style={styles.onlineMarker} />}
+					{props.online && <View style={styles.onlineMarker} />}
 				</View>
 				<View style={styles.verticalWrapper}>
 					<Text
-						style={styles.userNameText}
+						style={[
+							styles.userNameText,
+							props.mode === "web" &&
+							props._id === props.selectedChat
+								? styles.textSelected
+								: styles.textUnSelected
+						]}
 						numberOfLines={1}
 						ellipsizeMode="tail"
 					>
-						{fullName}
+						{props.fullName}
 					</Text>
 					<Text
-						style={styles.lastMessageText}
+						style={[
+							styles.lastMessageText,
+							props.mode === "web" &&
+							props._id === props.selectedChat
+								? styles.textSelected
+								: styles.textUnSelected
+						]}
 						numberOfLines={1}
 						ellipsizeMode="tail"
 					>
-						{lastMessage}
+						{props.lastMessage}
 					</Text>
 				</View>
 			</View>
@@ -70,16 +107,37 @@ export default function ChatCard({
 				]}
 			>
 				<Text
-					style={styles.lastMessageTimeText}
+					style={[
+						styles.lastMessageTimeText,
+						props.mode === "web" && props._id === props.selectedChat
+							? styles.textSelected
+							: styles.textUnSelected
+					]}
 					numberOfLines={1}
 					ellipsizeMode="tail"
 				>
-					{lastMessageTime}
+					{props.lastMessageTime}
 				</Text>
-				{unreadMessages > 0 ? (
-					<View style={styles.unreadMessagesContainer}>
-						<Text style={styles.unreadMessagesCount}>
-							{unreadMessages}
+				{props.unreadMessages > 0 ? (
+					<View
+						style={[
+							styles.unreadMessagesContainer,
+							props.mode === "web" &&
+							props._id === props.selectedChat
+								? styles.unreadMessagesContainerSelected
+								: styles.unreadMessagesContainerUnSelected
+						]}
+					>
+						<Text
+							style={[
+								styles.unreadMessagesCount,
+								props.mode === "web" &&
+								props._id === props.selectedChat
+									? styles.unreadMessagesCountSelected
+									: styles.unreadMessagesCountUnSelected
+							]}
+						>
+							{props.unreadMessages}
 						</Text>
 					</View>
 				) : (
@@ -92,15 +150,26 @@ export default function ChatCard({
 
 const styles = StyleSheet.create({
 	container: {
-		height: 65,
 		width: "100%",
-		backgroundColor: "#F4F5F8",
-		borderRadius: 17.5,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
 		paddingHorizontal: 10,
 		gap: 15
+	},
+	containerApp: {
+		height: 65,
+		borderRadius: 17.5
+	},
+	containerWeb: {
+		height: 75,
+		borderRadius: 20
+	},
+	containerUnSelected: {
+		backgroundColor: "#F4F5F8"
+	},
+	containerSelected: {
+		backgroundColor: theme.colors.primary
 	},
 	horizontalWrapper: {
 		flexDirection: "row",
@@ -115,13 +184,20 @@ const styles = StyleSheet.create({
 		alignItems: "center"
 	},
 	profileImageContainer: {
-		height: 50,
-		width: 50,
-		borderRadius: 10,
 		borderWidth: 1.5,
 		borderColor: "white",
 		overflow: "hidden",
 		position: "relative"
+	},
+	profileImageContainerApp: {
+		height: 50,
+		width: 50,
+		borderRadius: 10
+	},
+	profileImageContainerWeb: {
+		height: 55,
+		width: 55,
+		borderRadius: 12.5
 	},
 	onlineMarker: {
 		height: 10,
@@ -141,8 +217,13 @@ const styles = StyleSheet.create({
 	userNameText: {
 		fontSize: 12.5,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary,
 		lineHeight: 15
+	},
+	textUnSelected: {
+		color: theme.colors.secondary
+	},
+	textSelected: {
+		color: "white"
 	},
 	lastMessageText: {
 		fontSize: 10,
@@ -160,14 +241,24 @@ const styles = StyleSheet.create({
 		height: 15,
 		width: 15,
 		borderRadius: 10,
-		backgroundColor: theme.colors.primary,
 		alignItems: "center",
 		justifyContent: "center"
 	},
+	unreadMessagesContainerUnSelected: {
+		backgroundColor: theme.colors.primary
+	},
+	unreadMessagesContainerSelected: {
+		backgroundColor: "white"
+	},
 	unreadMessagesCount: {
 		fontSize: 7.5,
-		fontFamily: "Roboto-Regular",
+		fontFamily: "Roboto-Regular"
+	},
+	unreadMessagesCountUnSelected: {
 		color: "white"
+	},
+	unreadMessagesCountSelected: {
+		color: theme.colors.primary
 	},
 	emptyView: {
 		height: 15

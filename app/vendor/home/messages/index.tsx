@@ -108,6 +108,7 @@ export default function Tab(): React.ReactElement | null {
 						lastMessageTime={chat.lastMessageTime}
 						unreadMessages={chat.unreadMessages}
 						online={chat.online}
+						mode="app"
 						key={index}
 					/>
 				)
