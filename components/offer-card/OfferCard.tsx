@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		borderWidth: 1,
 		borderColor: "#F5F5F5",
+		backgroundColor: "white",
 		padding: 15,
 		flexDirection: "column",
 		gap: 20

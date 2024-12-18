@@ -5,15 +5,17 @@ import { Offer } from "../../utils/types"
 
 interface OffersPopupProps {
 	job_id: Offer["job_id"]
+	mode: "web" | "app"
 }
 
 export default function OffersPopup({
-	job_id
+	job_id,
+	mode
 }: OffersPopupProps): React.ReactElement | null {
 	const router = useRouter()
 
 	return (
-		<View style={styles.wrapper}>
+		<View style={[styles.wrapper, mode === "app" && styles.wrapperApp]}>
 			<View style={styles.container}>
 				<Text style={styles.titleText}>Offers</Text>
 				<TouchableOpacity
@@ -34,13 +36,15 @@ const styles = StyleSheet.create({
 		width: 225,
 		borderRadius: 10,
 		backgroundColor: "rgba(47, 116, 250, 0.25)",
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	wrapperApp: {
 		position: "absolute",
 		bottom: 125,
 		left: "50%",
 		transform: [{ translateX: -112.5 }],
-		zIndex: 50,
-		alignItems: "center",
-		justifyContent: "center"
+		zIndex: 50
 	},
 	container: {
 		height: 55,

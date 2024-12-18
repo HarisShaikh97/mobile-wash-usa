@@ -10,7 +10,7 @@ export default function Layout(): React.ReactElement | null {
 
 	return (
 		<View style={styles.wrapper}>
-			<OffersPopup job_id={`${id}`} />
+			<OffersPopup job_id={`${id}`} mode="app" />
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
