@@ -89,15 +89,17 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
-			<Text style={styles.titleText}>
-				You Have {offers.length} Offers
-			</Text>
+			<View style={styles.titleBarContainer}>
+				<Text style={styles.titleText}>
+					You Have {offers.length} OFFERS
+				</Text>
+			</View>
 			<View style={styles.offerCardsWrapper}>
 				{offers.map((offer, index): React.ReactElement | null => {
 					return (
 						<OfferCard
-							size="large"
-							width="full"
+							size="small"
+							width="third"
 							JobId={offer.job_id}
 							vendorId={offer.vendor_id}
 							vendorName={offer.vendorName}
@@ -107,7 +109,7 @@ export default function Page(): React.ReactElement | null {
 							reviews={offer.reviews}
 							amount={offer.amount}
 							location={offer.location}
-							mode="app"
+							mode="web"
 							key={index}
 						/>
 					)
@@ -123,16 +125,25 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		gap: 22.5
 	},
+	titleBarContainer: {
+		height: 115,
+		width: "100%",
+		borderRadius: 15,
+		backgroundColor: "white",
+		justifyContent: "center",
+		paddingHorizontal: 35
+	},
 	titleText: {
-		fontSize: 27.5,
+		fontSize: 25,
 		fontFamily: "Montserrat-Bold",
 		color: theme.colors.secondary,
-		width: 150,
-		lineHeight: 30
+		textTransform: "capitalize"
 	},
 	offerCardsWrapper: {
 		width: "100%",
-		flexDirection: "column",
-		gap: 10
+		flexDirection: "row",
+		flexWrap: "wrap",
+		justifyContent: "space-between",
+		gap: 15
 	}
 })

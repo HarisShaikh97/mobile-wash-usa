@@ -8,6 +8,7 @@ import { Offer } from "../../utils/types"
 
 interface OfferCardProps {
 	size: "small" | "large"
+	width: "full" | "third"
 	JobId: Offer["job_id"]
 	vendorId: Offer["vendor_id"]
 	vendorName: Offer["vendorName"]
@@ -17,10 +18,12 @@ interface OfferCardProps {
 	reviews: Offer["reviews"]
 	amount: Offer["amount"]
 	location: Offer["location"]
+	mode: "web" | "app"
 }
 
 export default function OfferCard({
 	size,
+	width,
 	JobId,
 	vendorId,
 	vendorName,
@@ -29,20 +32,32 @@ export default function OfferCard({
 	ratings,
 	reviews,
 	amount,
-	location
+	location,
+	mode
 }: OfferCardProps): React.ReactElement | null {
 	const router = useRouter()
 
 	const handleSendMessage = useCallback((): void => {
-		router.navigate(`/user/chat/${vendorId}`)
-	}, [router])
+		if (mode === "app") {
+			router.navigate(`/user/chat/${vendorId}`)
+		} else {
+			router.navigate("/user/home/messages")
+		}
+	}, [router, mode])
 
 	const handleAcceptOffer = useCallback((): void => {
 		router.navigate(`/user/offer-accepted/${JobId}`)
 	}, [router])
 
 	return (
-		<View style={styles.cardContainer}>
+		<View
+			style={[
+				styles.cardContainer,
+				width === "full"
+					? styles.cardContainerFull
+					: styles.cardContainerThird
+			]}
+		>
 			<View style={styles.horizontalWrapper}>
 				<View style={styles.vendorProfileDetailsContainer}>
 					<View style={styles.vendorProfileImageWrapper}>
@@ -160,7 +175,6 @@ export default function OfferCard({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		width: "100%",
 		borderRadius: 15,
 		borderWidth: 1,
 		borderColor: "#F5F5F5",
@@ -168,6 +182,12 @@ const styles = StyleSheet.create({
 		padding: 15,
 		flexDirection: "column",
 		gap: 20
+	},
+	cardContainerFull: {
+		width: "100%"
+	},
+	cardContainerThird: {
+		width: "32%"
 	},
 	horizontalWrapper: {
 		width: "100%",

@@ -250,6 +250,7 @@ export default function Page(): React.ReactElement | null {
 								return (
 									<OfferCard
 										size="small"
+										width="full"
 										JobId={offer.job_id}
 										vendorId={offer.vendor_id}
 										vendorName={offer.vendorName}
@@ -261,6 +262,7 @@ export default function Page(): React.ReactElement | null {
 										reviews={offer.reviews}
 										amount={offer.amount}
 										location={offer.location}
+										mode="web"
 										key={index}
 									/>
 								)

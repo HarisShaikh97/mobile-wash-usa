@@ -221,6 +221,7 @@ export default function Page(): React.ReactElement | null {
 								reviews={offer.reviews}
 								amount={offer.amount}
 								location={offer.location}
+								mode="app"
 								key={index}
 							/>
 						)
