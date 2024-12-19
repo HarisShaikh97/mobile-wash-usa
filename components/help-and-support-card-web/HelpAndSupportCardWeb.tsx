@@ -139,12 +139,12 @@ const styles = StyleSheet.create({
 		padding: 25
 	},
 	cardTitleText: {
-		fontSize: 16,
+		fontSize: 16.5,
 		fontFamily: "Roboto-Medium",
 		color: theme.colors.secondary
 	},
 	cardDescriptionText: {
-		fontSize: 10,
+		fontSize: 11.5,
 		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
 	},
