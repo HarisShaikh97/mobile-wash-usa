@@ -5,6 +5,7 @@ import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
 import EditProfileCardWeb from "../../../../components/edit-profile-card-web/EditProfileCardWeb"
+import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -73,7 +74,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={
 								selectedTab === "Edit Account"
 									? theme.colors.primary
@@ -113,7 +114,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={
 								selectedTab === "Security"
 									? theme.colors.primary
@@ -153,7 +154,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={
 								selectedTab === "Account Status"
 									? theme.colors.primary
@@ -181,7 +182,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={theme.colors.secondary}
 						/>
 					</TouchableOpacity>
@@ -242,7 +243,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={
 								selectedTab === "Help & Support"
 									? theme.colors.primary
@@ -282,7 +283,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<Feather
 							name="chevron-right"
-							size={20}
+							size={17.5}
 							color={
 								selectedTab === "Privacy Policy"
 									? theme.colors.primary
@@ -302,7 +303,11 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.logoutButtonText}>Log Out</Text>
 					</TouchableOpacity>
 				</View>
-				{selectedTab === "Edit Account" && <EditProfileCardWeb />}
+				{selectedTab === "Edit Account" ? (
+					<EditProfileCardWeb />
+				) : (
+					selectedTab === "Security" && <SecurityFeaturesCardWeb />
+				)}
 			</View>
 		</View>
 	)
@@ -361,11 +366,11 @@ const styles = StyleSheet.create({
 		gap: 20
 	},
 	settingOptionIcon: {
-		height: 20,
-		width: 20
+		height: 17.5,
+		width: 17.5
 	},
 	settingOptionText: {
-		fontSize: 20,
+		fontSize: 17.5,
 		fontFamily: "Roboto-Regular",
 		textTransform: "capitalize"
 	},
