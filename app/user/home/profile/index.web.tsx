@@ -6,6 +6,7 @@ import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
 import EditProfileCardWeb from "../../../../components/edit-profile-card-web/EditProfileCardWeb"
 import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
+import AccountStatusCardWeb from "../../../../components/account-status-card-web/AccountStatusCardWeb"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -305,8 +306,10 @@ export default function Tab(): React.ReactElement | null {
 				</View>
 				{selectedTab === "Edit Account" ? (
 					<EditProfileCardWeb />
+				) : selectedTab === "Security" ? (
+					<SecurityFeaturesCardWeb />
 				) : (
-					selectedTab === "Security" && <SecurityFeaturesCardWeb />
+					selectedTab === "Account Status" && <AccountStatusCardWeb />
 				)}
 			</View>
 		</View>
