@@ -8,6 +8,7 @@ import EditProfileCardWeb from "../../../../components/edit-profile-card-web/Edi
 import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
 import AccountStatusCardWeb from "../../../../components/account-status-card-web/AccountStatusCardWeb"
 import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-web/HelpAndSupportCardWeb"
+import PrivacyPolicyCardWeb from "../../../../components/privacy-policy-card-web/PrivacyPolicyCardWeb"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -311,10 +312,10 @@ export default function Tab(): React.ReactElement | null {
 					<SecurityFeaturesCardWeb />
 				) : selectedTab === "Account Status" ? (
 					<AccountStatusCardWeb />
+				) : selectedTab === "Help & Support" ? (
+					<HelpAndSupportCardWeb />
 				) : (
-					selectedTab === "Help & Support" && (
-						<HelpAndSupportCardWeb />
-					)
+					selectedTab === "Privacy Policy" && <PrivacyPolicyCardWeb />
 				)}
 			</View>
 		</View>
@@ -344,10 +345,13 @@ const styles = StyleSheet.create({
 		letterSpacing: 0.5
 	},
 	bodyContainer: {
+		flex: 1,
 		flexDirection: "row",
 		gap: 15
 	},
 	settingsCardContainer: {
+		flexShrink: 1,
+		alignSelf: "flex-start",
 		width: 460,
 		paddingVertical: 25,
 		paddingHorizontal: 35,
