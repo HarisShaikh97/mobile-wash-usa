@@ -7,6 +7,7 @@ import Feather from "@expo/vector-icons/Feather"
 import EditProfileCardWeb from "../../../../components/edit-profile-card-web/EditProfileCardWeb"
 import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
 import AccountStatusCardWeb from "../../../../components/account-status-card-web/AccountStatusCardWeb"
+import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-web/HelpAndSupportCardWeb"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -308,8 +309,12 @@ export default function Tab(): React.ReactElement | null {
 					<EditProfileCardWeb />
 				) : selectedTab === "Security" ? (
 					<SecurityFeaturesCardWeb />
+				) : selectedTab === "Account Status" ? (
+					<AccountStatusCardWeb />
 				) : (
-					selectedTab === "Account Status" && <AccountStatusCardWeb />
+					selectedTab === "Help & Support" && (
+						<HelpAndSupportCardWeb />
+					)
 				)}
 			</View>
 		</View>

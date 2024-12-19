@@ -6,7 +6,8 @@ import { theme } from "../../utils/constants"
 
 interface SearchBarProps {
 	placeholder: string
-	color: RgbaColor | HexColor
+	color: RgbaColor | HexColor | "transparent"
+	backgroundColor: RgbaColor | HexColor | "transparent"
 	value: string
 	onChangeText: (text: string) => void
 	filterEnabled: boolean
@@ -17,6 +18,7 @@ interface SearchBarProps {
 export default function SearchBar({
 	placeholder,
 	color,
+	backgroundColor,
 	value,
 	onChangeText,
 	filterEnabled,
@@ -28,7 +30,10 @@ export default function SearchBar({
 			style={[
 				styles.container,
 				mode === "app" ? styles.containerApp : styles.containerWeb,
-				{ borderColor: mode === "app" ? color : "transparent" }
+				{
+					borderColor: mode === "app" ? color : "transparent",
+					backgroundColor: backgroundColor
+				}
 			]}
 		>
 			<View style={styles.inputFieldWrapper}>
@@ -70,8 +75,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
-		backgroundColor: "white"
+		gap: 10
 	},
 	containerApp: {
 		height: 50,

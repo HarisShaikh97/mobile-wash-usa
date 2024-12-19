@@ -82,6 +82,7 @@ export default function Page(): React.ReactElement | null {
 							<SearchBar
 								placeholder="Try find “how to”"
 								color="#CACACA"
+								backgroundColor="#ffffff"
 								value={searchValue}
 								onChangeText={setSearchValue}
 								filterEnabled={false}

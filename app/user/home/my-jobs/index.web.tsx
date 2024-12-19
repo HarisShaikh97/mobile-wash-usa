@@ -89,6 +89,7 @@ export default function Tab(): React.ReactElement | null {
 					<SearchBar
 						placeholder="Search"
 						color="#CACACA"
+						backgroundColor="#ffffff"
 						value={searchValue}
 						onChangeText={setSearchValue}
 						filterEnabled={false}
