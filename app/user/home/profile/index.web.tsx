@@ -4,7 +4,7 @@ import { useSharedValue } from "react-native-reanimated"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
-import ProfileImageBox from "../../../../components/profile-image-box/ProfileImageBox"
+import EditProfileCardWeb from "../../../../components/edit-profile-card-web/EditProfileCardWeb"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -302,6 +302,7 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.logoutButtonText}>Log Out</Text>
 					</TouchableOpacity>
 				</View>
+				{selectedTab === "Edit Account" && <EditProfileCardWeb />}
 			</View>
 		</View>
 	)
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
 	},
 	bodyContainer: {
 		flexDirection: "row",
-		gap: 10
+		gap: 15
 	},
 	settingsCardContainer: {
 		width: 460,
