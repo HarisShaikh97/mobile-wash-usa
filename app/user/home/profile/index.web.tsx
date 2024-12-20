@@ -165,30 +165,6 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.settingOptionContainer}>
-						<View style={styles.settingOptionTitleWrapper}>
-							<Image
-								source={require("../../../../assets/icons/card2.svg")}
-								style={styles.settingOptionIcon}
-								contentFit="contain"
-							/>
-							<Text
-								style={[
-									styles.settingOptionText,
-									{
-										color: theme.colors.secondary
-									}
-								]}
-							>
-								Payment Details
-							</Text>
-						</View>
-						<Feather
-							name="chevron-right"
-							size={17.5}
-							color={theme.colors.secondary}
-						/>
-					</TouchableOpacity>
 					<View style={styles.settingOptionContainer}>
 						<View style={styles.settingOptionTitleWrapper}>
 							<Image
@@ -358,7 +334,7 @@ const styles = StyleSheet.create({
 		borderRadius: 17.5,
 		backgroundColor: "white",
 		flexDirection: "column",
-		gap: 35
+		gap: 40
 	},
 	settingsTitleText: {
 		fontSize: 25,
