@@ -98,10 +98,10 @@ export default function Page(): React.ReactElement | null {
 				]}
 				resizeMode="cover"
 			/>
-			<Animated.Image
+			<Image
 				source={nextImage}
 				style={[styles.background, styles.nextBackgroundImage]}
-				resizeMode="cover"
+				contentFit="cover"
 			/>
 			<View style={[styles.background, styles.overlay]}>
 				<View style={styles.cardContainer}>

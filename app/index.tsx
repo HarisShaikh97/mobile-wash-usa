@@ -98,7 +98,7 @@ export default function Page(): React.ReactElement | null {
 				]}
 				resizeMode="cover"
 			/>
-			<Animated.Image
+			<Image
 				source={nextImage}
 				style={[styles.background, styles.nextBackgroundImage]}
 				resizeMode="cover"

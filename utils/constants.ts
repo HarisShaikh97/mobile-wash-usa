@@ -16,6 +16,13 @@ export const backgroundImages: ImageSourcePropType[] = [
 	require("../assets/images/background4.png")
 ]
 
+export const backgroundImagesWeb: ImageSourcePropType[] = [
+	require("../assets/images/background-web1.png"),
+	require("../assets/images/background-web2.png"),
+	require("../assets/images/background-web3.png"),
+	require("../assets/images/background-web4.png")
+]
+
 export const services: Service[] = [
 	{
 		title: "Vehicle Wash & Maintenance",
