@@ -83,7 +83,11 @@ export default function Page(): React.ReactElement | null {
 							<Text style={styles.inputFieldTitleText}>
 								Budget
 							</Text>
-							<BudgetInput value={budget} setValue={setBudget} />
+							<BudgetInput
+								value={budget}
+								setValue={setBudget}
+								mode="app"
+							/>
 						</View>
 						<View style={styles.inputFieldWrapper}>
 							<Text style={styles.inputFieldTitleText}>

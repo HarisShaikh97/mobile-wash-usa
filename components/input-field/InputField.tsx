@@ -94,15 +94,20 @@ export default function InputField(
 					styles.inputFieldContainer,
 					type === "text" && props.multiline
 						? props.size === "small"
-							? styles.inputFieldMultiLineSmall
-							: styles.inputFieldMultiLineLarge
+							? styles.inputFieldMultiLineContainerSmall
+							: styles.inputFieldMultiLineContainerLarge
 						: styles.inputFieldSingleLine
 				]}
 			>
 				<View style={styles.contentWrapper}>
 					{type === "text" ? (
 						<TextInput
-							style={styles.inputField}
+							style={[
+								styles.inputField,
+								type === "text" &&
+									props.multiline &&
+									styles.inputFieldMultiLine
+							]}
 							value={props.value}
 							onChangeText={props.onChangeText}
 							placeholder={placeholder}
@@ -132,6 +137,7 @@ export default function InputField(
 					{type === "text" ? (
 						props.secureTextEntry && (
 							<TouchableOpacity
+								style={styles.inputFieldButton}
 								onPress={() =>
 									setIsPasswordVisible((prev) => !prev)
 								}
@@ -144,7 +150,10 @@ export default function InputField(
 							</TouchableOpacity>
 						)
 					) : type === "file" ? (
-						<TouchableOpacity onPress={handleFileUpload}>
+						<TouchableOpacity
+							style={styles.inputFieldButton}
+							onPress={handleFileUpload}
+						>
 							<MaterialCommunityIcons
 								name="paperclip"
 								size={15}
@@ -153,6 +162,7 @@ export default function InputField(
 						</TouchableOpacity>
 					) : (
 						<TouchableOpacity
+							style={styles.inputFieldButton}
 							onPress={() => {
 								setIsOpen((prev) => !prev)
 							}}
@@ -225,7 +235,6 @@ const styles = StyleSheet.create({
 	},
 	contentWrapper: {
 		flex: 1,
-		paddingHorizontal: 15,
 		flexDirection: "row",
 		gap: 5,
 		alignItems: "center"
@@ -233,23 +242,30 @@ const styles = StyleSheet.create({
 	inputFieldSingleLine: {
 		height: 50
 	},
-	inputFieldMultiLineSmall: {
-		height: 100,
-		paddingVertical: 15
+	inputFieldMultiLineContainerSmall: {
+		height: 100
 	},
-	inputFieldMultiLineLarge: {
-		height: 200,
+	inputFieldMultiLineContainerLarge: {
+		height: 200
+	},
+	inputFieldMultiLine: {
 		paddingVertical: 15
 	},
 	inputField: {
+		paddingHorizontal: 15,
 		flex: 1,
 		height: "100%",
+		borderRadius: 12.5,
 		fontSize: 12.5
 	},
 	inputFieldText: {
 		flex: 1,
 		fontSize: 12.5,
+		paddingHorizontal: 15,
 		color: "rgba(173, 173, 173, 0.94)"
+	},
+	inputFieldButton: {
+		paddingHorizontal: 15
 	},
 	dropdownContainer: {
 		width: "100%",

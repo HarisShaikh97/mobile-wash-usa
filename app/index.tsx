@@ -101,7 +101,7 @@ export default function Page(): React.ReactElement | null {
 			<Image
 				source={nextImage}
 				style={[styles.background, styles.nextBackgroundImage]}
-				resizeMode="cover"
+				contentFit="cover"
 			/>
 			<View style={[styles.background, styles.overlay]}>
 				<LinearGradient

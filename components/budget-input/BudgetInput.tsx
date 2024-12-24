@@ -12,11 +12,13 @@ import { theme } from "../../utils/constants"
 interface BudgetInputProps {
 	value: number
 	setValue: (val: number | ((prev: number) => number)) => void
+	mode: "web" | "app"
 }
 
 export default function BudgetInput({
 	value,
-	setValue
+	setValue,
+	mode
 }: BudgetInputProps): React.ReactElement | null {
 	const handleIncrement = useCallback((): void => {
 		setValue((prev) => prev + 1)
@@ -34,24 +36,28 @@ export default function BudgetInput({
 			>
 				<Entypo name="minus" size={15} color={theme.colors.primary} />
 			</TouchableOpacity>
-			<View style={styles.valueTextWrapper}>
-				<Text style={styles.valueText}>$</Text>
-				<TextInput
-					style={styles.valueText}
-					value={value.toString()}
-					onChangeText={(text) => {
-						if (text === "") {
-							setValue(0)
-						} else {
-							const numericValue = parseFloat(text)
-							if (!isNaN(numericValue)) {
-								setValue(numericValue)
+			{mode === "app" ? (
+				<View style={styles.valueTextWrapper}>
+					<Text style={styles.valueText}>$</Text>
+					<TextInput
+						style={styles.valueText}
+						value={value.toString()}
+						onChangeText={(text) => {
+							if (text === "") {
+								setValue(0)
+							} else {
+								const numericValue = parseFloat(text)
+								if (!isNaN(numericValue)) {
+									setValue(numericValue)
+								}
 							}
-						}
-					}}
-					keyboardType="numeric"
-				/>
-			</View>
+						}}
+						keyboardType="numeric"
+					/>
+				</View>
+			) : (
+				<Text style={styles.valueText}>${value}</Text>
+			)}
 			<TouchableOpacity
 				style={styles.updateButtonContainer}
 				onPress={handleIncrement}

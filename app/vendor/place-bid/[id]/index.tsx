@@ -59,7 +59,11 @@ export default function Page(): React.ReactElement | null {
 			/>
 			<View style={styles.bidAmountWrapper}>
 				<Text style={styles.bidAmountTitleText}>Your Bid Amount</Text>
-				<BudgetInput value={bidAmount} setValue={setBidAmount} />
+				<BudgetInput
+					value={bidAmount}
+					setValue={setBidAmount}
+					mode="app"
+				/>
 			</View>
 			<View style={styles.actionButtonsWrapper}>
 				<FormButton
