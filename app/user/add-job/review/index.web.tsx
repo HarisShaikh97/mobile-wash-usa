@@ -2,6 +2,7 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
@@ -14,17 +15,9 @@ export default function Page(): React.ReactElement | null {
 	}, [router])
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.headerContainer}>
-				<BackButton
-					size="small"
-					color="#000000"
-					backgroundColor="transparent"
-					borderColor="#F5F5F5"
-				/>
+		<AddJobWebLayout>
+			<View style={styles.container}>
 				<Text style={styles.titleText}>Review Your Job Posting</Text>
-			</View>
-			<View style={styles.bodyContainer}>
 				<View style={styles.jobDetailsWrapper}>
 					<View style={styles.jobDetailContainer}>
 						<Text
@@ -147,52 +140,43 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					<View style={styles.formButtonWrapper}>
+						<FormButton
+							length="full"
+							theme="dark"
+							title="Next"
+							onPress={handleSubmit}
+						/>
+					</View>
 				</View>
-				<FormButton
-					length="full"
-					theme="dark"
-					title="Next"
-					onPress={handleSubmit}
-				/>
 			</View>
-		</View>
+		</AddJobWebLayout>
 	)
 }
 
 const styles = StyleSheet.create({
+	titleText: {
+		fontSize: 35,
+		fontFamily: "Montserrat-Bold",
+		color: theme.colors.secondary
+	},
 	container: {
 		flex: 1,
 		flexDirection: "column",
-		backgroundColor: "white"
-	},
-	headerContainer: {
-		padding: 25,
-		flexDirection: "column",
-		gap: 25
-	},
-	titleText: {
-		fontSize: 27.5,
-		fontFamily: "Montserrat-Bold",
-		color: theme.colors.secondary,
-		width: 215
-	},
-	bodyContainer: {
-		flex: 1,
-		flexDirection: "column",
 		alignItems: "center",
-		justifyContent: "space-between",
-		paddingHorizontal: 25,
-		paddingBottom: 25
+		justifyContent: "center",
+		gap: 35
 	},
 	jobDetailsWrapper: {
-		width: "100%",
+		width: "85%",
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 15
+		gap: 17.5
 	},
 	jobDetailContainer: {
 		width: "100%",
-		padding: 15,
+		paddingHorizontal: 15,
+		paddingVertical: 20,
 		borderRadius: 10,
 		borderWidth: 1,
 		borderColor: "rgba(173, 173, 173, 0.2)",
@@ -201,7 +185,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between"
 	},
 	jobDetailText: {
-		fontSize: 12.5,
+		fontSize: 15,
 		fontFamily: "Roboto-Medium",
 		color: theme.colors.secondary,
 		maxWidth: "85%"
@@ -209,5 +193,8 @@ const styles = StyleSheet.create({
 	editIcon: {
 		height: 20,
 		width: 20
+	},
+	formButtonWrapper: {
+		width: "75%"
 	}
 })
