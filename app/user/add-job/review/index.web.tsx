@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
-import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
