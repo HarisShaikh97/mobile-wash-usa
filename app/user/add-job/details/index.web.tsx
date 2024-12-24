@@ -1,14 +1,5 @@
 import { useState, useCallback } from "react"
-import {
-	ScrollView,
-	KeyboardAvoidingView,
-	View,
-	Text,
-	TouchableOpacity,
-	Platform,
-	StyleSheet
-} from "react-native"
-import { ImageBackground } from "expo-image"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
 import InputField from "../../../../components/input-field/InputField"
