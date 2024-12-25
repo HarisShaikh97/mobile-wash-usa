@@ -12,7 +12,9 @@ export default function Page(): React.ReactElement | null {
 
 	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
 
-	const handleSubmit = useCallback(() => {}, [router])
+	const handleSubmit = useCallback(() => {
+		router.navigate("/user/add-job/payment-card-details")
+	}, [router])
 
 	return (
 		<AddJobWebLayout>
