@@ -7,11 +7,13 @@ import FormButton from "../form-button/FormButton"
 interface FeedbackConfirmationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function FeedbackConfirmationModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: FeedbackConfirmationModalProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -22,15 +24,29 @@ export default function FeedbackConfirmationModal({
 
 	return (
 		<Modal
-			animationType="slide"
+			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
 			visible={openModal}
 			onRequestClose={() => {
 				setOpenModal(false)
 			}}
 		>
-			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+			<View
+				style={[
+					styles.modalWrapper,
+					mode === "app"
+						? styles.modalWrapperApp
+						: styles.modalWrapperWeb
+				]}
+			>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
@@ -65,14 +81,26 @@ export default function FeedbackConfirmationModal({
 const styles = StyleSheet.create({
 	modalWrapper: {
 		flex: 1,
-		justifyContent: "flex-end",
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
+	},
+	modalWrapperApp: {
+		justifyContent: "flex-end"
+	},
+	modalWrapperWeb: {
+		alignItems: "center",
+		justifyContent: "center"
 	},
 	modalContainer: {
 		height: 375,
-		borderTopLeftRadius: 35,
-		borderTopRightRadius: 35,
 		backgroundColor: "white"
+	},
+	modalContainerApp: {
+		borderTopLeftRadius: 35,
+		borderTopRightRadius: 35
+	},
+	modalContainerWeb: {
+		borderRadius: 35,
+		width: 375
 	},
 	backgroundImage: {
 		flex: 1,

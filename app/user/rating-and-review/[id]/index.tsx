@@ -24,6 +24,7 @@ export default function Page(): React.ReactElement | null {
 			<FeedbackConfirmationModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="app"
 			/>
 			<Image
 				source={require("../../../../assets/icons/successful.svg")}
