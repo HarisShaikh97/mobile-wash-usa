@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import Feather from "@expo/vector-icons/Feather"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
+import JobPostSuccessfulModal from "../../../../components/job-post-successful-modal/JobPostSuccessfulModal"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
@@ -20,6 +21,11 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<AddJobWebLayout>
+			<JobPostSuccessfulModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				mode="web"
+			/>
 			<View style={styles.container}>
 				<Text style={styles.titleText}>Payment</Text>
 				<View style={styles.formContainer}>

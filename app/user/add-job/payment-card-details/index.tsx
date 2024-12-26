@@ -28,6 +28,7 @@ export default function Page(): React.ReactElement | null {
 			<JobPostSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="app"
 			/>
 			<View style={styles.headerContainer}>
 				<BackButton

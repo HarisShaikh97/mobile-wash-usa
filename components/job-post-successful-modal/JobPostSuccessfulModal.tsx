@@ -8,11 +8,13 @@ import { theme } from "../../utils/constants"
 interface JobPostModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function JobPostSuccessfulModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: JobPostModalProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -28,18 +30,37 @@ export default function JobPostSuccessfulModal({
 
 	return (
 		<Modal
-			animationType="slide"
+			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
 			visible={openModal}
 			onRequestClose={() => {
 				setOpenModal(false)
 			}}
 		>
-			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+			<View
+				style={[
+					styles.modalWrapper,
+					mode === "app"
+						? styles.modalWrapperApp
+						: styles.modalWrapperWeb
+				]}
+			>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
-						style={styles.backgroundImage}
+						style={[
+							styles.backgroundImage,
+							mode === "app"
+								? styles.backgroundImageApp
+								: styles.backgroundImageWeb
+						]}
 						contentFit="fill"
 					>
 						<Image
@@ -81,22 +102,41 @@ export default function JobPostSuccessfulModal({
 const styles = StyleSheet.create({
 	modalWrapper: {
 		flex: 1,
-		justifyContent: "flex-end",
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
+	modalWrapperApp: {
+		justifyContent: "flex-end"
+	},
+	modalWrapperWeb: {
+		alignItems: "center",
+		justifyContent: "center"
+	},
 	modalContainer: {
+		backgroundColor: "white"
+	},
+	modalContainerApp: {
 		height: 450,
 		borderTopLeftRadius: 35,
-		borderTopRightRadius: 35,
-		backgroundColor: "white"
+		borderTopRightRadius: 35
+	},
+	modalContainerWeb: {
+		height: 500,
+		width: 400,
+		borderRadius: 35
 	},
 	backgroundImage: {
 		flex: 1,
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 20,
-		paddingVertical: 50,
 		paddingHorizontal: 35
+	},
+	backgroundImageApp: {
+		paddingVertical: 50,
+		gap: 20
+	},
+	backgroundImageWeb: {
+		paddingVertical: 65,
+		gap: 30
 	},
 	successfulIcon: {
 		height: 100,
@@ -120,7 +160,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Montserrat-SemiBold",
 		color: theme.colors.primary,
 		width: 250,
-		textAlign: "center"
+		textAlign: "center",
+		letterSpacing: 0.5
 	},
 	formButtonsWrapper: {
 		flex: 1,
