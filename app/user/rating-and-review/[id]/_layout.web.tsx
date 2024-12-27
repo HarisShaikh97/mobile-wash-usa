@@ -5,7 +5,11 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
-		<View style={styles.container}>
+		<ImageBackground
+			source={require("../../../../assets/images/sign-up-bg-web.png")}
+			style={styles.container}
+			contentFit="fill"
+		>
 			<BackButton
 				size="large"
 				color="#000000"
@@ -24,7 +28,7 @@ export default function Layout(): React.ReactElement | null {
 					<Slot />
 				</ScrollView>
 			</ImageBackground>
-		</View>
+		</ImageBackground>
 	)
 }
 
