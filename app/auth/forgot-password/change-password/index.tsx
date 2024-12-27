@@ -1,24 +1,35 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
+import { useRouter } from "expo-router"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [newPassword, setNewPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(!openModal)
+		setOpenModal(true)
 	}, [openModal])
+
+	const modalHandleSubmit = useCallback((): void => {
+		setOpenModal(false)
+		router.navigate("/auth/login")
+	}, [openModal, router])
 
 	return (
 		<View style={styles.bodyContainer}>
 			<ResetPasswordSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				formButtonTitle="Login"
+				handleSubmit={modalHandleSubmit}
+				mode="app"
 			/>
 			<Text style={styles.titleText}>Change Password</Text>
 			<Text style={styles.descriptionText}>

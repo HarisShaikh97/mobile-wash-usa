@@ -1,26 +1,23 @@
-import { useCallback } from "react"
 import { Modal, View, Text, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
-import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
 interface ResetPasswordModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	formButtonTitle: string
+	handleSubmit: () => void
+	mode: "web" | "app"
 }
 
 export default function ResetPasswordSuccessfulModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	formButtonTitle,
+	handleSubmit,
+	mode
 }: ResetPasswordModalProps): React.ReactElement | null {
-	const router = useRouter()
-
-	const handleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/auth/login")
-	}, [openModal, router])
-
 	return (
 		<Modal
 			animationType="slide"
@@ -51,13 +48,13 @@ export default function ResetPasswordSuccessfulModal({
 								Successfully Reset!
 							</Text>
 							<Text style={styles.descriptionText}>
-								You Can Now Log In With Our New Password
+								You Can Now Log In With Your New Password
 							</Text>
 						</View>
 						<FormButton
 							length="full"
 							theme="dark"
-							title="Login"
+							title={formButtonTitle}
 							onPress={handleSubmit}
 						/>
 					</ImageBackground>
@@ -101,6 +98,7 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary,
 		width: 250,
 		textAlign: "center",
+		textTransform: "capitalize",
 		paddingTop: 5
 	},
 	titleText: {
@@ -108,6 +106,7 @@ const styles = StyleSheet.create({
 		fontFamily: "Montserrat-SemiBold",
 		color: theme.colors.primary,
 		width: 250,
+		textTransform: "capitalize",
 		textAlign: "center"
 	}
 })

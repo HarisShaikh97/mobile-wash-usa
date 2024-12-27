@@ -1,18 +1,37 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
+import { useRouter } from "expo-router"
+import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [oldPassword, setOldPassword] = useState<string>("")
 	const [newPassword, setNewPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
 
-	const handleSubmit = useCallback((): void => {}, [])
+	const handleSubmit = useCallback((): void => {
+		setOpenModal(!openModal)
+	}, [openModal])
+
+	const modalHandleSubmit = useCallback((): void => {
+		setOpenModal(false)
+		router.back()
+	}, [openModal, router])
 
 	return (
 		<View style={styles.bodyContainer}>
+			<ResetPasswordSuccessfulModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				formButtonTitle="Next"
+				handleSubmit={modalHandleSubmit}
+				mode="app"
+			/>
 			<Text style={styles.titleText}>Reset Password</Text>
 			<Text style={styles.descriptionText}>
 				Change your password below to keep your account secure.
