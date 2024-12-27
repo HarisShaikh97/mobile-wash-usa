@@ -15,7 +15,7 @@ export default function Page(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(!openModal)
+		setOpenModal(true)
 	}, [openModal])
 
 	const modalHandleSubmit = useCallback((): void => {
