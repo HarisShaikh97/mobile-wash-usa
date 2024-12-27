@@ -53,7 +53,7 @@ export default function Page(): React.ReactElement | null {
 
 const styles = StyleSheet.create({
 	bodyContainer: {
-		flex: 1,
+		width: "100%",
 		flexDirection: "column",
 		alignItems: "center"
 	},
