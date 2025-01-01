@@ -21,7 +21,7 @@ export default function Page(): React.ReactElement | null {
 
 	const reviews: Review[] = [
 		{
-			vendor_id: "1",
+			vendor_id: `${id}`,
 			userName: "Kurt Mullins",
 			image: require("../../../../assets/images/profile2.png"),
 			review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 			time: "8 days ago"
 		},
 		{
-			vendor_id: "1",
+			vendor_id: `${id}`,
 			userName: "Kurt Mullins",
 			image: require("../../../../assets/images/profile2.png"),
 			review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -37,7 +37,7 @@ export default function Page(): React.ReactElement | null {
 			time: "8 days ago"
 		},
 		{
-			vendor_id: "1",
+			vendor_id: `${id}`,
 			userName: "Kurt Mullins",
 			image: require("../../../../assets/images/profile2.png"),
 			review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -45,7 +45,7 @@ export default function Page(): React.ReactElement | null {
 			time: "8 days ago"
 		},
 		{
-			vendor_id: "1",
+			vendor_id: `${id}`,
 			userName: "Kurt Mullins",
 			image: require("../../../../assets/images/profile2.png"),
 			review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -53,7 +53,7 @@ export default function Page(): React.ReactElement | null {
 			time: "8 days ago"
 		},
 		{
-			vendor_id: "1",
+			vendor_id: `${id}`,
 			userName: "Kurt Mullins",
 			image: require("../../../../assets/images/profile2.png"),
 			review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
@@ -212,6 +212,7 @@ export default function Page(): React.ReactElement | null {
 												? "flex-end"
 												: "flex-start"
 										}
+										mode="app"
 										key={index}
 									/>
 								)

@@ -210,6 +210,7 @@ export default function Page(): React.ReactElement | null {
 												? "flex-end"
 												: "flex-start"
 										}
+										mode="app"
 										key={index}
 									/>
 								)

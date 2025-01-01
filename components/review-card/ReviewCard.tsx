@@ -12,6 +12,7 @@ interface ReviewCardProps {
 	rating: Review["rating"]
 	time: Review["time"]
 	alignSelf: "flex-start" | "flex-end" | "center"
+	mode: "web" | "app"
 }
 
 export default function ReviewCard({
@@ -21,10 +22,19 @@ export default function ReviewCard({
 	review,
 	rating,
 	time,
-	alignSelf
+	alignSelf,
+	mode
 }: ReviewCardProps): React.ReactElement | null {
 	return (
-		<View style={[styles.cardContainer, { alignSelf: alignSelf }]}>
+		<View
+			style={[
+				styles.cardContainer,
+				mode === "app"
+					? styles.cardContainerApp
+					: styles.cardContainerWeb,
+				{ alignSelf: alignSelf }
+			]}
+		>
 			<Image
 				source={image}
 				style={styles.profileImage}
@@ -42,13 +52,18 @@ export default function ReviewCard({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		width: "90%",
 		borderRadius: 12.5,
 		borderWidth: 1,
 		borderColor: "#F4F5F8",
 		padding: 15,
 		flexDirection: "row",
 		gap: 15
+	},
+	cardContainerApp: {
+		width: "90%"
+	},
+	cardContainerWeb: {
+		width: "45%"
 	},
 	profileImage: {
 		height: 50,
