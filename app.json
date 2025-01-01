@@ -20,7 +20,9 @@
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"permissions": ["android.permission.RECORD_AUDIO"],
+			"package": "com.mobilewashusa.mobilewashusa"
 		},
 		"web": {
 			"bundler": "metro",
@@ -31,7 +33,10 @@
 			[
 				"expo-font",
 				{
-					"fonts": ["fonts/Montserrat", "fonts/Roboto"]
+					"fonts": [
+						"./assets/fonts/Montserrat",
+						"./assets/fonts/Roboto"
+					]
 				}
 			],
 			[
@@ -46,6 +51,14 @@
 					"photosPermission": "Allow Mobile Wash to access your photos"
 				}
 			]
-		]
+		],
+		"extra": {
+			"router": {
+				"origin": false
+			},
+			"eas": {
+				"projectId": "12018f86-d749-4bef-b326-faacd4c96e8b"
+			}
+		}
 	}
 }
