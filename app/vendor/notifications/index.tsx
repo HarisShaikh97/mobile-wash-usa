@@ -54,6 +54,7 @@ export default function Page(): React.ReactElement | null {
 									description={notification.description}
 									time={notification.time}
 									setOpenModal={setOpenModal}
+									mode="app"
 									key={index}
 								/>
 							)
@@ -74,6 +75,7 @@ export default function Page(): React.ReactElement | null {
 									description={notification.description}
 									time={notification.time}
 									setOpenModal={setOpenModal}
+									mode="app"
 									key={index}
 								/>
 							)

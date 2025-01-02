@@ -11,6 +11,7 @@ interface NotificationCardProps {
 	description: Notification["description"]
 	time: Notification["time"]
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function NotificationCard({
@@ -19,12 +20,14 @@ export default function NotificationCard({
 	title,
 	description,
 	time,
-	setOpenModal
+	setOpenModal,
+	mode
 }: NotificationCardProps): React.ReactElement | null {
 	return (
 		<View
 			style={[
 				styles.container,
+				mode === "app" ? styles.containerApp : styles.containerWeb,
 				{
 					backgroundColor:
 						theme === "dark" ? "rgba(47, 116, 250, 0.1)" : "white",
@@ -43,21 +46,40 @@ export default function NotificationCard({
 						? require("../../assets/icons/security2.svg")
 						: require("../../assets/icons/alert.svg")
 				}
-				style={styles.iconImage}
+				style={
+					mode === "app" ? styles.iconImageApp : styles.iconImageWeb
+				}
 				contentFit="contain"
 			/>
-			<View style={styles.notificationDetailsWrapper}>
+			<View
+				style={[
+					styles.notificationDetailsWrapper,
+					mode === "app"
+						? styles.notificationDetailsWrapperApp
+						: styles.notificationDetailsWrapperWeb
+				]}
+			>
 				<View style={styles.horizontalWrapper}>
 					<View style={styles.verticalWrapper}>
 						<Text
-							style={styles.titleText}
+							style={[
+								styles.titleText,
+								mode === "app"
+									? styles.titleTextApp
+									: styles.titleTextWeb
+							]}
 							numberOfLines={1}
 							ellipsizeMode="tail"
 						>
 							{title}
 						</Text>
 						<Text
-							style={[styles.textSmall, styles.descriptionText]}
+							style={[
+								styles.descriptionText,
+								mode === "app"
+									? styles.descriptionTextApp
+									: styles.descriptionTextWeb
+							]}
 						>
 							{description}
 						</Text>
@@ -78,11 +100,20 @@ export default function NotificationCard({
 					{type === "security" ? (
 						<View />
 					) : (
-						<TouchableOpacity style={styles.viewButtonContainer}>
+						<TouchableOpacity
+							style={[
+								styles.viewButtonContainer,
+								mode === "app"
+									? styles.viewButtonContainerApp
+									: styles.viewButtonContainerWeb
+							]}
+						>
 							<Text
 								style={[
 									styles.textSmall,
-									styles.viewButtonText
+									mode === "app"
+										? styles.viewButtonTextApp
+										: styles.viewButtonTextWeb
 								]}
 							>
 								{type === "message"
@@ -91,7 +122,14 @@ export default function NotificationCard({
 							</Text>
 						</TouchableOpacity>
 					)}
-					<Text style={[styles.textSmall, styles.timeText]}>
+					<Text
+						style={[
+							styles.textSmall,
+							mode === "app"
+								? styles.timeTextApp
+								: styles.timeTextWeb
+						]}
+					>
 						{time}
 					</Text>
 				</View>
@@ -105,18 +143,34 @@ const styles = StyleSheet.create({
 		flexGrow: 1,
 		borderRadius: 12.5,
 		borderWidth: 1,
+		flexDirection: "row"
+	},
+	containerApp: {
 		padding: 15,
-		flexDirection: "row",
 		gap: 25
 	},
-	iconImage: {
+	containerWeb: {
+		padding: 25,
+		gap: 50
+	},
+	iconImageApp: {
 		height: 30,
 		width: 30
 	},
+	iconImageWeb: {
+		height: 45,
+		width: 45,
+		marginLeft: 17.5
+	},
 	notificationDetailsWrapper: {
 		flexGrow: 1,
-		flexDirection: "column",
+		flexDirection: "column"
+	},
+	notificationDetailsWrapperApp: {
 		gap: 15
+	},
+	notificationDetailsWrapperWeb: {
+		gap: 25
 	},
 	horizontalWrapper: {
 		flexDirection: "row",
@@ -132,30 +186,58 @@ const styles = StyleSheet.create({
 		alignItems: "center"
 	},
 	titleText: {
-		fontSize: 13.5,
 		fontFamily: "Montserrat-SemiBold",
 		color: theme.colors.secondary
+	},
+	titleTextApp: {
+		fontSize: 13.5
+	},
+	titleTextWeb: {
+		fontSize: 17.5,
+		letterSpacing: 0.5
 	},
 	textSmall: {
 		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
 	},
 	descriptionText: {
+		color: theme.colors.secondary
+	},
+	descriptionTextApp: {
+		fontFamily: "Roboto-Regular",
 		fontSize: 10
 	},
-	timeText: {
+	descriptionTextWeb: {
+		fontFamily: "Roboto-Light",
+		fontSize: 15,
+		maxWidth: 725
+	},
+	timeTextApp: {
 		fontSize: 8.5
 	},
+	timeTextWeb: {
+		fontSize: 12.5
+	},
 	viewButtonContainer: {
-		height: 30,
-		borderRadius: 8.5,
 		borderWidth: 0.75,
 		borderColor: theme.colors.secondary,
-		paddingHorizontal: 22.5,
 		alignItems: "center",
 		justifyContent: "center"
 	},
-	viewButtonText: {
+	viewButtonContainerApp: {
+		borderRadius: 8.5,
+		height: 30,
+		paddingHorizontal: 22.5
+	},
+	viewButtonContainerWeb: {
+		borderRadius: 6.5,
+		height: 40,
+		paddingHorizontal: 25
+	},
+	viewButtonTextApp: {
 		fontSize: 11.5
+	},
+	viewButtonTextWeb: {
+		fontSize: 13.5
 	}
 })

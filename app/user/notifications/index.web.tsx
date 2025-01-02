@@ -40,7 +40,6 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 			/>
-			<Text style={styles.titleText}>Notifications</Text>
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Today</Text>
 				<View style={styles.notificationCardsWrapper}>
@@ -54,7 +53,7 @@ export default function Page(): React.ReactElement | null {
 									description={notification.description}
 									time={notification.time}
 									setOpenModal={setOpenModal}
-									mode="app"
+									mode="web"
 									key={index}
 								/>
 							)
@@ -75,7 +74,7 @@ export default function Page(): React.ReactElement | null {
 									description={notification.description}
 									time={notification.time}
 									setOpenModal={setOpenModal}
-									mode="app"
+									mode="web"
 									key={index}
 								/>
 							)
@@ -93,22 +92,17 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		gap: 25
 	},
-	titleText: {
-		fontSize: 22.5,
-		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary,
-		alignSelf: "center",
-		marginBottom: 10
-	},
 	sectionContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 15
+		gap: 25
 	},
 	sectionTitleText: {
-		fontSize: 17.5,
+		fontSize: 20,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary
+		color: theme.colors.secondary,
+		marginLeft: 15,
+		letterSpacing: 0.5
 	},
 	notificationCardsWrapper: {
 		width: "100%",
