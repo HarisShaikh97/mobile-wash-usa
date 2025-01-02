@@ -31,6 +31,7 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				type={type}
+				mode="app"
 			/>
 			<Text style={styles.titleText}>Manage Your Account Status</Text>
 			<Text style={styles.descriptionText}>

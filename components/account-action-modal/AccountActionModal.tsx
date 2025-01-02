@@ -8,12 +8,14 @@ interface AccountActionModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 	type: "delete" | "deactivate"
+	mode: "app" | "web"
 }
 
 export default function AccountActionModal({
 	openModal,
 	setOpenModal,
-	type
+	type,
+	mode
 }: AccountActionModalProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -36,7 +38,14 @@ export default function AccountActionModal({
 			}}
 		>
 			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<Text style={styles.titleText}>
 						This is a permanent action.
 					</Text>
@@ -77,14 +86,21 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		width: "95%",
 		borderRadius: 30,
 		backgroundColor: "white",
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 15,
+		gap: 15
+	},
+	modalContainerApp: {
+		width: "95%",
 		padding: 25
+	},
+	modalContainerWeb: {
+		width: 385,
+		paddingHorizontal: 25,
+		paddingVertical: 50
 	},
 	titleText: {
 		maxWidth: 275,

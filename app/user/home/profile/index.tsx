@@ -13,9 +13,9 @@ export default function Tab(): React.ReactElement | null {
 
 	const notificationsEnabled = useSharedValue(false)
 
-	const handleUpdatedNotificationStatus = () => {
+	const handleUpdatedNotificationStatus = useCallback(() => {
 		notificationsEnabled.value = !notificationsEnabled.value
-	}
+	}, [notificationsEnabled])
 
 	const handleLogout = useCallback((): void => {
 		router.navigate("/")

@@ -4,11 +4,16 @@ import { useRouter } from "expo-router"
 import HorizontalSeparator from "../horizontal-separator/HorizontalSeparator"
 import { theme } from "../../utils/constants"
 
-export default function AccountStatusCardWeb(): React.ReactElement | null {
-	const router = useRouter()
+interface AccountStatusCardProps {
+	setType: (type: "delete" | "deactivate") => void
+	setOpenModal: (open: boolean) => void
+}
 
-	const [openModal, setOpenModal] = useState<boolean>(false)
-	const [type, setType] = useState<"delete" | "deactivate">("delete")
+export default function AccountStatusCardWeb({
+	setType,
+	setOpenModal
+}: AccountStatusCardProps): React.ReactElement | null {
+	const router = useRouter()
 
 	const handleDeleteAccount = useCallback(() => {
 		setType("delete")
@@ -19,10 +24,6 @@ export default function AccountStatusCardWeb(): React.ReactElement | null {
 		setType("deactivate")
 		setOpenModal(true)
 	}, [setType, setOpenModal])
-
-	const handleCancel = useCallback(() => {
-		router.back()
-	}, [router])
 
 	return (
 		<View style={styles.container}>

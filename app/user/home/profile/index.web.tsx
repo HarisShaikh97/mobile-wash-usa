@@ -9,6 +9,7 @@ import SecurityFeaturesCardWeb from "../../../../components/security-features-ca
 import AccountStatusCardWeb from "../../../../components/account-status-card-web/AccountStatusCardWeb"
 import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-web/HelpAndSupportCardWeb"
 import PrivacyPolicyCardWeb from "../../../../components/privacy-policy-card-web/PrivacyPolicyCardWeb"
+import AccountActionModal from "../../../../components/account-action-modal/AccountActionModal"
 import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
@@ -22,12 +23,17 @@ export default function Tab(): React.ReactElement | null {
 		| "Help & Support"
 		| "Privacy Policy"
 	>("Edit Account")
+	const [openAccountActionModal, setOpenAccountActionModal] =
+		useState<boolean>(false)
+	const [accountActiontype, setAccountActionType] = useState<
+		"delete" | "deactivate"
+	>("delete")
 
 	const notificationsEnabled = useSharedValue(false)
 
-	const handleUpdatedNotificationStatus = () => {
+	const handleUpdatedNotificationStatus = useCallback(() => {
 		notificationsEnabled.value = !notificationsEnabled.value
-	}
+	}, [notificationsEnabled])
 
 	const handleLogout = useCallback((): void => {
 		router.navigate("/")
@@ -35,6 +41,12 @@ export default function Tab(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
+			<AccountActionModal
+				openModal={openAccountActionModal}
+				setOpenModal={setOpenAccountActionModal}
+				type={accountActiontype}
+				mode="web"
+			/>
 			<ImageBackground
 				source={require("../../../../assets/images/profile-header-bg-web.png")}
 				style={styles.headerContainer}
@@ -287,7 +299,10 @@ export default function Tab(): React.ReactElement | null {
 				) : selectedTab === "Security" ? (
 					<SecurityFeaturesCardWeb />
 				) : selectedTab === "Account Status" ? (
-					<AccountStatusCardWeb />
+					<AccountStatusCardWeb
+						setType={setAccountActionType}
+						setOpenModal={setOpenAccountActionModal}
+					/>
 				) : selectedTab === "Help & Support" ? (
 					<HelpAndSupportCardWeb />
 				) : (
