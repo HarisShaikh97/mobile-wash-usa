@@ -6,11 +6,13 @@ import { theme } from "../../utils/constants"
 interface NotificationActionsModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function NotificationActionsModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: NotificationActionsModalProps): React.ReactElement | null {
 	const handleDeleteNotification = useCallback((): void => {
 		setOpenModal(false)
@@ -22,16 +24,30 @@ export default function NotificationActionsModal({
 
 	return (
 		<Modal
-			animationType="slide"
+			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
 			visible={openModal}
 			onRequestClose={() => {
 				setOpenModal(false)
 			}}
 		>
-			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
-					<View style={styles.horizontalBar} />
+			<View
+				style={[
+					styles.modalWrapper,
+					mode === "app"
+						? styles.modalWrapperApp
+						: styles.modalWrapperWeb
+				]}
+			>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
+					{mode === "app" && <View style={styles.horizontalBar} />}
 					<View style={styles.actionButtonsWrapper}>
 						<TouchableOpacity
 							style={[
@@ -85,19 +101,36 @@ export default function NotificationActionsModal({
 const styles = StyleSheet.create({
 	modalWrapper: {
 		flex: 1,
-		justifyContent: "flex-end",
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
+	modalWrapperApp: {
+		justifyContent: "flex-end"
+	},
+	modalWrapperWeb: {
+		justifyContent: "center",
+		alignItems: "center"
+	},
 	modalContainer: {
-		height: 200,
 		borderTopLeftRadius: 25,
 		borderTopRightRadius: 25,
 		backgroundColor: "white",
 		flexDirection: "column",
-		alignItems: "center",
+		alignItems: "center"
+	},
+	modalContainerApp: {
+		height: 200,
+		borderTopLeftRadius: 25,
+		borderTopRightRadius: 25,
 		justifyContent: "space-between",
 		paddingHorizontal: 15,
 		paddingVertical: 25
+	},
+	modalContainerWeb: {
+		width: 450,
+		borderRadius: 25,
+		justifyContent: "center",
+		paddingHorizontal: 25,
+		paddingVertical: 50
 	},
 	horizontalBar: {
 		height: 4.5,

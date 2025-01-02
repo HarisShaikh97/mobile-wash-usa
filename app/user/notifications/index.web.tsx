@@ -39,6 +39,7 @@ export default function Page(): React.ReactElement | null {
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="web"
 			/>
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Today</Text>

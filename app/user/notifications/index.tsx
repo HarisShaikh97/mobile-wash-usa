@@ -39,6 +39,7 @@ export default function Page(): React.ReactElement | null {
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="app"
 			/>
 			<Text style={styles.titleText}>Notifications</Text>
 			<View style={styles.sectionContainer}>
