@@ -10,13 +10,15 @@ interface PaymentInformationModalProps {
 	setOpenModal: (value: boolean) => void
 	selectedOption: PaymentOptions
 	handleProceed: () => void
+	mode: "app" | "web"
 }
 
 export default function PaymentInformationModal({
 	openModal,
 	setOpenModal,
 	selectedOption,
-	handleProceed
+	handleProceed,
+	mode
 }: PaymentInformationModalProps): React.ReactElement | null {
 	const handleChangeMethod = useCallback((): void => {
 		setOpenModal(false)
@@ -34,7 +36,12 @@ export default function PaymentInformationModal({
 			<View style={styles.modalWrapper}>
 				<ImageBackground
 					source={require("../../assets/images/modal-background.png")}
-					style={styles.modalContainer}
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
 					contentFit="fill"
 				>
 					<Text style={styles.titleText}>
@@ -78,7 +85,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		width: "90%",
 		borderRadius: 35,
 		backgroundColor: "white",
 		flexDirection: "column",
@@ -86,6 +92,12 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		gap: 10,
 		padding: 25
+	},
+	modalContainerApp: {
+		width: "90%"
+	},
+	modalContainerWeb: {
+		width: 400
 	},
 	titleText: {
 		fontSize: 27.5,

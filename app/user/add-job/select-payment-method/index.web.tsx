@@ -4,6 +4,7 @@ import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
 import FormButton from "../../../../components/form-button/FormButton"
+import PaymentInformationModal from "../../../../components/payment-information-modal/PaymentInformationModal"
 import { theme } from "../../../../utils/constants"
 import { PaymentOptions } from "../../../../utils/types"
 
@@ -11,13 +12,30 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+
+	const handleProceed = useCallback((): void => {
+		setOpenModal(false)
+		router.navigate(
+			selectedOption === "pod"
+				? "/user/home"
+				: "/user/add-job/payment-card-details"
+		)
+	}, [openModal, router])
 
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/payment-card-details")
-	}, [router])
+		setOpenModal(true)
+	}, [setOpenModal])
 
 	return (
 		<AddJobWebLayout>
+			<PaymentInformationModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				selectedOption={selectedOption}
+				handleProceed={handleProceed}
+				mode="web"
+			/>
 			<View style={styles.container}>
 				<View style={styles.titleWrapper}>
 					<Text style={styles.titleText}>

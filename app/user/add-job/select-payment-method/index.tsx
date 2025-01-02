@@ -38,6 +38,7 @@ export default function Page(): React.ReactElement | null {
 				setOpenModal={setOpenModal}
 				selectedOption={selectedOption}
 				handleProceed={handleProceed}
+				mode="app"
 			/>
 			<View style={styles.headerContainer}>
 				<BackButton
