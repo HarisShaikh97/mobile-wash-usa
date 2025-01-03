@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 35
 	},
 	mapView: {
-		height: 125,
+		height: 100,
 		width: "100%",
 		borderRadius: 10,
 		overflow: "hidden"

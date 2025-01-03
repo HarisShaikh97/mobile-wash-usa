@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
 	sliderWrapper: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 25,
+		gap: 15,
 		marginBottom: 15,
 		zIndex: 0
 	},
