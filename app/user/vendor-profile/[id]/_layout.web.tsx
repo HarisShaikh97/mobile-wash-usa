@@ -21,7 +21,10 @@ export default function Layout(): React.ReactElement | null {
 						borderColor="transparent"
 					/>
 					<View style={styles.headerCardsWrapper}>
-						<ProfileCardWeb />
+						<ProfileCardWeb
+							imageSource={require("../../../../assets/images/profile.png")}
+							userName="John Cosby"
+						/>
 						<NotificationButton mode="web" />
 					</View>
 				</View>

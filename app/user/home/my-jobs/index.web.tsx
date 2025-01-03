@@ -96,7 +96,10 @@ export default function Tab(): React.ReactElement | null {
 						mode="web"
 					/>
 					<View style={styles.headerItemsWrapper}>
-						<ProfileCardWeb />
+						<ProfileCardWeb
+							imageSource={require("../../../../assets/images/profile.png")}
+							userName="John Cosby"
+						/>
 						<NotificationButton mode="web" />
 					</View>
 				</View>

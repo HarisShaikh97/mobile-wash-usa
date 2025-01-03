@@ -13,7 +13,10 @@ export default function Layout(): React.ReactElement | null {
 			>
 				<View style={styles.scrollContainer}>
 					<View style={styles.headerContainer}>
-						<ProfileCardWeb />
+						<ProfileCardWeb
+							imageSource={require("../../../../../assets/images/profile.png")}
+							userName="John Cosby"
+						/>
 						<NotificationButton mode="web" />
 					</View>
 					<Slot />

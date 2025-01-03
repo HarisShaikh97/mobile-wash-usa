@@ -5,14 +5,14 @@ import {
 	TouchableOpacity,
 	StyleSheet
 } from "react-native"
-import { ImageBackground } from "expo-image"
+import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
-import ServiceCard from "../../../components/service-card/ServiceCard"
-import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../components/profile-card-web/ProfileCardWeb"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
-import { services, theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
+import Ratings from "../../../components/ratings/Ratings"
+import JobCard from "../../../components/job-card/JobCard"
+import { theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
@@ -26,7 +26,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -39,7 +39,7 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		},
 		{
 			_id: "2",
@@ -48,7 +48,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -61,7 +61,7 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		},
 		{
 			_id: "3",
@@ -70,7 +70,7 @@ export default function Tab(): React.ReactElement | null {
 			date: "28, Oct 2024",
 			time: "10am to 1pm",
 			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
 			address: "California, USA",
 			location: {
 				lat: 36.7783,
@@ -83,7 +83,7 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../assets/images/background3.png"),
 				require("../../../assets/images/background4.png")
 			],
-			status: "in-progress"
+			status: "incoming"
 		}
 	]
 
@@ -95,79 +95,88 @@ export default function Tab(): React.ReactElement | null {
 			<View style={styles.scrollContainer}>
 				<View style={styles.headerContainer}>
 					<ProfileCardWeb
-						imageSource={require("../../../assets/images/profile.png")}
-						userName="John Cosby"
+						imageSource={require("../../../assets/images/profile2.png")}
+						userName="Michael Guzzi"
 					/>
 					<NotificationButton mode="web" />
 				</View>
-				<View style={styles.cardsWrapper}>
+				<View
+					style={[
+						styles.cardsHorizontalWrapper,
+						styles.profileSection
+					]}
+				>
 					<ImageBackground
 						source={require("../../../assets/images/welcome-card-bg.png")}
 						style={styles.welcomeCardContainer}
 						contentFit="fill"
 					>
 						<ProfileImageBox
-							source={require("../../../assets/images/profile.png")}
+							source={require("../../../assets/images/profile2.png")}
 							mode="web"
 						/>
 						<Text style={styles.welcomeHeadingText}>
-							Welcome, John
+							Welcome, Michael
 						</Text>
 						<Text style={styles.welcomeDescriptionText}>
-							Find top-rated service providers for your vehicle,
-							home, and business
+							Browse available jobs and offer your top-notch
+							services to customers in need.
 						</Text>
 					</ImageBackground>
-					<View style={styles.postJobCardContainer}>
-						<Text style={styles.postJobHeadingText}>
-							Post a job
-						</Text>
-						<Text style={styles.postJobDescriptionText}>
-							Quickly post a car wash or maintenance job for
-							vendors to apply to.
-						</Text>
-						<TouchableOpacity
-							style={styles.postJobButtonContainer}
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
+					<View style={styles.cardsVerticalWrapper}>
+						<ImageBackground
+							source={require("../../../assets/images/card-bg.png")}
+							style={styles.ratingsCardContainer}
+							contentFit="fill"
 						>
-							<Text style={styles.postJobButtonText}>
-								Post a New Job
+							<Text style={styles.ratingsHeadingText}>
+								Overall Rating
 							</Text>
-						</TouchableOpacity>
+							<Text style={styles.ratingsValueText}>4.5</Text>
+							<Ratings ratings={4.5} size={30} />
+							<Text style={styles.ratingsDescriptionText}>
+								Base on 135 Reviews
+							</Text>
+						</ImageBackground>
+						<View style={styles.cardsHorizontalWrapper}>
+							<ImageBackground
+								source={require("../../../assets/images/card-bg.png")}
+								style={styles.statsCardContainer}
+								contentFit="cover"
+							>
+								<Text style={styles.statsTitleText}>
+									Total Earnings
+								</Text>
+								<Text style={styles.statsValueText}>
+									$ 450,750
+								</Text>
+							</ImageBackground>
+							<ImageBackground
+								source={require("../../../assets/images/card-bg.png")}
+								style={styles.statsCardContainer}
+								contentFit="cover"
+							>
+								<Text style={styles.statsTitleText}>
+									Jobs Completed
+								</Text>
+								<Text style={styles.statsValueText}>+15</Text>
+							</ImageBackground>
+						</View>
 					</View>
 				</View>
-				<View style={styles.cardsWrapper}>
-					{services.map(
-						(service, index): React.ReactElement | null => {
-							return (
-								<ServiceCard
-									title={service.title}
-									image={service.image}
-									mode="web"
-									key={index}
-								/>
-							)
-						}
-					)}
-				</View>
-				<View style={styles.myJobsTitleBarContainer}>
-					<View style={styles.myJobsTitleWrapper}>
-						<Text style={styles.myJobsTitleText}>My jobs</Text>
-						<Text style={styles.myJobsDescriptionText}>
-							Your active jobs
-						</Text>
-					</View>
+				<View style={styles.availableJobsTitleBarContainer}>
+					<Text style={styles.availableJobsTitleText}>
+						Available jobs
+					</Text>
 					<TouchableOpacity
 						onPress={() => {
-							router.navigate("/user/home/my-jobs")
+							router.navigate("/vendor/home/my-jobs")
 						}}
 					>
 						<Text style={styles.seeAllText}>See all</Text>
 					</TouchableOpacity>
 				</View>
-				<View style={styles.cardsWrapper}>
+				<View style={styles.cardsHorizontalWrapper}>
 					{jobs.map((job): React.ReactElement | null => {
 						return (
 							<JobCard
@@ -208,11 +217,19 @@ const styles = StyleSheet.create({
 		gap: 10,
 		alignSelf: "flex-end"
 	},
-	cardsWrapper: {
+	profileSection: {
+		marginVertical: 20
+	},
+	cardsHorizontalWrapper: {
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 20
+		gap: 15
+	},
+	cardsVerticalWrapper: {
+		height: 325,
+		flexDirection: "column",
+		gap: 15
 	},
 	welcomeCardContainer: {
 		flexGrow: 1,
@@ -238,44 +255,56 @@ const styles = StyleSheet.create({
 		width: 415,
 		textAlign: "center"
 	},
-	postJobCardContainer: {
-		height: 325,
-		width: 400,
+	ratingsCardContainer: {
+		flex: 1,
+		width: 385,
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 10,
 		backgroundColor: "white",
 		borderRadius: 25,
-		paddingHorizontal: 35
+		overflow: "hidden"
 	},
-	postJobHeadingText: {
-		fontSize: 35,
-		fontFamily: "Montserrat-SemiBold",
+	ratingsHeadingText: {
+		fontSize: 16.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
+	},
+	ratingsValueText: {
+		fontSize: 85,
+		fontFamily: "Roboto-Bold",
+		color: theme.colors.secondary,
+		lineHeight: 75
+	},
+	ratingsDescriptionText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Regular",
+		color: theme.colors.secondary
+	},
+	statsCardContainer: {
+		flex: 1,
+		height: 85,
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 5,
+		backgroundColor: "white",
+		borderRadius: 25,
+		overflow: "hidden"
+	},
+	statsTitleText: {
+		fontSize: 12.5,
+		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary,
 		textTransform: "capitalize"
 	},
-	postJobDescriptionText: {
-		fontSize: 17.5,
-		fontFamily: "Roboto-Light",
-		color: theme.colors.secondary,
-		textAlign: "center"
-	},
-	postJobButtonContainer: {
-		height: 57.5,
-		width: 200,
-		borderRadius: 11,
-		backgroundColor: theme.colors.primary,
-		marginTop: 15,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	postJobButtonText: {
-		fontSize: 15,
+	statsValueText: {
+		fontSize: 18.5,
 		fontFamily: "Roboto-Medium",
-		color: "white"
+		color: theme.colors.secondary
 	},
-	myJobsTitleBarContainer: {
+	availableJobsTitleBarContainer: {
 		height: 115,
 		width: "100%",
 		borderRadius: 15,
@@ -285,18 +314,9 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		paddingHorizontal: 30
 	},
-	myJobsTitleWrapper: {
-		flexDirection: "column"
-	},
-	myJobsTitleText: {
+	availableJobsTitleText: {
 		fontSize: 27.5,
 		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary,
-		textTransform: "capitalize"
-	},
-	myJobsDescriptionText: {
-		fontSize: 15,
-		fontFamily: "Roboto-Light",
 		color: theme.colors.secondary,
 		textTransform: "capitalize"
 	},

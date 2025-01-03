@@ -1,16 +1,29 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native"
+import {
+	TouchableOpacity,
+	Text,
+	ImageSourcePropType,
+	StyleSheet
+} from "react-native"
 import { Image } from "expo-image"
 import { theme } from "../../utils/constants"
 
-export default function ProfileCardWeb(): React.ReactElement | null {
+interface ProfileCardProps {
+	imageSource: ImageSourcePropType
+	userName: string
+}
+
+export default function ProfileCardWeb({
+	imageSource,
+	userName
+}: ProfileCardProps): React.ReactElement | null {
 	return (
 		<TouchableOpacity style={styles.profileCard}>
 			<Image
-				source={require("../../assets/images/profile.png")}
+				source={imageSource}
 				style={styles.profileImage}
 				contentFit="cover"
 			/>
-			<Text style={styles.userNameText}>John Cosby</Text>
+			<Text style={styles.userNameText}>{userName}</Text>
 		</TouchableOpacity>
 	)
 }
