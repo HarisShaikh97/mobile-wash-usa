@@ -133,6 +133,7 @@ export default function Page(): React.ReactElement | null {
 						placeholder="Search"
 						color="#F5F5F5"
 						backgroundColor="#ffffff"
+						borderColor="#F5F5F5"
 						value={searchValue}
 						onChangeText={setSearchValue}
 						filterEnabled

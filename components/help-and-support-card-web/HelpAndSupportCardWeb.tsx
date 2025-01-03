@@ -53,6 +53,7 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 						placeholder="Try find “how to”"
 						color="#CACACA"
 						backgroundColor="transparent"
+						borderColor="#F5F5F5"
 						value={searchValue}
 						onChangeText={setSearchValue}
 						filterEnabled={false}

@@ -83,6 +83,7 @@ export default function Page(): React.ReactElement | null {
 								placeholder="Try find “how to”"
 								color="#CACACA"
 								backgroundColor="#ffffff"
+								borderColor="#F5F5F5"
 								value={searchValue}
 								onChangeText={setSearchValue}
 								filterEnabled={false}

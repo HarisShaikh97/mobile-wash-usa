@@ -29,6 +29,7 @@ export default function Layout(): React.ReactElement | null {
 								placeholder="Search"
 								color="#CACACA"
 								backgroundColor="#ffffff"
+								borderColor="transparent"
 								value={searchValue}
 								onChangeText={setSearchValue}
 								filterEnabled={false}

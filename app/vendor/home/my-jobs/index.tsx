@@ -19,6 +19,10 @@ type Tab = "Active" | "Pending" | "Completed"
 export default function Page(): React.ReactElement | null {
 	const tabs: Tab[] = ["Active", "Pending", "Completed"]
 
+	const [searchValue, setSearchValue] = useState<string>("")
+	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [selectedTab, setSelectedTab] = useState<Tab>(tabs[0])
+
 	const jobs: Job[] = [
 		{
 			_id: "1",
@@ -110,10 +114,6 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
-	const [selectedTab, setSelectedTab] = useState<Tab>(tabs[0])
-
 	return (
 		<ScrollView
 			style={styles.scrollView}
@@ -139,6 +139,7 @@ export default function Page(): React.ReactElement | null {
 						placeholder="Search"
 						color="#F5F5F5"
 						backgroundColor="#ffffff"
+						borderColor="#F5F5F5"
 						value={searchValue}
 						onChangeText={setSearchValue}
 						filterEnabled

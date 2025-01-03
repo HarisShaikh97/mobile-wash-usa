@@ -33,6 +33,7 @@ export default function Layout(): React.ReactElement | null {
 						placeholder="Search"
 						color="#CACACA"
 						backgroundColor="#ffffff"
+						borderColor="#F5F5F5"
 						filterEnabled={false}
 						mode="app"
 					/>

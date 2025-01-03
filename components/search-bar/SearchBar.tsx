@@ -4,35 +4,40 @@ import AntDesign from "@expo/vector-icons/AntDesign"
 import { RgbaColor, HexColor } from "../../utils/types"
 import { theme } from "../../utils/constants"
 
-interface SearchBarProps {
+interface SearchBarBaseProps {
 	placeholder: string
 	color: RgbaColor | HexColor | "transparent"
 	backgroundColor: RgbaColor | HexColor | "transparent"
+	borderColor: RgbaColor | HexColor | "transparent"
 	value: string
 	onChangeText: (text: string) => void
-	filterEnabled: boolean
-	setOpenFilterModal?: (value: boolean) => void
 	mode: "app" | "web"
 }
 
-export default function SearchBar({
-	placeholder,
-	color,
-	backgroundColor,
-	value,
-	onChangeText,
-	filterEnabled,
-	setOpenFilterModal,
-	mode
-}: SearchBarProps): React.ReactElement | null {
+interface SearchBarFilterEnabledProps extends SearchBarBaseProps {
+	filterEnabled: true
+	setOpenFilterModal: (value: boolean) => void
+}
+
+interface SearchBarFilterDisabledProps extends SearchBarBaseProps {
+	filterEnabled: false
+}
+
+type SearchBarProps = SearchBarFilterEnabledProps | SearchBarFilterDisabledProps
+
+export default function SearchBar(
+	props: SearchBarProps
+): React.ReactElement | null {
 	return (
 		<View
 			style={[
 				styles.container,
-				mode === "app" ? styles.containerApp : styles.containerWeb,
+				props.mode === "app"
+					? styles.containerApp
+					: styles.containerWeb,
 				{
-					borderColor: mode === "app" ? color : "transparent",
-					backgroundColor: backgroundColor
+					borderColor: props.borderColor,
+					backgroundColor: props.backgroundColor
 				}
 			]}
 		>
@@ -40,23 +45,32 @@ export default function SearchBar({
 				<AntDesign name="search1" size={15} color="#CACACA" />
 				<TextInput
 					style={styles.inputField}
-					value={value}
-					onChangeText={onChangeText}
-					placeholder={placeholder}
+					value={props.value}
+					onChangeText={props.onChangeText}
+					placeholder={props.placeholder}
 					placeholderTextColor={"#CACACA"}
 				/>
 			</View>
-			{filterEnabled && setOpenFilterModal ? (
+			{props.filterEnabled ? (
 				<TouchableOpacity
-					style={styles.filterButton}
+					style={[
+						styles.filterButton,
+						props.mode === "app"
+							? styles.filterButtonApp
+							: styles.filterButtonWeb
+					]}
 					onPress={() => {
-						setOpenFilterModal(true)
+						props.setOpenFilterModal(true)
 					}}
 				>
 					<View style={styles.activeMarker} />
 					<Image
 						source={require("../../assets/icons/filter.svg")}
-						style={styles.filterIcon}
+						style={
+							props.mode === "app"
+								? styles.filterIconApp
+								: styles.filterIconWeb
+						}
 						contentFit="contain"
 					/>
 				</TouchableOpacity>
@@ -106,16 +120,25 @@ const styles = StyleSheet.create({
 	},
 	filterButton: {
 		height: "100%",
-		width: 50,
 		borderRadius: 10,
 		backgroundColor: theme.colors.primary,
 		alignItems: "center",
 		justifyContent: "center",
 		position: "relative"
 	},
-	filterIcon: {
+	filterButtonApp: {
+		width: 50
+	},
+	filterButtonWeb: {
+		width: 60
+	},
+	filterIconApp: {
 		height: 30,
 		width: 30
+	},
+	filterIconWeb: {
+		height: 37.5,
+		width: 37.5
 	},
 	activeMarker: {
 		height: 10,
