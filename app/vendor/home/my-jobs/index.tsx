@@ -122,6 +122,7 @@ export default function Page(): React.ReactElement | null {
 			<JobsFilterModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="app"
 			/>
 			<View style={styles.container}>
 				<View style={styles.headerContainer}>

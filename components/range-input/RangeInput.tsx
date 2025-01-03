@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { View, Text, TextInput, StyleSheet } from "react-native"
 import Animated, {
 	SharedValue,
@@ -17,6 +17,7 @@ interface RangeInputProps {
 	limit: number
 	minPosition: SharedValue<number>
 	maxPosition: SharedValue<number>
+	mode: "app" | "web"
 }
 
 export default function RangeInput({
@@ -25,8 +26,17 @@ export default function RangeInput({
 	thumbSize,
 	limit,
 	minPosition,
-	maxPosition
+	maxPosition,
+	mode
 }: RangeInputProps): React.ReactElement | null {
+	const [minValue, setMinValue] = useState<number>(
+		Math.floor((minPosition.value * limit) / trackBarLength)
+	)
+
+	const [maxValue, setMaxValue] = useState<number>(
+		Math.ceil((maxPosition.value * limit) / (trackBarLength - thumbSize))
+	)
+
 	const animatedMinStyle = useAnimatedStyle(() => {
 		return {
 			transform: [{ translateX: minPosition.value }]
@@ -57,9 +67,16 @@ export default function RangeInput({
 					newMinPosition >= 0
 				) {
 					minPosition.value = newMinPosition
+					if (mode === "web") {
+						setMinValue(
+							Math.floor(
+								(newMinPosition * limit) / trackBarLength
+							)
+						)
+					}
 				}
 			}),
-		[minPosition, maxPosition, thumbSize]
+		[minPosition, maxPosition, thumbSize, setMinValue, mode]
 	)
 
 	const gestureMax = useMemo(
@@ -73,9 +90,17 @@ export default function RangeInput({
 					newMaxPosition <= trackBarLength - thumbSize
 				) {
 					maxPosition.value = newMaxPosition
+					if (mode === "web") {
+						setMaxValue(
+							Math.ceil(
+								(newMaxPosition * limit) /
+									(trackBarLength - thumbSize)
+							)
+						)
+					}
 				}
 			}),
-		[minPosition, maxPosition, thumbSize, trackBarLength]
+		[minPosition, maxPosition, thumbSize, trackBarLength, setMaxValue, mode]
 	)
 
 	const minAnimatedProps = useAnimatedProps(() => {
@@ -107,22 +132,34 @@ export default function RangeInput({
 				<View style={styles.minMaxItemWrapper}>
 					<Text style={styles.minMaxText}>Min</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						<AnimatedTextInput
-							animatedProps={minAnimatedProps}
-							style={styles.minMaxQuantityText}
-							editable={false}
-						/>
+						{mode === "app" ? (
+							<AnimatedTextInput
+								animatedProps={minAnimatedProps}
+								style={styles.minMaxQuantityText}
+								editable={false}
+							/>
+						) : (
+							<Text style={styles.minMaxQuantityText}>
+								{minValue}
+							</Text>
+						)}
 					</View>
 				</View>
 				<View style={styles.separator} />
 				<View style={styles.minMaxItemWrapper}>
 					<Text style={styles.minMaxText}>Max</Text>
 					<View style={styles.minMaxQuantityContainer}>
-						<AnimatedTextInput
-							animatedProps={maxAnimatedProps}
-							style={styles.minMaxQuantityText}
-							editable={false}
-						/>
+						{mode === "app" ? (
+							<AnimatedTextInput
+								animatedProps={maxAnimatedProps}
+								style={styles.minMaxQuantityText}
+								editable={false}
+							/>
+						) : (
+							<Text style={styles.minMaxQuantityText}>
+								{maxValue}
+							</Text>
+						)}
 					</View>
 				</View>
 			</View>

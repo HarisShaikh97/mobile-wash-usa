@@ -16,11 +16,13 @@ const TRACK_BAR_LENGTH = 300
 interface JobsFilterModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function JobsFilterModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: JobsFilterModalProps): React.ReactElement | null {
 	const minPosition = useSharedValue(0)
 	const maxPosition = useSharedValue(280)
@@ -52,17 +54,29 @@ export default function JobsFilterModal({
 
 	return (
 		<Modal
-			animationType="slide"
+			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
 			visible={openModal}
 			onRequestClose={() => {
 				setOpenModal(false)
 			}}
 		>
-			<GestureHandlerRootView style={styles.modalWrapper}>
+			<GestureHandlerRootView
+				style={[
+					styles.modalWrapper,
+					mode === "app"
+						? styles.modalWrapperApp
+						: styles.modalWrapperWeb
+				]}
+			>
 				<ImageBackground
 					source={require("../../assets/images/modal-background.png")}
-					style={styles.modalContainer}
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
 					contentFit="fill"
 				>
 					<View style={styles.modalHeaderContainer}>
@@ -106,6 +120,7 @@ export default function JobsFilterModal({
 							trackBarLength={TRACK_BAR_LENGTH}
 							minPosition={minPosition}
 							maxPosition={maxPosition}
+							mode={mode}
 						/>
 						<InputField
 							length="full"
@@ -138,16 +153,29 @@ export default function JobsFilterModal({
 const styles = StyleSheet.create({
 	modalWrapper: {
 		flex: 1,
-		justifyContent: "flex-end",
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
+	modalWrapperApp: {
+		justifyContent: "flex-end"
+	},
+	modalWrapperWeb: {
+		justifyContent: "center",
+		alignItems: "center"
+	},
 	modalContainer: {
-		borderTopLeftRadius: 35,
-		borderTopRightRadius: 35,
 		backgroundColor: "white",
 		flexDirection: "column",
-		alignItems: "center",
+		alignItems: "center"
+	},
+	modalContainerApp: {
+		borderTopLeftRadius: 35,
+		borderTopRightRadius: 35,
 		padding: 25
+	},
+	modalContainerWeb: {
+		borderRadius: 35,
+		width: 425,
+		padding: 35
 	},
 	modalHeaderContainer: {
 		width: "100%",

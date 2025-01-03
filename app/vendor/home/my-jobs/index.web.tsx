@@ -10,6 +10,7 @@ import JobCard from "../../../../components/job-card/JobCard"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../../components/profile-card-web/ProfileCardWeb"
 import SearchBar from "../../../../components/search-bar/SearchBar"
+import JobsFilterModal from "../../../../components/jobs-filter-modal/JobsFilterModal"
 import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
@@ -96,6 +97,11 @@ export default function Tab(): React.ReactElement | null {
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			<JobsFilterModal
+				openModal={openModal}
+				setOpenModal={setOpenModal}
+				mode="web"
+			/>
 			<View style={styles.scrollContainer}>
 				<View style={styles.headerContainer}>
 					<ProfileCardWeb
