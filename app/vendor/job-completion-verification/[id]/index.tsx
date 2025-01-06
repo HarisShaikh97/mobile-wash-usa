@@ -20,6 +20,7 @@ export default function Page(): React.ReactElement | null {
 			<JobCompletionSuccessfulModal
 				openModal={openSuccessModal}
 				setOpenModal={setOpenSuccessModal}
+				mode="app"
 			/>
 			<InvalidOTPModal
 				openModal={openInvalidModal}

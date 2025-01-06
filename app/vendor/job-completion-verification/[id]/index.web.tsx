@@ -12,7 +12,7 @@ export default function Page(): React.ReactElement | null {
 	const [openInvalidModal, setOpenInvalidModal] = useState<boolean>(false)
 
 	const handleSubmit = useCallback((): void => {
-		setOpenInvalidModal(true)
+		setOpenSuccessModal(true)
 	}, [setOpenSuccessModal, setOpenInvalidModal])
 
 	return (
@@ -20,6 +20,7 @@ export default function Page(): React.ReactElement | null {
 			<JobCompletionSuccessfulModal
 				openModal={openSuccessModal}
 				setOpenModal={setOpenSuccessModal}
+				mode="web"
 			/>
 			<InvalidOTPModal
 				openModal={openInvalidModal}
