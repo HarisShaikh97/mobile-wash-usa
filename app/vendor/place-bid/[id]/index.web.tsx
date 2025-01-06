@@ -38,6 +38,7 @@ export default function Page(): React.ReactElement | null {
 			<BidSubmittedModal
 				openModal={openSuccessModal}
 				setOpenModal={setOpenSuccessModal}
+				mode="web"
 			/>
 			{errorType && (
 				<AccountErrorModal
