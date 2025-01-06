@@ -1,6 +1,6 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
@@ -28,6 +28,7 @@ export default function JobCard({
 	mode
 }: JobCardProps): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	return (
 		<View
@@ -136,7 +137,7 @@ export default function JobCard({
 								mode === "app"
 									? styles.actionButtonContainerApp
 									: styles.actionButtonContainerWeb,
-								styles.statusTab
+								styles.inProgressStatusTab
 							]}
 						>
 							<Text
@@ -150,9 +151,54 @@ export default function JobCard({
 								In Progress
 							</Text>
 						</View>
+					) : status === "incoming" ? (
+						<TouchableOpacity
+							style={[
+								styles.actionButtonContainer,
+								mode === "app"
+									? styles.actionButtonContainerApp
+									: styles.actionButtonContainerWeb,
+								styles.buttonLightBlue
+							]}
+							onPress={() => {
+								router.navigate(`/vendor/home/my-jobs/${_id}`)
+							}}
+						>
+							<Text
+								style={[
+									mode === "app"
+										? styles.actionButtonsTextApp
+										: styles.actionButtonsTextWeb,
+									styles.actionButtonsTextDark
+								]}
+							>
+								View
+							</Text>
+						</TouchableOpacity>
+					) : status === "active" ? (
+						<View
+							style={[
+								styles.actionButtonContainer,
+								mode === "app"
+									? styles.actionButtonContainerApp
+									: styles.actionButtonContainerWeb,
+								styles.activeStatusTab
+							]}
+						>
+							<Text
+								style={[
+									mode === "app"
+										? styles.actionButtonsTextApp
+										: styles.actionButtonsTextWeb,
+									styles.actionButtonsTextDark
+								]}
+							>
+								Active
+							</Text>
+						</View>
 					) : (
-						status === "incoming" && (
-							<TouchableOpacity
+						status === "completed" && (
+							<View
 								style={[
 									styles.actionButtonContainer,
 									mode === "app"
@@ -160,11 +206,6 @@ export default function JobCard({
 										: styles.actionButtonContainerWeb,
 									styles.buttonLightBlue
 								]}
-								onPress={() => {
-									router.navigate(
-										`/vendor/home/my-jobs/${_id}`
-									)
-								}}
 							>
 								<Text
 									style={[
@@ -174,12 +215,12 @@ export default function JobCard({
 										styles.actionButtonsTextDark
 									]}
 								>
-									View
+									Completed
 								</Text>
-							</TouchableOpacity>
+							</View>
 						)
 					)}
-					{status === "in-progress" ? (
+					{status === "incoming" ? (
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
@@ -189,7 +230,37 @@ export default function JobCard({
 								styles.buttonDarkBlue
 							]}
 							onPress={() => {
-								router.navigate(`/user/home/my-jobs/${_id}`)
+								router.navigate(`/vendor/place-bid/${_id}`)
+							}}
+						>
+							<Text
+								style={[
+									mode === "app"
+										? styles.actionButtonsTextApp
+										: styles.actionButtonsTextWeb,
+									styles.actionButtonsTextLight
+								]}
+							>
+								Place a bid
+							</Text>
+						</TouchableOpacity>
+					) : (
+						<TouchableOpacity
+							style={[
+								styles.actionButtonContainer,
+								mode === "app"
+									? styles.actionButtonContainerApp
+									: styles.actionButtonContainerWeb,
+								styles.buttonDarkBlue
+							]}
+							onPress={() => {
+								if (pathname.includes("/user/")) {
+									router.navigate(`/user/home/my-jobs/${_id}`)
+								} else {
+									router.navigate(
+										`/vendor/home/my-jobs/${_id}`
+									)
+								}
 							}}
 						>
 							<Text
@@ -203,32 +274,6 @@ export default function JobCard({
 								View Details
 							</Text>
 						</TouchableOpacity>
-					) : (
-						status === "incoming" && (
-							<TouchableOpacity
-								style={[
-									styles.actionButtonContainer,
-									mode === "app"
-										? styles.actionButtonContainerApp
-										: styles.actionButtonContainerWeb,
-									styles.buttonDarkBlue
-								]}
-								onPress={() => {
-									router.navigate(`/vendor/place-bid/${_id}`)
-								}}
-							>
-								<Text
-									style={[
-										mode === "app"
-											? styles.actionButtonsTextApp
-											: styles.actionButtonsTextWeb,
-										styles.actionButtonsTextLight
-									]}
-								>
-									Place a bid
-								</Text>
-							</TouchableOpacity>
-						)
 					)}
 				</View>
 			)}
@@ -366,8 +411,11 @@ const styles = StyleSheet.create({
 		height: 35,
 		width: 135
 	},
-	statusTab: {
+	inProgressStatusTab: {
 		backgroundColor: "rgba(255, 107, 44, 0.1)"
+	},
+	activeStatusTab: {
+		backgroundColor: "rgba(40, 167, 69, 0.1)"
 	},
 	buttonDarkBlue: {
 		backgroundColor: theme.colors.primary
