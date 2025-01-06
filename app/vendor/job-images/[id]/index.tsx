@@ -15,7 +15,7 @@ export default function Page(): React.ReactElement | null {
 		setCurrentImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImages.length
 		)
-	}, [])
+	}, [setCurrentImageIndex, backgroundImages])
 
 	const handlePreviousImage = useCallback((): void => {
 		setCurrentImageIndex(
@@ -23,11 +23,11 @@ export default function Page(): React.ReactElement | null {
 				(prevIndex - 1 + backgroundImages.length) %
 				backgroundImages.length
 		)
-	}, [])
+	}, [setCurrentImageIndex, backgroundImages])
 
 	const currentImage = useMemo(
 		() => backgroundImages[currentImageIndex],
-		[currentImageIndex]
+		[currentImageIndex, currentImageIndex]
 	)
 
 	return (
