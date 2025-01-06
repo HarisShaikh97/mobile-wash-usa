@@ -7,11 +7,13 @@ import { theme } from "../../utils/constants"
 interface InvalidOTPModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "app" | "web"
 }
 
 export default function InvalidOTPModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: InvalidOTPModalProps): React.ReactElement | null {
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false)
@@ -19,18 +21,37 @@ export default function InvalidOTPModal({
 
 	return (
 		<Modal
-			animationType="slide"
+			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
 			visible={openModal}
 			onRequestClose={() => {
 				setOpenModal(false)
 			}}
 		>
-			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+			<View
+				style={[
+					styles.modalWrapper,
+					mode === "app"
+						? styles.modalWrapperApp
+						: styles.modalWrapperWeb
+				]}
+			>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
-						style={styles.backgroundImage}
+						style={[
+							styles.backgroundImage,
+							mode === "app"
+								? styles.backgroundImageApp
+								: styles.backgroundImageWeb
+						]}
 						contentFit="fill"
 					>
 						<Image
@@ -64,22 +85,41 @@ export default function InvalidOTPModal({
 const styles = StyleSheet.create({
 	modalWrapper: {
 		flex: 1,
-		justifyContent: "flex-end",
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
+	},
+	modalWrapperApp: {
+		justifyContent: "flex-end"
+	},
+	modalWrapperWeb: {
+		justifyContent: "center",
+		alignItems: "center"
 	},
 	modalContainer: {
 		height: 425,
-		borderTopLeftRadius: 35,
-		borderTopRightRadius: 35,
 		backgroundColor: "white"
+	},
+	modalContainerApp: {
+		borderTopLeftRadius: 35,
+		borderTopRightRadius: 35
+	},
+	modalContainerWeb: {
+		width: 365,
+		borderRadius: 35
 	},
 	backgroundImage: {
 		flex: 1,
 		flexDirection: "column",
 		alignItems: "center",
 		gap: 20,
-		paddingVertical: 50,
+		paddingVertical: 50
+	},
+	backgroundImageApp: {
+		gap: 20,
 		paddingHorizontal: 35
+	},
+	backgroundImageWeb: {
+		gap: 15,
+		paddingHorizontal: 50
 	},
 	invalidIcon: {
 		height: 100,

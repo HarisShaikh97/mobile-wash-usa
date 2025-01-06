@@ -24,6 +24,7 @@ export default function Page(): React.ReactElement | null {
 			<InvalidOTPModal
 				openModal={openInvalidModal}
 				setOpenModal={setOpenInvalidModal}
+				mode="app"
 			/>
 			<Text style={styles.titleText}>Job Completion Verification</Text>
 			<Text style={[styles.descriptionText, styles.descriptionTextLarge]}>
