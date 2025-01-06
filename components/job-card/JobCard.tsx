@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
 	cardContainerApp: {
 		flexGrow: 1,
 		flexShrink: 1,
-		width: "auto",
+		width: "100%",
 		borderRadius: 15,
 		borderWidth: 1,
 		borderColor: "#F5F5F5",

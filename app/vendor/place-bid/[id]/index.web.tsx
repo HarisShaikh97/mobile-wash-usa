@@ -24,9 +24,9 @@ export default function Page(): React.ReactElement | null {
 	>(null)
 
 	const handleSubmitBid = useCallback((): void => {
-		setErrorType("verification-pending")
-		setOpenErrorModal(true)
-		// setOpenSuccessModal(true)
+		// setErrorType("verification-pending")
+		// setOpenErrorModal(true)
+		setOpenSuccessModal(true)
 	}, [setOpenSuccessModal, setOpenErrorModal, setErrorType])
 
 	const handleCancel = useCallback((): void => {
@@ -44,7 +44,7 @@ export default function Page(): React.ReactElement | null {
 					openModal={openErrorModal}
 					setOpenModal={setOpenErrorModal}
 					type={errorType}
-					mode="app"
+					mode="web"
 				/>
 			)}
 			<Text style={styles.titleText}>place a bid</Text>
@@ -64,7 +64,7 @@ export default function Page(): React.ReactElement | null {
 				<BudgetInput
 					value={bidAmount}
 					setValue={setBidAmount}
-					mode="app"
+					mode="web"
 				/>
 			</View>
 			<View style={styles.actionButtonsWrapper}>
@@ -87,14 +87,10 @@ export default function Page(): React.ReactElement | null {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		width: "100%",
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 25,
-		paddingTop: 65,
-		paddingBottom: 35,
-		paddingHorizontal: 25
+		gap: 50
 	},
 	titleText: {
 		fontSize: 27.5,
@@ -114,7 +110,6 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary
 	},
 	actionButtonsWrapper: {
-		flex: 1,
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "flex-end",

@@ -8,12 +8,14 @@ interface AccountErrorModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
 	type: "verification-pending" | "verification-rejected" | "payment-required"
+	mode: "app" | "web"
 }
 
 export default function AccountErrorModal({
 	openModal,
 	setOpenModal,
-	type
+	type,
+	mode
 }: AccountErrorModalProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -41,7 +43,14 @@ export default function AccountErrorModal({
 			}}
 		>
 			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<Text
 						style={[
 							styles.titleText,
@@ -97,15 +106,23 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		width: "95%",
 		borderRadius: 30,
 		backgroundColor: "white",
 		flexDirection: "column",
 		alignItems: "center",
-		justifyContent: "center",
+		justifyContent: "center"
+	},
+	modalContainerApp: {
+		width: "95%",
 		gap: 15,
 		paddingVertical: 25,
 		paddingHorizontal: 15
+	},
+	modalContainerWeb: {
+		width: 450,
+		gap: 25,
+		paddingVertical: 50,
+		paddingHorizontal: 35
 	},
 	titleText: {
 		maxWidth: 275,
