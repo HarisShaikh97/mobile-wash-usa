@@ -44,7 +44,7 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
 			],
-			status: "incoming"
+			status: "completed"
 		},
 		{
 			_id: "2",
@@ -66,7 +66,7 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
 			],
-			status: "incoming"
+			status: "completed"
 		},
 		{
 			_id: "3",
@@ -88,7 +88,139 @@ export default function Tab(): React.ReactElement | null {
 				require("../../../../assets/images/background3.png"),
 				require("../../../../assets/images/background4.png")
 			],
-			status: "incoming"
+			status: "completed"
+		},
+		{
+			_id: "4",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "active"
+		},
+		{
+			_id: "5",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "active"
+		},
+		{
+			_id: "6",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "active"
+		},
+		{
+			_id: "7",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "in-progress"
+		},
+		{
+			_id: "8",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "in-progress"
+		},
+		{
+			_id: "9",
+			title: "Car Wash Service Needed",
+			clientName: "John Doe",
+			date: "28, Oct 2024",
+			time: "10am to 1pm",
+			description:
+				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+			address: "California, USA",
+			location: {
+				lat: 36.7783,
+				lng: 119.4179
+			},
+			budget: 500,
+			images: [
+				require("../../../../assets/images/background1.png"),
+				require("../../../../assets/images/background2.png"),
+				require("../../../../assets/images/background3.png"),
+				require("../../../../assets/images/background4.png")
+			],
+			status: "in-progress"
 		}
 	]
 
@@ -156,22 +288,32 @@ export default function Tab(): React.ReactElement | null {
 					})}
 				</View>
 				<View style={styles.cardsWrapper}>
-					{jobs.map((job): React.ReactElement | null => {
-						return (
-							<JobCard
-								_id={job._id}
-								title={job.title}
-								description={job.description}
-								date={job.date}
-								address={job.address}
-								budget={job.budget}
-								status={job.status}
-								showActionButtons
-								mode="web"
-								key={job._id}
-							/>
-						)
-					})}
+					{jobs
+						.filter((job): boolean => {
+							const statusMap: { [key: string]: string } = {
+								Active: "active",
+								Pending: "in-progress",
+								Completed: "completed"
+							}
+
+							return job.status === statusMap[selectedTab]
+						})
+						.map((job): React.ReactElement | null => {
+							return (
+								<JobCard
+									_id={job._id}
+									title={job.title}
+									description={job.description}
+									date={job.date}
+									address={job.address}
+									budget={job.budget}
+									status={job.status}
+									showActionButtons
+									mode="web"
+									key={job._id}
+								/>
+							)
+						})}
 				</View>
 			</View>
 		</ScrollView>
@@ -202,6 +344,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
+		justifyContent: "space-between",
+		flexWrap: "wrap",
 		gap: 20
 	},
 	myJobsTitleBarContainer: {

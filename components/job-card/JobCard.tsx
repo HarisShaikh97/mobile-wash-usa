@@ -283,13 +283,13 @@ export default function JobCard({
 
 const styles = StyleSheet.create({
 	cardContainer: {
-		flexGrow: 1,
-		flexShrink: 1,
-		width: "auto",
 		backgroundColor: "white",
 		flexDirection: "column"
 	},
 	cardContainerApp: {
+		flexGrow: 1,
+		flexShrink: 1,
+		width: "auto",
 		borderRadius: 15,
 		borderWidth: 1,
 		borderColor: "#F5F5F5",
@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
 		gap: 5
 	},
 	cardContainerWeb: {
+		width: "32%",
 		borderRadius: 15,
 		padding: 25,
 		gap: 15
