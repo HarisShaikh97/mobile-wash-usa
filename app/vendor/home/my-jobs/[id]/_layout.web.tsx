@@ -1,7 +1,5 @@
 import { ScrollView, View, StyleSheet } from "react-native"
 import { Slot } from "expo-router"
-import ProfileCardWeb from "../../../../../components/profile-card-web/ProfileCardWeb"
-import NotificationButton from "../../../../../components/notification-button/NotificationButton"
 import { WEB_SIDE_NAV_WIDTH } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
@@ -11,13 +9,6 @@ export default function Layout(): React.ReactElement | null {
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.scrollContainer}>
-				<View style={styles.headerContainer}>
-					<ProfileCardWeb
-						imageSource={require("../../../../../assets/images/profile.png")}
-						userName="John Cosby"
-					/>
-					<NotificationButton mode="web" />
-				</View>
 				<Slot />
 			</View>
 		</ScrollView>
@@ -33,13 +24,8 @@ const styles = StyleSheet.create({
 	scrollContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 50,
-		padding: 35
-	},
-	headerContainer: {
-		flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
-		alignSelf: "flex-end"
+		padding: 35,
+		gap: 35
 	}
 })

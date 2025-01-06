@@ -3,76 +3,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter, useLocalSearchParams } from "expo-router"
 import BackButton from "../../../../../components/back-button/BackButton"
-import OfferCard from "../../../../../components/offer-card/OfferCard"
-import OffersPopup from "../../../../../components/offers-popup/OffersPopup"
 import { theme } from "../../../../../utils/constants"
-import { Offer } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const { id } = useLocalSearchParams()
 
 	const router = useRouter()
 
-	const offers: Offer[] = [
-		{
-			job_id: "1",
-			vendor_id: "2",
-			vendorName: "Michael Guzzi",
-			vendorImage: require("../../../../../assets/images/vendor-profile.png"),
-			vendorJobsCompleted: 26,
-			ratings: 4.5,
-			reviews: 26,
-			amount: 450,
-			location: "California, USA"
-		},
-		{
-			job_id: "2",
-			vendor_id: "2",
-			vendorName: "Michael Guzzi",
-			vendorImage: require("../../../../../assets/images/vendor-profile.png"),
-			vendorJobsCompleted: 26,
-			ratings: 4.5,
-			reviews: 26,
-			amount: 450,
-			location: "California, USA"
-		},
-		{
-			job_id: "3",
-			vendor_id: "2",
-			vendorName: "Michael Guzzi",
-			vendorImage: require("../../../../../assets/images/vendor-profile.png"),
-			vendorJobsCompleted: 26,
-			ratings: 4.5,
-			reviews: 26,
-			amount: 450,
-			location: "California, USA"
-		},
-		{
-			job_id: "4",
-			vendor_id: "2",
-			vendorName: "Michael Guzzi",
-			vendorImage: require("../../../../../assets/images/vendor-profile.png"),
-			vendorJobsCompleted: 26,
-			ratings: 4.5,
-			reviews: 26,
-			amount: 450,
-			location: "California, USA"
-		},
-		{
-			job_id: "5",
-			vendor_id: "2",
-			vendorName: "Michael Guzzi",
-			vendorImage: require("../../../../../assets/images/vendor-profile.png"),
-			vendorJobsCompleted: 26,
-			ratings: 4.5,
-			reviews: 26,
-			amount: 450,
-			location: "California, USA"
-		}
-	]
+	const handleMarkCompleted = useCallback((): void => {
+		router.navigate(`/vendor/job-completion-verification/${id}`)
+	}, [router, id])
 
 	const handleViewImage = useCallback((): void => {
-		router.navigate(`/user/job-images/${id}`)
+		router.navigate(`/vendor/job-images/${id}`)
 	}, [router, id])
 
 	return (
@@ -87,43 +30,14 @@ export default function Page(): React.ReactElement | null {
 					/>
 					<Text style={styles.headerTitleText}>Job Details</Text>
 				</View>
-				<View style={styles.headerActionButtonsWrapper}>
-					<View
-						style={[
-							styles.headerActionButtonContainer,
-							styles.statusTabContainer
-						]}
-					>
-						<Text
-							style={[
-								styles.headerActionButtonText,
-								styles.statusTabText
-							]}
-						>
-							In progress
-						</Text>
-					</View>
-					<TouchableOpacity
-						style={[
-							styles.headerActionButtonContainer,
-							styles.deleteButtonContainer
-						]}
-					>
-						<Image
-							source={require("../../../../../assets/icons/delete3.svg")}
-							style={styles.deleteButtonIcon}
-							contentFit="contain"
-						/>
-						<Text
-							style={[
-								styles.headerActionButtonText,
-								styles.deleteButtonText
-							]}
-						>
-							Delete
-						</Text>
-					</TouchableOpacity>
-				</View>
+				<TouchableOpacity
+					style={styles.headerActionButtonContainer}
+					onPress={handleMarkCompleted}
+				>
+					<Text style={styles.headerActionButtonText}>
+						Mark as completed
+					</Text>
+				</TouchableOpacity>
 			</View>
 			<View style={styles.bodyContainer}>
 				<View style={styles.jobDetailsCard}>
@@ -181,15 +95,6 @@ export default function Page(): React.ReactElement | null {
 						took a galley of type and scrambled it to make a type
 						specimen book.
 					</Text>
-					<Text style={styles.sectionTitleText}>Location</Text>
-					<Text style={styles.sectionDescriptionText}>
-						Overlook Avenue, Belleville, NJ, USA
-					</Text>
-					<Image
-						source={require("../../../../../assets/images/map3.png")}
-						style={styles.mapView}
-						contentFit="cover"
-					/>
 					<Text style={styles.sectionTitleText}>Gallery</Text>
 					<View style={styles.galleryImagesWrapper}>
 						<TouchableOpacity
@@ -240,36 +145,16 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
-				<View style={styles.vendorOffersCard}>
-					<Text style={styles.offersTitleText}>
-						Offers by vendors
+				<View style={styles.locationCard}>
+					<Text style={styles.sectionTitleText}>Location</Text>
+					<Text style={styles.sectionDescriptionText}>
+						Overlook Avenue, Belleville, NJ, USA
 					</Text>
-					<View style={styles.offerCardsWrapper}>
-						{offers.map(
-							(offer, index): React.ReactElement | null => {
-								return (
-									<OfferCard
-										size="small"
-										width="full"
-										JobId={offer.job_id}
-										vendorId={offer.vendor_id}
-										vendorName={offer.vendorName}
-										vendorImage={offer.vendorImage}
-										vendorJobsCompleted={
-											offer.vendorJobsCompleted
-										}
-										ratings={offer.ratings}
-										reviews={offer.reviews}
-										amount={offer.amount}
-										location={offer.location}
-										mode="web"
-										key={index}
-									/>
-								)
-							}
-						)}
-					</View>
-					<OffersPopup job_id={`${id}`} mode="web" />
+					<Image
+						source={require("../../../../../assets/images/map3.png")}
+						style={styles.mapView}
+						contentFit="cover"
+					/>
 				</View>
 			</View>
 		</View>
@@ -303,40 +188,19 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary,
 		textTransform: "capitalize"
 	},
-	headerActionButtonsWrapper: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 15
-	},
 	headerActionButtonContainer: {
 		height: 50,
 		paddingHorizontal: 20,
 		borderRadius: 6.5,
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
+		backgroundColor: theme.colors.primary
 	},
 	headerActionButtonText: {
 		fontSize: 15,
 		fontFamily: "Roboto-Regular",
-		textTransform: "capitalize"
-	},
-	statusTabContainer: {
-		backgroundColor: "rgba(255, 193, 7, 0.1)"
-	},
-	statusTabText: {
-		color: "rgba(255, 193, 7, 1)"
-	},
-	deleteButtonContainer: {
-		backgroundColor: "rgba(220, 53, 69, 0.1)",
-		flexDirection: "row",
-		gap: 10
-	},
-	deleteButtonText: {
-		color: "rgba(220, 53, 69, 1)"
-	},
-	deleteButtonIcon: {
-		height: 15,
-		width: 15
+		textTransform: "capitalize",
+		color: "white"
 	},
 	bodyContainer: {
 		flexDirection: "row",
@@ -445,28 +309,14 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary,
 		textTransform: "uppercase"
 	},
-	vendorOffersCard: {
+	locationCard: {
 		flexShrink: 1,
 		alignSelf: "flex-start",
 		flexDirection: "column",
-		alignItems: "center",
-		gap: 35,
+		gap: 5,
 		width: 480,
 		borderRadius: 6.5,
 		backgroundColor: "white",
 		padding: 25
-	},
-	offersTitleText: {
-		fontSize: 22.5,
-		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary,
-		textTransform: "capitalize",
-		letterSpacing: 0.5
-	},
-	offerCardsWrapper: {
-		width: "90%",
-		flexDirection: "column",
-		gap: 10,
-		alignItems: "center"
 	}
 })

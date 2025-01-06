@@ -13,7 +13,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleSubmit = useCallback((): void => {
 		router.navigate(`/user/rating-and-review/${id}`)
-	}, [router])
+	}, [router, id])
 
 	return (
 		<View style={styles.container}>

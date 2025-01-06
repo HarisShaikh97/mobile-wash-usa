@@ -17,7 +17,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleSendMessage = useCallback((): void => {
 		router.navigate(`/user/chat/${id}`)
-	}, [router])
+	}, [router, id])
 
 	const reviews: Review[] = [
 		{

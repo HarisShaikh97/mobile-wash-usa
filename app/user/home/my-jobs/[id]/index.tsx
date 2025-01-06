@@ -72,7 +72,7 @@ export default function Page(): React.ReactElement | null {
 
 	const handleViewImage = useCallback((): void => {
 		router.navigate(`/user/job-images/${id}`)
-	}, [router])
+	}, [router, id])
 
 	return (
 		<View style={styles.bodyContainer}>
