@@ -10,14 +10,16 @@ import { theme } from "../../utils/constants"
 interface ProfileCardProps {
 	imageSource: ImageSourcePropType
 	userName: string
+	onPress: () => void
 }
 
 export default function ProfileCardWeb({
 	imageSource,
-	userName
+	userName,
+	onPress
 }: ProfileCardProps): React.ReactElement | null {
 	return (
-		<TouchableOpacity style={styles.profileCard}>
+		<TouchableOpacity style={styles.profileCard} onPress={onPress}>
 			<Image
 				source={imageSource}
 				style={styles.profileImage}

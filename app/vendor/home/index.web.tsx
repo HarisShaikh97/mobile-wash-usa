@@ -97,6 +97,9 @@ export default function Tab(): React.ReactElement | null {
 					<ProfileCardWeb
 						imageSource={require("../../../assets/images/profile2.png")}
 						userName="Michael Guzzi"
+						onPress={() => {
+							router.navigate("/vendor/home/profile/preview")
+						}}
 					/>
 					<NotificationButton mode="web" />
 				</View>

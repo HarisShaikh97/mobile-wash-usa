@@ -6,6 +6,7 @@ import {
 	Text,
 	StyleSheet
 } from "react-native"
+import { useRouter } from "expo-router"
 import JobCard from "../../../../components/job-card/JobCard"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../../components/profile-card-web/ProfileCardWeb"
@@ -17,6 +18,8 @@ import { Job } from "../../../../utils/types"
 type Tab = "Active" | "Pending" | "Completed"
 
 export default function Tab(): React.ReactElement | null {
+	const router = useRouter()
+
 	const tabs: Tab[] = ["Active", "Pending", "Completed"]
 
 	const [searchValue, setSearchValue] = useState<string>("")
@@ -239,6 +242,9 @@ export default function Tab(): React.ReactElement | null {
 					<ProfileCardWeb
 						imageSource={require("../../../../assets/images/profile2.png")}
 						userName="Michael Guzzi"
+						onPress={() => {
+							router.navigate("/vendor/home/profile/preview")
+						}}
 					/>
 					<NotificationButton mode="web" />
 				</View>

@@ -1,11 +1,6 @@
 import { useState } from "react"
-import {
-	View,
-	ScrollView,
-	Text,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
+import { View, ScrollView, Text, StyleSheet } from "react-native"
+import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import ProfileCardWeb from "../../../components/profile-card-web/ProfileCardWeb"
 import SearchBar from "../../../components/search-bar/SearchBar"
@@ -16,6 +11,8 @@ import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	const router = useRouter()
+
 	const [searchValue, setSearchValue] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -132,6 +129,9 @@ export default function Page(): React.ReactElement | null {
 						<ProfileCardWeb
 							imageSource={require("../../../assets/images/profile2.png")}
 							userName="Michael Guzzi"
+							onPress={() => {
+								router.navigate("/vendor/home/profile/preview")
+							}}
 						/>
 						<NotificationButton mode="web" />
 					</View>
