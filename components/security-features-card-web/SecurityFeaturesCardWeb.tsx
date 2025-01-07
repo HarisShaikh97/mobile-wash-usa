@@ -1,11 +1,12 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
 import HorizontalSeparator from "../horizontal-separator/HorizontalSeparator"
 import { theme } from "../../utils/constants"
 
 export default function SecurityFeaturesCardWeb(): React.ReactElement | null {
 	const router = useRouter()
+	const pathname = usePathname()
 
 	return (
 		<View style={styles.container}>
@@ -16,7 +17,13 @@ export default function SecurityFeaturesCardWeb(): React.ReactElement | null {
 					<Text style={styles.settingOptionText}>Password Reset</Text>
 					<TouchableOpacity
 						onPress={() => {
-							router.navigate("/user/security/reset-password")
+							router.navigate(
+								`/${
+									pathname.includes("/user/")
+										? "user"
+										: "vendor"
+								}/security/reset-password`
+							)
 						}}
 					>
 						<Feather

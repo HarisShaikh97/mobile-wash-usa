@@ -4,7 +4,7 @@ import { useSharedValue } from "react-native-reanimated"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import Feather from "@expo/vector-icons/Feather"
-import EditProfileCardWeb from "../../../../components/edit-profile-card-web/EditProfileCardWeb"
+import CustomerEditProfileCardWeb from "../../../../components/customer-edit-profile-card-web/CustomerEditProfileCardWeb"
 import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
 import AccountStatusCardWeb from "../../../../components/account-status-card-web/AccountStatusCardWeb"
 import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-web/HelpAndSupportCardWeb"
@@ -295,7 +295,7 @@ export default function Tab(): React.ReactElement | null {
 					</TouchableOpacity>
 				</View>
 				{selectedTab === "Edit Account" ? (
-					<EditProfileCardWeb />
+					<CustomerEditProfileCardWeb />
 				) : selectedTab === "Security" ? (
 					<SecurityFeaturesCardWeb />
 				) : selectedTab === "Account Status" ? (

@@ -7,7 +7,7 @@ import Feather from "@expo/vector-icons/Feather"
 import InputField from "../input-field/InputField"
 import { theme } from "../../utils/constants"
 
-export default function EditProfileCardWeb(): React.ReactElement | null {
+export default function CustomerEditProfileCardWeb(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [newImage, setNewImage] = useState<string | null>(null)
@@ -34,7 +34,9 @@ export default function EditProfileCardWeb(): React.ReactElement | null {
 		router.navigate("/user/home")
 	}, [router])
 
-	const handleCancel = useCallback(() => {}, [])
+	const handleCancel = useCallback(() => {
+		router.back()
+	}, [router])
 	return (
 		<View style={styles.container}>
 			<View style={styles.profileImageContainer}>

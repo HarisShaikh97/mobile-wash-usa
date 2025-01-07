@@ -117,13 +117,13 @@ const styles = StyleSheet.create({
 		maxWidth: 775,
 		flex: 1,
 		borderRadius: 17.5,
-		backgroundColor: "white",
-		padding: 35
+		backgroundColor: "white"
 	},
 	privacyPolicyCardScrollContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 15
+		gap: 15,
+		padding: 35
 	},
 	cardTitleText: {
 		fontSize: 18.5,
