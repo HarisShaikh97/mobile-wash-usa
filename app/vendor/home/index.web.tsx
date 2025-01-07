@@ -193,6 +193,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						)
 					})}
+					{jobs.length % 3 === 2 && <View style={styles.emptyView} />}
 				</View>
 			</View>
 		</ScrollView>
@@ -224,7 +225,12 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 15
+		justifyContent: "space-between",
+		flexWrap: "wrap",
+		gap: 20
+	},
+	emptyView: {
+		width: "32%"
 	},
 	cardsVerticalWrapper: {
 		height: 325,
