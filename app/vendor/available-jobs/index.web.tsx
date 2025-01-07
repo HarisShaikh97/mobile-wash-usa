@@ -1,6 +1,13 @@
 import { useState } from "react"
-import { View, ScrollView, Text, StyleSheet } from "react-native"
+import {
+	View,
+	ScrollView,
+	Text,
+	TouchableOpacity,
+	StyleSheet
+} from "react-native"
 import BackButton from "../../../components/back-button/BackButton"
+import ProfileCardWeb from "../../../components/profile-card-web/ProfileCardWeb"
 import SearchBar from "../../../components/search-bar/SearchBar"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
@@ -111,37 +118,49 @@ export default function Page(): React.ReactElement | null {
 			<JobsFilterModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
-				mode="app"
+				mode="web"
 			/>
-			<View style={styles.container}>
+			<View style={styles.scrollContainer}>
 				<View style={styles.headerContainer}>
 					<BackButton
-						size="small"
+						size="large"
 						color="#000000"
-						backgroundColor="transparent"
-						borderColor="#F5F5F5"
+						backgroundColor="#ffffff"
+						borderColor="transparent"
 					/>
-					<NotificationButton theme="dark" mode="app" />
+					<View style={styles.headerCardsWrapper}>
+						<ProfileCardWeb
+							imageSource={require("../../../assets/images/profile2.png")}
+							userName="Michael Guzzi"
+						/>
+						<NotificationButton mode="web" />
+					</View>
 				</View>
 				<View style={styles.bodyContainer}>
-					<View style={styles.titleContainer}>
-						<Text style={styles.titleText}>Available Jobs</Text>
-						<Text style={styles.descriptionText}>
-							Browse and apply nearby
-						</Text>
+					<View style={styles.availableJobsTitleBarContainer}>
+						<View style={styles.availableJobsTitleWrapper}>
+							<Text style={styles.availableJobsTitleText}>
+								Available jobs
+							</Text>
+							<Text style={styles.availableJobsDescriptionText}>
+								Browse and apply nearby
+							</Text>
+						</View>
+						<View style={styles.searchBarWrapper}>
+							<SearchBar
+								placeholder="Search"
+								color="#CACACA"
+								backgroundColor="#ffffff"
+								borderColor="#F5F5F5"
+								value={searchValue}
+								onChangeText={setSearchValue}
+								filterEnabled={true}
+								setOpenFilterModal={setOpenModal}
+								mode="app"
+							/>
+						</View>
 					</View>
-					<SearchBar
-						placeholder="Search"
-						color="#F5F5F5"
-						backgroundColor="#ffffff"
-						borderColor="#F5F5F5"
-						value={searchValue}
-						onChangeText={setSearchValue}
-						filterEnabled
-						setOpenFilterModal={setOpenModal}
-						mode="app"
-					/>
-					<View style={styles.jobCardsContainer}>
+					<View style={styles.cardsWrapper}>
 						{jobs.map((job): React.ReactElement | null => {
 							return (
 								<JobCard
@@ -153,11 +172,14 @@ export default function Page(): React.ReactElement | null {
 									budget={job.budget}
 									status={job.status}
 									showActionButtons
-									mode="app"
+									mode="web"
 									key={job._id}
 								/>
 							)
 						})}
+						{jobs.length % 3 === 2 && (
+							<View style={styles.emptyView} />
+						)}
 					</View>
 				</View>
 			</View>
@@ -168,44 +190,68 @@ export default function Page(): React.ReactElement | null {
 const styles = StyleSheet.create({
 	scrollView: {
 		flex: 1,
-		backgroundColor: "white",
-		paddingHorizontal: 20
+		backgroundColor: "#F3F8FE"
 	},
-	container: {
-		flexDirection: "column"
+	scrollContainer: {
+		width: "100%",
+		flexDirection: "column",
+		alignItems: "center",
+		padding: 35,
+		gap: 65
 	},
 	headerContainer: {
 		width: "100%",
-		paddingVertical: 35,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between"
 	},
+	headerCardsWrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 10
+	},
 	bodyContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 20,
-		marginBottom: 25
+		gap: 25
 	},
-	titleContainer: {
-		flexDirection: "column",
-		alignItems: "center"
-	},
-	titleText: {
-		fontSize: 25,
-		fontFamily: "Montserrat-Bold",
-		color: theme.colors.secondary
-	},
-	descriptionText: {
-		fontSize: 13.5,
-		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary
-	},
-	jobCardsContainer: {
+	availableJobsTitleBarContainer: {
+		height: 115,
 		width: "100%",
-		flexDirection: "column",
+		borderRadius: 15,
+		backgroundColor: "white",
+		flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
-		marginTop: 10
+		justifyContent: "space-between",
+		paddingHorizontal: 30
+	},
+	availableJobsTitleWrapper: {
+		flexDirection: "column"
+	},
+	availableJobsTitleText: {
+		fontSize: 27.5,
+		fontFamily: "Montserrat-SemiBold",
+		color: theme.colors.secondary,
+		textTransform: "capitalize"
+	},
+	availableJobsDescriptionText: {
+		fontSize: 15,
+		fontFamily: "Roboto-Light",
+		color: theme.colors.secondary,
+		textTransform: "capitalize"
+	},
+	searchBarWrapper: {
+		width: 400
+	},
+	cardsWrapper: {
+		width: "100%",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		flexWrap: "wrap",
+		gap: 20
+	},
+	emptyView: {
+		width: "32%"
 	}
 })
