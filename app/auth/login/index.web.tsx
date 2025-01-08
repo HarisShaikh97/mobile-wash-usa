@@ -13,7 +13,7 @@ export default function Page(): React.ReactElement | null {
 	const [password, setPassword] = useState<string>("")
 
 	const handleLogin = useCallback((): void => {
-		router.navigate("/user/home")
+		router.navigate("/vendor/home")
 	}, [router])
 
 	const handleSignUp = useCallback((): void => {

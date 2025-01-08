@@ -7,11 +7,13 @@ import { theme } from "../../utils/constants"
 interface DeleteChatConfirmationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
+	mode: "web" | "app"
 }
 
 export default function DeleteChatConfirmationModal({
 	openModal,
-	setOpenModal
+	setOpenModal,
+	mode
 }: DeleteChatConfirmationModalProps): React.ReactElement | null {
 	const router = useRouter()
 
@@ -34,7 +36,14 @@ export default function DeleteChatConfirmationModal({
 			}}
 		>
 			<View style={styles.modalWrapper}>
-				<View style={styles.modalContainer}>
+				<View
+					style={[
+						styles.modalContainer,
+						mode === "app"
+							? styles.modalContainerApp
+							: styles.modalContainerWeb
+					]}
+				>
 					<Text style={styles.titleText}>Delete Chat</Text>
 					<Text style={styles.descriptionText}>
 						Are you sure you want to delete this chat? This action
@@ -68,14 +77,20 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0, 0, 0, 0.65)"
 	},
 	modalContainer: {
-		width: "95%",
 		borderRadius: 30,
 		backgroundColor: "white",
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 15,
+		gap: 15
+	},
+	modalContainerApp: {
+		width: "95%",
 		padding: 25
+	},
+	modalContainerWeb: {
+		width: 375,
+		padding: 35
 	},
 	titleText: {
 		maxWidth: 275,

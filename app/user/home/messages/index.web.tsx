@@ -173,6 +173,7 @@ export default function Tab(): React.ReactElement | null {
 			<DeleteChatConfirmationModal
 				openModal={openDeleteChatConfirmationModal}
 				setOpenModal={setOpenDeleteChatConfirmationModal}
+				mode="web"
 			/>
 			<View style={styles.headerContainer}>
 				<NotificationButton mode="web" />
