@@ -287,8 +287,6 @@ const styles = StyleSheet.create({
 		flexDirection: "column"
 	},
 	cardContainerApp: {
-		flexGrow: 1,
-		flexShrink: 1,
 		width: "100%",
 		borderRadius: 15,
 		borderWidth: 1,

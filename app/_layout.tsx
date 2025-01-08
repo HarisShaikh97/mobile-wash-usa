@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import { View, StatusBar, StyleSheet } from "react-native"
+import { Image } from "expo-image"
 import { Stack } from "expo-router"
 import * as NavigationBar from "expo-navigation-bar"
 import * as SplashScreen from "expo-splash-screen"
@@ -8,10 +9,23 @@ import { Provider } from "react-redux"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useReactQueryDevTools } from "@dev-plugins/react-query"
 import { store } from "../store/store"
+import { Asset } from "expo-asset"
 
 SplashScreen.preventAutoHideAsync()
 
 const queryClient = new QueryClient()
+
+async function cacheImages(images: (string | number)[]): Promise<void> {
+	await Promise.all(
+		images.map(async (image) => {
+			if (typeof image === "string") {
+				await Image.prefetch(image)
+			} else {
+				await Asset.fromModule(image).downloadAsync()
+			}
+		})
+	)
+}
 
 export default function Layout(): React.ReactElement | null {
 	const [appIsReady, setAppIsReady] = useState(false)
@@ -46,6 +60,109 @@ export default function Layout(): React.ReactElement | null {
 					"Roboto-Light": require("../assets/fonts/Roboto/Roboto Light 300.ttf"),
 					"Roboto-Thin": require("../assets/fonts/Roboto/Roboto Thin 250.ttf")
 				})
+
+				await cacheImages([
+					require("../assets/logo/logo.png"),
+					require("../assets/images/add-job-header.png"),
+					require("../assets/images/background-web1.png"),
+					require("../assets/images/background-web2.png"),
+					require("../assets/images/background-web3.png"),
+					require("../assets/images/background-web4.png"),
+					require("../assets/images/background1.png"),
+					require("../assets/images/background2.png"),
+					require("../assets/images/background3.png"),
+					require("../assets/images/background4.png"),
+					require("../assets/images/bottom-nav.png"),
+					require("../assets/images/card-bg.png"),
+					require("../assets/images/chat-header-bg.png"),
+					require("../assets/images/customer-sign-up-header.png"),
+					require("../assets/images/help-and-support-arc.png"),
+					require("../assets/images/home-screen-bg.png"),
+					require("../assets/images/login-image-web.png"),
+					require("../assets/images/login-image.png"),
+					require("../assets/images/map-lg-web.png"),
+					require("../assets/images/map-lg.png"),
+					require("../assets/images/map.png"),
+					require("../assets/images/map2.png"),
+					require("../assets/images/map3.png"),
+					require("../assets/images/modal-background.png"),
+					require("../assets/images/profile-bg.png"),
+					require("../assets/images/profile-header-bg-web.png"),
+					require("../assets/images/profile.png"),
+					require("../assets/images/profile2.png"),
+					require("../assets/images/screen-bg.png"),
+					require("../assets/images/security-arc.png"),
+					require("../assets/images/service-1.png"),
+					require("../assets/images/service-2.png"),
+					require("../assets/images/service-3.png"),
+					require("../assets/images/side-nav-bg.png"),
+					require("../assets/images/sign-up-bg-web.png"),
+					require("../assets/images/sign-up-bg-web2.png"),
+					require("../assets/images/sign-up-bg.png"),
+					require("../assets/images/sign-up-image-web.png"),
+					require("../assets/images/sign-up-image-web2.png"),
+					require("../assets/images/vendor-profile.png"),
+					require("../assets/images/vendor-profile2.png"),
+					require("../assets/images/vendor-profile3.png"),
+					require("../assets/images/vendor-sign-up-header.png"),
+					require("../assets/images/verify-account-bg.png"),
+					require("../assets/images/welcome-card-bg.png"),
+					require("../assets/icons/account-status-blue.svg"),
+					require("../assets/icons/account-status.svg"),
+					require("../assets/icons/alert.svg"),
+					require("../assets/icons/camera.svg"),
+					require("../assets/icons/card.svg"),
+					require("../assets/icons/card2.svg"),
+					require("../assets/icons/chat.svg"),
+					require("../assets/icons/cross.svg"),
+					require("../assets/icons/date.svg"),
+					require("../assets/icons/delete.svg"),
+					require("../assets/icons/delete2.svg"),
+					require("../assets/icons/delete3.svg"),
+					require("../assets/icons/edit-profile-blue.svg"),
+					require("../assets/icons/edit-profile.svg"),
+					require("../assets/icons/edit.svg"),
+					require("../assets/icons/facebook.svg"),
+					require("../assets/icons/filter.svg"),
+					require("../assets/icons/google.svg"),
+					require("../assets/icons/help-and-support-blue.svg"),
+					require("../assets/icons/help-and-support.svg"),
+					require("../assets/icons/home-blue.svg"),
+					require("../assets/icons/home.svg"),
+					require("../assets/icons/invalid.svg"),
+					require("../assets/icons/location.svg"),
+					require("../assets/icons/location2.svg"),
+					require("../assets/icons/location3.svg"),
+					require("../assets/icons/logout-blue.svg"),
+					require("../assets/icons/logout.svg"),
+					require("../assets/icons/master-card.svg"),
+					require("../assets/icons/message.svg"),
+					require("../assets/icons/messages-blue.svg"),
+					require("../assets/icons/messages.svg"),
+					require("../assets/icons/my-jobs-blue.svg"),
+					require("../assets/icons/my-jobs.svg"),
+					require("../assets/icons/notification-black.svg"),
+					require("../assets/icons/notification-off.svg"),
+					require("../assets/icons/notification-outline.svg"),
+					require("../assets/icons/notification.svg"),
+					require("../assets/icons/pay-on-delivery.svg"),
+					require("../assets/icons/paypal.svg"),
+					require("../assets/icons/privacy-policy-blue.svg"),
+					require("../assets/icons/privacy-policy.svg"),
+					require("../assets/icons/profile-blue.svg"),
+					require("../assets/icons/profile.svg"),
+					require("../assets/icons/search-job.svg"),
+					require("../assets/icons/security-blue.svg"),
+					require("../assets/icons/security.svg"),
+					require("../assets/icons/security2.svg"),
+					require("../assets/icons/send.svg"),
+					require("../assets/icons/star.svg"),
+					require("../assets/icons/successful.svg"),
+					require("../assets/icons/time.svg"),
+					require("../assets/icons/user.svg"),
+					require("../assets/icons/user2.svg"),
+					require("../assets/icons/warning.svg")
+				])
 			} catch (e) {
 				console.warn(e)
 			} finally {
