@@ -21,6 +21,7 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				status={status}
+				mode="app"
 			/>
 			<Text style={styles.titleText}>Confirm Your PayPal Account</Text>
 			<Text style={styles.descriptionText}>

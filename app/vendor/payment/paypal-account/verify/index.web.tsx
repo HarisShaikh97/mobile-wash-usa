@@ -11,7 +11,7 @@ export default function Page(): React.ReactElement | null {
 	const [status, setStatus] = useState<"success" | "invalid">("success")
 
 	const handleSubmit = useCallback((): void => {
-		setStatus("success")
+		setStatus("invalid")
 		setOpenModal(true)
 	}, [setOpenModal, setStatus])
 
@@ -21,6 +21,7 @@ export default function Page(): React.ReactElement | null {
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				status={status}
+				mode="web"
 			/>
 			<View style={styles.titleWrapper}>
 				<Text style={styles.titleText}>
