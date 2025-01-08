@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: "column",
 		alignItems: "center",
-		justifyContent: "space-between",
 		gap: 25
 	},
 	formContainer: {
