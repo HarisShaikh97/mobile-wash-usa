@@ -41,6 +41,7 @@ export default function Layout(): React.ReactElement | null {
 				openModal={openChatActionModal}
 				setOpenModal={setOpenChatActionModal}
 				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
+				mode="app"
 			/>
 			<DeleteChatConfirmationModal
 				openModal={openDeleteChatConfirmationModal}

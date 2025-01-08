@@ -14,6 +14,8 @@ import ChatCard from "../../../../components/chat-card/ChatCard"
 import ChatInputField from "../../../../components/chat-input-field/ChatInputField"
 import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
 import MessageCard from "../../../../components/message-card/MessageCard"
+import ChatActionsModal from "../../../../components/chat-actions-modal/ChatActionsModal"
+import DeleteChatConfirmationModal from "../../../../components/delete-chat-confirmation-modal/DeleteChatConfirmationModal"
 import { Chat, Message } from "../../../../utils/types"
 import { theme } from "../../../../utils/constants"
 
@@ -147,11 +149,31 @@ export default function Tab(): React.ReactElement | null {
 	const [searchValue, setSearchValue] = useState<string>("")
 	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id)
 	const [message, setMessage] = useState<string>("")
+	const [openChatActionModal, setOpenChatActionModal] =
+		useState<boolean>(false)
+	const [
+		openDeleteChatConfirmationModal,
+		setOpenDeleteChatConfirmationModal
+	] = useState<boolean>(false)
+
+	const handleOpenChatActionModal = useCallback((): void => {
+		setOpenChatActionModal(true)
+	}, [setOpenChatActionModal])
 
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
 		<View style={styles.container}>
+			<ChatActionsModal
+				openModal={openChatActionModal}
+				setOpenModal={setOpenChatActionModal}
+				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
+				mode="web"
+			/>
+			<DeleteChatConfirmationModal
+				openModal={openDeleteChatConfirmationModal}
+				setOpenModal={setOpenDeleteChatConfirmationModal}
+			/>
 			<View style={styles.headerContainer}>
 				<NotificationButton mode="web" />
 			</View>
@@ -241,6 +263,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 						<TouchableOpacity
 							style={styles.chatBoxOptionsButtonContainer}
+							onPress={handleOpenChatActionModal}
 						>
 							<Entypo
 								name="dots-three-vertical"
