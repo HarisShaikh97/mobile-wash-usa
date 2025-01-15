@@ -6,18 +6,21 @@ import BackButton from "../../../components/back-button/BackButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initialize useRouter hook for navigation
 
+	// Memoized function to handle customer selection
 	const handleSelectCustomer = useCallback((): void => {
-		router.navigate("/auth/sign-up/customer")
+		router.navigate("/auth/sign-up/customer") // Navigating to the customer sign up page
 	}, [router])
 
+	// Memoized function to handle vendor selection
 	const handleSelectVendor = useCallback((): void => {
-		router.navigate("/auth/sign-up/vendor")
+		router.navigate("/auth/sign-up/vendor") // Navigating to the vendor sign up page
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			{/* Header container for the back button */}
 			<View style={styles.headerContainer}>
 				<BackButton
 					size="small"
@@ -26,12 +29,17 @@ export default function Page(): React.ReactElement | null {
 					borderColor="#F5F5F5"
 				/>
 			</View>
+			{/* Body container for the main content */}
 			<View style={styles.bodyContainer}>
+				{/* Title text for the welcome message */}
 				<Text style={styles.titleText}>Welcome</Text>
+				{/* Description text for the user role selection */}
 				<Text style={styles.descriptionText}>
 					Are you a Customer or a Vendor?
 				</Text>
+				{/* Container for the user role options */}
 				<View style={styles.userRolesOptionsWrapper}>
+					{/* Option for selecting customer role */}
 					<TouchableOpacity
 						style={styles.userRoleOption}
 						onPress={handleSelectCustomer}
@@ -40,6 +48,7 @@ export default function Page(): React.ReactElement | null {
 							I am a Customer
 						</Text>
 					</TouchableOpacity>
+					{/* Option for selecting vendor role */}
 					<TouchableOpacity
 						style={styles.userRoleOption}
 						onPress={handleSelectVendor}
@@ -49,6 +58,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Background image for the sign-up page */}
 				<Image
 					source={require("../../../assets/images/sign-up-bg.png")}
 					alt="sign-up"

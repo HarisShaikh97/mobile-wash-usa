@@ -6,46 +6,59 @@ import AccountActionModal from "../../../components/account-action-modal/Account
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
+	// State variables for managing modal visibility and action type
 	const [openModal, setOpenModal] = useState<boolean>(false)
 	const [type, setType] = useState<"delete" | "deactivate">("delete")
 
+	// Memoized function to handle account deletion
 	const handleDeleteAccount = useCallback(() => {
-		setType("delete")
-		setOpenModal(true)
+		setType("delete") // Setting action type to 'delete'
+		setOpenModal(true) // Opening the modal
 	}, [setType, setOpenModal])
 
+	// Memoized function to handle account deactivation
 	const handleDeactivateAccount = useCallback(() => {
-		setType("deactivate")
-		setOpenModal(true)
+		setType("deactivate") // Setting action type to 'deactivate'
+		setOpenModal(true) // Opening the modal
 	}, [setType, setOpenModal])
 
+	// Memoized function to handle cancel action
 	const handleCancel = useCallback(() => {
-		router.back()
+		router.back() // Navigating back
 	}, [router])
 
 	return (
+		// Main container for the account status page
 		<View style={styles.container}>
+			{/* Modal for account action */}
 			<AccountActionModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				type={type}
 				mode="app"
 			/>
+			{/* Title text for the account status page */}
 			<Text style={styles.titleText}>Manage Your Account Status</Text>
+			{/* Description text for the account status page */}
 			<Text style={styles.descriptionText}>
 				You can choose to deactivate your account temporarily or delete
 				it permanently. Please select an option below.
 			</Text>
+			{/* Container for the account actions */}
 			<View style={styles.accountActionsCard}>
+				{/* Section for deactivating the account */}
 				<View style={styles.accountActionSection}>
+					{/* Title text for deactivating the account */}
 					<Text style={styles.cardTitleText}>Deactivate Account</Text>
+					{/* Description text for deactivating the account */}
 					<Text style={styles.cardDescriptionText}>
 						Temporarily deactivate your account. You won’t be able
 						to access it, but all your data will remain saved. You
 						can reactivate at any time by logging in again.
 					</Text>
+					{/* Button to deactivate the account */}
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeactivateAccount}
@@ -55,13 +68,18 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Separator between deactivation and deletion */}
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Section for deleting the account */}
 				<View style={styles.accountActionSection}>
+					{/* Title text for deleting the account */}
 					<Text style={styles.cardTitleText}>Delete Account</Text>
+					{/* Description text for deleting the account */}
 					<Text style={styles.cardDescriptionText}>
 						Permanently delete your account. All your data will be
 						erased, and this action cannot be undone.
 					</Text>
+					{/* Button to delete the account */}
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeleteAccount}
@@ -72,6 +90,7 @@ export default function Page(): React.ReactElement | null {
 					</TouchableOpacity>
 				</View>
 			</View>
+			{/* Button to cancel the account action */}
 			<TouchableOpacity
 				style={styles.cancelButtonContainer}
 				onPress={handleCancel}

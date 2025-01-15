@@ -5,12 +5,15 @@ import BackButton from "../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// ImageBackground component for the layout's background image
 		<ImageBackground
 			source={require("../../../assets/images/screen-bg.png")}
 			style={styles.bgImage}
 			contentFit="fill"
 		>
+			{/* View container for the header section */}
 			<View style={styles.headerContainer}>
+				{/* BackButton component for navigation */}
 				<BackButton
 					size="small"
 					color="#000000"
@@ -18,11 +21,13 @@ export default function Layout(): React.ReactElement | null {
 					borderColor="transparent"
 				/>
 			</View>
+			{/* Image component for the security arc image */}
 			<Image
 				source={require("../../../assets/images/security-arc.png")}
 				style={styles.arcImage}
 				contentFit="fill"
 			/>
+			{/* Slot component for dynamic content */}
 			<Slot />
 		</ImageBackground>
 	)

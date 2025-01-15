@@ -2,29 +2,37 @@ import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
-import AccountVerificationSuccessfulWebModal from "../../../../components/account-verification-successful-web-modal/AccountVerificationSuccessfulWebModal"
+import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [OTP, setOTP] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [OTP, setOTP] = useState<string>("") // State to store the OTP input by the user
+	const [openModal, setOpenModal] = useState<boolean>(false) // State to manage the modal visibility
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true)
+		setOpenModal(true) // Opens the modal on form submission
 	}, [setOpenModal])
 
 	return (
 		<View style={styles.bodyContainer}>
-			<AccountVerificationSuccessfulWebModal
+			{/* Modal for account verification success */}
+			<AccountVerificationSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
+				mode="web"
 			/>
+			{/* Title text for verification */}
 			<Text style={styles.titleText}>Verify Your Account</Text>
+			{/* Description text for verification */}
 			<Text style={styles.descriptionText}>
 				A verification code has been sent to your email/phone.
 			</Text>
+			{/* Container for the verification form */}
 			<View style={styles.formContainer}>
+				{/* OTP input field */}
 				<OTPInput onChangeText={setOTP} />
+				{/* Container for policy and terms text */}
 				<View style={styles.policyAndTermsTextContainer}>
 					<Text
 						style={[
@@ -34,6 +42,7 @@ export default function Page(): React.ReactElement | null {
 					>
 						By verifying your account, you agree to
 					</Text>
+					{/* Wrapper for policy and terms links */}
 					<View style={styles.policyAndTermsTextWrapper}>
 						<Text
 							style={[
@@ -81,6 +90,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</View>
 				</View>
+				{/* Form button for verification */}
 				<FormButton
 					length="full"
 					theme="dark"
@@ -88,6 +98,7 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 			</View>
+			{/* Wrapper for resend code text */}
 			<View style={styles.policyAndTermsTextContainer}>
 				<View style={styles.policyAndTermsTextWrapper}>
 					<Text

@@ -4,20 +4,26 @@ import { Slot } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
+	// The layout is a background image with a back button and a card container
 	return (
+		// Use ImageBackground component to set the background image
 		<ImageBackground
 			source={require("../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Render the back button component */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for the body content */}
 			<View style={styles.bodyContainer}>
+				{/* Container for the card content */}
 				<View style={styles.cardContainer}>
+					{/* Render the dynamic content slot */}
 					<Slot />
 				</View>
 			</View>

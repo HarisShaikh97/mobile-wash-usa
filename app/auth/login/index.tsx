@@ -7,32 +7,40 @@ import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [userName, setUserName] = useState<string>("")
-	const [password, setPassword] = useState<string>("")
+	const [userName, setUserName] = useState<string>("") // State to store the user's name
+	const [password, setPassword] = useState<string>("") // State to store the user's password
 
+	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
-		router.navigate("/vendor/home")
+		router.navigate("/vendor/home") // Navigating to the vendor home page
 	}, [router])
 
+	// Memoized function to handle sign up
 	const handleSignUp = useCallback((): void => {
-		router.navigate("/auth/sign-up")
+		router.navigate("/auth/sign-up") // Navigating to the sign up page
 	}, [router])
 
+	// Memoized function to handle forget password
 	const handleForgetPassword = useCallback((): void => {
-		router.navigate("/auth/forgot-password")
+		router.navigate("/auth/forgot-password") // Navigating to the forgot password page
 	}, [router])
 
 	return (
+		// Main container for the login page
 		<View style={styles.container}>
+			{/* Title text for the login page */}
 			<Text style={styles.titleText} numberOfLines={2}>
 				Welcome Back!
 			</Text>
+			{/* Description text for the login page */}
 			<Text style={styles.descriptionText}>
 				Please log in to your account
 			</Text>
+			{/* Container for the login form */}
 			<View style={styles.formContainer}>
+				{/* Input field for email/number */}
 				<InputField
 					length="full"
 					title="Email/Number"
@@ -43,6 +51,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for password */}
 				<InputField
 					length="full"
 					title="Password"
@@ -53,48 +62,61 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Form button to submit the login form */}
 				<FormButton
 					length="full"
 					theme="dark"
 					title="Login"
 					onPress={handleLogin}
 				/>
+				{/* Button to navigate to the forgot password page */}
 				<TouchableOpacity
 					style={styles.forgetPasswordButton}
 					onPress={handleForgetPassword}
 				>
+					{/* Text for the forgot password button */}
 					<Text style={styles.forgetPasswordButtonText}>
 						Forgot Password?
 					</Text>
 				</TouchableOpacity>
 			</View>
+			{/* Google social login button */}
 			<TouchableOpacity style={styles.socialLoginButton}>
+				{/* Google icon */}
 				<Image
 					source={require("../../../assets/icons/google.svg")}
 					alt="google"
 					style={styles.socialIcon}
 					contentFit="contain"
 				/>
+				{/* Text for the Google social login button */}
 				<Text style={styles.socialLoginButtonText}>
 					Continue With Google
 				</Text>
 			</TouchableOpacity>
+			{/* Facebook social login button */}
 			<TouchableOpacity style={styles.socialLoginButton}>
+				{/* Facebook icon */}
 				<Image
 					source={require("../../../assets/icons/facebook.svg")}
 					alt="facebook"
 					style={styles.socialIcon}
 					contentFit="contain"
 				/>
+				{/* Text for the Facebook social login button */}
 				<Text style={styles.socialLoginButtonText}>
 					Continue With Facebook
 				</Text>
 			</TouchableOpacity>
+			{/* Container for the sign up text */}
 			<View style={styles.signUpTextWrapper}>
+				{/* Text for the sign up link */}
 				<Text style={[styles.signUpText, styles.signUpTextBlack]}>
 					New to Mobile Wash USA?
 				</Text>
+				{/* Button to navigate to the sign up page */}
 				<TouchableOpacity onPress={handleSignUp}>
+					{/* Text for the sign up button */}
 					<Text style={[styles.signUpText, styles.signUpTextBlue]}>
 						Sign Up
 					</Text>

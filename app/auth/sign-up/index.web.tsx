@@ -6,40 +6,51 @@ import BackButton from "../../../components/back-button/BackButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
+	// Memoized function to handle customer selection
 	const handleSelectCustomer = useCallback((): void => {
-		router.navigate("/auth/sign-up/customer")
+		router.navigate("/auth/sign-up/customer") // Navigating to the customer sign up page
 	}, [router])
 
+	// Memoized function to handle vendor selection
 	const handleSelectVendor = useCallback((): void => {
-		router.navigate("/auth/sign-up/vendor")
+		router.navigate("/auth/sign-up/vendor") // Navigating to the vendor sign up page
 	}, [router])
 
 	return (
+		// Background image container for the sign-up page
 		<ImageBackground
 			source={require("../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Additional background image for layering */}
 			<Image
 				source={require("../../../assets/images/sign-up-bg-web2.png")}
 				style={styles.bgImage}
 				contentFit="fill"
 			/>
+			{/* Back button component */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for the main content */}
 			<View style={styles.bodyContainer}>
+				{/* Container for the card content */}
 				<View style={styles.cardContainer}>
+					{/* Title text for the welcome message */}
 					<Text style={styles.titleText}>Welcome</Text>
+					{/* Description text for the user role selection */}
 					<Text style={styles.descriptionText}>
 						Are you a Customer or a Vendor?
 					</Text>
+					{/* Container for the user role options */}
 					<View style={styles.userRolesOptionsWrapper}>
+						{/* Customer role option */}
 						<TouchableOpacity
 							style={styles.userRoleOption}
 							onPress={handleSelectCustomer}
@@ -48,6 +59,7 @@ export default function Page(): React.ReactElement | null {
 								I am a Customer
 							</Text>
 						</TouchableOpacity>
+						{/* Vendor role option */}
 						<TouchableOpacity
 							style={styles.userRoleOption}
 							onPress={handleSelectVendor}

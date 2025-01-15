@@ -7,23 +7,31 @@ import ResetPasswordSuccessfulModal from "../../../../components/reset-password-
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get the router instance for navigation
 	const router = useRouter()
 
+	// State variables to store the new password, confirm password, and modal state
 	const [newPassword, setNewPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
+	// Function to handle form submission
 	const handleSubmit = useCallback((): void => {
+		// Set the modal state to true to open the modal
 		setOpenModal(true)
 	}, [openModal])
 
+	// Function to handle modal submission
 	const modalHandleSubmit = useCallback((): void => {
+		// Set the modal state to false to close the modal
 		setOpenModal(false)
+		// Navigate to the login page
 		router.navigate("/auth/login")
 	}, [openModal, router])
 
 	return (
 		<View style={styles.bodyContainer}>
+			{/* Render the success modal */}
 			<ResetPasswordSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
@@ -31,11 +39,15 @@ export default function Page(): React.ReactElement | null {
 				handleSubmit={modalHandleSubmit}
 				mode="app"
 			/>
+			{/* Page title */}
 			<Text style={styles.titleText}>Change Password</Text>
+			{/* Page description */}
 			<Text style={styles.descriptionText}>
 				Create a new password below to access your account.
 			</Text>
+			{/* Form container */}
 			<View style={styles.formContainer}>
+				{/* Input field for new password */}
 				<InputField
 					length="full"
 					title="New Password"
@@ -46,6 +58,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for confirm password */}
 				<InputField
 					length="full"
 					title="Confirm Password"
@@ -56,6 +69,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Form button to submit the form */}
 				<FormButton
 					length="full"
 					theme="dark"

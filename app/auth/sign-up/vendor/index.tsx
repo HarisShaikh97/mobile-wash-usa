@@ -1,71 +1,42 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
-import { useMutation } from "@tanstack/react-query"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
-import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing useRouter for navigation
 
-	const [fullName, setFullName] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [password, setPassword] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
-	const [businessInformation, setBusinessInformation] = useState<string>("")
+	const [fullName, setFullName] = useState<string>("") // State for full name
+	const [email, setEmail] = useState<string>("") // State for email
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State for phone number
+	const [password, setPassword] = useState<string>("") // State for password
+	const [location, setLocation] = useState<string>("") // State for location
+	const [businessInformation, setBusinessInformation] = useState<string>("") // State for business information
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
-	)
+	) // State for documents
 
-	const { mutate } = useMutation({
-		mutationFn: (data: FormData) => signUp(data),
-		onSuccess: (data) => console.log(data),
-		onError: (err) => console.log(err)
-	})
-
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// const formData = new FormData()
-		// formData.append("fullName", fullName)
-		// formData.append("email", email)
-		// formData.append("phoneNumber", phoneNumber)
-		// formData.append("password", password)
-		// formData.append("location", location)
-		// formData.append("businessInformation", businessInformation)
+		router.navigate("/auth/sign-up/verification-code") // Navigating to verification code page on submit
+	}, [router])
 
-		// if (documents?.assets) {
-		// 	documents.assets.forEach((doc) => {
-		// 		const file = new Blob([doc.uri], {
-		// 			type: "application/octet-stream"
-		// 		})
-		// 		formData.append("documents", file, doc.name || "document")
-		// 	})
-		// }
-
-		// mutate(formData)
-		router.navigate("/auth/sign-up/verification-code")
-	}, [
-		router,
-		fullName,
-		email,
-		phoneNumber,
-		password,
-		location,
-		businessInformation,
-		documents
-	])
-
+	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
-		router.navigate("/auth/login")
+		router.navigate("/auth/login") // Navigating to login page
 	}, [router])
 
 	return (
+		// Main container for the sign up page
 		<View style={styles.bodyContainer}>
+			{/* Title text for the sign up page */}
 			<Text style={styles.titleText}>Sign Up</Text>
+			{/* Container for the sign up form */}
 			<View style={styles.formContainer}>
+				{/* Input field for full name */}
 				<InputField
 					length="full"
 					title="Full Name"
@@ -76,6 +47,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for email */}
 				<InputField
 					length="full"
 					title="Email"
@@ -86,6 +58,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for phone number */}
 				<InputField
 					length="full"
 					title="Phone Number"
@@ -96,6 +69,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for password */}
 				<InputField
 					length="full"
 					title="Password"
@@ -106,6 +80,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for business information */}
 				<InputField
 					length="full"
 					title="Business Information"
@@ -117,7 +92,9 @@ export default function Page(): React.ReactElement | null {
 					size="small"
 					type="text"
 				/>
+				{/* Container for document upload */}
 				<View style={styles.documentInputWrapper}>
+					{/* Input field for document upload */}
 					<InputField
 						length="full"
 						title="Upload Documents"
@@ -126,14 +103,18 @@ export default function Page(): React.ReactElement | null {
 						onUploadFile={setDocuments}
 						type="file"
 					/>
+					{/* Container for document upload description */}
 					<View style={styles.documentInputDescriptionTextWrapper}>
+						{/* Bullet marker for document upload description */}
 						<View style={styles.bulletMarker} />
+						{/* Text for document upload description */}
 						<Text style={styles.documentInputDescriptionText}>
 							Upload PDF or Image Documents As Proof Of Business
 							Verification.
 						</Text>
 					</View>
 				</View>
+				{/* Input field for location */}
 				<InputField
 					length="full"
 					title="Location"
@@ -144,7 +125,9 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Container for policy and terms text */}
 				<View style={styles.policyAndTermsTextContainer}>
+					{/* Text for policy and terms */}
 					<Text
 						style={[
 							styles.policyAndTermsText,
@@ -153,7 +136,9 @@ export default function Page(): React.ReactElement | null {
 					>
 						By signing up, you agree to our
 					</Text>
+					{/* Container for policy and terms links */}
 					<View style={styles.policyAndTermsTextWrapper}>
+						{/* Link for terms of service */}
 						<TouchableOpacity>
 							<Text
 								style={[
@@ -172,6 +157,7 @@ export default function Page(): React.ReactElement | null {
 						>
 							{" and "}
 						</Text>
+						{/* Link for privacy policy */}
 						<TouchableOpacity>
 							<Text
 								style={[
@@ -192,16 +178,20 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</View>
 				</View>
+				{/* Button for sign up */}
 				<FormButton
 					length="full"
 					theme="dark"
 					title="Sign Up"
 					onPress={handleSubmit}
 				/>
+				{/* Container for login text */}
 				<View style={styles.loginTextWrapper}>
+					{/* Text for login */}
 					<Text style={[styles.loginText, styles.loginTextBlack]}>
 						Already have an account?
 					</Text>
+					{/* Button for login */}
 					<TouchableOpacity onPress={handleLogin}>
 						<Text style={[styles.loginText, styles.loginTextBlue]}>
 							Login

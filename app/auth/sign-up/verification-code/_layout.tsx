@@ -5,8 +5,11 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main container for the layout
 		<View style={styles.container}>
+			{/* Container for the header content */}
 			<View style={styles.headerContainer}>
+				{/* Custom BackButton component for navigation */}
 				<BackButton
 					size="small"
 					color="#000000"
@@ -14,7 +17,9 @@ export default function Layout(): React.ReactElement | null {
 					borderColor="transparent"
 				/>
 			</View>
+			{/* Slot for dynamic content rendering */}
 			<Slot />
+			{/* Background image for the verification code page */}
 			<Image
 				source={require("../../../../assets/images/verify-account-bg.png")}
 				alt="sign-up"

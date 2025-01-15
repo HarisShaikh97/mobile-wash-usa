@@ -12,12 +12,14 @@ import BackButton from "../../../components/back-button/BackButton"
 export default function Layout(): React.ReactElement | null {
 	return (
 		<View style={styles.container}>
+			{/* Image background for the header section */}
 			<ImageBackground
 				source={require("../../../assets/images/login-image.png")}
 				style={styles.headerBackgroundImage}
 				contentFit="cover"
 			>
 				<View style={styles.headerContainer}>
+					{/* Back button component */}
 					<BackButton
 						size="small"
 						color="#000000"
@@ -26,11 +28,13 @@ export default function Layout(): React.ReactElement | null {
 					/>
 				</View>
 			</ImageBackground>
+			{/* Keyboard avoiding view for handling keyboard appearance */}
 			<KeyboardAvoidingView
 				style={styles.scrollViewContainer}
 				behavior={Platform.OS === "ios" ? "padding" : "height"}
 			>
 				<ScrollView showsVerticalScrollIndicator={false}>
+					{/* Slot for dynamic content */}
 					<Slot />
 				</ScrollView>
 			</KeyboardAvoidingView>

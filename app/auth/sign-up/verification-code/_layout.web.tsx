@@ -5,25 +5,31 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Using ImageBackground for the background image
 		<ImageBackground
 			source={require("../../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Using Image for the verification account background */}
 			<Image
 				source={require("../../../../assets/images/verify-account-bg.png")}
 				alt="sign-up"
 				style={styles.bgImage}
 				contentFit="fill"
 			/>
+			{/* Using custom BackButton component for navigation */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for the body content */}
 			<View style={styles.bodyContainer}>
+				{/* Container for the card content */}
 				<View style={styles.cardContainer}>
+					{/* Slot for dynamic content */}
 					<Slot />
 				</View>
 			</View>

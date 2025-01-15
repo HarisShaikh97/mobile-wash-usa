@@ -1,157 +1,132 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
-import { useMutation } from "@tanstack/react-query"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
-import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [fullName, setFullName] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [password, setPassword] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
-	const [businessInformation, setBusinessInformation] = useState<string>("")
+	// State variables for form fields
+	const [fullName, setFullName] = useState<string>("") // State to store the user's full name
+	const [email, setEmail] = useState<string>("") // State to store the user's email
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State to store the user's phone number
+	const [password, setPassword] = useState<string>("") // State to store the user's password
+	const [location, setLocation] = useState<string>("") // State to store the user's location
+	const [businessInformation, setBusinessInformation] = useState<string>("") // State to store the user's business information
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
-	)
+	) // State to store the user's documents
 
-	const { mutate } = useMutation({
-		mutationFn: (data: FormData) => signUp(data),
-		onSuccess: (data) => console.log(data),
-		onError: (err) => console.log(err)
-	})
-
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// const formData = new FormData()
-		// formData.append("fullName", fullName)
-		// formData.append("email", email)
-		// formData.append("phoneNumber", phoneNumber)
-		// formData.append("password", password)
-		// formData.append("location", location)
-		// formData.append("businessInformation", businessInformation)
+		router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
+	}, [router])
 
-		// if (documents?.assets) {
-		// 	documents.assets.forEach((doc) => {
-		// 		const file = new Blob([doc.uri], {
-		// 			type: "application/octet-stream"
-		// 		})
-		// 		formData.append("documents", file, doc.name || "document")
-		// 	})
-		// }
-
-		// mutate(formData)
-		router.navigate("/auth/sign-up/verification-code")
-	}, [
-		router,
-		fullName,
-		email,
-		phoneNumber,
-		password,
-		location,
-		businessInformation,
-		documents
-	])
-
+	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
-		router.navigate("/auth/login")
+		router.navigate("/auth/login") // Navigate to the user home page
 	}, [router])
 
 	return (
+		// Main container for the sign up page
 		<View style={styles.bodyContainer}>
+			{/* Title text for the sign up page */}
 			<Text style={styles.titleText}>Sign Up</Text>
-			<View style={styles.formsWrapper}>
-				<View style={styles.formContainer}>
+			{/* Container for the sign up form */}
+			<View style={styles.formContainer}>
+				{/* Input field for full name */}
+				<InputField
+					length="full"
+					title="Full Name"
+					placeholder="Enter your full name"
+					value={fullName}
+					onChangeText={setFullName}
+					secureTextEntry={false}
+					multiline={false}
+					type="text"
+				/>
+				{/* Input field for email */}
+				<InputField
+					length="full"
+					title="Email"
+					placeholder="Enter your email address"
+					value={email}
+					onChangeText={setEmail}
+					secureTextEntry={false}
+					multiline={false}
+					type="text"
+				/>
+				{/* Input field for phone number */}
+				<InputField
+					length="full"
+					title="Phone Number"
+					placeholder="Enter your phone number"
+					value={phoneNumber}
+					onChangeText={setPhoneNumber}
+					secureTextEntry={false}
+					multiline={false}
+					type="text"
+				/>
+				{/* Input field for password */}
+				<InputField
+					length="full"
+					title="Password"
+					placeholder="**********"
+					value={password}
+					onChangeText={setPassword}
+					secureTextEntry={true}
+					multiline={false}
+					type="text"
+				/>
+				{/* Input field for business information */}
+				<InputField
+					length="full"
+					title="Business Information"
+					placeholder="Tell us about your business or the services you provide."
+					value={businessInformation}
+					onChangeText={setBusinessInformation}
+					secureTextEntry={false}
+					multiline={true}
+					size="small"
+					type="text"
+				/>
+				{/* Container for document input */}
+				<View style={styles.documentInputWrapper}>
 					<InputField
 						length="full"
-						title="Full Name"
-						placeholder="Enter your full name"
-						value={fullName}
-						onChangeText={setFullName}
-						secureTextEntry={false}
-						multiline={false}
-						type="text"
+						title="Upload Documents"
+						placeholder="Insurance, Business License, etc."
+						files={documents}
+						onUploadFile={setDocuments}
+						type="file"
 					/>
-					<InputField
-						length="full"
-						title="Email"
-						placeholder="Enter your email address"
-						value={email}
-						onChangeText={setEmail}
-						secureTextEntry={false}
-						multiline={false}
-						type="text"
-					/>
-					<InputField
-						length="full"
-						title="Phone Number"
-						placeholder="Enter your phone number"
-						value={phoneNumber}
-						onChangeText={setPhoneNumber}
-						secureTextEntry={false}
-						multiline={false}
-						type="text"
-					/>
-					<InputField
-						length="full"
-						title="Password"
-						placeholder="**********"
-						value={password}
-						onChangeText={setPassword}
-						secureTextEntry={true}
-						multiline={false}
-						type="text"
-					/>
-				</View>
-				<View style={styles.formContainer}>
-					<InputField
-						length="full"
-						title="Business Information"
-						placeholder="Tell us about your business or the services you provide."
-						value={businessInformation}
-						onChangeText={setBusinessInformation}
-						secureTextEntry={false}
-						multiline={true}
-						size="small"
-						type="text"
-					/>
-					<View style={styles.documentInputWrapper}>
-						<InputField
-							length="full"
-							title="Upload Documents"
-							placeholder="Insurance, Business License, etc."
-							files={documents}
-							onUploadFile={setDocuments}
-							type="file"
-						/>
-						<View
-							style={styles.documentInputDescriptionTextWrapper}
-						>
-							<View style={styles.bulletMarker} />
-							<Text style={styles.documentInputDescriptionText}>
-								Upload PDF or Image Documents As Proof Of
-								Business Verification.
-							</Text>
-						</View>
+					{/* Description text for document input */}
+					<View style={styles.documentInputDescriptionTextWrapper}>
+						<View style={styles.bulletMarker} />
+						<Text style={styles.documentInputDescriptionText}>
+							Upload PDF or Image Documents As Proof Of Business
+							Verification.
+						</Text>
 					</View>
-					<InputField
-						length="full"
-						title="Location"
-						placeholder="Enter your location"
-						value={location}
-						onChangeText={setLocation}
-						secureTextEntry={false}
-						multiline={false}
-						type="text"
-					/>
 				</View>
+				{/* Input field for location */}
+				<InputField
+					length="full"
+					title="Location"
+					placeholder="Enter your location"
+					value={location}
+					onChangeText={setLocation}
+					secureTextEntry={false}
+					multiline={false}
+					type="text"
+				/>
 			</View>
+			{/* Container for policy and terms text */}
 			<View style={styles.policyAndTermsTextContainer}>
+				{/* Policy and terms text wrapper */}
 				<View style={styles.policyAndTermsTextWrapper}>
 					<Text
 						style={[
@@ -172,6 +147,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Policy and terms text wrapper */}
 				<View style={styles.policyAndTermsTextWrapper}>
 					<Text
 						style={[
@@ -201,6 +177,7 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				</View>
 			</View>
+			{/* Container for form button */}
 			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"
@@ -209,10 +186,13 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleSubmit}
 				/>
 			</View>
+			{/* Container for login text */}
 			<View style={styles.loginTextWrapper}>
+				{/* Text for existing account prompt */}
 				<Text style={[styles.loginText, styles.loginTextBlack]}>
 					Already have an account?
 				</Text>
+				{/* Button for login */}
 				<TouchableOpacity onPress={handleLogin}>
 					<Text style={[styles.loginText, styles.loginTextBlue]}>
 						Login

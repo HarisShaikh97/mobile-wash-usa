@@ -6,22 +6,31 @@ import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// State to store the user's name
 	const [userName, setUserName] = useState<string>("")
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
+		// Navigate to the verification code page
 		router.navigate("/auth/forgot-password/verification-code")
 	}, [router])
 
 	return (
+		// Main container for the page
 		<View style={styles.bodyContainer}>
+			{/* Page title */}
 			<Text style={styles.titleText}>Forgot Your Password?</Text>
+			{/* Page description */}
 			<Text style={styles.descriptionText}>
 				Enter your registered email address or phone number, and we’ll
 				send you a link or code to reset your password.
 			</Text>
+			{/* Form container */}
 			<View style={styles.formContainer}>
+				{/* Input field for email/number */}
 				<InputField
 					length="full"
 					title="Email/Number"
@@ -32,6 +41,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Form button to submit the form */}
 				<FormButton
 					length="full"
 					theme="dark"
