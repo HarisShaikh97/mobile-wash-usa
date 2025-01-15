@@ -14,7 +14,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
-		router.navigate("/vendor/home") // Navigating to the vendor home page
+		router.navigate("/user/home") // Navigating to the vendor home page
 	}, [router])
 
 	// Memoized function to handle sign up

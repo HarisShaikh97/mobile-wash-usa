@@ -1,5 +1,5 @@
 import { ImageSourcePropType } from "react-native"
-import { Theme, HexColor, Service, FAQ } from "./types"
+import { Theme, HexColor, Service, FAQ, JobType } from "./types"
 
 export const theme: Theme = {
 	colors: {
@@ -35,6 +35,66 @@ export const services: Service[] = [
 	{
 		title: "Commercial Services",
 		image: require("../assets/images/service-3.png")
+	}
+]
+
+export const jobTypes: JobType[] = [
+	{
+		title: "Vehicle Wash & Maintenance",
+		subTypes: [
+			{
+				title: "Automobile"
+			},
+			{
+				title: "RV"
+			},
+			{
+				title: "Commercial Truck"
+			},
+			{
+				title: "Semi-Truck"
+			},
+			{
+				title: "Other"
+			}
+		]
+	},
+	{
+		title: "Residential Cleaning",
+		subTypes: [
+			{
+				title: "House"
+			},
+			{
+				title: "Roof"
+			},
+			{
+				title: "Driveway"
+			},
+			{
+				title: "Parking Lot"
+			},
+			{
+				title: "Other"
+			}
+		]
+	},
+	{
+		title: "Commercial Services",
+		subTypes: [
+			{
+				title: "Building Exterior"
+			},
+			{
+				title: "Window"
+			},
+			{
+				title: "Parking Lot"
+			},
+			{
+				title: "Other"
+			}
+		]
 	}
 ]
 

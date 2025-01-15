@@ -9,7 +9,7 @@ import {
 import * as DocumentPicker from "expo-document-picker"
 import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import { theme } from "../../utils/constants"
-import { SelectOption } from "../../utils/types"
+import { JobType, JobSubType } from "../../utils/types"
 
 interface BaseInputFieldProps {
 	title: string
@@ -20,9 +20,9 @@ interface BaseInputFieldProps {
 
 interface SelectInputFieldProps extends BaseInputFieldProps {
 	type: "select"
-	data: SelectOption[]
-	value: SelectOption | null
-	onChangeValue: (val: SelectOption) => void
+	data: Array<any>
+	value: any
+	onChangeValue: (val: any) => void
 }
 
 interface TextInputFieldProps extends BaseInputFieldProps {
@@ -182,10 +182,7 @@ export default function InputField(
 				{type === "select" && isOpen && (
 					<View style={styles.dropdownContainer}>
 						{props.data.map(
-							(
-								option: SelectOption,
-								index: number
-							): React.ReactElement | null => {
+							(option, index): React.ReactElement | null => {
 								return (
 									<TouchableOpacity
 										key={index}

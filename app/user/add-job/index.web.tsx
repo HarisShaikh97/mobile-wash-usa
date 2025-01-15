@@ -1,18 +1,19 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import AddJobWebLayout from "../../../components/add-job-web-layout/AddJobWebLayout"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
-import { SelectOption } from "../../../utils/types"
-import { theme, services } from "../../../utils/constants"
+import { JobType, JobSubType } from "../../../utils/types"
+import { theme, jobTypes } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [jobTitle, setJobTitle] = useState<string>("")
-	const [jobType, setJobType] = useState<SelectOption | null>(null)
+	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null)
+	const [selectedJobSubType, setSelectedJobSubType] =
+		useState<JobSubType | null>(null)
 	const [jobDescription, setJobDescription] = useState<string>("")
 
 	const handleSubmit = useCallback(() => {
@@ -37,13 +38,25 @@ export default function Page(): React.ReactElement | null {
 					<InputField
 						length="full"
 						type="select"
-						data={services}
-						value={jobType}
-						onChangeValue={setJobType}
+						data={jobTypes}
+						value={selectedJobType}
+						onChangeValue={setSelectedJobType}
 						title="Job Type"
 						placeholder="Select Job Type"
-						zIndex={1}
+						zIndex={2}
 					/>
+					{selectedJobType && (
+						<InputField
+							length="full"
+							type="select"
+							data={selectedJobType.subTypes}
+							value={selectedJobSubType}
+							onChangeValue={setSelectedJobSubType}
+							title={selectedJobType.title}
+							placeholder="Select Job Sub Type"
+							zIndex={1}
+						/>
+					)}
 					<InputField
 						length="full"
 						type="text"
@@ -76,7 +89,7 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		alignItems: "center",
 		justifyContent: "center",
-		gap: 35
+		gap: 25
 	},
 	titleText: {
 		fontSize: 37.5,
@@ -93,6 +106,7 @@ const styles = StyleSheet.create({
 		gap: 15
 	},
 	formButtonWrapper: {
+		marginTop: 10,
 		width: "70%"
 	}
 })

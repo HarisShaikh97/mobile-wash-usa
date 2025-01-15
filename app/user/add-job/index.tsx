@@ -12,14 +12,16 @@ import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
-import { services, theme } from "../../../utils/constants"
-import { SelectOption } from "../../../utils/types"
+import { jobTypes, theme } from "../../../utils/constants"
+import { JobType, JobSubType } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
 	const [jobTitle, setJobTitle] = useState<string>("")
-	const [jobType, setJobType] = useState<SelectOption | null>(null)
+	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null)
+	const [selectedJobSubType, setSelectedJobSubType] =
+		useState<JobSubType | null>(null)
 	const [jobDescription, setJobDescription] = useState<string>("")
 
 	const handleSubmit = useCallback(() => {
@@ -64,13 +66,25 @@ export default function Page(): React.ReactElement | null {
 						<InputField
 							length="full"
 							type="select"
-							data={services}
-							value={jobType}
-							onChangeValue={setJobType}
+							data={jobTypes}
+							value={selectedJobType}
+							onChangeValue={setSelectedJobType}
 							title="Job Type"
 							placeholder="Select Job Type"
-							zIndex={1}
+							zIndex={2}
 						/>
+						{selectedJobType && (
+							<InputField
+								length="full"
+								type="select"
+								data={selectedJobType.subTypes}
+								value={selectedJobSubType}
+								onChangeValue={setSelectedJobSubType}
+								title={selectedJobType.title}
+								placeholder="Select Job Sub Type"
+								zIndex={1}
+							/>
+						)}
 						<InputField
 							length="full"
 							type="text"
