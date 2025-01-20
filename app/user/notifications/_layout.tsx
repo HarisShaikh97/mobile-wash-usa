@@ -11,22 +11,28 @@ import { theme } from "../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Content container */}
 			<View style={styles.container}>
+				{/* Header with back button and "Read all" button */}
 				<View style={styles.headerContainer}>
+					{/* Back navigation button */}
 					<BackButton
 						size="small"
 						color="#000000"
 						backgroundColor="transparent"
 						borderColor="#F5F5F5"
 					/>
+					{/* "Read all" button */}
 					<TouchableOpacity>
 						<Text style={styles.readAllButtonText}>Read all</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Slot for child route content */}
 				<Slot />
 			</View>
 		</ScrollView>

@@ -8,43 +8,57 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [dateTime, setDateTime] = useState<string>("")
-	const [budget, setBudget] = useState<number>(0)
+	const [dateTime, setDateTime] = useState<string>("") // State for storing date and time
+	const [budget, setBudget] = useState<number>(0) // State for storing budget
 
+	// Memoized function to handle location selection
 	const handleSelectLocation = useCallback(() => {
-		router.navigate("/user/add-job/select-location")
+		router.navigate("/user/add-job/select-location") // Navigating to the location selection page
 	}, [router])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/review")
+		router.navigate("/user/add-job/review") // Navigating to the review page
 	}, [router])
 
 	return (
+		// Using AddJobWebLayout component for layout
 		<AddJobWebLayout>
+			{/* Main container for the page */}
 			<View style={styles.container}>
+				{/* Title text for the page */}
 				<Text style={styles.titleText}>Set job details</Text>
+				{/* Container for the form fields */}
 				<View style={styles.formContainer}>
+					{/* Wrapper for the budget input field */}
 					<View style={styles.inputFieldWrapper}>
+						{/* Title text for the budget field */}
 						<Text style={styles.inputFieldTitleText}>Budget</Text>
+						{/* BudgetInput component for budget input */}
 						<BudgetInput
 							value={budget}
 							setValue={setBudget}
 							mode="web"
 						/>
 					</View>
+					{/* Wrapper for the location input field */}
 					<View style={styles.inputFieldWrapper}>
+						{/* Title text for the location field */}
 						<Text style={styles.inputFieldTitleText}>Location</Text>
+						{/* TouchableOpacity for selecting a location */}
 						<TouchableOpacity
 							style={styles.inputFieldContainer}
 							onPress={handleSelectLocation}
 						>
+							{/* Text for the location field */}
 							<Text style={styles.inputFieldText}>
 								Select Your Location
 							</Text>
 						</TouchableOpacity>
 					</View>
+					{/* InputField component for date and time input */}
 					<InputField
 						length="full"
 						type="text"
@@ -55,7 +69,9 @@ export default function Page(): React.ReactElement | null {
 						secureTextEntry={false}
 						placeholder="DD/MM/YYYY TT"
 					/>
+					{/* Wrapper for the form submission button */}
 					<View style={styles.formButtonWrapper}>
+						{/* FormButton component for form submission */}
 						<FormButton
 							length="full"
 							theme="dark"

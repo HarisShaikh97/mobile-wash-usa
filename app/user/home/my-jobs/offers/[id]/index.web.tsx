@@ -5,6 +5,7 @@ import { theme } from "../../../../../../utils/constants"
 import { Offer } from "../../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Retrieve the offer ID from the URL parameters
 	const { id } = useLocalSearchParams()
 
 	const offers: Offer[] = [
@@ -88,14 +89,19 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Container for the offer details
 		<View style={styles.bodyContainer}>
 			<View style={styles.titleBarContainer}>
+				{/* Title text for the offer details */}
 				<Text style={styles.titleText}>
 					You Have {offers.length} OFFERS
 				</Text>
 			</View>
+			{/* Wrapper for the offer cards */}
 			<View style={styles.offerCardsWrapper}>
+				{/* Mapping through each offer to display an OfferCard component */}
 				{offers.map((offer, index): React.ReactElement | null => {
+					// Render each offer using the OfferCard component
 					return (
 						<OfferCard
 							size="small"

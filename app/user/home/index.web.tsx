@@ -16,6 +16,7 @@ import { services, theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Initialize router for navigation
 	const router = useRouter()
 
 	const jobs: Job[] = [
@@ -88,12 +89,16 @@ export default function Tab(): React.ReactElement | null {
 	]
 
 	return (
+		// Main ScrollView container with side nav offset and custom background
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Primary content container with consistent padding and column layout */}
 			<View style={styles.scrollContainer}>
+				{/* Header section containing profile and notifications */}
 				<View style={styles.headerContainer}>
+					{/* Profile card showing user avatar and name, links to profile */}
 					<ProfileCardWeb
 						imageSource={require("../../../assets/images/profile.png")}
 						userName="John Cosby"
@@ -101,34 +106,46 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/home/profile")
 						}}
 					/>
+					{/* Web-styled notification button */}
 					<NotificationButton mode="web" />
 				</View>
+
+				{/* Featured cards section with welcome and post job cards */}
 				<View style={styles.cardsWrapper}>
+					{/* Welcome card with background image and centered content */}
 					<ImageBackground
 						source={require("../../../assets/images/welcome-card-bg.png")}
 						style={styles.welcomeCardContainer}
 						contentFit="fill"
 					>
+						{/* Prominent user profile image display */}
 						<ProfileImageBox
 							source={require("../../../assets/images/profile.png")}
 							mode="web"
 						/>
+						{/* Large personalized welcome heading */}
 						<Text style={styles.welcomeHeadingText}>
 							Welcome, John
 						</Text>
+						{/* Service description text */}
 						<Text style={styles.welcomeDescriptionText}>
 							Find top-rated service providers for your vehicle,
 							home, and business
 						</Text>
 					</ImageBackground>
+
+					{/* Post Job card with action button */}
 					<View style={styles.postJobCardContainer}>
+						{/* Card title text */}
 						<Text style={styles.postJobHeadingText}>
 							Post a job
 						</Text>
+						{/* Job posting process description */}
 						<Text style={styles.postJobDescriptionText}>
 							Quickly post a car wash or maintenance job for
 							vendors to apply to.
 						</Text>
+						{/* Primary CTA button for job creation */}
 						<TouchableOpacity
 							style={styles.postJobButtonContainer}
 							onPress={() => {
@@ -141,6 +158,8 @@ export default function Tab(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+
+				{/* Services grid showing available service categories */}
 				<View style={styles.cardsWrapper}>
 					{services.map(
 						(service, index): React.ReactElement | null => {
@@ -155,13 +174,18 @@ export default function Tab(): React.ReactElement | null {
 						}
 					)}
 				</View>
+
+				{/* My Jobs section header with title and See all link */}
 				<View style={styles.myJobsTitleBarContainer}>
 					<View style={styles.myJobsTitleWrapper}>
+						{/* Section title */}
 						<Text style={styles.myJobsTitleText}>My jobs</Text>
+						{/* Section subtitle */}
 						<Text style={styles.myJobsDescriptionText}>
 							Your active jobs
 						</Text>
 					</View>
+					{/* Link to full jobs list */}
 					<TouchableOpacity
 						onPress={() => {
 							router.navigate("/user/home/my-jobs")
@@ -170,7 +194,10 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.seeAllText}>See all</Text>
 					</TouchableOpacity>
 				</View>
+
+				{/* Jobs grid with 3-column layout */}
 				<View style={styles.cardsWrapper}>
+					{/* Map and render individual job cards */}
 					{jobs.map((job): React.ReactElement | null => {
 						return (
 							<JobCard
@@ -187,6 +214,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						)
 					})}
+					{/* Empty view for grid alignment when 2 cards present */}
 					{jobs.length % 3 === 2 && <View style={styles.emptyView} />}
 				</View>
 			</View>

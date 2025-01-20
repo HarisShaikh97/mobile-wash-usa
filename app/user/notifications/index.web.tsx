@@ -6,6 +6,7 @@ import { theme } from "../../../utils/constants"
 import { Notification } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// State to control notification actions modal visibility
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const notifications: Notification[] = [
@@ -35,15 +36,20 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for notifications page
 		<View style={styles.container}>
+			{/* Modal for notification actions like delete/mark as read */}
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
+			{/* Today's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Today</Text>
+				{/* Container for today's notification cards */}
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through notifications array to render notification cards */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
@@ -62,9 +68,12 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
+			{/* Yesterday's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Yesterday</Text>
+				{/* Container for yesterday's notification cards */}
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through notifications array to render notification cards */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (

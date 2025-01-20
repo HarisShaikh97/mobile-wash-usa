@@ -15,6 +15,7 @@ import { services, theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Initialize router for navigation
 	const router = useRouter()
 
 	const jobs: Job[] = [
@@ -87,18 +88,24 @@ export default function Tab(): React.ReactElement | null {
 	]
 
 	return (
+		// Main ScrollView container for the home screen
 		<ScrollView
 			style={styles.scrollContainer}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Main container view */}
 			<View style={styles.container}>
+				{/* Background image */}
 				<Image
 					source={require("../../../assets/images/home-screen-bg.png")}
 					style={styles.bgImage}
 					contentFit="fill"
 				/>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Header with profile image and notification button */}
 					<View style={styles.headerContainer}>
+						{/* Profile image button */}
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/user/home/profile")
@@ -109,8 +116,10 @@ export default function Tab(): React.ReactElement | null {
 								mode="app"
 							/>
 						</TouchableOpacity>
+						{/* Notification button */}
 						<NotificationButton theme="light" mode="app" />
 					</View>
+					{/* Welcome text section */}
 					<View style={styles.welcomeTextWrapper}>
 						<Text style={styles.welcomeHeadingText}>
 							Welcome, John
@@ -120,12 +129,15 @@ export default function Tab(): React.ReactElement | null {
 							home, and business
 						</Text>
 					</View>
+					{/* Horizontal scrolling services section */}
 					<ScrollView
 						style={styles.servicesCardsScrollView}
 						horizontal
 						showsHorizontalScrollIndicator={false}
 					>
+						{/* Services cards container */}
 						<View style={styles.servicesCardsScrollContainer}>
+							{/* Map through services to render ServiceCard components */}
 							{services.map(
 								(service, index): React.ReactElement | null => {
 									return (
@@ -140,6 +152,7 @@ export default function Tab(): React.ReactElement | null {
 							)}
 						</View>
 					</ScrollView>
+					{/* Post job section */}
 					<View style={styles.postJobSectionContainer}>
 						<Text style={styles.jobTitleText}>Post A Job</Text>
 						<Text
@@ -151,6 +164,7 @@ export default function Tab(): React.ReactElement | null {
 							Quickly post a car wash or maintenance job for
 							vendors to apply to.
 						</Text>
+						{/* Post job button */}
 						<TouchableOpacity
 							style={styles.postJobButtonContainer}
 							onPress={() => {
@@ -162,13 +176,16 @@ export default function Tab(): React.ReactElement | null {
 							</Text>
 						</TouchableOpacity>
 					</View>
+					{/* My jobs section */}
 					<View style={styles.myJobsSectionContainer}>
+						{/* My jobs header with title and see all button */}
 						<View style={styles.myJobsHeaderContainer}>
 							<Text style={styles.jobTitleText}>My Jobs</Text>
 							<View style={styles.activeJobsTextContainer}>
 								<Text style={styles.jobDescriptionText}>
 									Your Active Jobs
 								</Text>
+								{/* See all jobs button */}
 								<TouchableOpacity
 									onPress={() => {
 										router.navigate("/user/home/my-jobs")
@@ -180,7 +197,9 @@ export default function Tab(): React.ReactElement | null {
 								</TouchableOpacity>
 							</View>
 						</View>
+						{/* Container for job cards */}
 						<View style={styles.jobCardsContainer}>
+							{/* Map through jobs to render JobCard components */}
 							{jobs.map((job): React.ReactElement | null => {
 								return (
 									<JobCard

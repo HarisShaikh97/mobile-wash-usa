@@ -7,18 +7,24 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/select-payment-method")
+		router.navigate("/user/add-job/select-payment-method") // Navigating to the payment method selection page
 	}, [router])
 
 	return (
 		<AddJobWebLayout>
+			{/* Main container for the page */}
 			<View style={styles.container}>
+				{/* Title text for the page */}
 				<Text style={styles.titleText}>Review Your Job Posting</Text>
+				{/* Container for the job details */}
 				<View style={styles.jobDetailsWrapper}>
+					{/* Job detail container for the job title */}
 					<View style={styles.jobDetailContainer}>
+						{/* Text for the job title */}
 						<Text
 							style={styles.jobDetailText}
 							numberOfLines={2}
@@ -26,6 +32,7 @@ export default function Page(): React.ReactElement | null {
 						>
 							Car Wash At Home
 						</Text>
+						{/* Edit icon for the job title */}
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/user/add-job")
@@ -38,6 +45,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Additional job detail containers follow the same structure */}
 					<View style={styles.jobDetailContainer}>
 						<Text
 							style={styles.jobDetailText}
@@ -139,6 +147,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* FormButton for submitting the form */}
 					<View style={styles.formButtonWrapper}>
 						<FormButton
 							length="full"

@@ -5,15 +5,19 @@ import NotificationButton from "../../../../../components/notification-button/No
 import { WEB_SIDE_NAV_WIDTH } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Using useRouter hook to navigate
 
 	return (
+		// ScrollView component for displaying scrollable content.
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* View component serving as a container for the scrollable content. */}
 			<View style={styles.scrollContainer}>
+				{/* View component serving as a container for the header content. */}
 				<View style={styles.headerContainer}>
+					{/* ProfileCardWeb component displaying user profile information. */}
 					<ProfileCardWeb
 						imageSource={require("../../../../../assets/images/profile.png")}
 						userName="John Cosby"
@@ -21,8 +25,10 @@ export default function Layout(): React.ReactElement | null {
 							router.navigate("/user/home/profile")
 						}}
 					/>
+					{/* NotificationButton component for displaying notifications. */}
 					<NotificationButton mode="web" />
 				</View>
+				{/* Slot component for rendering dynamic content. */}
 				<Slot />
 			</View>
 		</ScrollView>

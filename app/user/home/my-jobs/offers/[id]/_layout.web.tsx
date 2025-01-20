@@ -8,24 +8,30 @@ import BackButton from "../../../../../../components/back-button/BackButton"
 import { WEB_SIDE_NAV_WIDTH } from "../../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Use useRouter hook to get the router instance
 
-	const [searchValue, setSearchValue] = useState<string>("")
+	const [searchValue, setSearchValue] = useState<string>("") // State to manage the search value
 
 	return (
+		// Main scrollable container for the layout
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Container for the scrollable content */}
 			<View style={styles.scrollContainer}>
+				{/* Header container for the layout */}
 				<View style={styles.headerContainer}>
+					{/* Wrapper for the header items */}
 					<View style={styles.headerItemsWrapper}>
+						{/* Back button for navigation */}
 						<BackButton
 							size="large"
 							color="#000000"
 							backgroundColor="#ffffff"
 							borderColor="#F5F5F5"
 						/>
+						{/* Search bar for filtering content */}
 						<SearchBar
 							placeholder="Search"
 							color="#CACACA"
@@ -37,7 +43,9 @@ export default function Layout(): React.ReactElement | null {
 							mode="web"
 						/>
 					</View>
+					{/* Wrapper for the header items */}
 					<View style={styles.headerItemsWrapper}>
+						{/* Profile card for the user */}
 						<ProfileCardWeb
 							imageSource={require("../../../../../../assets/images/profile.png")}
 							userName="John Cosby"
@@ -45,9 +53,11 @@ export default function Layout(): React.ReactElement | null {
 								router.navigate("/user/home/profile")
 							}}
 						/>
+						{/* Notification button for displaying notifications */}
 						<NotificationButton mode="web" />
 					</View>
 				</View>
+				{/* Render dynamic content using the Slot component */}
 				<Slot />
 			</View>
 		</ScrollView>

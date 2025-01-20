@@ -7,17 +7,21 @@ import SearchBar from "../../../../components/search-bar/SearchBar"
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
+	const [searchValue, setSearchValue] = useState<string>("") // State to manage the search value
 
 	return (
 		<View style={styles.container}>
+			{/* Background image for the profile */}
 			<Image
 				source={require("../../../../assets/images/profile-bg.png")}
 				style={styles.bgImage}
 				contentFit="fill"
 			/>
+			{/* Container for the body content */}
 			<View style={styles.bodyContainer}>
+				{/* Header container for the back button */}
 				<View style={styles.headerContainer}>
+					{/* Back button for navigation */}
 					<BackButton
 						size="small"
 						color="#ffffff"
@@ -25,8 +29,11 @@ export default function Layout(): React.ReactElement | null {
 						borderColor="#ffffff"
 					/>
 				</View>
+				{/* Wrapper for the title and search bar */}
 				<View style={styles.titleWrapper}>
+					{/* Title text for the page */}
 					<Text style={styles.titleText}>All Chats</Text>
+					{/* Search bar for filtering chats */}
 					<SearchBar
 						value={searchValue}
 						onChangeText={setSearchValue}
@@ -38,11 +45,14 @@ export default function Layout(): React.ReactElement | null {
 						mode="app"
 					/>
 				</View>
+				{/* Container for the chats card */}
 				<View style={styles.chatsCard}>
+					{/* Scroll view for the chats card content */}
 					<ScrollView
 						style={styles.chatsCardScrollView}
 						showsVerticalScrollIndicator={false}
 					>
+						{/* Slot for dynamic content rendering */}
 						<Slot />
 					</ScrollView>
 				</View>

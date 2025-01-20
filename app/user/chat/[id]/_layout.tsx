@@ -18,38 +18,46 @@ import DeleteChatConfirmationModal from "../../../../components/delete-chat-conf
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const [message, setMessage] = useState<string>("")
+	const [message, setMessage] = useState<string>("") // State for managing the chat message
 	const [openChatActionModal, setOpenChatActionModal] =
-		useState<boolean>(false)
+		useState<boolean>(false) // State for managing the visibility of the chat actions modal
 	const [
 		openDeleteChatConfirmationModal,
 		setOpenDeleteChatConfirmationModal
-	] = useState<boolean>(false)
+	] = useState<boolean>(false) // State for managing the visibility of the delete chat confirmation modal
 
+	// Memoized function to chat actions modal
 	const handleOpenChatActionModal = useCallback((): void => {
-		setOpenChatActionModal(true)
+		setOpenChatActionModal(true) // Function to open the chat actions modal
 	}, [setOpenChatActionModal])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
+		// KeyboardAvoidingView is used to handle keyboard appearance and disappearance
 		<KeyboardAvoidingView
 			style={styles.container}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+			{/* ChatActionsModal is used to manage chat actions */}
 			<ChatActionsModal
 				openModal={openChatActionModal}
 				setOpenModal={setOpenChatActionModal}
 				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
 				mode="app"
 			/>
+			{/* DeleteChatConfirmationModal is used to confirm deletion of chat */}
 			<DeleteChatConfirmationModal
 				openModal={openDeleteChatConfirmationModal}
 				setOpenModal={setOpenDeleteChatConfirmationModal}
 				mode="app"
 			/>
+			{/* Container for the body content */}
 			<View style={styles.bodyContainer}>
+				{/* Container for the header content */}
 				<View style={styles.headerContainer}>
+					{/* Horizontal wrapper for the header content */}
 					<View style={styles.horizontalWrapper}>
 						<BackButton
 							size="small"
@@ -57,14 +65,17 @@ export default function Layout(): React.ReactElement | null {
 							backgroundColor="rgba(255, 255, 255, 0.15)"
 							borderColor="#ffffff"
 						/>
+						{/* Container for the profile image */}
 						<View style={styles.profileImageContainer}>
 							<Image
 								source={require("../../../../assets/images/vendor-profile.png")}
 								style={styles.profileImage}
 								contentFit="cover"
 							/>
+							{/* View for the online marker */}
 							<View style={styles.onlineMarker} />
 						</View>
+						{/* Vertical wrapper for the vendor information */}
 						<View style={styles.verticalWrapper}>
 							<Text style={styles.vendorNameText}>
 								Michael Guzzi
@@ -72,6 +83,7 @@ export default function Layout(): React.ReactElement | null {
 							<Text style={styles.onlineText}>Online</Text>
 						</View>
 					</View>
+					{/* Button to open chat actions modal */}
 					<TouchableOpacity
 						style={styles.optionsButton}
 						onPress={handleOpenChatActionModal}
@@ -83,13 +95,17 @@ export default function Layout(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+				{/* Container for the chats card */}
 				<View style={styles.chatsCard}>
+					{/* Scroll view for the chats */}
 					<ScrollView
 						style={styles.chatsCardScrollView}
 						showsVerticalScrollIndicator={false}
 					>
+						{/* Placeholder for dynamic content */}
 						<Slot />
 					</ScrollView>
+					{/* Input field for chat message */}
 					<ChatInputField
 						value={message}
 						onChangeText={setMessage}

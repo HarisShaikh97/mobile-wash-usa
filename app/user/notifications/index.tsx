@@ -6,6 +6,7 @@ import { theme } from "../../../utils/constants"
 import { Notification } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// State to control notification actions modal visibility
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const notifications: Notification[] = [
@@ -36,18 +37,26 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
+			{/* Modal for notification actions like delete/mark as read */}
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="app"
 			/>
+			{/* Page title */}
 			<Text style={styles.titleText}>Notifications</Text>
+			{/* Today's notifications section */}
+			{/* Container for today's notifications section */}
 			<View style={styles.sectionContainer}>
+				{/* "Today" section header */}
 				<Text style={styles.sectionTitleText}>Today</Text>
+				{/* Wrapper for notification cards */}
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through notifications array to render notification cards */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
+								// Individual notification card with alternating dark/light theme
 								<NotificationCard
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}
@@ -63,12 +72,18 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
+			{/* Yesterday's notifications section */}
+			{/* Yesterday's notifications section container */}
 			<View style={styles.sectionContainer}>
+				{/* "Yesterday" section header */}
 				<Text style={styles.sectionTitleText}>Yesterday</Text>
+				{/* Wrapper for yesterday's notification cards */}
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through notifications array to render notification cards */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
+								// Individual notification card with alternating dark/light theme
 								<NotificationCard
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}

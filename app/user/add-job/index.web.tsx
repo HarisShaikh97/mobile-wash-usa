@@ -8,23 +8,28 @@ import { JobType, JobSubType } from "../../../utils/types"
 import { theme, jobTypes } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [jobTitle, setJobTitle] = useState<string>("")
-	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null)
+	const [jobTitle, setJobTitle] = useState<string>("") // State for managing job title
+	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null) // State for managing selected job type
 	const [selectedJobSubType, setSelectedJobSubType] =
-		useState<JobSubType | null>(null)
-	const [jobDescription, setJobDescription] = useState<string>("")
+		useState<JobSubType | null>(null) // State for managing selected job sub type
+	const [jobDescription, setJobDescription] = useState<string>("") // State for managing job description
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/details")
+		router.navigate("/user/add-job/details") // Navigating to the next page on form submission
 	}, [router])
 
 	return (
 		<AddJobWebLayout>
+			{/* Main container for the page content */}
 			<View style={styles.container}>
+				{/* Title text for the page */}
 				<Text style={styles.titleText}>Describe Your Job Needs</Text>
+				{/* Container for the form fields */}
 				<View style={styles.formContainer}>
+					{/* Input field for job title */}
 					<InputField
 						length="full"
 						type="text"
@@ -35,6 +40,7 @@ export default function Page(): React.ReactElement | null {
 						secureTextEntry={false}
 						placeholder="Enter Job Title"
 					/>
+					{/* Input field for job type */}
 					<InputField
 						length="full"
 						type="select"
@@ -45,7 +51,9 @@ export default function Page(): React.ReactElement | null {
 						placeholder="Select Job Type"
 						zIndex={2}
 					/>
+					{/* Conditional rendering of job sub-type input field */}
 					{selectedJobType && (
+						// Input field for job sub-type, only visible when job type is selected
 						<InputField
 							length="full"
 							type="select"
@@ -57,6 +65,7 @@ export default function Page(): React.ReactElement | null {
 							zIndex={1}
 						/>
 					)}
+					{/* Input field for job description */}
 					<InputField
 						length="full"
 						type="text"
@@ -68,12 +77,15 @@ export default function Page(): React.ReactElement | null {
 						placeholder="Write Job Description"
 						size="large"
 					/>
+					{/* Container for the form button */}
 					<View style={styles.formButtonWrapper}>
+						{/* Form button to navigate to the next page */}
 						<FormButton
 							length="full"
 							theme="dark"
 							title="Next"
 							onPress={handleSubmit}
+							// Calls the handleSubmit function when the button is pressed
 						/>
 					</View>
 				</View>

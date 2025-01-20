@@ -14,8 +14,10 @@ import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
+	// Initialize router for navigation
 	const router = useRouter()
 
+	// State to track which settings tab is currently selected
 	const [selectedTab, setSelectedTab] = useState<
 		| "Edit Account"
 		| "Security"
@@ -23,30 +25,39 @@ export default function Tab(): React.ReactElement | null {
 		| "Help & Support"
 		| "Privacy Policy"
 	>("Edit Account")
+
+	// State to control visibility of account action modal (delete/deactivate)
 	const [openAccountActionModal, setOpenAccountActionModal] =
 		useState<boolean>(false)
+
+	// State to track which type of account action is selected (delete or deactivate)
 	const [accountActiontype, setAccountActionType] = useState<
 		"delete" | "deactivate"
 	>("delete")
 
+	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
 
+	// Memoized function to handle updating the notification status
 	const handleUpdatedNotificationStatus = useCallback(() => {
-		notificationsEnabled.value = !notificationsEnabled.value
+		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
 	}, [notificationsEnabled])
 
+	// Memoized function to handle logging out
 	const handleLogout = useCallback((): void => {
-		router.navigate("/")
+		router.navigate("/") // Navigate to home page on logout
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			{/* Account action modal for delete/deactivate */}
 			<AccountActionModal
 				openModal={openAccountActionModal}
 				setOpenModal={setOpenAccountActionModal}
 				type={accountActiontype}
 				mode="web"
 			/>
+			{/* Header section with background image */}
 			<ImageBackground
 				source={require("../../../../assets/images/profile-header-bg-web.png")}
 				style={styles.headerContainer}
@@ -54,9 +65,12 @@ export default function Tab(): React.ReactElement | null {
 			>
 				<Text style={styles.titleText}>{selectedTab}</Text>
 			</ImageBackground>
+			{/* Main content container */}
 			<View style={styles.bodyContainer}>
+				{/* Settings sidebar */}
 				<View style={styles.settingsCardContainer}>
 					<Text style={styles.settingsTitleText}>Setting</Text>
+					{/* Edit Profile option */}
 					<TouchableOpacity
 						style={styles.settingOptionContainer}
 						onPress={() => {
@@ -97,6 +111,7 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
+					{/* Security option */}
 					<TouchableOpacity
 						style={styles.settingOptionContainer}
 						onPress={() => {
@@ -137,6 +152,7 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
+					{/* Account Status option */}
 					<TouchableOpacity
 						style={styles.settingOptionContainer}
 						onPress={() => {
@@ -177,6 +193,7 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
+					{/* Notifications toggle */}
 					<View style={styles.settingOptionContainer}>
 						<View style={styles.settingOptionTitleWrapper}>
 							<Image
@@ -202,6 +219,7 @@ export default function Tab(): React.ReactElement | null {
 							duration={250}
 						/>
 					</View>
+					{/* Help & Support option */}
 					<TouchableOpacity
 						style={styles.settingOptionContainer}
 						onPress={() => {
@@ -242,6 +260,7 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
+					{/* Privacy Policy option */}
 					<TouchableOpacity
 						style={styles.settingOptionContainer}
 						onPress={() => {
@@ -282,6 +301,7 @@ export default function Tab(): React.ReactElement | null {
 							}
 						/>
 					</TouchableOpacity>
+					{/* Logout button */}
 					<TouchableOpacity
 						style={styles.logOutButton}
 						onPress={handleLogout}
@@ -294,6 +314,7 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.logoutButtonText}>Log Out</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Conditional rendering of content based on selected tab */}
 				{selectedTab === "Edit Account" ? (
 					<CustomerEditProfileCardWeb />
 				) : selectedTab === "Security" ? (

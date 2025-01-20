@@ -6,10 +6,12 @@ import OffersPopup from "../../../../../components/offers-popup/OffersPopup"
 import { theme } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
+	// Using useLocalSearchParams to get the id from the URL
 	const { id } = useLocalSearchParams()
 
 	return (
 		<View style={styles.wrapper}>
+			{/* OffersPopup component is used to display offers related to the job */}
 			<OffersPopup job_id={`${id}`} mode="app" />
 			<ScrollView
 				style={styles.scrollView}
@@ -17,14 +19,17 @@ export default function Layout(): React.ReactElement | null {
 			>
 				<View style={styles.container}>
 					<View style={styles.headerContainer}>
+						{/* BackButton component is used for navigation */}
 						<BackButton
 							size="small"
 							color={theme.colors.secondary}
 							backgroundColor="transparent"
 							borderColor="#F5F5F5"
 						/>
+						{/* DeleteButton component is used to delete the job */}
 						<DeleteButton />
 					</View>
+					{/* Slot component is used to render dynamic content */}
 					<Slot />
 				</View>
 			</ScrollView>

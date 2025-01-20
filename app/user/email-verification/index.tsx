@@ -5,26 +5,35 @@ import OTPInput from "../../../components/otp-input/OTPInput"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [OTP, setOTP] = useState<string>("")
+	const [OTP, setOTP] = useState<string>("") // State to manage the OTP input
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
+		// Container for the verification code input
 		<View style={styles.bodyContainer}>
+			{/* Displaying the title for the verification code input */}
 			<Text style={styles.titleText}>Enter the Verification Code</Text>
+			{/* Providing a description for the verification process */}
 			<Text style={styles.descriptionText}>
 				A 5-digit code has been sent to your email. Please enter the
 				code below to Change your email.
 			</Text>
+			{/* Container for the form fields and buttons */}
 			<View style={styles.formContainer}>
+				{/* OTP input field for user input */}
 				<OTPInput onChangeText={setOTP} />
+				{/* Button to submit the verification code */}
 				<FormButton
 					length="full"
 					theme="dark"
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>
+				{/* Container for the resend code text and link */}
 				<View style={styles.policyAndTermsTextWrapper}>
+					{/* Text indicating the option to resend the code */}
 					<Text
 						style={[
 							styles.policyAndTermsText,
@@ -33,7 +42,9 @@ export default function Page(): React.ReactElement | null {
 					>
 						Don’t receive code ?
 					</Text>
+					{/* Touchable area for the resend code link */}
 					<TouchableOpacity>
+						{/* Link to resend the verification code */}
 						<Text
 							style={[
 								styles.policyAndTermsText,

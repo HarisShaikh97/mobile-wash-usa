@@ -6,7 +6,7 @@ import { theme } from "../../../../utils/constants"
 import { Message } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const { id } = useLocalSearchParams()
+	const { id } = useLocalSearchParams() // Using useLocalSearchParams hook to get the id parameter from the URL
 
 	const messages: Message[] = [
 		{
@@ -43,6 +43,7 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.bodyContainer}>
+			{/* Job Card Section */}
 			<View style={styles.jobCard}>
 				<View style={styles.horizontalWrapper}>
 					<Text
@@ -63,11 +64,13 @@ export default function Page(): React.ReactElement | null {
 					before noon...
 				</Text>
 			</View>
+			{/* Yesterday's Chat Section Header */}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
 				<Text style={styles.chatSectionTitleText}>Yesterday</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
+			{/* Mapping and rendering yesterday's messages */}
 			{messages.map((message, index): React.ReactElement | null => {
 				return (
 					<MessageCard
@@ -80,11 +83,13 @@ export default function Page(): React.ReactElement | null {
 					/>
 				)
 			})}
+			{/* Today's Chat Section Header */}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
 				<Text style={styles.chatSectionTitleText}>Today</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
+			{/* Mapping and rendering today's messages */}
 			{messages.map((message, index): React.ReactElement | null => {
 				return (
 					<MessageCard

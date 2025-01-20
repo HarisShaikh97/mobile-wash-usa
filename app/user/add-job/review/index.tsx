@@ -7,26 +7,35 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/select-payment-method")
+		router.navigate("/user/add-job/select-payment-method") // Navigating to the next page
 	}, [router])
 
 	return (
+		// Main container for the page
 		<View style={styles.container}>
+			{/* Header container for the page */}
 			<View style={styles.headerContainer}>
+				{/* BackButton component for navigation */}
 				<BackButton
 					size="small"
 					color="#000000"
 					backgroundColor="transparent"
 					borderColor="#F5F5F5"
 				/>
+				{/* Title text for the page */}
 				<Text style={styles.titleText}>Review Your Job Posting</Text>
 			</View>
+			{/* Body container for the page */}
 			<View style={styles.bodyContainer}>
+				{/* Wrapper for job details */}
 				<View style={styles.jobDetailsWrapper}>
+					{/* Container for each job detail */}
 					<View style={styles.jobDetailContainer}>
+						{/* Text for the job detail */}
 						<Text
 							style={styles.jobDetailText}
 							numberOfLines={2}
@@ -34,6 +43,7 @@ export default function Page(): React.ReactElement | null {
 						>
 							Car Wash At Home
 						</Text>
+						{/* Edit icon for the job detail */}
 						<TouchableOpacity
 							onPress={() => {
 								router.navigate("/user/add-job")
@@ -46,6 +56,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Additional job detail containers follow the same structure */}
 					<View style={styles.jobDetailContainer}>
 						<Text
 							style={styles.jobDetailText}
@@ -148,6 +159,7 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+				{/* FormButton for submitting the form */}
 				<FormButton
 					length="full"
 					theme="dark"

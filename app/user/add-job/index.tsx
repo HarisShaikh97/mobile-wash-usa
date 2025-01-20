@@ -16,30 +16,36 @@ import { jobTypes, theme } from "../../../utils/constants"
 import { JobType, JobSubType } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [jobTitle, setJobTitle] = useState<string>("")
-	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null)
+	const [jobTitle, setJobTitle] = useState<string>("") // State for managing job title
+	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null) // State for managing selected job type
 	const [selectedJobSubType, setSelectedJobSubType] =
-		useState<JobSubType | null>(null)
-	const [jobDescription, setJobDescription] = useState<string>("")
+		useState<JobSubType | null>(null) // State for managing selected job sub type
+	const [jobDescription, setJobDescription] = useState<string>("") // State for managing job description
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/details")
+		router.navigate("/user/add-job/details") // Navigating to the next page on form submission
 	}, [router])
 
 	return (
+		// KeyboardAvoidingView to handle keyboard appearance and disappearance
 		<KeyboardAvoidingView
 			style={styles.scrollView}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+			{/* ScrollView to enable scrolling of content */}
 			<ScrollView showsVerticalScrollIndicator={false}>
+				{/* Container for the entire page content */}
 				<View style={styles.container}>
+					{/* ImageBackground for the header */}
 					<ImageBackground
 						source={require("../../../assets/images/add-job-header.png")}
 						style={styles.headerBackgroundImage}
 						contentFit="fill"
 					>
+						{/* Container for the header content */}
 						<View style={styles.headerContainer}>
 							<BackButton
 								size="small"
@@ -52,7 +58,9 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 					</ImageBackground>
+					{/* Container for the body content */}
 					<View style={styles.bodyContainer}>
+						{/* Input field for job title */}
 						<InputField
 							length="full"
 							type="text"
@@ -63,6 +71,7 @@ export default function Page(): React.ReactElement | null {
 							secureTextEntry={false}
 							placeholder="Enter Job Title"
 						/>
+						{/* Input field for job type */}
 						<InputField
 							length="full"
 							type="select"
@@ -73,6 +82,7 @@ export default function Page(): React.ReactElement | null {
 							placeholder="Select Job Type"
 							zIndex={2}
 						/>
+						{/* Conditional rendering of job sub-type input field */}
 						{selectedJobType && (
 							<InputField
 								length="full"
@@ -85,6 +95,7 @@ export default function Page(): React.ReactElement | null {
 								zIndex={1}
 							/>
 						)}
+						{/* Input field for job description */}
 						<InputField
 							length="full"
 							type="text"
@@ -96,6 +107,7 @@ export default function Page(): React.ReactElement | null {
 							placeholder="Write Job Description"
 							size="large"
 						/>
+						{/* Form button to navigate to the next page */}
 						<FormButton
 							length="full"
 							theme="dark"

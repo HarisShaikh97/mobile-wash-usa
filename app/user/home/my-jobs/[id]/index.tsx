@@ -8,8 +8,10 @@ import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Using useLocalSearchParams to get the id from the URL
 	const { id } = useLocalSearchParams()
 
+	// Using useRouter hook to navigate
 	const router = useRouter()
 
 	const offers: Offer[] = [
@@ -70,13 +72,18 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
+	// Memoized function to handle viewing job images
 	const handleViewImage = useCallback((): void => {
+		// Navigate to the job images page with the current job's id.
 		router.navigate(`/user/job-images/${id}`)
 	}, [router, id])
 
 	return (
+		// Container for the entire job details
 		<View style={styles.bodyContainer}>
+			{/* Section for the job title */}
 			<View style={styles.jobTitleSection}>
+				{/* Job title text */}
 				<Text
 					style={styles.titleText}
 					numberOfLines={2}
@@ -84,7 +91,9 @@ export default function Page(): React.ReactElement | null {
 				>
 					Car Wash Service Needed
 				</Text>
+				{/* Wrapper for job date and time */}
 				<View style={styles.jobDateTimeWrapper}>
+					{/* Wrapper for user icon and name */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/user.svg")}
@@ -95,7 +104,9 @@ export default function Page(): React.ReactElement | null {
 							John Doe
 						</Text>
 					</View>
+					{/* Circular separator */}
 					<View style={styles.circularSeparator} />
+					{/* Wrapper for date icon and text */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/date.svg")}
@@ -106,7 +117,9 @@ export default function Page(): React.ReactElement | null {
 							28, Oct 2024
 						</Text>
 					</View>
+					{/* Circular separator */}
 					<View style={styles.circularSeparator} />
+					{/* Wrapper for time icon and text */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/time.svg")}
@@ -119,12 +132,16 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 			</View>
+			{/* Horizontal separator */}
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Section for the job budget */}
 			<View style={styles.budgetSection}>
 				<Text style={styles.budgetTitleText}>Budget</Text>
 				<Text style={styles.budgetPriceText}>$500</Text>
 			</View>
+			{/* Horizontal separator */}
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Section for the job description */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Job Description</Text>
 				<Text style={styles.sectionDescriptionText}>
@@ -139,9 +156,12 @@ export default function Page(): React.ReactElement | null {
 					make a type specimen book.
 				</Text>
 			</View>
+			{/* Horizontal separator */}
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Section for the job location */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Location</Text>
+				{/* Wrapper for the map and location text */}
 				<View style={styles.mapViewWrapper}>
 					<Text style={styles.locationText}>
 						Overlook Avenue, Belleville, NJ, USA
@@ -153,9 +173,12 @@ export default function Page(): React.ReactElement | null {
 					/>
 				</View>
 			</View>
+			{/* Section for the job gallery */}
 			<View style={styles.gallerySection}>
 				<Text style={styles.galleryTitleText}>Gallery</Text>
+				{/* Wrapper for the gallery images */}
 				<View style={styles.galleryImagesWrapper}>
+					{/* Gallery image item */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -166,6 +189,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image item */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -176,6 +200,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image item */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -186,6 +211,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image item */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -204,10 +230,14 @@ export default function Page(): React.ReactElement | null {
 					</TouchableOpacity>
 				</View>
 			</View>
+			{/* Horizontal separator */}
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Section for the job offers */}
 			<View style={styles.offersSection}>
 				<Text style={styles.offersTitleText}>Offers By Vendors</Text>
+				{/* Wrapper for the offer cards */}
 				<View style={styles.offerCardsWrapper}>
+					{/* Mapping through the offers and rendering the offer card */}
 					{offers.map((offer, index): React.ReactElement | null => {
 						return (
 							<OfferCard

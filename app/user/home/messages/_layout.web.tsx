@@ -4,8 +4,11 @@ import { WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Outermost View component with wrapper styles
 		<View style={styles.wrapper}>
+			{/* Inner View component with container styles */}
 			<View style={styles.container}>
+				{/* Slot component for dynamic content rendering */}
 				<Slot />
 			</View>
 		</View>

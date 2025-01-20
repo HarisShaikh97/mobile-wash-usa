@@ -8,48 +8,56 @@ import InputField from "../../../components/input-field/InputField"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [newImage, setNewImage] = useState<string | null>(null)
-	const [fullName, setFullName] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
+	const [newImage, setNewImage] = useState<string | null>(null) // State for managing the new image selected by the user
+	const [fullName, setFullName] = useState<string>("") // State for managing the user's full name
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State for managing the user's phone number
+	const [email, setEmail] = useState<string>("") // State for managing the user's email
+	const [location, setLocation] = useState<string>("") // State for managing the user's location
 
+	// Memoized function to handle image selection
 	const pickImage = useCallback(async (): Promise<void> => {
+		// Launching the image library to select an image
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.All,
-				quality: 1
+				mediaTypes: ImagePicker.MediaTypeOptions.All, // Allowing selection of all media types
+				quality: 1 // Setting image quality to maximum
 			})
 
+		// Checking if an image was selected and not canceled
 		if (!result.canceled && result.assets && result.assets.length > 0) {
-			setNewImage(result.assets[0].uri)
+			setNewImage(result.assets[0].uri) // Setting the new image URI to the state
 		} else {
-			console.log("No image selected or operation canceled!")
+			console.log("No image selected or operation canceled!") // Logging a message if no image is selected or the operation is canceled
 		}
 	}, [setNewImage])
 
+	// Memoized function to handle save action
 	const handleSave = useCallback(() => {
-		router.navigate("/user/email-verification")
+		router.navigate("/user/email-verification") // Navigating to the email verification page on save
 	}, [router])
 
+	// Memoized function to handle cancel action
 	const handleCancel = useCallback(() => {
-		router.back()
+		router.back() // Navigating back to the previous page on cancel
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			{/* Container for the profile image */}
 			<View style={styles.profileImageContainer}>
+				{/* Displaying the selected image or a default profile image */}
 				<Image
 					source={
 						newImage
-							? { uri: newImage }
-							: require("../../../assets/images/profile.png")
+							? { uri: newImage } // Using the selected image URI
+							: require("../../../assets/images/profile.png") // Default profile image
 					}
 					style={styles.profileImage}
 					contentFit="cover"
 				/>
+				{/* Upload button for selecting a new image */}
 				<TouchableOpacity
 					style={styles.uploadButton}
 					onPress={pickImage}
@@ -57,7 +65,9 @@ export default function Page(): React.ReactElement | null {
 					<Feather name="upload" size={12.5} color="white" />
 				</TouchableOpacity>
 			</View>
+			{/* Container for the form fields */}
 			<View style={styles.formContainer}>
+				{/* Input field for full name */}
 				<InputField
 					length="full"
 					type="text"
@@ -68,6 +78,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Input field for phone number */}
 				<InputField
 					length="full"
 					type="text"
@@ -78,6 +89,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Input field for email */}
 				<InputField
 					length="full"
 					type="text"
@@ -88,6 +100,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Input field for location */}
 				<InputField
 					length="full"
 					type="text"
@@ -99,7 +112,9 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 			</View>
+			{/* Container for action buttons */}
 			<View style={styles.actionButtonsWrapper}>
+				{/* Cancel button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,
@@ -116,6 +131,7 @@ export default function Page(): React.ReactElement | null {
 						Cancel
 					</Text>
 				</TouchableOpacity>
+				{/* Save button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,

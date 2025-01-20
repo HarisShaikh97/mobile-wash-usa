@@ -3,31 +3,38 @@ import { ImageBackground, Image } from "expo-image"
 import { Slot, useRouter } from "expo-router"
 
 export default function Layout(): React.ReactElement | null {
+	// Initialize router for navigation
 	const router = useRouter()
 
 	return (
+		// Main background image container
 		<ImageBackground
 			source={require("../../../../assets/images/screen-bg.png")}
 			style={styles.bgImage}
 			contentFit="fill"
 		>
+			{/* Scrollable content container */}
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
 			>
+				{/* Main content wrapper with padding */}
 				<View style={styles.scrollContainer}>
+					{/* Close/back button */}
 					<TouchableOpacity
 						style={styles.crossButton}
 						onPress={() => {
 							router.back()
 						}}
 					>
+						{/* Close icon */}
 						<Image
 							source={require("../../../../assets/icons/cross.svg")}
 							style={styles.crossIcon}
 							contentFit="contain"
 						/>
 					</TouchableOpacity>
+					{/* Slot for child route content */}
 					<Slot />
 				</View>
 			</ScrollView>

@@ -7,17 +7,23 @@ import BackButton from "../../../../components/back-button/BackButton"
 import { backgroundImages } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get the job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// State to track the index of currently displayed image
 	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
 
+	// Memoized function to handle transitioning to next image in the carousel
 	const handleNextImage = useCallback((): void => {
+		// Increments index and wraps around using modulo of array length
 		setCurrentImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImages.length
 		)
 	}, [setCurrentImageIndex, backgroundImages])
 
+	// Memoized function to handle transitioning to previous image in the carousel
 	const handlePreviousImage = useCallback((): void => {
+		// Decrements index and wraps around using modulo, adding length to handle negative values
 		setCurrentImageIndex(
 			(prevIndex) =>
 				(prevIndex - 1 + backgroundImages.length) %
@@ -25,13 +31,17 @@ export default function Page(): React.ReactElement | null {
 		)
 	}, [setCurrentImageIndex, backgroundImages])
 
+	// Memoizes the current image to prevent unnecessary re-renders
 	const currentImage = useMemo(
+		// Returns image at current index from background images array
 		() => backgroundImages[currentImageIndex],
 		[currentImageIndex, currentImageIndex]
 	)
 
 	return (
+		// Main container for the image viewer
 		<View style={styles.container}>
+			{/* Header with back button */}
 			<View style={styles.headerContainer}>
 				<BackButton
 					size="large"
@@ -40,17 +50,20 @@ export default function Page(): React.ReactElement | null {
 					borderColor="transparent"
 				/>
 			</View>
+			{/* Full screen background image */}
 			<Image
 				source={currentImage}
 				style={styles.background}
 				contentFit="cover"
 			/>
+			{/* Previous image button */}
 			<TouchableOpacity
 				style={[styles.actionButton, styles.previousButton]}
 				onPress={handlePreviousImage}
 			>
 				<AntDesign name="arrowleft" size={17.5} color="black" />
 			</TouchableOpacity>
+			{/* Next image button */}
 			<TouchableOpacity
 				style={[styles.actionButton, styles.nextButton]}
 				onPress={handleNextImage}

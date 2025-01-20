@@ -9,29 +9,37 @@ import Switch from "../../../../components/switch/Switch"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
+	// Using useRouter hook to navigate
 	const router = useRouter()
 
+	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
 
+	// Memoized function to handle updating the notification status
 	const handleUpdatedNotificationStatus = useCallback(() => {
-		notificationsEnabled.value = !notificationsEnabled.value
+		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
 	}, [notificationsEnabled])
 
+	// Memoized function to handle logging out
 	const handleLogout = useCallback((): void => {
-		router.navigate("/")
+		router.navigate("/") // Navigate to the home page
 	}, [router])
 
 	return (
 		<View style={styles.accountSettingsSection}>
+			{/* Account section heading */}
 			<Text style={styles.headingText}>Account</Text>
 			<View style={styles.profileTab}>
 				<View style={styles.profileIconWrapper}>
+					{/* User profile image */}
 					<ProfileImageBox
 						source={require("../../../../assets/images/profile.png")}
 						mode="app"
 					/>
 					<View style={styles.profileTextWrapper}>
+						{/* Username display */}
 						<Text style={styles.usernameText}>John Doe</Text>
+						{/* Personal info label */}
 						<Text style={styles.personalInfoText}>
 							Personal Info
 						</Text>
@@ -43,6 +51,7 @@ export default function Tab(): React.ReactElement | null {
 						router.navigate("/user/edit-account")
 					}}
 				>
+					{/* Navigation chevron icon */}
 					<Feather
 						name="chevron-right"
 						size={17.5}
@@ -50,15 +59,20 @@ export default function Tab(): React.ReactElement | null {
 					/>
 				</TouchableOpacity>
 			</View>
+
+			{/* Settings section heading */}
 			<Text style={styles.headingText}>Setting</Text>
 			<View style={styles.settingOptionContainer}>
+				{/* Edit Profile option */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Edit profile icon */}
 						<Image
 							source={require("../../../../assets/icons/edit-profile.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Edit profile text */}
 						<Text style={styles.settingOptionText}>
 							Edit Profile
 						</Text>
@@ -69,6 +83,7 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/edit-account")
 						}}
 					>
+						{/* Navigation chevron icon */}
 						<Feather
 							name="chevron-right"
 							size={17.5}
@@ -76,13 +91,17 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+
+				{/* Security option */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Security icon */}
 						<Image
 							source={require("../../../../assets/icons/security.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Security text */}
 						<Text style={styles.settingOptionText}>Security</Text>
 					</View>
 					<TouchableOpacity
@@ -91,6 +110,7 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/security")
 						}}
 					>
+						{/* Navigation chevron icon */}
 						<Feather
 							name="chevron-right"
 							size={17.5}
@@ -98,13 +118,17 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+
+				{/* Account Status option */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Account status icon */}
 						<Image
 							source={require("../../../../assets/icons/account-status.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Account status text */}
 						<Text style={styles.settingOptionText}>
 							Account Status
 						</Text>
@@ -115,6 +139,7 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/account-status")
 						}}
 					>
+						{/* Navigation chevron icon */}
 						<Feather
 							name="chevron-right"
 							size={17.5}
@@ -122,17 +147,22 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+
+				{/* Notification toggle */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Notification icon */}
 						<Image
 							source={require("../../../../assets/icons/notification-outline.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Notification text */}
 						<Text style={styles.settingOptionText}>
 							Notification
 						</Text>
 					</View>
+					{/* Notification toggle switch */}
 					<Switch
 						value={notificationsEnabled}
 						onPress={handleUpdatedNotificationStatus}
@@ -140,13 +170,17 @@ export default function Tab(): React.ReactElement | null {
 						duration={250}
 					/>
 				</View>
+
+				{/* Help & Support option */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Help and support icon */}
 						<Image
 							source={require("../../../../assets/icons/help-and-support.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Help and support text */}
 						<Text style={styles.settingOptionText}>
 							Help & Support
 						</Text>
@@ -157,6 +191,7 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/help-and-support")
 						}}
 					>
+						{/* Navigation chevron icon */}
 						<Feather
 							name="chevron-right"
 							size={17.5}
@@ -164,13 +199,17 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+
+				{/* Privacy Policy option */}
 				<View style={styles.settingOption}>
 					<View style={styles.settingOptionNameWrapper}>
+						{/* Privacy policy icon */}
 						<Image
 							source={require("../../../../assets/icons/privacy-policy.svg")}
 							style={styles.settingOptionIcon}
 							contentFit="contain"
 						/>
+						{/* Privacy policy text */}
 						<Text style={styles.settingOptionText}>
 							Privacy Policy
 						</Text>
@@ -181,6 +220,7 @@ export default function Tab(): React.ReactElement | null {
 							router.navigate("/user/privacy-policy")
 						}}
 					>
+						{/* Navigation chevron icon */}
 						<Feather
 							name="chevron-right"
 							size={17.5}
@@ -188,15 +228,19 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+
+				{/* Logout button */}
 				<TouchableOpacity
 					style={styles.logOutButton}
 					onPress={handleLogout}
 				>
+					{/* Logout icon */}
 					<Image
 						source={require("../../../../assets/icons/logout.svg")}
 						style={styles.settingOptionIcon}
 						contentFit="contain"
 					/>
+					{/* Logout text */}
 					<Text style={styles.settingOptionText}>Log Out</Text>
 				</TouchableOpacity>
 			</View>

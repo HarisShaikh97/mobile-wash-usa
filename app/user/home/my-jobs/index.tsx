@@ -8,6 +8,7 @@ import { theme } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// State to handle search input
 	const [searchValue, setSearchValue] = useState<string>("")
 
 	const jobs: Job[] = [
@@ -102,11 +103,13 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// ScrollView for the entire jobs section
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.container}>
+				{/* Header container with back and notification buttons */}
 				<View style={styles.headerContainer}>
 					<BackButton
 						size="small"
@@ -116,13 +119,16 @@ export default function Page(): React.ReactElement | null {
 					/>
 					<NotificationButton theme="dark" mode="app" />
 				</View>
+				{/* Body container for job titles, search bar, and job cards */}
 				<View style={styles.bodyContainer}>
+					{/* Title container for the "My Jobs" section */}
 					<View style={styles.titleContainer}>
 						<Text style={styles.titleText}>My Jobs</Text>
 						<Text style={styles.descriptionText}>
 							Your Active Jobs
 						</Text>
 					</View>
+					{/* Search bar for filtering job listings */}
 					<SearchBar
 						placeholder="Search"
 						color="#CACACA"
@@ -133,9 +139,11 @@ export default function Page(): React.ReactElement | null {
 						filterEnabled={false}
 						mode="app"
 					/>
+					{/* Container for individual job cards */}
 					<View style={styles.jobCardsContainer}>
 						{jobs.map((job): React.ReactElement | null => {
 							return (
+								// JobCard component displaying individual job details
 								<JobCard
 									_id={job._id}
 									title={job.title}

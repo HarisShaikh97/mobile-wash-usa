@@ -9,9 +9,10 @@ import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Using useRouter hook to navigate
 	const router = useRouter()
 
-	const [searchValue, setSearchValue] = useState<string>("")
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
 
 	const jobs: Job[] = [
 		{
@@ -88,7 +89,9 @@ export default function Tab(): React.ReactElement | null {
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.scrollContainer}>
+				{/* Header section containing the search bar and user profile card */}
 				<View style={styles.headerContainer}>
+					{/* Search bar component with custom styles and functionality */}
 					<SearchBar
 						placeholder="Search"
 						color="#CACACA"
@@ -99,7 +102,9 @@ export default function Tab(): React.ReactElement | null {
 						filterEnabled={false}
 						mode="web"
 					/>
+					{/* Container for user profile and notification button */}
 					<View style={styles.headerItemsWrapper}>
+						{/* Profile card with user information and navigation action */}
 						<ProfileCardWeb
 							imageSource={require("../../../../assets/images/profile.png")}
 							userName="John Cosby"
@@ -107,16 +112,20 @@ export default function Tab(): React.ReactElement | null {
 								router.navigate("/user/home/profile")
 							}}
 						/>
+						{/* Notification button to alert users to new messages or alerts */}
 						<NotificationButton mode="web" />
 					</View>
 				</View>
+				{/* Title bar for the 'My Jobs' section displaying section title and description */}
 				<View style={styles.myJobsTitleBarContainer}>
 					<Text style={styles.myJobsTitleText}>My jobs</Text>
 					<Text style={styles.myJobsDescriptionText}>
 						Your active jobs
 					</Text>
 				</View>
+				{/* Container for job cards displaying job details */}
 				<View style={styles.cardsWrapper}>
+					{/* Mapping through jobs array to render JobCard components for each job */}
 					{jobs.map((job): React.ReactElement | null => {
 						return (
 							<JobCard
@@ -134,7 +143,9 @@ export default function Tab(): React.ReactElement | null {
 						)
 					})}
 				</View>
+				{/* Duplicate container for job cards - consider removing or refactoring if not needed */}
 				<View style={styles.cardsWrapper}>
+					{/* Mapping through jobs array to render JobCard components for each job */}
 					{jobs.map((job): React.ReactElement | null => {
 						return (
 							<JobCard

@@ -9,30 +9,35 @@ import { theme } from "../../../../utils/constants"
 import { PaymentOptions } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card") // State for managing the selected payment option
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing the modal visibility
 
+	// Memoized function to handle form submission
 	const handleProceed = useCallback((): void => {
-		setOpenModal(false)
+		setOpenModal(false) // Closing the modal
 		router.navigate(
+			// Navigating to the next page based on the selected payment option
 			selectedOption === "pod"
 				? "/user/home"
 				: "/user/add-job/payment-card-details"
 		)
 	}, [openModal, router])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		setOpenModal(true)
+		setOpenModal(true) // Opening the modal on form submission
 	}, [setOpenModal])
 
 	return (
+		// ImageBackground component for the screen's background image
 		<ImageBackground
 			source={require("../../../../assets/images/screen-bg.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* PaymentInformationModal component for managing payment information */}
 			<PaymentInformationModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
@@ -40,7 +45,9 @@ export default function Page(): React.ReactElement | null {
 				handleProceed={handleProceed}
 				mode="app"
 			/>
+			{/* View container for the header section */}
 			<View style={styles.headerContainer}>
+				{/* BackButton component for navigation */}
 				<BackButton
 					size="small"
 					color="#000000"
@@ -48,35 +55,48 @@ export default function Page(): React.ReactElement | null {
 					borderColor="#F5F5F5"
 				/>
 			</View>
+			{/* View container for the body section */}
 			<View style={styles.bodyContainer}>
+				{/* View container for the form section */}
 				<View style={styles.formContainer}>
+					{/* View container for the title wrapper */}
 					<View style={styles.titleWrapper}>
+						{/* Text for the title */}
 						<Text style={styles.titleText}>
 							Select Your Payment Method
 						</Text>
+						{/* Text for the description */}
 						<Text style={styles.descriptionText}>
 							To post this job, please select your preferred
 							payment method.
 						</Text>
 					</View>
+					{/* Text for the heading */}
 					<Text style={styles.headingText}>Options</Text>
+					{/* View container for the payment options wrapper */}
 					<View style={styles.paymentOptionsWrapper}>
+						{/* TouchableOpacity for the card payment option */}
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
 								setSelectedOption("card")
+								// Setting the selected option to "card" on press
 							}}
 						>
+							{/* View container for the payment option title wrapper */}
 							<View style={styles.paymentOptionTitleWrapper}>
+								{/* Image for the card icon */}
 								<Image
 									source={require("../../../../assets/icons/card.svg")}
 									style={styles.paymentOptionIcon}
 									contentFit="contain"
 								/>
+								{/* Text for the card payment option */}
 								<Text style={styles.paymentOptionTitleText}>
 									Credit Card/Debit Card
 								</Text>
 							</View>
+							{/* View for the checkbox */}
 							<View
 								style={[
 									styles.checkBox,
@@ -85,11 +105,13 @@ export default function Page(): React.ReactElement | null {
 										: styles.checkboxUnChecked
 								]}
 							>
+								{/* Inner circle for the checkbox */}
 								{selectedOption === "card" && (
 									<View style={styles.checkboxInnerCircle} />
 								)}
 							</View>
 						</TouchableOpacity>
+						{/* Similar structure for the paypal payment option */}
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
@@ -119,6 +141,7 @@ export default function Page(): React.ReactElement | null {
 								)}
 							</View>
 						</TouchableOpacity>
+						{/* Similar structure for the pay on delivery payment option */}
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
@@ -150,6 +173,7 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+				{/* FormButton for submitting the form */}
 				<FormButton
 					length="full"
 					theme="dark"

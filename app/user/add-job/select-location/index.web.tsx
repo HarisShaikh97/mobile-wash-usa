@@ -13,28 +13,36 @@ import HorizontalSeparator from "../../../../components/horizontal-separator/Hor
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// State variable for managing location input
 	const [location, setLocation] = useState<string>("")
 
 	return (
+		// ImageBackground component for the screen's background image
 		<ImageBackground
 			source={require("../../../../assets/images/map-lg-web.png")}
 			style={styles.container}
 			contentFit="cover"
 		>
+			{/* View container for the header section */}
 			<View style={styles.headerContainer}>
+				{/* BackButton component for navigation */}
 				<BackButton
 					size="large"
 					color="#000000"
 					backgroundColor="#ffffff"
 					borderColor="transparent"
 				/>
+				{/* View container for the search bar section */}
 				<View style={styles.searchBarContainer}>
+					{/* View container for the horizontal wrapper */}
 					<View style={styles.horizontalWrapper}>
+						{/* Image for the location icon */}
 						<Image
 							source={require("../../../../assets/icons/location3.svg")}
 							style={styles.locationIcon}
 							contentFit="contain"
 						/>
+						{/* TextInput for user input */}
 						<TextInput
 							value={location}
 							onChangeText={setLocation}
@@ -43,15 +51,20 @@ export default function Page(): React.ReactElement | null {
 							style={styles.textField}
 						/>
 					</View>
+					{/* Conditional rendering for search results list */}
 					{location.length > 0 && (
 						<View style={styles.searchResultsList}>
+							{/* HorizontalSeparator for separating search results */}
 							<HorizontalSeparator color="#DDDDDD" />
+							{/* TouchableOpacity for each search result */}
 							<TouchableOpacity style={styles.horizontalWrapper}>
+								{/* Image for the location icon */}
 								<Image
 									source={require("../../../../assets/icons/location3.svg")}
 									style={styles.locationIcon}
 									contentFit="contain"
 								/>
+								{/* Text for the search result */}
 								<Text style={styles.textField}>
 									Current Location
 								</Text>
@@ -90,12 +103,15 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
+			{/* View container for the zoom buttons wrapper */}
 			<View style={styles.zoomButtonsWrapper}>
+				{/* TouchableOpacity for zoom in button */}
 				<TouchableOpacity
 					style={[styles.zoomButtonContainer, styles.zoomInButton]}
 				>
 					<AntDesign name="plus" size={22.5} color="black" />
 				</TouchableOpacity>
+				{/* TouchableOpacity for zoom out button */}
 				<TouchableOpacity
 					style={[styles.zoomButtonContainer, styles.zoomOutButton]}
 				>

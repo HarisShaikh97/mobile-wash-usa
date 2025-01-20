@@ -17,99 +17,132 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [dateTime, setDateTime] = useState<Date | null>(null)
-	const [budget, setBudget] = useState<number>(0)
+	// State variables for managing date and time, budget, and date picker visibility
+	const [dateTime, setDateTime] = useState<Date | null>(null) // Stores the selected date and time
+	const [budget, setBudget] = useState<number>(0) // Stores the selected budget
 	const [isDatePickerVisible, setDatePickerVisibility] =
-		useState<boolean>(false)
+		useState<boolean>(false) // Toggles the visibility of the date picker
 
+	// Function to show the date picker
 	const showDatePicker = useCallback(() => {
+		// Set the visibility of the date picker to true
 		setDatePickerVisibility(true)
 	}, [setDatePickerVisibility])
 
+	// Function to hide the date picker
 	const hideDatePicker = useCallback(() => {
+		// Set the visibility of the date picker to false
 		setDatePickerVisibility(false)
 	}, [setDatePickerVisibility])
 
+	// Function to handle date and time selection
 	const handleConfirm = useCallback(
 		(date: Date) => {
+			// Update the state with the chosen date
 			setDateTime(date)
+			// Hide the date picker after selection
 			hideDatePicker()
 		},
 		[setDateTime, hideDatePicker]
 	)
 
+	// Function to handle location selection
 	const handleSelectLocation = useCallback(() => {
+		// Navigate to the location selection page
 		router.navigate("/user/add-job/select-location")
 	}, [router])
 
+	// Function to handle form submission
 	const handleSubmit = useCallback(() => {
+		// Navigate to the review page
 		router.navigate("/user/add-job/review")
 	}, [router])
 
 	return (
+		// KeyboardAvoidingView to handle keyboard visibility and scrolling
 		<KeyboardAvoidingView
 			style={styles.scrollView}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+			{/* ScrollView to enable vertical scrolling */}
 			<ScrollView showsVerticalScrollIndicator={false}>
+				{/* Main container for the page */}
 				<View style={styles.container}>
+					{/* Date picker modal, visible when the user selects a date and time */}
 					<DateTimePickerModal
 						isVisible={isDatePickerVisible}
 						mode="datetime"
 						onConfirm={handleConfirm}
 						onCancel={hideDatePicker}
 					/>
+					{/* ImageBackground for the header, displaying a background image */}
 					<ImageBackground
 						source={require("../../../../assets/images/add-job-header.png")}
 						style={styles.headerBackgroundImage}
 						contentFit="fill"
 					>
+						{/* Header container, including the back button and title */}
 						<View style={styles.headerContainer}>
+							{/* BackButton component for navigation */}
 							<BackButton
 								size="small"
 								color="#000000"
 								backgroundColor="#F5F5F5"
 								borderColor="transparent"
 							/>
+							{/* Title text for the page */}
 							<Text style={styles.titleText}>
 								Set Job Details
 							</Text>
 						</View>
 					</ImageBackground>
+					{/* Body container, including the form fields and buttons */}
 					<View style={styles.bodyContainer}>
+						{/* Input field wrapper for the budget field */}
 						<View style={styles.inputFieldWrapper}>
+							{/* Title text for the budget field */}
 							<Text style={styles.inputFieldTitleText}>
 								Budget
 							</Text>
+							{/* BudgetInput component for selecting a budget */}
 							<BudgetInput
 								value={budget}
 								setValue={setBudget}
 								mode="app"
 							/>
 						</View>
+						{/* Input field wrapper for the location field */}
 						<View style={styles.inputFieldWrapper}>
+							{/* Title text for the location field */}
 							<Text style={styles.inputFieldTitleText}>
 								Location
 							</Text>
+							{/* TouchableOpacity for selecting a location */}
 							<TouchableOpacity
 								style={styles.inputFieldContainer}
 								onPress={handleSelectLocation}
 							>
+								{/* Text for the location field */}
 								<Text style={styles.inputFieldText}>
 									Select Your Location
 								</Text>
 							</TouchableOpacity>
 						</View>
+						{/* Input field wrapper for the date and time field */}
 						<View style={styles.inputFieldWrapper}>
+							{/* Title text for the date and time field */}
 							<Text style={styles.inputFieldTitleText}>
 								Date & Time
 							</Text>
+							{/* TouchableOpacity for selecting a date and time */}
 							<TouchableOpacity
 								style={styles.inputFieldContainer}
 								onPress={showDatePicker}
 							>
+								{/* Text for the date and time field */}
 								<Text style={styles.inputFieldText}>
 									{dateTime
 										? dateTime.toLocaleString()
@@ -117,6 +150,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</TouchableOpacity>
 						</View>
+						{/* FormButton for submitting the form */}
 						<FormButton
 							length="full"
 							theme="dark"

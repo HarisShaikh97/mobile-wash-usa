@@ -9,28 +9,37 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [cardNumber, setCardNumber] = useState<string>("")
-	const [expiryDate, setExpiryDate] = useState<string>("")
-	const [CVC, setCVC] = useState<string>("")
-	const [cardHolderName, setCardHolderName] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	// State variables for managing card details and modal visibility
+	const [cardNumber, setCardNumber] = useState<string>("") // State for storing card number
+	const [expiryDate, setExpiryDate] = useState<string>("") // State for storing expiry date
+	const [CVC, setCVC] = useState<string>("") // State for storing CVC
+	const [cardHolderName, setCardHolderName] = useState<string>("") // State for storing card holder name
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		setOpenModal(true)
+		setOpenModal(true) // Function to open the modal on form submission
 	}, [setOpenModal])
 
 	return (
 		<AddJobWebLayout>
+			{/* JobPostSuccessfulModal component for displaying the success modal */}
 			<JobPostSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
+			{/* Main container for the payment details */}
 			<View style={styles.container}>
+				{/* Title text for the payment section */}
 				<Text style={styles.titleText}>Payment</Text>
+				{/* Container for the payment form fields */}
 				<View style={styles.formContainer}>
+					{/* Header container for the payment form */}
 					<View style={styles.formHeaderContainer}>
+						{/* View container for the payment method wrapper */}
 						<View style={styles.paymentMethodWrapper}>
+							{/* Text for the payment method */}
 							<Text
 								style={[
 									styles.paymentMethodText,
@@ -39,14 +48,17 @@ export default function Page(): React.ReactElement | null {
 							>
 								Method of payment
 							</Text>
+							{/* TouchableOpacity for changing the payment method */}
 							<TouchableOpacity
 								style={styles.changeButtonContainer}
 							>
+								{/* Icon for editing the payment method */}
 								<Feather
 									name="edit"
 									size={15}
 									color={theme.colors.primary}
 								/>
+								{/* Text for changing the payment method */}
 								<Text
 									style={[
 										styles.paymentMethodText,
@@ -57,15 +69,20 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</TouchableOpacity>
 						</View>
+						{/* View container for the card details */}
 						<View style={styles.cardContainer}>
+							{/* View container for the card text wrapper */}
 							<View style={styles.cardTextWrapper}>
+								{/* Title text for the card */}
 								<Text style={styles.cardTitleText}>
 									Credit or Debit card
 								</Text>
+								{/* Description text for the card */}
 								<Text style={styles.cardDescriptionText}>
 									Online payment
 								</Text>
 							</View>
+							{/* Image for the card icon */}
 							<Image
 								source={require("../../../../assets/icons/master-card.svg")}
 								style={styles.cardIcon}
@@ -73,6 +90,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</View>
 					</View>
+					{/* InputField component for the card number */}
 					<InputField
 						length="full"
 						type="text"
@@ -83,7 +101,9 @@ export default function Page(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* View container for the input fields wrapper */}
 					<View style={styles.inputFieldsWrapper}>
+						{/* InputField component for the expiry date */}
 						<InputField
 							length="half"
 							type="text"
@@ -94,6 +114,7 @@ export default function Page(): React.ReactElement | null {
 							secureTextEntry={false}
 							multiline={false}
 						/>
+						{/* InputField component for the CVC */}
 						<InputField
 							length="half"
 							type="text"
@@ -105,6 +126,7 @@ export default function Page(): React.ReactElement | null {
 							multiline={false}
 						/>
 					</View>
+					{/* InputField component for the card holder name */}
 					<InputField
 						length="full"
 						type="text"
@@ -116,7 +138,9 @@ export default function Page(): React.ReactElement | null {
 						multiline={false}
 					/>
 				</View>
+				{/* View container for the form submission button */}
 				<View style={styles.formButtonWrapper}>
+					{/* FormButton component for form submission */}
 					<FormButton
 						length="full"
 						theme="dark"

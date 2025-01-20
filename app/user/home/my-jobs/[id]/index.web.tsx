@@ -9,8 +9,10 @@ import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Using useLocalSearchParams to get the id from the URL
 	const { id } = useLocalSearchParams()
 
+	// Using useRouter hook to navigate
 	const router = useRouter()
 
 	const offers: Offer[] = [
@@ -71,29 +73,39 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
+	// Memoized function to handle viewing job images
 	const handleViewImage = useCallback((): void => {
+		// Navigate to the job images page with the current job's id.
 		router.navigate(`/user/job-images/${id}`)
 	}, [router, id])
 
 	return (
+		// Container for the entire job details
 		<View style={styles.container}>
+			{/* Header Container for the job details */}
 			<View style={styles.headerContainer}>
+				{/* Header Title Wrapper for the job details */}
 				<View style={styles.headerTitleWrapper}>
+					{/* BackButton component for navigation */}
 					<BackButton
 						size="large"
 						color="#000000"
 						backgroundColor="#ffffff"
 						borderColor="#F5F5F5"
 					/>
+					{/* Header Title Text for the job details */}
 					<Text style={styles.headerTitleText}>Job Details</Text>
 				</View>
+				{/* Header Action Buttons Wrapper for the job details */}
 				<View style={styles.headerActionButtonsWrapper}>
+					{/* Status Tab Container for the job details */}
 					<View
 						style={[
 							styles.headerActionButtonContainer,
 							styles.statusTabContainer
 						]}
 					>
+						{/* Status Tab Text for the job details */}
 						<Text
 							style={[
 								styles.headerActionButtonText,
@@ -103,17 +115,20 @@ export default function Page(): React.ReactElement | null {
 							In progress
 						</Text>
 					</View>
+					{/* Delete Button Container for the job details */}
 					<TouchableOpacity
 						style={[
 							styles.headerActionButtonContainer,
 							styles.deleteButtonContainer
 						]}
 					>
+						{/* Delete Button Icon for the job details */}
 						<Image
 							source={require("../../../../../assets/icons/delete3.svg")}
 							style={styles.deleteButtonIcon}
 							contentFit="contain"
 						/>
+						{/* Delete Button Text for the job details */}
 						<Text
 							style={[
 								styles.headerActionButtonText,
@@ -125,50 +140,70 @@ export default function Page(): React.ReactElement | null {
 					</TouchableOpacity>
 				</View>
 			</View>
+			{/* Body Container for the job details */}
 			<View style={styles.bodyContainer}>
+				{/* Job Details Card for the job details */}
 				<View style={styles.jobDetailsCard}>
+					{/* Job Title Text for the job details */}
 					<Text style={styles.jobTitleText}>
 						Car wash service needed
 					</Text>
+					{/* Job Date and Time Wrapper for the job details */}
 					<View style={styles.jobDateTimeWrapper}>
+						{/* Job Date and Time Text Icon Wrapper for the job details */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
+							{/* Job Date and Time Text Icon for the job details */}
 							<Image
 								source={require("../../../../../assets/icons/user.svg")}
 								style={styles.jobDateTimeTextIcon}
 								contentFit="contain"
 							/>
+							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
 								John Doe
 							</Text>
 						</View>
+						{/* Circular Separator for the job details */}
 						<View style={styles.circularSeparator} />
+						{/* Job Date and Time Text Icon Wrapper for the job details */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
+							{/* Job Date and Time Text Icon for the job details */}
 							<Image
 								source={require("../../../../../assets/icons/date.svg")}
 								style={styles.jobDateTimeTextIcon}
 								contentFit="contain"
 							/>
+							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
 								28, Oct 2024
 							</Text>
 						</View>
+						{/* Circular Separator for the job details */}
 						<View style={styles.circularSeparator} />
+						{/* Job Date and Time Text Icon Wrapper for the job details */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
+							{/* Job Date and Time Text Icon for the job details */}
 							<Image
 								source={require("../../../../../assets/icons/time.svg")}
 								style={styles.jobDateTimeTextIcon}
 								contentFit="contain"
 							/>
+							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
 								10am to 1pm
 							</Text>
 						</View>
 					</View>
+					{/* Budget Section for the job details */}
 					<View style={styles.budgetSection}>
+						{/* Budget Title Text for the job details */}
 						<Text style={styles.budgetTitleText}>Budget</Text>
+						{/* Budget Price Text for the job details */}
 						<Text style={styles.budgetPriceText}>$500</Text>
 					</View>
+					{/* Section Title Text for the job details */}
 					<Text style={styles.sectionTitleText}>Job Description</Text>
+					{/* Section Description Text for the job details */}
 					<Text style={styles.sectionDescriptionText}>
 						Lorem Ipsum is simply dummy text of the printing and
 						typesetting industry. Lorem Ipsum has been the
@@ -181,56 +216,70 @@ export default function Page(): React.ReactElement | null {
 						took a galley of type and scrambled it to make a type
 						specimen book.
 					</Text>
+					{/* Section Title Text for the job details */}
 					<Text style={styles.sectionTitleText}>Location</Text>
+					{/* Section Description Text for the job details */}
 					<Text style={styles.sectionDescriptionText}>
 						Overlook Avenue, Belleville, NJ, USA
 					</Text>
+					{/* Map View for the job details */}
 					<Image
 						source={require("../../../../../assets/images/map3.png")}
 						style={styles.mapView}
 						contentFit="cover"
 					/>
+					{/* Section Title Text for the job details */}
 					<Text style={styles.sectionTitleText}>Gallery</Text>
+					{/* Gallery Images Wrapper for the job details */}
 					<View style={styles.galleryImagesWrapper}>
+						{/* Gallery Image Item Container for the job details */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
 						>
+							{/* Gallery Image for the job details */}
 							<Image
 								source={require("../../../../../assets/images/background1.png")}
 								style={styles.galleryImage}
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery Image Item Container for the job details */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
 						>
+							{/* Gallery Image for the job details */}
 							<Image
 								source={require("../../../../../assets/images/background2.png")}
 								style={styles.galleryImage}
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery Image Item Container for the job details */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
 						>
+							{/* Gallery Image for the job details */}
 							<Image
 								source={require("../../../../../assets/images/background3.png")}
 								style={styles.galleryImage}
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery Image Item Container for the job details */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
 						>
+							{/* Gallery Image for the job details */}
 							<ImageBackground
 								source={require("../../../../../assets/images/background4.png")}
 								style={styles.galleryImage}
 								contentFit="cover"
 							>
+								{/* See More Button for the job details */}
 								<View style={styles.seeMoreButton}>
 									<Text style={styles.seeMoreButtonText}>
 										see more
@@ -240,11 +289,15 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+				{/* Vendor Offers Card for the job details */}
 				<View style={styles.vendorOffersCard}>
+					{/* Offers Title Text for the job details */}
 					<Text style={styles.offersTitleText}>
 						Offers by vendors
 					</Text>
+					{/* Offer Cards Wrapper for the job details */}
 					<View style={styles.offerCardsWrapper}>
+						{/* Mapping through the offers to display each offer */}
 						{offers.map(
 							(offer, index): React.ReactElement | null => {
 								return (
@@ -269,6 +322,7 @@ export default function Page(): React.ReactElement | null {
 							}
 						)}
 					</View>
+					{/* Offers Popup for the job details */}
 					<OffersPopup job_id={`${id}`} mode="web" />
 				</View>
 			</View>

@@ -9,26 +9,31 @@ import { theme } from "../../../../utils/constants"
 import { PaymentOptions } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
-	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card") // State for managing the selected payment option
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing the modal visibility
 
+	// Memoized function to handle form submission
 	const handleProceed = useCallback((): void => {
-		setOpenModal(false)
+		setOpenModal(false) // Closing the modal
 		router.navigate(
+			// Navigating to the next page based on the selected payment option
 			selectedOption === "pod"
 				? "/user/home"
 				: "/user/add-job/payment-card-details"
 		)
 	}, [openModal, router])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		setOpenModal(true)
+		setOpenModal(true) // Opening the modal on form submission
 	}, [setOpenModal])
 
 	return (
+		// AddJobWebLayout component for the page layout
 		<AddJobWebLayout>
+			{/* PaymentInformationModal component for managing payment information */}
 			<PaymentInformationModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
@@ -36,35 +41,48 @@ export default function Page(): React.ReactElement | null {
 				handleProceed={handleProceed}
 				mode="web"
 			/>
+			{/* Main container for the page */}
 			<View style={styles.container}>
+				{/* Title wrapper for the page */}
 				<View style={styles.titleWrapper}>
+					{/* Title text for the page */}
 					<Text style={styles.titleText}>
 						Select Your Payment Method
 					</Text>
+					{/* Description text for the page */}
 					<Text style={styles.descriptionText}>
 						To post this job, please select your preferred payment
 						method.
 					</Text>
 				</View>
+				{/* Form container for the page */}
 				<View style={styles.formContainer}>
+					{/* Heading text for the payment options */}
 					<Text style={styles.headingText}>Options</Text>
+					{/* Payment options wrapper */}
 					<View style={styles.paymentOptionsWrapper}>
+						{/* TouchableOpacity for the card payment option */}
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
 								setSelectedOption("card")
+								// Setting the selected option to "card" on press
 							}}
 						>
+							{/* Payment option title wrapper */}
 							<View style={styles.paymentOptionTitleWrapper}>
+								{/* Image for the card payment option */}
 								<Image
 									source={require("../../../../assets/icons/card.svg")}
 									style={styles.paymentOptionIcon}
 									contentFit="contain"
 								/>
+								{/* Title text for the card payment option */}
 								<Text style={styles.paymentOptionTitleText}>
 									Credit Card/Debit Card
 								</Text>
 							</View>
+							{/* Checkbox for the card payment option */}
 							<View
 								style={[
 									styles.checkBox,
@@ -78,6 +96,7 @@ export default function Page(): React.ReactElement | null {
 								)}
 							</View>
 						</TouchableOpacity>
+						{/* Additional payment options follow the same structure */}
 						<TouchableOpacity
 							style={styles.paymentOptionContainer}
 							onPress={() => {
@@ -138,7 +157,9 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+				{/* Form button wrapper */}
 				<View style={styles.formButtonWrapper}>
+					{/* FormButton component for the form submission */}
 					<FormButton
 						length="full"
 						theme="dark"

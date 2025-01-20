@@ -146,40 +146,53 @@ export default function Tab(): React.ReactElement | null {
 		}
 	]
 
+	// State to manage the search value
 	const [searchValue, setSearchValue] = useState<string>("")
+	// State to manage the selected chat's ID
 	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id)
+	// State to manage the message text
 	const [message, setMessage] = useState<string>("")
+	// State to manage the visibility of the chat action modal
 	const [openChatActionModal, setOpenChatActionModal] =
 		useState<boolean>(false)
+	// State to manage the visibility of the delete chat confirmation modal
 	const [
 		openDeleteChatConfirmationModal,
 		setOpenDeleteChatConfirmationModal
 	] = useState<boolean>(false)
 
+	// Memoized function to handle opening the chat action modal
 	const handleOpenChatActionModal = useCallback((): void => {
-		setOpenChatActionModal(true)
+		setOpenChatActionModal(true) // Setting the state to true
 	}, [setOpenChatActionModal])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
 		<View style={styles.container}>
+			{/* Chat Actions Modal component */}
 			<ChatActionsModal
 				openModal={openChatActionModal}
 				setOpenModal={setOpenChatActionModal}
 				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
 				mode="web"
 			/>
+			{/* Delete Chat Confirmation Modal component */}
 			<DeleteChatConfirmationModal
 				openModal={openDeleteChatConfirmationModal}
 				setOpenModal={setOpenDeleteChatConfirmationModal}
 				mode="web"
 			/>
+			{/* Header Container for Notification Button */}
 			<View style={styles.headerContainer}>
 				<NotificationButton mode="web" />
 			</View>
+			{/* Body Container for all chats and chat box */}
 			<View style={styles.bodyContainer}>
+				{/* Container for all chats */}
 				<View style={styles.allChatsCardContainer}>
+					{/* Image Background for all chats header */}
 					<ImageBackground
 						source={require("../../../../assets/images/chat-header-bg.png")}
 						style={styles.allChatsCardHeader}
@@ -187,11 +200,14 @@ export default function Tab(): React.ReactElement | null {
 					>
 						<Text style={styles.allChatsTitleText}>All chats</Text>
 					</ImageBackground>
+					{/* Scroll View for all chats */}
 					<ScrollView
 						style={styles.allChatsScrollView}
 						showsVerticalScrollIndicator={false}
 					>
+						{/* Container for all chats scroll view */}
 						<View style={styles.allChatsScrollContainer}>
+							{/* Search Bar for chats */}
 							<SearchBar
 								placeholder="Search"
 								color="#F5F5F5"
@@ -202,6 +218,7 @@ export default function Tab(): React.ReactElement | null {
 								filterEnabled={false}
 								mode="app"
 							/>
+							{/* Mapping through chats array to render each chat */}
 							{chats.map(
 								(chat, index): React.ReactElement | null => {
 									return (
@@ -226,10 +243,15 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 					</ScrollView>
 				</View>
+				{/* Container for chat box */}
 				<View style={styles.chatBoxContainer}>
+					{/* Header Container for chat box */}
 					<View style={styles.chatBoxHeaderContainer}>
+						{/* Profile Wrapper for chat box */}
 						<View style={styles.chatBoxProfileWrapper}>
+							{/* Profile Image Wrapper for chat box */}
 							<View style={styles.chatBoxProfileImageWrapper}>
+								{/* Profile Image for chat box */}
 								<Image
 									source={
 										chats.find((chat): boolean => {
@@ -239,13 +261,16 @@ export default function Tab(): React.ReactElement | null {
 									style={styles.chatBoxProfileImage}
 									contentFit="cover"
 								/>
+								{/* Online Marker for chat box */}
 								{chats.find((chat): boolean => {
 									return chat._id === selectedChat
 								})?.online && (
 									<View style={styles.onlineMarker} />
 								)}
 							</View>
+							{/* Profile Details Wrapper for chat box */}
 							<View style={styles.chatBoxProfileDetailsWrapper}>
+								{/* User Name Text for chat box */}
 								<Text style={styles.chatBoxUserNameText}>
 									{
 										chats.find((chat): boolean => {
@@ -253,6 +278,7 @@ export default function Tab(): React.ReactElement | null {
 										})?.fullName
 									}
 								</Text>
+								{/* Online Text for chat box */}
 								<Text style={styles.chatBoxOnlineText}>
 									{chats.find((chat): boolean => {
 										return chat._id === selectedChat
@@ -262,10 +288,12 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Options Button Container for chat box */}
 						<TouchableOpacity
 							style={styles.chatBoxOptionsButtonContainer}
 							onPress={handleOpenChatActionModal}
 						>
+							{/* Icon for chat box options */}
 							<Entypo
 								name="dots-three-vertical"
 								size={15}
@@ -273,13 +301,18 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Scroll View for chat cards */}
 					<ScrollView
 						style={styles.chatsCardScrollView}
 						showsVerticalScrollIndicator={false}
 					>
+						{/* Container for chat cards scroll view */}
 						<View style={styles.chatCardsScrollContainer}>
+							{/* Job Card for demonstration */}
 							<View style={styles.jobCard}>
+								{/* Horizontal Wrapper for job card */}
 								<View style={styles.horizontalWrapper}>
+									{/* Job Title Text */}
 									<Text
 										style={styles.jobTitleText}
 										numberOfLines={2}
@@ -287,8 +320,10 @@ export default function Tab(): React.ReactElement | null {
 									>
 										Car Wash Service Needed
 									</Text>
+									{/* Amount Text */}
 									<Text style={styles.amountText}>$500</Text>
 								</View>
+								{/* Job Description Text */}
 								<Text
 									style={styles.jobDescriptionText}
 									numberOfLines={2}
@@ -298,13 +333,18 @@ export default function Tab(): React.ReactElement | null {
 									SUV. Preferably before noon...
 								</Text>
 							</View>
+							{/* Chat Section Header */}
 							<View style={styles.chatSectionHeader}>
+								{/* Horizontal Separator */}
 								<HorizontalSeparator color="#EDEDED" />
+								{/* Chat Section Title Text */}
 								<Text style={styles.chatSectionTitleText}>
 									Yesterday
 								</Text>
+								{/* Horizontal Separator */}
 								<HorizontalSeparator color="#EDEDED" />
 							</View>
+							{/* Mapping through messages array to render each message */}
 							{messages.map(
 								(message, index): React.ReactElement | null => {
 									return (
@@ -319,13 +359,18 @@ export default function Tab(): React.ReactElement | null {
 									)
 								}
 							)}
+							{/* Chat Section Header */}
 							<View style={styles.chatSectionHeader}>
+								{/* Horizontal Separator */}
 								<HorizontalSeparator color="#EDEDED" />
+								{/* Chat Section Title Text */}
 								<Text style={styles.chatSectionTitleText}>
 									Today
 								</Text>
+								{/* Horizontal Separator */}
 								<HorizontalSeparator color="#EDEDED" />
 							</View>
+							{/* Mapping through messages array to render each message */}
 							{messages.map(
 								(message, index): React.ReactElement | null => {
 									return (
@@ -342,6 +387,7 @@ export default function Tab(): React.ReactElement | null {
 							)}
 						</View>
 					</ScrollView>
+					{/* Chat Input Field for sending messages */}
 					<ChatInputField
 						value={message}
 						onChangeText={setMessage}
