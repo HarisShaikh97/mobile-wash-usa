@@ -76,18 +76,20 @@ export default function AccountErrorModal({
 					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
-							theme="light"
+							colorTheme="light"
 							title="Cancel"
+							isLoading={false}
 							length="half"
 							onPress={handleCancel}
 						/>
 						<FormButton
-							theme="dark"
+							colorTheme="dark"
 							title={
 								type === "payment-required"
 									? "Add Payment Method"
 									: "Contact Support"
 							}
+							isLoading={false}
 							length="half"
 							onPress={handleProceed}
 						/>

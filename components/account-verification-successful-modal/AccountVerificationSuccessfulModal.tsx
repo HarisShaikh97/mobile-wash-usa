@@ -71,7 +71,8 @@ export default function AccountVerificationSuccessfulModal({
 						</View>
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title="Login"
 							onPress={handleSubmit}
 						/>

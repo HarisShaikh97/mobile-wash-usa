@@ -56,18 +56,20 @@ export default function AccountActionModal({
 					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
-							theme="black"
+							colorTheme="black"
 							title="Cancel"
+							isLoading={false}
 							length="half"
 							onPress={handleCancel}
 						/>
 						<FormButton
-							theme="danger"
+							colorTheme="danger"
 							title={
 								type === "deactivate"
 									? "Deactivate Account"
 									: "Delete Account"
 							}
+							isLoading={false}
 							length="half"
 							onPress={handleProceed}
 						/>

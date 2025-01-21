@@ -76,7 +76,8 @@ export default function JobCompletionSuccessfulModal({
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
-								theme="dark"
+								colorTheme="dark"
+								isLoading={false}
 								title="Okay"
 								onPress={handleSubmit}
 							/>

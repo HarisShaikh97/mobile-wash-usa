@@ -111,4 +111,9 @@ export type SignUpData = {
 	documents?: File[]
 }
 
+export type LoginData = {
+	email: string
+	password: string
+}
+
 export type PaymentOptions = "card" | "paypal" | "pod"

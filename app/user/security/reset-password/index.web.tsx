@@ -85,7 +85,8 @@ export default function Page(): React.ReactElement | null {
 					<View style={styles.formButtonWrapper}>
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title="Reset Password"
 							onPress={handleSubmit}
 						/>

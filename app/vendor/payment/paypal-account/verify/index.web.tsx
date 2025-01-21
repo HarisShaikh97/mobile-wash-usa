@@ -37,7 +37,8 @@ export default function Page(): React.ReactElement | null {
 				<OTPInput onChangeText={setOTP} />
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>

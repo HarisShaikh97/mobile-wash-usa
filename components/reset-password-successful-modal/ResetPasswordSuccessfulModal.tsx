@@ -67,7 +67,8 @@ export default function ResetPasswordSuccessfulModal({
 						</View>
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title={formButtonTitle}
 							onPress={handleSubmit}
 						/>

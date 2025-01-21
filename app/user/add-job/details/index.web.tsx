@@ -74,7 +74,8 @@ export default function Page(): React.ReactElement | null {
 						{/* FormButton component for form submission */}
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title="Next"
 							onPress={handleSubmit}
 						/>

@@ -56,7 +56,8 @@ export default function PaymentInformationModal({
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title={
 								selectedOption === "pod"
 									? "Confirm and Post Job"
@@ -66,7 +67,8 @@ export default function PaymentInformationModal({
 						/>
 						<FormButton
 							length="full"
-							theme="light"
+							colorTheme="light"
+							isLoading={false}
 							title="Change Payment Method"
 							onPress={handleChangeMethod}
 						/>

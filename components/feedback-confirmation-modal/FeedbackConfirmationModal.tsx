@@ -66,7 +66,8 @@ export default function FeedbackConfirmationModal({
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
-								theme="gray"
+								colorTheme="gray"
+								isLoading={false}
 								title="Close"
 								onPress={handleSubmit}
 							/>

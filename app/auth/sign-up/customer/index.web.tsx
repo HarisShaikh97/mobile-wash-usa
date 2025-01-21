@@ -143,7 +143,8 @@ export default function Page(): React.ReactElement | null {
 				{/* Form button for sign up */}
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Sign Up"
 					onPress={handleSubmit}
 				/>

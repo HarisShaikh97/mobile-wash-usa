@@ -74,13 +74,15 @@ export default function BidSubmittedModal({
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="half"
-								theme="light"
+								colorTheme="light"
+								isLoading={false}
 								title="Go to Dashboard"
 								onPress={handleGoToDashboard}
 							/>
 							<FormButton
 								length="half"
-								theme="dark"
+								colorTheme="dark"
+								isLoading={false}
 								title="View More Jobs"
 								onPress={handleViewMoreJobs}
 							/>

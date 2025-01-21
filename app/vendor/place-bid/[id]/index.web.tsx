@@ -70,14 +70,16 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<View style={styles.actionButtonsWrapper}>
 				<FormButton
-					theme="light"
+					colorTheme="light"
 					title="Cancel"
+					isLoading={false}
 					onPress={handleCancel}
 					length="half"
 				/>
 				<FormButton
-					theme="dark"
+					colorTheme="dark"
 					title="Submit Bid"
+					isLoading={false}
 					onPress={handleSubmitBid}
 					length="half"
 				/>

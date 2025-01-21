@@ -51,14 +51,16 @@ export default function DeleteChatConfirmationModal({
 					</Text>
 					<View style={styles.actionButtonsWrapper}>
 						<FormButton
-							theme="black"
+							colorTheme="black"
 							title="Cancel"
+							isLoading={false}
 							length="half"
 							onPress={handleCancel}
 						/>
 						<FormButton
-							theme="danger"
+							colorTheme="danger"
 							title="Delete Chat"
+							isLoading={false}
 							length="half"
 							onPress={handleProceed}
 						/>

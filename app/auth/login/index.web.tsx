@@ -2,8 +2,10 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
+import { login } from "../../../helpers/auth"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -12,11 +14,39 @@ export default function Page(): React.ReactElement | null {
 	const [userName, setUserName] = useState<string>("") // State to store the user's name
 	const [password, setPassword] = useState<string>("") // State to store the user's password
 
+	// Memoized function to handle login success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+			// Get the role of the user
+			const role = data?.data?.user?.role
+			if (role) {
+				// Check if the user is a vendor or a customer and navigate to the appropriate page
+				router.navigate(
+					role === "vendor" ? "/vendor/home" : "/user/home"
+				)
+			}
+		},
+		[router]
+	)
+
+	// Memoized function to handle login error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle login
+	const { mutate, isPending } = useMutation({
+		mutationFn: login,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
-		// Navigate to the user home page
-		router.navigate("/user/home")
-	}, [router])
+		// Mutate the login function with the user's name and password
+		mutate({ email: userName, password: password })
+	}, [mutate, userName, password])
 
 	// Memoized function to handle sign up
 	const handleSignUp = useCallback((): void => {
@@ -70,7 +100,8 @@ export default function Page(): React.ReactElement | null {
 			{/* Login button */}
 			<FormButton
 				length="full"
-				theme="dark"
+				colorTheme="dark"
+				isLoading={isPending}
 				title="Login"
 				onPress={handleLogin}
 			/>

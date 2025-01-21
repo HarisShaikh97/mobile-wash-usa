@@ -155,7 +155,8 @@ export default function Page(): React.ReactElement | null {
 				{/* FormButton component for confirming payment */}
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Confirm Payment"
 					onPress={handleSubmit}
 				/>

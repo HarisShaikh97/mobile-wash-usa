@@ -1,16 +1,23 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native"
+import {
+	TouchableOpacity,
+	Text,
+	ActivityIndicator,
+	StyleSheet
+} from "react-native"
 import { theme } from "../../utils/constants"
 
 interface FormButtonProps {
 	length: "full" | "half"
-	theme: "light" | "dark" | "danger" | "black" | "gray"
+	colorTheme: "light" | "dark" | "danger" | "black" | "gray"
+	isLoading: boolean
 	title: string
 	onPress: () => void
 }
 
 export default function FormButton({
 	length,
-	theme,
+	colorTheme,
+	isLoading,
 	title,
 	onPress
 }: FormButtonProps): React.ReactElement | null {
@@ -21,36 +28,53 @@ export default function FormButton({
 				length === "full"
 					? styles.buttonContainerFull
 					: styles.buttonContainerHalf,
-				theme === "dark"
+				colorTheme === "dark"
 					? styles.buttonDarkTheme
-					: theme === "light"
+					: colorTheme === "light"
 					? styles.buttonLightTheme
-					: theme === "danger"
+					: colorTheme === "danger"
 					? styles.buttonDangerTheme
-					: theme === "black"
+					: colorTheme === "black"
 					? styles.buttonBlackTheme
-					: theme === "gray" && styles.buttonGrayTheme
+					: colorTheme === "gray" && styles.buttonGrayTheme
 			]}
+			disabled={isLoading}
 			onPress={onPress}
 		>
-			<Text
-				style={[
-					length === "full"
-						? styles.buttonText
-						: styles.buttonTextSmall,
-					theme === "dark"
-						? styles.buttonDarkThemeText
-						: theme === "light"
-						? styles.buttonLightThemeText
-						: theme === "danger"
-						? styles.buttonDangerThemeText
-						: theme === "black"
-						? styles.buttonDarkThemeText
-						: theme === "gray" && styles.buttonGrayThemeText
-				]}
-			>
-				{title}
-			</Text>
+			{isLoading ? (
+				<ActivityIndicator
+					size={25}
+					color={
+						colorTheme === "dark" ||
+						colorTheme === "black" ||
+						colorTheme === "gray"
+							? "white"
+							: colorTheme === "danger"
+							? "#DC3545"
+							: theme.colors.primary
+					}
+				/>
+			) : (
+				<Text
+					style={[
+						length === "full"
+							? styles.buttonText
+							: styles.buttonTextSmall,
+						colorTheme === "dark"
+							? styles.buttonDarkThemeText
+							: colorTheme === "light"
+							? styles.buttonLightThemeText
+							: colorTheme === "danger"
+							? styles.buttonDangerThemeText
+							: colorTheme === "black"
+							? styles.buttonDarkThemeText
+							: colorTheme === "gray" &&
+							  styles.buttonGrayThemeText
+					]}
+				>
+					{title}
+				</Text>
+			)}
 		</TouchableOpacity>
 	)
 }

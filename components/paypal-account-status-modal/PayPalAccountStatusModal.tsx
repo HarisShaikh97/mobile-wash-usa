@@ -66,7 +66,8 @@ export default function PayPalAccountStatusModal({
 					</Text>
 					<FormButton
 						length="half"
-						theme="dark"
+						colorTheme="dark"
+						isLoading={false}
 						title={status === "success" ? "Ok" : "Resend Code"}
 						onPress={handleSubmit}
 					/>

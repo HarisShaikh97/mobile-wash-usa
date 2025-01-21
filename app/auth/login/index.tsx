@@ -65,7 +65,8 @@ export default function Page(): React.ReactElement | null {
 				{/* Form button to submit the login form */}
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Login"
 					onPress={handleLogin}
 				/>

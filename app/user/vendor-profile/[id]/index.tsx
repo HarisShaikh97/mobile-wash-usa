@@ -88,7 +88,8 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<FormButton
 				length="half"
-				theme="dark"
+				colorTheme="dark"
+				isLoading={false}
 				title="Send Message"
 				onPress={handleSendMessage}
 			/>

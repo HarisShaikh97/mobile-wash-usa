@@ -83,7 +83,8 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<FormButton
 				length="full"
-				theme="dark"
+				colorTheme="dark"
+				isLoading={false}
 				title="Link PayPal"
 				onPress={handleSubmit}
 			/>

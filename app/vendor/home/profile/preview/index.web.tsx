@@ -128,7 +128,8 @@ export default function Page(): React.ReactElement | null {
 						<View style={styles.formButtonWrapper}>
 							<FormButton
 								length="half"
-								theme="dark"
+								colorTheme="dark"
+								isLoading={false}
 								title="Edit Profile"
 								onPress={handleEditProfile}
 							/>

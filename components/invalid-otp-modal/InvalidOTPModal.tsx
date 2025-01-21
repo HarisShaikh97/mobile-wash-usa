@@ -70,7 +70,8 @@ export default function InvalidOTPModal({
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
-								theme="black"
+								colorTheme="black"
+								isLoading={false}
 								title="Retry"
 								onPress={handleSubmit}
 							/>

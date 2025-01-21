@@ -141,7 +141,8 @@ export default function JobsFilterModal({
 					<FormButton
 						title="Apply Filter"
 						onPress={handleApplyFilter}
-						theme="dark"
+						isLoading={false}
+						colorTheme="dark"
 						length="full"
 					/>
 				</ImageBackground>

@@ -72,7 +72,8 @@ export default function Page(): React.ReactElement | null {
 				{/* Form button to submit the form */}
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Reset Password"
 					onPress={handleSubmit}
 				/>

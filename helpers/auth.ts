@@ -1,10 +1,14 @@
 import axios from "axios"
-import { SignUpData } from "../utils/types"
+import { SignUpData, LoginData } from "../utils/types"
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL
+const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
 
 export const signUp = async (data: FormData | SignUpData): Promise<any> => {
-	console.log(`${API_URL}/api/register`)
-	const response = await axios.post(`${API_URL}/api/register`, data)
+	const response = await api.post("/api/register", data)
+	return response.data
+}
+
+export const login = async (data: LoginData): Promise<any> => {
+	const response = await api.post("/api/v1/login", data)
 	return response.data
 }

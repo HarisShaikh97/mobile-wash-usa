@@ -110,7 +110,8 @@ export default function Page(): React.ReactElement | null {
 						{/* Form button to navigate to the next page */}
 						<FormButton
 							length="full"
-							theme="dark"
+							colorTheme="dark"
+							isLoading={false}
 							title="Next"
 							onPress={handleSubmit}
 						/>

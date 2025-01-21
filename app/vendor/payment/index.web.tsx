@@ -94,7 +94,8 @@ export default function Page(): React.ReactElement | null {
 			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"
-					theme="dark"
+					colorTheme="dark"
+					isLoading={false}
 					title="Next"
 					onPress={handleSubmit}
 				/>

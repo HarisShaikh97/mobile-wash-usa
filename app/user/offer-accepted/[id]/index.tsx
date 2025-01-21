@@ -119,7 +119,8 @@ export default function Page(): React.ReactElement | null {
 			</View>
 			<FormButton
 				length="full"
-				theme="light"
+				colorTheme="light"
+				isLoading={false}
 				title="Download Receipt"
 				onPress={handleSubmit}
 			/>
