@@ -1,8 +1,10 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -15,10 +17,39 @@ export default function Page(): React.ReactElement | null {
 	const [password, setPassword] = useState<string>("") // State to store the user's password
 	const [location, setLocation] = useState<string>("") // State to store the user's location
 
+	// Memoized function to handle sign up success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
+		},
+		[router]
+	)
+
+	// Memoized function to handle sign up error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle sign up
+	const { mutate, isPending } = useMutation({
+		mutationFn: signUp,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
-	}, [router])
+		// Mutate the sign up function with the user's information
+		mutate({
+			full_name: fullName,
+			email: email,
+			phone_number: phoneNumber,
+			password: password,
+			address: location,
+			role: "customer"
+		})
+	}, [mutate, fullName, email, phoneNumber, password, location])
 
 	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {
@@ -144,7 +175,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={false}
+					isLoading={isPending}
 					title="Sign Up"
 					onPress={handleSubmit}
 				/>
