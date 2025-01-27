@@ -3,14 +3,19 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 import Feather from "@expo/vector-icons/Feather"
 import ProfileImageBox from "../../../../components/profile-image-box/ProfileImageBox"
 import Switch from "../../../../components/switch/Switch"
+import { deleteSession } from "../../../../features/auth/authSlice"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
 	// Using useRouter hook to navigate
 	const router = useRouter()
+
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
 
 	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
@@ -20,9 +25,13 @@ export default function Tab(): React.ReactElement | null {
 		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
 	}, [notificationsEnabled])
 
-	// Memoized function to handle logging out
+	// Memoized function to handle logout
 	const handleLogout = useCallback((): void => {
-		router.navigate("/") // Navigate to the home page
+		// Dispatching the deleteSession action to remove the user's session
+		dispatch(deleteSession())
+
+		// Navigating to the welcome page after logout
+		router.navigate("/")
 	}, [router])
 
 	return (

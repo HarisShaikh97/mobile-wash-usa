@@ -3,35 +3,52 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 import Feather from "@expo/vector-icons/Feather"
 import ProfileImageBox from "../../../../components/profile-image-box/ProfileImageBox"
 import ProfileLayout from "../../../../components/profile-layout/ProfileLayout"
 import Switch from "../../../../components/switch/Switch"
+import { deleteSession } from "../../../../features/auth/authSlice"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
+	// Using useRouter hook to navigate
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
+	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
 
-	const handleUpdatedNotificationStatus = () => {
-		notificationsEnabled.value = !notificationsEnabled.value
-	}
+	// Memoized function to handle updating the notification status
+	const handleUpdatedNotificationStatus = useCallback(() => {
+		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
+	}, [notificationsEnabled])
 
+	// Memoized function to handle logout
 	const handleLogout = useCallback((): void => {
+		// Dispatching the deleteSession action to remove the user's session
+		dispatch(deleteSession())
+
+		// Navigating to the welcome page after logout
 		router.navigate("/")
 	}, [router])
 
 	return (
 		<ProfileLayout title="Profile">
 			<View style={styles.accountSettingsSection}>
+				{/* Account section header */}
 				<Text style={styles.headingText}>Account</Text>
+				{/* Profile information card */}
 				<View style={styles.profileTab}>
 					<View style={styles.profileIconWrapper}>
+						{/* Profile image */}
 						<ProfileImageBox
 							source={require("../../../../assets/images/vendor-profile.png")}
 							mode="app"
 						/>
+						{/* User details */}
 						<View style={styles.profileTextWrapper}>
 							<Text style={styles.usernameText}>
 								Michael Guzzi
@@ -41,6 +58,7 @@ export default function Tab(): React.ReactElement | null {
 							</Text>
 						</View>
 					</View>
+					{/* Navigation button to profile preview */}
 					<TouchableOpacity
 						style={styles.nextButton}
 						onPress={() => {
@@ -54,8 +72,11 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+				{/* Settings section header */}
 				<Text style={styles.headingText}>Setting</Text>
+				{/* Container for all setting options */}
 				<View style={styles.settingOptionContainer}>
+					{/* Edit Profile option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -80,6 +101,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Security settings option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -104,6 +126,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Payment details option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -128,6 +151,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Account status option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -152,6 +176,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Notification toggle option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -170,6 +195,7 @@ export default function Tab(): React.ReactElement | null {
 							duration={250}
 						/>
 					</View>
+					{/* Help and support option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -194,6 +220,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Privacy policy option */}
 					<View style={styles.settingOption}>
 						<View style={styles.settingOptionNameWrapper}>
 							<Image
@@ -218,6 +245,7 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Logout button */}
 					<TouchableOpacity
 						style={styles.logOutButton}
 						onPress={handleLogout}

@@ -2,6 +2,8 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { ImageBackground, Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
+import { deleteSession } from "../../features/auth/authSlice"
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs"
 import NavItemWeb from "../nav-item-web/NavItemWeb"
 import { theme, WEB_SIDE_NAV_WIDTH } from "../../utils/constants"
@@ -12,25 +14,37 @@ export default function SideNavWeb({
 	navigation,
 	insets
 }: BottomTabBarProps): React.ReactElement | null {
-	const router = useRouter()
+	const router = useRouter() // Initializing the router instance for navigation
 
+	const dispatch = useDispatch() // Initializing the dispatch function for Redux
+
+	// Memoized function to handle logout
 	const handleLogout = useCallback((): void => {
+		// Dispatching the deleteSession action to remove the user's session
+		dispatch(deleteSession())
+
+		// Navigating to the welcome page after logout
 		router.navigate("/")
 	}, [router])
 
 	return (
+		// Main container for the side navigation
 		<View style={styles.sideNavWrapper}>
+			{/* Background image container */}
 			<ImageBackground
 				source={require("../../assets/images/side-nav-bg.png")}
 				style={styles.sideNavContainer}
 				contentFit="fill"
 			>
+				{/* Company logo */}
 				<Image
 					source={require("../../assets/logo/logo.png")}
 					style={styles.logoImage}
 					contentFit="contain"
 				/>
+				{/* Container for navigation items */}
 				<View style={styles.navItemsWrapper}>
+					{/* Map through routes to create navigation items */}
 					{state.routes.map((route, index) => (
 						<NavItemWeb
 							state={state}
@@ -43,15 +57,18 @@ export default function SideNavWeb({
 						/>
 					))}
 				</View>
+				{/* Logout button */}
 				<TouchableOpacity
 					style={styles.navItemContainer}
 					onPress={handleLogout}
 				>
+					{/* Logout icon */}
 					<Image
 						source={require("../../assets/icons/logout-blue.svg")}
 						style={styles.navIcon}
 						contentFit="contain"
 					/>
+					{/* Logout text */}
 					<Text style={styles.titleText}>Logout</Text>
 				</TouchableOpacity>
 			</ImageBackground>

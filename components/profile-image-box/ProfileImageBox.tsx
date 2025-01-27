@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 	profileImageContainer: {
 		borderWidth: 1.15,
 		borderColor: "white",
+		backgroundColor: "white",
 		overflow: "hidden",
 		alignItems: "center",
 		justifyContent: "center"

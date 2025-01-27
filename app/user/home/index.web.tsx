@@ -18,6 +18,9 @@ import { services, theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize router for navigation
 	const router = useRouter()
 
@@ -107,8 +110,16 @@ export default function Tab(): React.ReactElement | null {
 				<View style={styles.headerContainer}>
 					{/* Profile card showing user avatar and name, links to profile */}
 					<ProfileCardWeb
-						imageSource={require("../../../assets/images/profile.png")}
-						userName="John Cosby"
+						imageSource={
+							user &&
+							user.profile_pic &&
+							user.profile_pic.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${user.profile_pic}`
+								  }
+								: require("../../../assets/images/profile.png")
+						}
+						userName={user && user.full_name ? user.full_name : ""}
 						onPress={() => {
 							router.navigate("/user/home/profile")
 						}}
@@ -127,12 +138,21 @@ export default function Tab(): React.ReactElement | null {
 					>
 						{/* Prominent user profile image display */}
 						<ProfileImageBox
-							source={require("../../../assets/images/profile.png")}
+							source={
+								user &&
+								user.profile_pic &&
+								user.profile_pic.length > 0
+									? {
+											uri: `${BASE_URL}/storage/${user.profile_pic}`
+									  }
+									: require("../../../assets/images/profile.png")
+							}
 							mode="web"
 						/>
 						{/* Large personalized welcome heading */}
 						<Text style={styles.welcomeHeadingText}>
-							Welcome, John
+							Welcome,{" "}
+							{user && user.full_name ? user.full_name : ""}
 						</Text>
 						{/* Service description text */}
 						<Text style={styles.welcomeDescriptionText}>
@@ -140,7 +160,6 @@ export default function Tab(): React.ReactElement | null {
 							home, and business
 						</Text>
 					</ImageBackground>
-
 					{/* Post Job card with action button */}
 					<View style={styles.postJobCardContainer}>
 						{/* Card title text */}
@@ -165,7 +184,6 @@ export default function Tab(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
-
 				{/* Services grid showing available service categories */}
 				<View style={styles.cardsWrapper}>
 					{services.map(
@@ -181,7 +199,6 @@ export default function Tab(): React.ReactElement | null {
 						}
 					)}
 				</View>
-
 				{/* My Jobs section header with title and See all link */}
 				<View style={styles.myJobsTitleBarContainer}>
 					<View style={styles.myJobsTitleWrapper}>
@@ -201,7 +218,6 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.seeAllText}>See all</Text>
 					</TouchableOpacity>
 				</View>
-
 				{/* Jobs grid with 3-column layout */}
 				<View style={styles.cardsWrapper}>
 					{/* Map and render individual job cards */}
