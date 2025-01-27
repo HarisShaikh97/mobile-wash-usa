@@ -1,30 +1,35 @@
-import { ScrollView, View, StyleSheet } from "react-native"
+import { ScrollView, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import { Slot } from "expo-router"
 import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main background container with sign up background image
 		<ImageBackground
 			source={require("../../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Back navigation button */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Secondary background container with screen background image */}
 			<ImageBackground
 				source={require("../../../../assets/images/screen-bg.png")}
 				style={styles.bgImage}
 				contentFit="fill"
 			>
+				{/* Scrollable content container */}
 				<ScrollView
 					style={styles.bodyScrollView}
 					showsVerticalScrollIndicator={false}
 				>
+					{/* Slot for child components */}
 					<Slot />
 				</ScrollView>
 			</ImageBackground>

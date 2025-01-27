@@ -5,11 +5,13 @@ import BackButton from "../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Background image container for the privacy policy layout
 		<ImageBackground
 			source={require("../../../assets/images/screen-bg.png")}
 			style={styles.bgImage}
 			contentFit="fill"
 		>
+			{/* Header section containing back navigation button */}
 			<View style={styles.headerContainer}>
 				<BackButton
 					size="small"
@@ -18,6 +20,7 @@ export default function Layout(): React.ReactElement | null {
 					borderColor="transparent"
 				/>
 			</View>
+			{/* Slot component for rendering child routes */}
 			<Slot />
 		</ImageBackground>
 	)

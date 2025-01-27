@@ -7,6 +7,8 @@ import {
 } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
+import { RootState } from "../../../store/store"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
@@ -18,6 +20,11 @@ import { Job } from "../../../utils/types"
 export default function Tab(): React.ReactElement | null {
 	// Initialize router for navigation
 	const router = useRouter()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
+
+	console.log(user)
 
 	const jobs: Job[] = [
 		{

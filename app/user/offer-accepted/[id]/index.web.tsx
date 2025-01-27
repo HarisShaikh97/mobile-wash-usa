@@ -8,19 +8,28 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
+
+	// Initialize router for navigation
 	const router = useRouter()
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
+		// Navigate to the rating and review page
 		router.navigate(`/user/rating-and-review/${id}`)
 	}, [router, id])
 
 	return (
+		// Main container
 		<View style={styles.container}>
+			{/* Success check icon */}
 			<View style={styles.checkIconContainer}>
 				<FontAwesome6 name="check" size={37.5} color="white" />
 			</View>
+			{/* Title */}
 			<Text style={styles.titleText}>Offer Accepted!</Text>
+			{/* OTP display box */}
 			<View style={styles.otpBox}>
 				<Text style={styles.otpHeadingText}>Generated OTP</Text>
 				<Text style={styles.otpValueText}>123456</Text>
@@ -28,12 +37,15 @@ export default function Page(): React.ReactElement | null {
 					Is Your OTP For Job Confirmation
 				</Text>
 			</View>
+			{/* OTP instructions */}
 			<Text style={[styles.descriptionText, styles.instructionText]}>
 				Once the job is completed, please provide the OTP to verify and
 				confirm job completion.
 			</Text>
+			{/* Job receipt details container */}
 			<View style={styles.jobReceiptContainer}>
 				<HorizontalSeparator color="#F5F5F5" />
+				{/* Payment method section */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>
 						Payment method
@@ -48,6 +60,7 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 				<HorizontalSeparator color="#F5F5F5" />
+				{/* Job details section */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>Job Title:</Text>
 					<Text
@@ -61,6 +74,7 @@ export default function Page(): React.ReactElement | null {
 						Car Wash At Home
 					</Text>
 				</View>
+				{/* Date and time */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>Date & Time:</Text>
 					<Text
@@ -74,6 +88,7 @@ export default function Page(): React.ReactElement | null {
 						October 5, 2024 02:00 PM
 					</Text>
 				</View>
+				{/* Location details */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>Location:</Text>
 					<Text
@@ -88,6 +103,7 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				</View>
 				<HorizontalSeparator color="#F5F5F5" />
+				{/* Vendor information */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>Vendor Name:</Text>
 					<Text
@@ -101,6 +117,7 @@ export default function Page(): React.ReactElement | null {
 						Michael Guzzi
 					</Text>
 				</View>
+				{/* Budget information */}
 				<View style={styles.horizontalWrapper}>
 					<Text style={styles.receiptHeadingText}>
 						Agreed Budget:
@@ -117,6 +134,7 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				</View>
 			</View>
+			{/* Download receipt button */}
 			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"

@@ -5,7 +5,8 @@ import { theme } from "../../../../../../utils/constants"
 import { Offer } from "../../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const { id } = useLocalSearchParams() // Using useLocalSearchParams to get the id from the URL
+	// Retrieve the offer ID from the URL parameters
+	const { id } = useLocalSearchParams()
 
 	const offers: Offer[] = [
 		{

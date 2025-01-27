@@ -14,6 +14,10 @@ export type Theme = {
 	colors: ThemeColors
 }
 
+export type UserRole = "customer" | "vendor"
+
+export type AccountStatus = "active" | "inactive" | "banned"
+
 export type Service = {
 	title: string
 	image: ImageSourcePropType
@@ -106,7 +110,7 @@ export type SignUpData = {
 	phone_number: string
 	password: string
 	location: string
-	role: "customer" | "vendor"
+	role: UserRole
 	businessInformation?: string
 	documents?: File[]
 }
@@ -114,6 +118,25 @@ export type SignUpData = {
 export type LoginData = {
 	email: string
 	password: string
+}
+
+export type User = {
+	id: number
+	full_name: string
+	email: string
+	phone_number: string
+	role: UserRole
+	address: string | null
+	location: {
+		lat: number
+		lng: number
+	}
+	business_information: string | null
+	profile_pic: string | null
+	status: AccountStatus
+	onesignal_player_id: string | null
+	about: string | null
+	created_at: string
 }
 
 export type PaymentOptions = "card" | "paypal" | "pod"

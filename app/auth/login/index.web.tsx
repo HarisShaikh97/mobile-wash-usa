@@ -3,13 +3,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
+import { useDispatch } from "react-redux"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { login } from "../../../helpers/auth"
+import { createSession } from "../../../features/auth/authSlice"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter() // Initializing the router instance for navigation
+
+	const dispatch = useDispatch() // Initializing the dispatch function for Redux
 
 	const [userName, setUserName] = useState<string>("") // State to store the user's name
 	const [password, setPassword] = useState<string>("") // State to store the user's password
@@ -18,6 +22,15 @@ export default function Page(): React.ReactElement | null {
 	const handleSuccess = useCallback(
 		(data: any) => {
 			console.log(data)
+
+			// Create a session for the user
+			dispatch(
+				createSession({
+					user: data.data.user,
+					token: data.data.access_token
+				})
+			)
+
 			// Get the role of the user
 			const role = data?.data?.user?.role
 			if (role) {
@@ -27,7 +40,7 @@ export default function Page(): React.ReactElement | null {
 				)
 			}
 		},
-		[router]
+		[router, dispatch, createSession]
 	)
 
 	// Memoized function to handle login error

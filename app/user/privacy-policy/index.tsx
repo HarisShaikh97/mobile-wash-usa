@@ -3,13 +3,18 @@ import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	return (
+		// Main container for the privacy policy page
 		<View style={styles.container}>
+			{/* Page title */}
 			<Text style={styles.titleText}>Privacy Policy</Text>
+			{/* Scrollable container for privacy policy content */}
 			<ScrollView
 				style={styles.privacyPolicyCard}
 				showsVerticalScrollIndicator={false}
 			>
+				{/* Container for all privacy policy sections */}
 				<View style={styles.privacyPolicyCardScrollContainer}>
+					{/* Introduction section */}
 					<Text style={styles.cardTitleText}>1. Introduction:</Text>
 					<Text style={styles.cardDescriptionText}>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -23,6 +28,7 @@ export default function Page(): React.ReactElement | null {
 						velit esse cillum dolore eu fugiat nulla pariatur.
 						Excepteur sint occaecat cupidatat non proident.
 					</Text>
+					{/* Information Collection section */}
 					<Text style={styles.cardTitleText}>
 						2. Information Collection:
 					</Text>
@@ -36,6 +42,7 @@ export default function Page(): React.ReactElement | null {
 						Nemo enim ipsam voluptatem quia voluptas sit aspernatur
 						aut odit aut fugit.
 					</Text>
+					{/* Use of Information section */}
 					<Text style={styles.cardTitleText}>
 						3. Use of Information:
 					</Text>
@@ -47,6 +54,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Data Sharing section */}
 					<Text style={styles.cardTitleText}>4. Data Sharing:</Text>
 					<Text style={styles.cardDescriptionText}>
 						At vero eos et accusamus et iusto odio dignissimos
@@ -56,6 +64,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Use of Information (repeated) section */}
 					<Text style={styles.cardTitleText}>
 						5. Use of Information:
 					</Text>
@@ -67,6 +76,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Security section */}
 					<Text style={styles.cardTitleText}>6. Security:</Text>
 					<Text style={styles.cardDescriptionText}>
 						At vero eos et accusamus et iusto odio dignissimos
@@ -76,6 +86,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* User Rights section */}
 					<Text style={styles.cardTitleText}>7. User Rights:</Text>
 					<Text style={styles.cardDescriptionText}>
 						At vero eos et accusamus et iusto odio dignissimos
@@ -85,6 +96,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Cookies section */}
 					<Text style={styles.cardTitleText}>8. Cookies:</Text>
 					<Text style={styles.cardDescriptionText}>
 						At vero eos et accusamus et iusto odio dignissimos
@@ -94,6 +106,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Data Retention section */}
 					<Text style={styles.cardTitleText}>9. Data Retention:</Text>
 					<Text style={styles.cardDescriptionText}>
 						At vero eos et accusamus et iusto odio dignissimos
@@ -103,6 +116,7 @@ export default function Page(): React.ReactElement | null {
 						in culpa qui officia deserunt mollitia animi, id est
 						laborum et dolorum fuga
 					</Text>
+					{/* Changes to Policy section */}
 					<Text style={styles.cardTitleText}>
 						10. Changes to the Policy:
 					</Text>
