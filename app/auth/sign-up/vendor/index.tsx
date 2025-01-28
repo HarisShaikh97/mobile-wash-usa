@@ -248,7 +248,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={false}
+					isLoading={isPending}
 					title="Sign Up"
 					onPress={handleSubmit}
 				/>
