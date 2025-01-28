@@ -1,18 +1,27 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { useSelector } from "react-redux"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const [OTP, setOTP] = useState<string>("") // State to store the OTP input by the user
 	const [openModal, setOpenModal] = useState<boolean>(false) // State to manage the modal visibility
 
+	// Retrieve email from Redux store
+	const email = useSelector(
+		(state: RootState) => state.accountVerification.email
+	)
+
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true) // Opens the modal on form submission
 	}, [setOpenModal])
+
+	console.log(email)
 
 	return (
 		<View style={styles.bodyContainer}>

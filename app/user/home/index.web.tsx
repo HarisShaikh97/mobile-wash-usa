@@ -27,8 +27,6 @@ export default function Tab(): React.ReactElement | null {
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
 
-	console.log(user)
-
 	const jobs: Job[] = [
 		{
 			_id: "1",

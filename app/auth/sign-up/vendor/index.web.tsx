@@ -2,14 +2,18 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
+import { useDispatch } from "react-redux"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { signUp } from "../../../../helpers/auth"
+import { addVerificationEmail } from "../../../../features/account-verification/accountVerificationSlice"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter() // Initializing the router instance for navigation
+
+	const dispatch = useDispatch() // Initializing the dispatch function for Redux
 
 	// State variables for form fields
 	const [fullName, setFullName] = useState<string>("") // State to store the user's full name
@@ -26,9 +30,17 @@ export default function Page(): React.ReactElement | null {
 	const handleSuccess = useCallback(
 		(data: any) => {
 			console.log(data)
+
+			// Dispatch action to store email for verification
+			dispatch(
+				addVerificationEmail({
+					email: email
+				})
+			)
+
 			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
 		},
-		[router]
+		[router, email, dispatch, addVerificationEmail]
 	)
 
 	// Memoized function to handle sign up error
