@@ -1,9 +1,11 @@
 import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import { signUp } from "../../../../helpers/auth"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -19,10 +21,74 @@ export default function Page(): React.ReactElement | null {
 		null
 	) // State for documents
 
+	// Memoized function to handle sign up success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
+		},
+		[router]
+	)
+
+	// Memoized function to handle sign up error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle sign up
+	const { mutate, isPending } = useMutation({
+		mutationFn: signUp,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		router.navigate("/auth/sign-up/verification-code") // Navigating to verification code page on submit
-	}, [router])
+		// Create a new FormData instance to send data to the server
+		const formData = new FormData()
+
+		// Append user's personal information
+		formData.append("full_name", fullName)
+		formData.append("email", email)
+		formData.append("phone_number", phoneNumber)
+		formData.append("password", password)
+		formData.append("address", location)
+
+		// Set user role as vendor
+		formData.append("role", "vendor")
+
+		// Append business-specific information
+		formData.append("business_information", businessInformation)
+
+		// Append documents if they exist
+		if (documents && documents.assets && documents.assets.length > 0) {
+			documents.assets.forEach((asset, index) => {
+				// Create a blob from the file data
+				const blob = new Blob([asset.uri], {
+					type: asset.mimeType || "application/octet-stream"
+				})
+
+				// Append the blob with filename
+				formData.append(
+					"documents[]",
+					blob,
+					asset.name || `document_${index}`
+				)
+			})
+		}
+
+		// Mutate the sign up function with the user's information
+		mutate(formData)
+	}, [
+		mutate,
+		fullName,
+		email,
+		phoneNumber,
+		password,
+		location,
+		businessInformation,
+		documents
+	])
 
 	// Memoized function to handle login
 	const handleLogin = useCallback((): void => {

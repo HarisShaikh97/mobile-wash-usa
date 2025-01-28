@@ -113,19 +113,6 @@ export type CustomerSignUpData = {
 	role: "customer"
 }
 
-export interface VendorSignUpData extends FormData {
-	append(name: "full_name", value: string): void
-	append(name: "email", value: string): void
-	append(name: "phone_number", value: string): void
-	append(name: "password", value: string): void
-	append(name: "address", value: string): void
-	append(name: "role", value: "vendor"): void
-	append(name: "business_information", value: string): void
-	append(name: "about", value: string): void
-	append(name: "documents", value: Blob): void
-	append(name: "profile_pic", value: Blob): void
-}
-
 export type LoginData = {
 	email: string
 	password: string
