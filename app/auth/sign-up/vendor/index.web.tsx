@@ -35,94 +35,102 @@ export default function Page(): React.ReactElement | null {
 		<View style={styles.bodyContainer}>
 			{/* Title text for the sign up page */}
 			<Text style={styles.titleText}>Sign Up</Text>
-			{/* Container for the sign up form */}
-			<View style={styles.formContainer}>
-				{/* Input field for full name */}
-				<InputField
-					length="full"
-					title="Full Name"
-					placeholder="Enter your full name"
-					value={fullName}
-					onChangeText={setFullName}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				{/* Input field for email */}
-				<InputField
-					length="full"
-					title="Email"
-					placeholder="Enter your email address"
-					value={email}
-					onChangeText={setEmail}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				{/* Input field for phone number */}
-				<InputField
-					length="full"
-					title="Phone Number"
-					placeholder="Enter your phone number"
-					value={phoneNumber}
-					onChangeText={setPhoneNumber}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
-				{/* Input field for password */}
-				<InputField
-					length="full"
-					title="Password"
-					placeholder="**********"
-					value={password}
-					onChangeText={setPassword}
-					secureTextEntry={true}
-					multiline={false}
-					type="text"
-				/>
-				{/* Input field for business information */}
-				<InputField
-					length="full"
-					title="Business Information"
-					placeholder="Tell us about your business or the services you provide."
-					value={businessInformation}
-					onChangeText={setBusinessInformation}
-					secureTextEntry={false}
-					multiline={true}
-					size="small"
-					type="text"
-				/>
-				{/* Container for document input */}
-				<View style={styles.documentInputWrapper}>
+			{/* Wrapper for the sign up forms */}
+			<View style={styles.formsWrapper}>
+				{/* Container for the sign up form */}
+				<View style={styles.formContainer}>
+					{/* Input field for full name */}
 					<InputField
 						length="full"
-						title="Upload Documents"
-						placeholder="Insurance, Business License, etc."
-						files={documents}
-						onUploadFile={setDocuments}
-						type="file"
+						title="Full Name"
+						placeholder="Enter your full name"
+						value={fullName}
+						onChangeText={setFullName}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
 					/>
-					{/* Description text for document input */}
-					<View style={styles.documentInputDescriptionTextWrapper}>
-						<View style={styles.bulletMarker} />
-						<Text style={styles.documentInputDescriptionText}>
-							Upload PDF or Image Documents As Proof Of Business
-							Verification.
-						</Text>
-					</View>
+					{/* Input field for email */}
+					<InputField
+						length="full"
+						title="Email"
+						placeholder="Enter your email address"
+						value={email}
+						onChangeText={setEmail}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+					{/* Input field for phone number */}
+					<InputField
+						length="full"
+						title="Phone Number"
+						placeholder="Enter your phone number"
+						value={phoneNumber}
+						onChangeText={setPhoneNumber}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+					{/* Input field for password */}
+					<InputField
+						length="full"
+						title="Password"
+						placeholder="**********"
+						value={password}
+						onChangeText={setPassword}
+						secureTextEntry={true}
+						multiline={false}
+						type="text"
+					/>
 				</View>
-				{/* Input field for location */}
-				<InputField
-					length="full"
-					title="Location"
-					placeholder="Enter your location"
-					value={location}
-					onChangeText={setLocation}
-					secureTextEntry={false}
-					multiline={false}
-					type="text"
-				/>
+				{/* Container for the sign up form */}
+				<View style={styles.formContainer}>
+					{/* Input field for business information */}
+					<InputField
+						length="full"
+						title="Business Information"
+						placeholder="Tell us about your business or the services you provide."
+						value={businessInformation}
+						onChangeText={setBusinessInformation}
+						secureTextEntry={false}
+						multiline={true}
+						size="small"
+						type="text"
+					/>
+					{/* Container for document input */}
+					<View style={styles.documentInputWrapper}>
+						<InputField
+							length="full"
+							title="Upload Documents"
+							placeholder="Insurance, Business License, etc."
+							files={documents}
+							onUploadFile={setDocuments}
+							type="file"
+						/>
+						{/* Description text for document input */}
+						<View
+							style={styles.documentInputDescriptionTextWrapper}
+						>
+							<View style={styles.bulletMarker} />
+							<Text style={styles.documentInputDescriptionText}>
+								Upload PDF or Image Documents As Proof Of
+								Business Verification.
+							</Text>
+						</View>
+					</View>
+					{/* Input field for location */}
+					<InputField
+						length="full"
+						title="Location"
+						placeholder="Enter your location"
+						value={location}
+						onChangeText={setLocation}
+						secureTextEntry={false}
+						multiline={false}
+						type="text"
+					/>
+				</View>
 			</View>
 			{/* Container for policy and terms text */}
 			<View style={styles.policyAndTermsTextContainer}>
