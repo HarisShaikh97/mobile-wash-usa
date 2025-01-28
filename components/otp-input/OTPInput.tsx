@@ -13,7 +13,7 @@ export default function OTPInput({
 	return (
 		<View style={styles.otpInputWrapper}>
 			<OtpInput
-				numberOfDigits={5}
+				numberOfDigits={6}
 				theme={{
 					pinCodeContainerStyle: styles.pinCodeContainer,
 					pinCodeTextStyle: styles.pinCodeText,
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
 		marginTop: 15
 	},
 	pinCodeContainer: {
-		height: 50,
-		width: 50,
-		borderRadius: 12.5,
+		height: 45,
+		width: 45,
+		borderRadius: 10,
 		borderWidth: 1.5,
 		borderColor: "#E1E1E1",
 		backgroundColor: "white"
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary
 	},
 	focusStick: {
-		height: 17.5,
+		height: 15,
 		backgroundColor: theme.colors.primary
 	}
 })

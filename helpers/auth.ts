@@ -1,5 +1,9 @@
 import axios from "axios"
-import { CustomerSignUpData, LoginData } from "../utils/types"
+import {
+	CustomerSignUpData,
+	LoginData,
+	VerifyRegistrationData
+} from "../utils/types"
 
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
@@ -18,6 +22,19 @@ export const signUp = async (
 export const login = async (data: LoginData): Promise<any> => {
 	// Create a request with the data
 	const response = await api.post("/api/v1/login", data)
+	// Return the response data
+	return response.data
+}
+
+// Login function to handle registration verification
+export const verifyRegistration = async (
+	data: VerifyRegistrationData
+): Promise<any> => {
+	// Create a request with the data
+	const response = await api.post(
+		"/api/v1/account/verify-registration-otp",
+		data
+	)
 	// Return the response data
 	return response.data
 }

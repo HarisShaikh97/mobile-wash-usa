@@ -118,6 +118,11 @@ export type LoginData = {
 	password: string
 }
 
+export type VerifyRegistrationData = {
+	email: string
+	otp: string
+}
+
 export type User = {
 	id: number
 	full_name: string

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 export interface AccountVerificationState {
-	email: string | null
+	email: string
 }
 
 const initialState: AccountVerificationState = {
-	email: null
+	email: ""
 }
 
 export const accountVerificationSlice = createSlice({
@@ -16,7 +16,7 @@ export const accountVerificationSlice = createSlice({
 			state.email = action.payload.email
 		},
 		deleteVerificationEmail: (state) => {
-			state.email = null
+			state.email = ""
 		}
 	}
 })

@@ -1,13 +1,19 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSelector } from "react-redux"
+import { useMutation } from "@tanstack/react-query"
+import { useDispatch } from "react-redux"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
+import { verifyRegistration } from "../../../../helpers/auth"
+import { deleteVerificationEmail } from "../../../../features/account-verification/accountVerificationSlice"
 import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	const dispatch = useDispatch() // Initializing the dispatch function for Redux
+
 	const [OTP, setOTP] = useState<string>("") // State to store the OTP input by the user
 	const [openModal, setOpenModal] = useState<boolean>(false) // State to manage the modal visibility
 
@@ -16,12 +22,36 @@ export default function Page(): React.ReactElement | null {
 		(state: RootState) => state.accountVerification.email
 	)
 
+	// Memoized function to handle account verification success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Dispatch action to delete verification email
+			dispatch(deleteVerificationEmail())
+
+			setOpenModal(true) // Opens the modal on form submission
+		},
+		[setOpenModal, dispatch, deleteVerificationEmail]
+	)
+
+	// Memoized function to handle account verification error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle account verification
+	const { mutate, isPending } = useMutation({
+		mutationFn: verifyRegistration,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true) // Opens the modal on form submission
-	}, [setOpenModal])
-
-	console.log(email)
+		// Mutate the account verification function with the user's email and OTP
+		mutate({ email: email, otp: OTP })
+	}, [mutate, email, OTP])
 
 	return (
 		<View style={styles.bodyContainer}>
@@ -103,7 +133,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={false}
+					isLoading={isPending}
 					title="Verify Account"
 					onPress={handleSubmit}
 				/>
