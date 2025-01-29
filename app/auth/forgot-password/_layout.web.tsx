@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native"
-import { ImageBackground } from "expo-image"
+import { ImageBackground, Image } from "expo-image"
 import { Slot } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
 
@@ -27,6 +27,12 @@ export default function Layout(): React.ReactElement | null {
 					<Slot />
 				</View>
 			</View>
+			{/* Render the arc image */}
+			<Image
+				source={require("../../../assets/images/security-arc.png")}
+				style={styles.arcImage}
+				contentFit="fill"
+			/>
 		</ImageBackground>
 	)
 }
@@ -36,7 +42,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#F3F8FE",
 		flexDirection: "column",
-		padding: 35
+		padding: 35,
+		position: "relative"
 	},
 	bodyContainer: {
 		flex: 1,
@@ -50,5 +57,12 @@ const styles = StyleSheet.create({
 		padding: 65,
 		backgroundColor: "white",
 		borderRadius: 27.5
+	},
+	arcImage: {
+		position: "absolute",
+		right: 0,
+		bottom: 0,
+		height: 185,
+		width: 200
 	}
 })
