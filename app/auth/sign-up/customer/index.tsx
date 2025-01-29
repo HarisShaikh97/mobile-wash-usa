@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { signUp } from "../../../../helpers/auth"
-import { addVerificationEmail } from "../../../../features/account-verification/accountVerificationSlice"
+import { addVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {

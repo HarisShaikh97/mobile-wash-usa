@@ -7,7 +7,7 @@ import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
 import { verifyRegistration } from "../../../../helpers/auth"
-import { deleteVerificationEmail } from "../../../../features/account-verification/accountVerificationSlice"
+import { deleteVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
 import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
@@ -19,7 +19,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Retrieve email from Redux store
 	const email = useSelector(
-		(state: RootState) => state.accountVerification.email
+		(state: RootState) => state.emailVerification.email
 	)
 
 	// Memoized function to handle account verification success

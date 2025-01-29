@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-export interface AccountVerificationState {
+export interface EmailVerificationState {
 	email: string
 }
 
-const initialState: AccountVerificationState = {
+const initialState: EmailVerificationState = {
 	email: ""
 }
 
-export const accountVerificationSlice = createSlice({
-	name: "account-verification",
+export const emailVerificationSlice = createSlice({
+	name: "email-verification",
 	initialState,
 	reducers: {
 		addVerificationEmail: (state, action) => {
@@ -22,6 +22,6 @@ export const accountVerificationSlice = createSlice({
 })
 
 export const { addVerificationEmail, deleteVerificationEmail } =
-	accountVerificationSlice.actions
+	emailVerificationSlice.actions
 
-export default accountVerificationSlice.reducer
+export default emailVerificationSlice.reducer
