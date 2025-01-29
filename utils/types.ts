@@ -123,6 +123,10 @@ export type VerifyRegistrationData = {
 	otp: string
 }
 
+export type ForgotPasswordData = {
+	email: string
+}
+
 export type User = {
 	id: number
 	full_name: string

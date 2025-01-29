@@ -17,7 +17,7 @@ export default function Page(): React.ReactElement | null {
 			<Text style={styles.titleText}>Enter the Verification Code</Text>
 			{/* Providing a description for the verification process */}
 			<Text style={styles.descriptionText}>
-				A 5-digit code has been sent to your email. Please enter the
+				A 6-digit code has been sent to your email. Please enter the
 				code below to Change your email.
 			</Text>
 			{/* Container for the form fields and buttons */}

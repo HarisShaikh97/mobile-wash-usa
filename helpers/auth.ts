@@ -2,7 +2,8 @@ import axios from "axios"
 import {
 	CustomerSignUpData,
 	LoginData,
-	VerifyRegistrationData
+	VerifyRegistrationData,
+	ForgotPasswordData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -26,7 +27,7 @@ export const login = async (data: LoginData): Promise<any> => {
 	return response.data
 }
 
-// Login function to handle registration verification
+// Verification function to handle registration verification
 export const verifyRegistration = async (
 	data: VerifyRegistrationData
 ): Promise<any> => {
@@ -35,6 +36,16 @@ export const verifyRegistration = async (
 		"/api/v1/account/verify-registration-otp",
 		data
 	)
+	// Return the response data
+	return response.data
+}
+
+// Forgot password function to handle reset password
+export const forgotPassword = async (
+	data: ForgotPasswordData
+): Promise<any> => {
+	// Create a request with the data
+	const response = await api.post("/api/v1/account/password/reset", data)
 	// Return the response data
 	return response.data
 }

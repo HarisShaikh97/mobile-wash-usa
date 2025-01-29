@@ -1,22 +1,59 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
+import { useDispatch } from "react-redux"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
+import { forgotPassword } from "../../../helpers/auth"
+import { addVerificationEmail } from "../../../features/email-verification/emailVerificationSlice"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
 	// State to store the user's name
 	const [userName, setUserName] = useState<string>("")
 
+	// Memoized function to handle forgot password success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Add the user's email to the Redux store
+			dispatch(
+				addVerificationEmail({
+					email: userName
+				})
+			)
+
+			// Navigate to the verification code page
+			router.navigate("/auth/forgot-password/verification-code")
+		},
+		[router, dispatch, addVerificationEmail, userName]
+	)
+
+	// Memoized function to handle forgot password error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle forgot password
+	const { mutate, isPending } = useMutation({
+		mutationFn: forgotPassword,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// Navigate to the verification code page
-		router.navigate("/auth/forgot-password/verification-code")
-	}, [router])
+		// Mutate the forgot password function with the user's name
+		mutate({ email: userName })
+	}, [mutate, userName])
 
 	return (
 		// Main container for the page
@@ -46,7 +83,7 @@ export default function Page(): React.ReactElement | null {
 					<FormButton
 						length="full"
 						colorTheme="dark"
-						isLoading={false}
+						isLoading={isPending}
 						title="Send"
 						onPress={handleSubmit}
 					/>

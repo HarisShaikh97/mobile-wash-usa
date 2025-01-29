@@ -13,7 +13,7 @@ export default function Page(): React.ReactElement | null {
 		<View style={styles.bodyContainer}>
 			<Text style={styles.titleText}>Enter the Verification Code</Text>
 			<Text style={styles.descriptionText}>
-				A 5-digit code has been sent to your email. Please enter the
+				A 6-digit code has been sent to your email. Please enter the
 				code below to Change your email.
 			</Text>
 			<View style={styles.formContainer}>
