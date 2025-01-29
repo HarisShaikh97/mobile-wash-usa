@@ -127,6 +127,11 @@ export type ForgotPasswordData = {
 	email: string
 }
 
+export type VerifyResetPasswordData = {
+	email: string
+	otp: string
+}
+
 export type User = {
 	id: number
 	full_name: string

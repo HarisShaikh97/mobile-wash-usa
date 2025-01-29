@@ -3,7 +3,8 @@ import {
 	CustomerSignUpData,
 	LoginData,
 	VerifyRegistrationData,
-	ForgotPasswordData
+	ForgotPasswordData,
+	VerifyResetPasswordData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -46,6 +47,19 @@ export const forgotPassword = async (
 ): Promise<any> => {
 	// Create a request with the data
 	const response = await api.post("/api/v1/account/password/reset", data)
+	// Return the response data
+	return response.data
+}
+
+// Verification function to handle reset password verification
+export const verifyResetPassword = async (
+	data: VerifyResetPasswordData
+): Promise<any> => {
+	// Create a request with the data
+	const response = await api.post(
+		"/api/v1/account/verify-reset-password-otp",
+		data
+	)
 	// Return the response data
 	return response.data
 }

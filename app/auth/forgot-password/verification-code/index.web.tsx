@@ -1,22 +1,61 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
+import { useDispatch, useSelector } from "react-redux"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
+import { verifyResetPassword } from "../../../../helpers/auth"
+import { deleteVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	// Get the router instance for navigation
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
+	// Retrieve email from Redux store
+	const email = useSelector(
+		(state: RootState) => state.emailVerification.email
+	)
+
 	// State to store the OTP input
 	const [OTP, setOTP] = useState<string>("")
 
+	// Memoized function to handle verify reset password success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Dispatch action to delete verification email
+			dispatch(deleteVerificationEmail())
+
+			// Navigate to the change password page
+			router.navigate("/auth/forgot-password/change-password")
+		},
+		[router, dispatch, deleteVerificationEmail]
+	)
+
+	// Memoized function to handle verify reset password error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle verify reset password
+	const { mutate, isPending } = useMutation({
+		mutationFn: verifyResetPassword,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// Navigate to the change password page
-		router.navigate("/auth/forgot-password/change-password")
-	}, [router])
+		// Mutate the verify reset password function with the user's email and OTP
+		mutate({ email: email, otp: OTP })
+	}, [mutate, email, OTP])
 
 	return (
 		<View style={styles.bodyContainer}>
@@ -35,7 +74,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={false}
+					isLoading={isPending}
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>
