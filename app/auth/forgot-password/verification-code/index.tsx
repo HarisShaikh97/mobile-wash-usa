@@ -7,6 +7,7 @@ import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import { verifyResetPassword } from "../../../../helpers/auth"
 import { deleteVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
+import { addAccessToken } from "../../../../features/reset-password/resetPasswordSlice"
 import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
@@ -32,6 +33,9 @@ export default function Page(): React.ReactElement | null {
 
 			// Dispatch action to delete verification email
 			dispatch(deleteVerificationEmail())
+
+			// Dispatch action to add access token
+			dispatch(addAccessToken({ accessToken: data.data.access_token }))
 
 			// Navigate to the change password page
 			router.navigate("/auth/forgot-password/change-password")

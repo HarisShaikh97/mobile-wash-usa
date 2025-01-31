@@ -1,14 +1,23 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	// Get the router instance for navigation
 	const router = useRouter()
+
+	// Retrieve access token from Redux store
+	const accessToken = useSelector(
+		(state: RootState) => state.resetPassword.accessToken
+	)
+
+	console.log(accessToken)
 
 	// State variables to store the new password, confirm password, and modal state
 	const [newPassword, setNewPassword] = useState<string>("")
