@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle verify reset password success
 	const handleSuccess = useCallback(
 		(data: any) => {
-			console.log(data.data.access_token)
+			console.log(data)
 
 			// Dispatch action to delete verification email
 			dispatch(deleteVerificationEmail())

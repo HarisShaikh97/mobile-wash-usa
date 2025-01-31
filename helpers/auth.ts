@@ -4,7 +4,8 @@ import {
 	LoginData,
 	VerifyRegistrationData,
 	ForgotPasswordData,
-	VerifyResetPasswordData
+	VerifyResetPasswordData,
+	SetNewPasswordData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -59,6 +60,24 @@ export const verifyResetPassword = async (
 	const response = await api.post(
 		"/api/v1/account/verify-reset-password-otp",
 		data
+	)
+	// Return the response data
+	return response.data
+}
+
+// Set new password function to handle password update
+export const setNewPassword = async (
+	data: SetNewPasswordData
+): Promise<any> => {
+	// Create a request with the password and bearer token
+	const response = await api.post(
+		"/api/v1/account/password/create-new",
+		{ password: data.password },
+		{
+			headers: {
+				Authorization: `Bearer ${data.accessToken}`
+			}
+		}
 	)
 	// Return the response data
 	return response.data

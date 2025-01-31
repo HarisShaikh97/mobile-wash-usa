@@ -132,6 +132,11 @@ export type VerifyResetPasswordData = {
 	otp: string
 }
 
+export type SetNewPasswordData = {
+	accessToken: string
+	password: string
+}
+
 export type User = {
 	id: number
 	full_name: string

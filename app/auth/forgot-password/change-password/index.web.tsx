@@ -1,10 +1,13 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { useMutation } from "@tanstack/react-query"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
+import { setNewPassword } from "../../../../helpers/auth"
+import { deleteAccessToken } from "../../../../features/reset-password/resetPasswordSlice"
 import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
@@ -12,23 +15,53 @@ export default function Page(): React.ReactElement | null {
 	// Get the router instance for navigation
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
 	// Retrieve access token from Redux store
 	const accessToken = useSelector(
 		(state: RootState) => state.resetPassword.accessToken
 	)
 
-	console.log(accessToken)
-
 	// State variables to store the new password, confirm password, and modal state
-	const [newPassword, setNewPassword] = useState<string>("")
+	const [password, setPassword] = useState<string>("")
 	const [confirmPassword, setConfirmPassword] = useState<string>("")
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
+	// Memoized function to handle set new password success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Dispatch action to delete access token
+			dispatch(deleteAccessToken())
+
+			// Set the modal state to true to open the modal
+			setOpenModal(true)
+		},
+		[dispatch, deleteAccessToken, setOpenModal]
+	)
+
+	// Memoized function to handle set new password error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
+	// Mutation hook to handle set new password
+	const { mutate, isPending } = useMutation({
+		mutationFn: setNewPassword,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// Set the modal state to true to open the modal
-		setOpenModal(true)
-	}, [openModal])
+		// Check if the passwords match
+		if (password === confirmPassword) {
+			// Mutate the set new password function with the access token and password
+			mutate({ accessToken: accessToken, password: password })
+		}
+	}, [mutate, accessToken, password, confirmPassword])
 
 	// Function to handle modal submission
 	const modalHandleSubmit = useCallback((): void => {
@@ -61,8 +94,8 @@ export default function Page(): React.ReactElement | null {
 					length="full"
 					title="New Password"
 					placeholder="Enter your new password"
-					value={newPassword}
-					onChangeText={setNewPassword}
+					value={password}
+					onChangeText={setPassword}
 					secureTextEntry={true}
 					multiline={false}
 					type="text"
@@ -83,7 +116,7 @@ export default function Page(): React.ReactElement | null {
 					<FormButton
 						length="full"
 						colorTheme="dark"
-						isLoading={false}
+						isLoading={isPending}
 						title="Reset Password"
 						onPress={handleSubmit}
 					/>
