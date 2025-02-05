@@ -117,7 +117,7 @@ export default function Tab(): React.ReactElement | null {
 								  }
 								: require("../../../assets/images/profile.png")
 						}
-						userName={user && user.full_name ? user.full_name : ""}
+						userName={(user && user.full_name) || ""}
 						onPress={() => {
 							router.navigate("/user/home/profile")
 						}}
@@ -125,7 +125,6 @@ export default function Tab(): React.ReactElement | null {
 					{/* Web-styled notification button */}
 					<NotificationButton mode="web" />
 				</View>
-
 				{/* Featured cards section with welcome and post job cards */}
 				<View style={styles.cardsWrapper}>
 					{/* Welcome card with background image and centered content */}
@@ -150,7 +149,7 @@ export default function Tab(): React.ReactElement | null {
 						{/* Large personalized welcome heading */}
 						<Text style={styles.welcomeHeadingText}>
 							Welcome,{" "}
-							{user && user.full_name ? user.full_name : ""}
+							{(user && user.full_name.split(" ")[0]) || ""}
 						</Text>
 						{/* Service description text */}
 						<Text style={styles.welcomeDescriptionText}>

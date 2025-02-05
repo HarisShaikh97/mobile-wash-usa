@@ -7,16 +7,24 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
+import { RootState } from "../../../store/store"
 import { services, theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize router for navigation
 	const router = useRouter()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	const jobs: Job[] = [
 		{
@@ -112,7 +120,15 @@ export default function Tab(): React.ReactElement | null {
 							}}
 						>
 							<ProfileImageBox
-								source={require("../../../assets/images/profile.png")}
+								source={
+									user &&
+									user.profile_pic &&
+									user.profile_pic.length > 0
+										? {
+												uri: `${BASE_URL}/storage/${user.profile_pic}`
+										  }
+										: require("../../../assets/images/profile.png")
+								}
 								mode="app"
 							/>
 						</TouchableOpacity>
@@ -122,7 +138,8 @@ export default function Tab(): React.ReactElement | null {
 					{/* Welcome text section */}
 					<View style={styles.welcomeTextWrapper}>
 						<Text style={styles.welcomeHeadingText}>
-							Welcome, John
+							Welcome,{" "}
+							{(user && user.full_name.split(" ")[0]) || ""}
 						</Text>
 						<Text style={styles.welcomeDescriptionText}>
 							Find top-rated service providers for your vehicle,
