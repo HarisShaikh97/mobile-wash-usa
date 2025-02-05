@@ -1,14 +1,16 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
-import { useRouter, usePathname } from "expo-router"
+import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
 interface JobCardProps {
-	_id: Job["_id"]
-	title: Job["title"]
-	description: Job["description"]
-	date: Job["date"]
+	id: Job["id"]
+	job_title: Job["job_title"]
+	job_description: Job["job_description"]
+	created_at: Job["created_at"]
 	address: Job["address"]
 	budget: Job["budget"]
 	status: Job["status"]
@@ -17,20 +19,24 @@ interface JobCardProps {
 }
 
 export default function JobCard({
-	_id,
-	title,
-	description,
-	date,
+	id,
+	job_title,
+	job_description,
+	created_at,
 	address,
 	budget,
 	status,
 	showActionButtons,
 	mode
 }: JobCardProps): React.ReactElement | null {
+	// Initialize router for navigation
 	const router = useRouter()
-	const pathname = usePathname()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	return (
+		// Main card container with conditional styling for app/web modes
 		<View
 			style={[
 				styles.cardContainer,
@@ -39,6 +45,7 @@ export default function JobCard({
 					: styles.cardContainerWeb
 			]}
 		>
+			{/* Job title and budget section */}
 			<View style={styles.jobTitleContainer}>
 				<Text
 					style={[
@@ -50,10 +57,11 @@ export default function JobCard({
 					numberOfLines={2}
 					ellipsizeMode="tail"
 				>
-					{title}
+					{job_title}
 				</Text>
 				<Text style={styles.budgetText}>${budget}</Text>
 			</View>
+			{/* Job description with mode-specific styling */}
 			<Text
 				style={[
 					styles.descriptionText,
@@ -61,11 +69,12 @@ export default function JobCard({
 						? styles.descriptionTextApp
 						: styles.descriptionTextWeb
 				]}
-				numberOfLines={mode === "app" ? 2 : 3}
+				numberOfLines={mode === "app" ? 2 : 1}
 				ellipsizeMode="tail"
 			>
-				{description}
+				{job_description}
 			</Text>
+			{/* Date and location section */}
 			<View
 				style={[
 					styles.dateAndLocationSection,
@@ -77,6 +86,7 @@ export default function JobCard({
 				<Text style={styles.dateAndLocationTitleText}>
 					Date And Location
 				</Text>
+				{/* Container for date and location details */}
 				<View
 					style={[
 						styles.dateAndLocationDetailsContainer,
@@ -85,6 +95,7 @@ export default function JobCard({
 							: styles.dateAndLocationDetailsContainerWeb
 					]}
 				>
+					{/* Date display section */}
 					<View style={styles.dateAndLocationTextWrapper}>
 						<Image
 							source={require("../../assets/icons/date.svg")}
@@ -99,9 +110,10 @@ export default function JobCard({
 									: styles.dateAndLocationDetailsTextWeb
 							]}
 						>
-							{date}
+							{created_at.slice(0, 10)}
 						</Text>
 					</View>
+					{/* Circular separator between date and location */}
 					<View
 						style={
 							mode === "app"
@@ -109,7 +121,13 @@ export default function JobCard({
 								: styles.circularSeparatorLarge
 						}
 					/>
-					<View style={styles.dateAndLocationTextWrapper}>
+					{/* Location display section */}
+					<View
+						style={[
+							styles.dateAndLocationTextWrapper,
+							styles.locationTextWrapper
+						]}
+					>
 						<Image
 							source={require("../../assets/icons/location.svg")}
 							style={styles.dateAndLocationIcon}
@@ -122,159 +140,79 @@ export default function JobCard({
 									? styles.dateAndLocationDetailsTextApp
 									: styles.dateAndLocationDetailsTextWeb
 							]}
+							numberOfLines={1}
+							ellipsizeMode="tail"
 						>
 							{address}
 						</Text>
 					</View>
 				</View>
 			</View>
+			{/* Action buttons section - conditionally rendered */}
 			{showActionButtons && (
 				<View style={styles.actionButtonsWrapper}>
-					{status === "in-progress" ? (
-						<View
+					{/* Status indicator button */}
+					<View
+						style={[
+							styles.actionButtonContainer,
+							mode === "app"
+								? styles.actionButtonContainerApp
+								: styles.actionButtonContainerWeb,
+							status === "in-progress"
+								? styles.buttonLightYellow
+								: status === "open"
+								? styles.buttonLightBlue
+								: status === "completed"
+								? styles.buttonLightGreen
+								: status === "cancelled" &&
+								  styles.buttonLightRed
+						]}
+					>
+						<Text
 							style={[
-								styles.actionButtonContainer,
 								mode === "app"
-									? styles.actionButtonContainerApp
-									: styles.actionButtonContainerWeb,
-								styles.inProgressStatusTab
+									? styles.actionButtonsTextApp
+									: styles.actionButtonsTextWeb,
+								styles.actionButtonsTextDark
 							]}
 						>
-							<Text
-								style={[
-									mode === "app"
-										? styles.actionButtonsTextApp
-										: styles.actionButtonsTextWeb,
-									styles.actionButtonsTextDark
-								]}
-							>
-								In Progress
-							</Text>
-						</View>
-					) : status === "incoming" ? (
-						<TouchableOpacity
+							{status === "in-progress"
+								? "In Progress"
+								: status === "open"
+								? "Open"
+								: status === "completed"
+								? "Completed"
+								: status === "cancelled" && "Cancelled"}
+						</Text>
+					</View>
+					{/* View Details button with role-based navigation */}
+					<TouchableOpacity
+						style={[
+							styles.actionButtonContainer,
+							mode === "app"
+								? styles.actionButtonContainerApp
+								: styles.actionButtonContainerWeb,
+							styles.buttonDarkBlue
+						]}
+						onPress={() => {
+							if (user && user.role === "customer") {
+								router.navigate(`/user/home/my-jobs/${id}`)
+							} else if (user && user.role === "vendor") {
+								router.navigate(`/vendor/home/my-jobs/${id}`)
+							}
+						}}
+					>
+						<Text
 							style={[
-								styles.actionButtonContainer,
 								mode === "app"
-									? styles.actionButtonContainerApp
-									: styles.actionButtonContainerWeb,
-								styles.buttonLightBlue
-							]}
-							onPress={() => {
-								router.navigate(`/vendor/home/my-jobs/${_id}`)
-							}}
-						>
-							<Text
-								style={[
-									mode === "app"
-										? styles.actionButtonsTextApp
-										: styles.actionButtonsTextWeb,
-									styles.actionButtonsTextDark
-								]}
-							>
-								View
-							</Text>
-						</TouchableOpacity>
-					) : status === "active" ? (
-						<View
-							style={[
-								styles.actionButtonContainer,
-								mode === "app"
-									? styles.actionButtonContainerApp
-									: styles.actionButtonContainerWeb,
-								styles.activeStatusTab
+									? styles.actionButtonsTextApp
+									: styles.actionButtonsTextWeb,
+								styles.actionButtonsTextLight
 							]}
 						>
-							<Text
-								style={[
-									mode === "app"
-										? styles.actionButtonsTextApp
-										: styles.actionButtonsTextWeb,
-									styles.actionButtonsTextDark
-								]}
-							>
-								Active
-							</Text>
-						</View>
-					) : (
-						status === "completed" && (
-							<View
-								style={[
-									styles.actionButtonContainer,
-									mode === "app"
-										? styles.actionButtonContainerApp
-										: styles.actionButtonContainerWeb,
-									styles.buttonLightBlue
-								]}
-							>
-								<Text
-									style={[
-										mode === "app"
-											? styles.actionButtonsTextApp
-											: styles.actionButtonsTextWeb,
-										styles.actionButtonsTextDark
-									]}
-								>
-									Completed
-								</Text>
-							</View>
-						)
-					)}
-					{status === "incoming" ? (
-						<TouchableOpacity
-							style={[
-								styles.actionButtonContainer,
-								mode === "app"
-									? styles.actionButtonContainerApp
-									: styles.actionButtonContainerWeb,
-								styles.buttonDarkBlue
-							]}
-							onPress={() => {
-								router.navigate(`/vendor/place-bid/${_id}`)
-							}}
-						>
-							<Text
-								style={[
-									mode === "app"
-										? styles.actionButtonsTextApp
-										: styles.actionButtonsTextWeb,
-									styles.actionButtonsTextLight
-								]}
-							>
-								Place a bid
-							</Text>
-						</TouchableOpacity>
-					) : (
-						<TouchableOpacity
-							style={[
-								styles.actionButtonContainer,
-								mode === "app"
-									? styles.actionButtonContainerApp
-									: styles.actionButtonContainerWeb,
-								styles.buttonDarkBlue
-							]}
-							onPress={() => {
-								if (pathname.includes("/user/")) {
-									router.navigate(`/user/home/my-jobs/${_id}`)
-								} else {
-									router.navigate(
-										`/vendor/home/my-jobs/${_id}`
-									)
-								}
-							}}
-						>
-							<Text
-								style={[
-									mode === "app"
-										? styles.actionButtonsTextApp
-										: styles.actionButtonsTextWeb,
-									styles.actionButtonsTextLight
-								]}
-							>
-								View Details
-							</Text>
-						</TouchableOpacity>
-					)}
+							View Details
+						</Text>
+					</TouchableOpacity>
 				</View>
 			)}
 		</View>
@@ -378,6 +316,9 @@ const styles = StyleSheet.create({
 		gap: 6.5,
 		alignItems: "center"
 	},
+	locationTextWrapper: {
+		flex: 1
+	},
 	dateAndLocationDetailsText: {
 		fontFamily: "Roboto-Regular",
 		color: theme.colors.secondary
@@ -410,10 +351,13 @@ const styles = StyleSheet.create({
 		height: 35,
 		width: 135
 	},
-	inProgressStatusTab: {
+	buttonLightRed: {
 		backgroundColor: "rgba(255, 107, 44, 0.1)"
 	},
-	activeStatusTab: {
+	buttonLightYellow: {
+		backgroundColor: "rgba(251, 186, 29, 0.1)"
+	},
+	buttonLightGreen: {
 		backgroundColor: "rgba(40, 167, 69, 0.1)"
 	},
 	buttonDarkBlue: {

@@ -8,10 +8,12 @@ import {
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useSelector } from "react-redux"
+import { useQuery } from "@tanstack/react-query"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
+import { getMyJobs } from "../../../helpers/job"
 import { RootState } from "../../../store/store"
 import { services, theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
@@ -26,74 +28,15 @@ export default function Tab(): React.ReactElement | null {
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
 
-	const jobs: Job[] = [
-		{
-			_id: "1",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "2",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "3",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		}
-	]
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data: myJobs } = useQuery({
+		queryKey: ["my-jobs", token],
+		queryFn: () => getMyJobs({ accessToken: token }),
+		enabled: !!token
+	})
 
 	return (
 		// Main ScrollView container for the home screen
@@ -217,22 +160,31 @@ export default function Tab(): React.ReactElement | null {
 						{/* Container for job cards */}
 						<View style={styles.jobCardsContainer}>
 							{/* Map through jobs to render JobCard components */}
-							{jobs.map((job): React.ReactElement | null => {
-								return (
-									<JobCard
-										_id={job._id}
-										title={job.title}
-										description={job.description}
-										date={job.date}
-										address={job.address}
-										budget={job.budget}
-										status={job.status}
-										showActionButtons
-										mode="app"
-										key={job._id}
-									/>
-								)
-							})}
+							{Array.isArray(myJobs) &&
+								myJobs
+									.slice(0, 3)
+									.map(
+										(
+											job: Job
+										): React.ReactElement | null => {
+											return (
+												<JobCard
+													id={job.id}
+													job_title={job.job_title}
+													job_description={
+														job.job_description
+													}
+													created_at={job.created_at}
+													address={job.address}
+													budget={job.budget}
+													status={job.status}
+													showActionButtons
+													mode="app"
+													key={job.id}
+												/>
+											)
+										}
+									)}
 						</View>
 					</View>
 				</View>

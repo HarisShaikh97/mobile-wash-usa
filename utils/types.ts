@@ -37,20 +37,22 @@ export type SelectOption = {
 }
 
 export type Job = {
-	_id: string
-	title: string
-	clientName: string
-	date: string
-	time: string
-	description: string
+	id: number
+	user_id: number
+	service_id: number
+	job_title: string
 	address: string
 	location: {
 		lat: number
 		lng: number
 	}
 	budget: number
-	images: ImageSourcePropType[]
-	status: "incoming" | "posted" | "in-progress" | "active" | "completed"
+	status: "in-progress" | "open" | "completed" | "cancelled"
+	scheduled_time: string
+	job_description: string
+	payment_status: number
+	created_at: string
+	updated_at: string
 }
 
 export type FAQ = {
@@ -59,7 +61,7 @@ export type FAQ = {
 }
 
 export type Offer = {
-	job_id: Job["_id"]
+	job_id: Job["id"]
 	vendor_id: string
 	vendorName: string
 	vendorImage: ImageSourcePropType
@@ -135,6 +137,10 @@ export type VerifyResetPasswordData = {
 export type SetNewPasswordData = {
 	accessToken: string
 	password: string
+}
+
+export type QueryData = {
+	accessToken: string | null
 }
 
 export type User = {

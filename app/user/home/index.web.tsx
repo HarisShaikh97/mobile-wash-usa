@@ -8,12 +8,14 @@ import {
 import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import { useSelector } from "react-redux"
+import { useQuery } from "@tanstack/react-query"
 import { RootState } from "../../../store/store"
 import ServiceCard from "../../../components/service-card/ServiceCard"
 import JobCard from "../../../components/job-card/JobCard"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../components/profile-card-web/ProfileCardWeb"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
+import { getMyJobs } from "../../../helpers/job"
 import { services, theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
@@ -27,74 +29,15 @@ export default function Tab(): React.ReactElement | null {
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
 
-	const jobs: Job[] = [
-		{
-			_id: "1",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "2",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "3",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Full exterior and interior wash needed for SUV. Preferably before noon Full exterior and interior wash needed for SUV. Preferably before noon.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		}
-	]
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data: myJobs } = useQuery({
+		queryKey: ["my-jobs", token],
+		queryFn: () => getMyJobs({ accessToken: token }),
+		enabled: !!token
+	})
 
 	return (
 		// Main ScrollView container with side nav offset and custom background
@@ -218,24 +161,29 @@ export default function Tab(): React.ReactElement | null {
 				{/* Jobs grid with 3-column layout */}
 				<View style={styles.cardsWrapper}>
 					{/* Map and render individual job cards */}
-					{jobs.map((job): React.ReactElement | null => {
-						return (
-							<JobCard
-								_id={job._id}
-								title={job.title}
-								description={job.description}
-								date={job.date}
-								address={job.address}
-								budget={job.budget}
-								status={job.status}
-								showActionButtons
-								mode="web"
-								key={job._id}
-							/>
-						)
-					})}
+					{Array.isArray(myJobs) &&
+						myJobs
+							.slice(0, 3)
+							.map((job: Job): React.ReactElement | null => {
+								return (
+									<JobCard
+										id={job.id}
+										job_title={job.job_title}
+										job_description={job.job_description}
+										created_at={job.created_at}
+										address={job.address}
+										budget={job.budget}
+										status={job.status}
+										showActionButtons
+										mode="web"
+										key={job.id}
+									/>
+								)
+							})}
 					{/* Empty view for grid alignment when 2 cards present */}
-					{jobs.length % 3 === 2 && <View style={styles.emptyView} />}
+					{Array.isArray(myJobs) && myJobs.length % 3 === 2 && (
+						<View style={styles.emptyView} />
+					)}
 				</View>
 			</View>
 		</ScrollView>
