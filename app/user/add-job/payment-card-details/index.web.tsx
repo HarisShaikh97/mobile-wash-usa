@@ -1,7 +1,5 @@
 import { useState, useCallback } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { Image } from "expo-image"
-import Feather from "@expo/vector-icons/Feather"
+import { View, Text, StyleSheet } from "react-native"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
 import JobPostSuccessfulModal from "../../../../components/job-post-successful-modal/JobPostSuccessfulModal"
 import InputField from "../../../../components/input-field/InputField"
@@ -35,61 +33,6 @@ export default function Page(): React.ReactElement | null {
 				<Text style={styles.titleText}>Payment</Text>
 				{/* Container for the payment form fields */}
 				<View style={styles.formContainer}>
-					{/* Header container for the payment form */}
-					<View style={styles.formHeaderContainer}>
-						{/* View container for the payment method wrapper */}
-						<View style={styles.paymentMethodWrapper}>
-							{/* Text for the payment method */}
-							<Text
-								style={[
-									styles.paymentMethodText,
-									styles.paymentMethodTextBlack
-								]}
-							>
-								Method of payment
-							</Text>
-							{/* TouchableOpacity for changing the payment method */}
-							<TouchableOpacity
-								style={styles.changeButtonContainer}
-							>
-								{/* Icon for editing the payment method */}
-								<Feather
-									name="edit"
-									size={15}
-									color={theme.colors.primary}
-								/>
-								{/* Text for changing the payment method */}
-								<Text
-									style={[
-										styles.paymentMethodText,
-										styles.paymentMethodTextBlue
-									]}
-								>
-									Change
-								</Text>
-							</TouchableOpacity>
-						</View>
-						{/* View container for the card details */}
-						<View style={styles.cardContainer}>
-							{/* View container for the card text wrapper */}
-							<View style={styles.cardTextWrapper}>
-								{/* Title text for the card */}
-								<Text style={styles.cardTitleText}>
-									Credit or Debit card
-								</Text>
-								{/* Description text for the card */}
-								<Text style={styles.cardDescriptionText}>
-									Online payment
-								</Text>
-							</View>
-							{/* Image for the card icon */}
-							<Image
-								source={require("../../../../assets/icons/master-card.svg")}
-								style={styles.cardIcon}
-								contentFit="contain"
-							/>
-						</View>
-					</View>
 					{/* InputField component for the card number */}
 					<InputField
 						length="full"
@@ -164,7 +107,6 @@ const styles = StyleSheet.create({
 		gap: 50
 	},
 	formContainer: {
-		flex: 1,
 		width: "80%",
 		flexDirection: "column",
 		gap: 25
@@ -176,59 +118,6 @@ const styles = StyleSheet.create({
 		width: 325,
 		textAlign: "center",
 		letterSpacing: 0.5
-	},
-	formHeaderContainer: {
-		width: "100%",
-		flexDirection: "column",
-		gap: 15
-	},
-	paymentMethodWrapper: {
-		width: "100%",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
-	},
-	paymentMethodText: {
-		fontSize: 13.5,
-		fontFamily: "Roboto-Medium"
-	},
-	paymentMethodTextBlack: {
-		color: theme.colors.secondary
-	},
-	paymentMethodTextBlue: {
-		color: theme.colors.primary
-	},
-	changeButtonContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 7.5
-	},
-	cardContainer: {
-		height: 75,
-		width: "100%",
-		borderRadius: 10,
-		backgroundColor: theme.colors.secondary,
-		paddingHorizontal: 20,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between"
-	},
-	cardIcon: {
-		height: 25,
-		width: 25
-	},
-	cardTextWrapper: {
-		flexDirection: "column"
-	},
-	cardTitleText: {
-		fontSize: 13.5,
-		fontFamily: "Roboto-Medium",
-		color: "white"
-	},
-	cardDescriptionText: {
-		fontSize: 12.5,
-		fontFamily: "Roboto-Light",
-		color: "white"
 	},
 	inputFieldsWrapper: {
 		width: "100%",

@@ -7,126 +7,92 @@ import {
 } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import NotificationButton from "../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../components/profile-card-web/ProfileCardWeb"
 import ProfileImageBox from "../../../components/profile-image-box/ProfileImageBox"
 import Ratings from "../../../components/ratings/Ratings"
 import JobCard from "../../../components/job-card/JobCard"
+import { RootState } from "../../../store/store"
 import { theme, WEB_SIDE_NAV_WIDTH } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
+	// Initialize router for navigation
 	const router = useRouter()
 
-	const jobs: Job[] = [
-		{
-			_id: "1",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "incoming"
-		},
-		{
-			_id: "2",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "incoming"
-		},
-		{
-			_id: "3",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../assets/images/background1.png"),
-				require("../../../assets/images/background2.png"),
-				require("../../../assets/images/background3.png"),
-				require("../../../assets/images/background4.png")
-			],
-			status: "incoming"
-		}
-	]
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
+
+	const myJobs: Job[] = []
 
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Content container */}
 			<View style={styles.scrollContainer}>
+				{/* Header section with profile card and notification button */}
 				<View style={styles.headerContainer}>
 					<ProfileCardWeb
-						imageSource={require("../../../assets/images/profile2.png")}
-						userName="Michael Guzzi"
+						imageSource={
+							user &&
+							user.profile_pic &&
+							user.profile_pic.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${user.profile_pic}`
+								  }
+								: require("../../../assets/images/profile.png")
+						}
+						userName={(user && user.full_name) || ""}
 						onPress={() => {
 							router.navigate("/vendor/home/profile/preview")
 						}}
 					/>
 					<NotificationButton mode="web" />
 				</View>
+				{/* Profile section with welcome card and stats */}
 				<View
 					style={[
 						styles.cardsHorizontalWrapper,
 						styles.profileSection
 					]}
 				>
+					{/* Welcome card with profile image and message */}
 					<ImageBackground
 						source={require("../../../assets/images/welcome-card-bg.png")}
 						style={styles.welcomeCardContainer}
 						contentFit="fill"
 					>
 						<ProfileImageBox
-							source={require("../../../assets/images/profile2.png")}
+							source={
+								user &&
+								user.profile_pic &&
+								user.profile_pic.length > 0
+									? {
+											uri: `${BASE_URL}/storage/${user.profile_pic}`
+									  }
+									: require("../../../assets/images/profile.png")
+							}
 							mode="web"
 						/>
 						<Text style={styles.welcomeHeadingText}>
-							Welcome, Michael
+							Welcome,{" "}
+							{(user && user.full_name.split(" ")[0]) || ""}
 						</Text>
 						<Text style={styles.welcomeDescriptionText}>
 							Browse available jobs and offer your top-notch
 							services to customers in need.
 						</Text>
 					</ImageBackground>
+					{/* Right side cards container */}
 					<View style={styles.cardsVerticalWrapper}>
+						{/* Ratings card */}
 						<ImageBackground
 							source={require("../../../assets/images/card-bg.png")}
 							style={styles.ratingsCardContainer}
@@ -141,7 +107,9 @@ export default function Tab(): React.ReactElement | null {
 								Base on 135 Reviews
 							</Text>
 						</ImageBackground>
+						{/* Stats cards container */}
 						<View style={styles.cardsHorizontalWrapper}>
+							{/* Earnings stats card */}
 							<ImageBackground
 								source={require("../../../assets/images/card-bg.png")}
 								style={styles.statsCardContainer}
@@ -154,6 +122,7 @@ export default function Tab(): React.ReactElement | null {
 									$ 450,750
 								</Text>
 							</ImageBackground>
+							{/* Jobs completed stats card */}
 							<ImageBackground
 								source={require("../../../assets/images/card-bg.png")}
 								style={styles.statsCardContainer}
@@ -167,6 +136,7 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 					</View>
 				</View>
+				{/* Available jobs section header */}
 				<View style={styles.availableJobsTitleBarContainer}>
 					<Text style={styles.availableJobsTitleText}>
 						Available jobs
@@ -179,24 +149,32 @@ export default function Tab(): React.ReactElement | null {
 						<Text style={styles.seeAllText}>See all</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Jobs list container */}
 				<View style={styles.cardsHorizontalWrapper}>
-					{jobs.map((job): React.ReactElement | null => {
-						return (
-							<JobCard
-								_id={job._id}
-								title={job.title}
-								description={job.description}
-								date={job.date}
-								address={job.address}
-								budget={job.budget}
-								status={job.status}
-								showActionButtons
-								mode="web"
-								key={job._id}
-							/>
-						)
-					})}
-					{jobs.length % 3 === 2 && <View style={styles.emptyView} />}
+					{/* Map and render individual job cards */}
+					{Array.isArray(myJobs) &&
+						myJobs
+							.slice(0, 3)
+							.map((job: Job): React.ReactElement | null => {
+								return (
+									<JobCard
+										id={job.id}
+										job_title={job.job_title}
+										job_description={job.job_description}
+										created_at={job.created_at}
+										address={job.address}
+										budget={job.budget}
+										status={job.status}
+										showActionButtons
+										mode="web"
+										key={job.id}
+									/>
+								)
+							})}
+					{/* Empty view for grid alignment when 2 cards present */}
+					{Array.isArray(myJobs) && myJobs.length % 3 === 2 && (
+						<View style={styles.emptyView} />
+					)}
 				</View>
 			</View>
 		</ScrollView>

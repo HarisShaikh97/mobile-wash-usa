@@ -7,249 +7,84 @@ import {
 	StyleSheet
 } from "react-native"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
+import { useQuery } from "@tanstack/react-query"
 import JobCard from "../../../../components/job-card/JobCard"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import ProfileCardWeb from "../../../../components/profile-card-web/ProfileCardWeb"
 import SearchBar from "../../../../components/search-bar/SearchBar"
 import JobsFilterModal from "../../../../components/jobs-filter-modal/JobsFilterModal"
+import { getMyJobs } from "../../../../helpers/job"
+import { RootState } from "../../../../store/store"
 import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
-import { Job } from "../../../../utils/types"
-
-type Tab = "Active" | "Pending" | "Completed"
+import { Job, JobTab } from "../../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
+	// Initialize router for navigation
 	const router = useRouter()
 
-	const tabs: Tab[] = ["Active", "Pending", "Completed"]
+	// Define tabs
+	const tabs: JobTab[] = ["Pending", "Completed", "Cancelled"]
 
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
-	const [selectedTab, setSelectedTab] = useState<Tab>(tabs[0])
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing the modal visibility
+	const [selectedTab, setSelectedTab] = useState<JobTab>(tabs[0]) // State for managing the selected tab
 
-	const jobs: Job[] = [
-		{
-			_id: "1",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "completed"
-		},
-		{
-			_id: "2",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "completed"
-		},
-		{
-			_id: "3",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "completed"
-		},
-		{
-			_id: "4",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "active"
-		},
-		{
-			_id: "5",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "active"
-		},
-		{
-			_id: "6",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "active"
-		},
-		{
-			_id: "7",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "8",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		},
-		{
-			_id: "9",
-			title: "Car Wash Service Needed",
-			clientName: "John Doe",
-			date: "28, Oct 2024",
-			time: "10am to 1pm",
-			description:
-				"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-			address: "California, USA",
-			location: {
-				lat: 36.7783,
-				lng: 119.4179
-			},
-			budget: 500,
-			images: [
-				require("../../../../assets/images/background1.png"),
-				require("../../../../assets/images/background2.png"),
-				require("../../../../assets/images/background3.png"),
-				require("../../../../assets/images/background4.png")
-			],
-			status: "in-progress"
-		}
-	]
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data: myJobs } = useQuery({
+		queryKey: ["my-jobs", token],
+		queryFn: () => getMyJobs({ accessToken: token }),
+		enabled: !!token
+	})
 
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Jobs filter modal component */}
 			<JobsFilterModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
+			{/* Main content container */}
 			<View style={styles.scrollContainer}>
+				{/* Header section with profile and notification */}
 				<View style={styles.headerContainer}>
+					{/* Profile card component */}
 					<ProfileCardWeb
-						imageSource={require("../../../../assets/images/profile2.png")}
-						userName="Michael Guzzi"
+						imageSource={
+							user &&
+							user.profile_pic &&
+							user.profile_pic.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${user.profile_pic}`
+								  }
+								: require("../../../../assets/images/profile.png")
+						}
+						userName={(user && user.full_name) || ""}
 						onPress={() => {
 							router.navigate("/vendor/home/profile/preview")
 						}}
 					/>
+					{/* Notification button component */}
 					<NotificationButton mode="web" />
 				</View>
+				{/* Title bar with search functionality */}
 				<View style={styles.myJobsTitleBarContainer}>
 					<Text style={styles.myJobsTitleText}>My jobs</Text>
+					{/* Search bar container */}
 					<View style={styles.searchBarWrapper}>
 						<SearchBar
 							placeholder="Search"
@@ -264,6 +99,7 @@ export default function Tab(): React.ReactElement | null {
 						/>
 					</View>
 				</View>
+				{/* Job status tabs section */}
 				<View style={styles.tabsWrapper}>
 					{tabs.map((tab, index): React.ReactElement | null => {
 						return (
@@ -294,33 +130,39 @@ export default function Tab(): React.ReactElement | null {
 					})}
 				</View>
 				<View style={styles.cardsWrapper}>
-					{jobs
-						.filter((job): boolean => {
-							const statusMap: { [key: string]: string } = {
-								Active: "active",
-								Pending: "in-progress",
-								Completed: "completed"
-							}
-
-							return job.status === statusMap[selectedTab]
-						})
-						.map((job): React.ReactElement | null => {
-							return (
-								<JobCard
-									_id={job._id}
-									title={job.title}
-									description={job.description}
-									date={job.date}
-									address={job.address}
-									budget={job.budget}
-									status={job.status}
-									showActionButtons
-									mode="web"
-									key={job._id}
-								/>
-							)
-						})}
-					{jobs.length % 3 === 2 && <View style={styles.emptyView} />}
+					{/* Map and render individual job cards */}
+					{Array.isArray(myJobs) &&
+						myJobs
+							.filter((job) => {
+								// Map tab names to job status values
+								const statusMap = {
+									Pending: "in-progress",
+									Completed: "completed",
+									Cancelled: "cancelled"
+								}
+								// Filter jobs based on the selected tab
+								return job.status === statusMap[selectedTab]
+							})
+							.map((job: Job): React.ReactElement | null => {
+								return (
+									<JobCard
+										id={job.id}
+										job_title={job.job_title}
+										job_description={job.job_description}
+										created_at={job.created_at}
+										address={job.address}
+										budget={job.budget}
+										status={job.status}
+										showActionButtons
+										mode="web"
+										key={job.id}
+									/>
+								)
+							})}
+					{/* Empty view for grid alignment when 2 cards present */}
+					{Array.isArray(myJobs) && myJobs.length % 3 === 2 && (
+						<View style={styles.emptyView} />
+					)}
 				</View>
 			</View>
 		</ScrollView>

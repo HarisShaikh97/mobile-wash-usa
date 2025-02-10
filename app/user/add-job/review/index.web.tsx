@@ -11,7 +11,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/user/add-job/select-payment-method") // Navigating to the payment method selection page
+		router.navigate("/user/add-job/payment-card-details") // Navigating to the payment method selection page
 	}, [router])
 
 	return (
@@ -94,26 +94,6 @@ export default function Page(): React.ReactElement | null {
 							ellipsizeMode="tail"
 						>
 							$500
-						</Text>
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job/details")
-							}}
-						>
-							<Image
-								source={require("../../../../assets/icons/edit.svg")}
-								style={styles.editIcon}
-								contentFit="contain"
-							/>
-						</TouchableOpacity>
-					</View>
-					<View style={styles.jobDetailContainer}>
-						<Text
-							style={styles.jobDetailText}
-							numberOfLines={2}
-							ellipsizeMode="tail"
-						>
-							2972 Westheimer Rd. Santa Ana, Illinois 85486
 						</Text>
 						<TouchableOpacity
 							onPress={() => {

@@ -162,4 +162,6 @@ export type User = {
 	created_at: string
 }
 
-export type PaymentOptions = "card" | "paypal" | "pod"
+export type JobTab = "Pending" | "Completed" | "Cancelled"
+
+export type PaymentOptions = "card" | "pod"
