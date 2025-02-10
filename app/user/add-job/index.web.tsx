@@ -75,7 +75,7 @@ export default function Page(): React.ReactElement | null {
 						multiline={true}
 						secureTextEntry={false}
 						placeholder="Write Job Description"
-						size="large"
+						size="small"
 					/>
 					{/* Container for the form button */}
 					<View style={styles.formButtonWrapper}>
