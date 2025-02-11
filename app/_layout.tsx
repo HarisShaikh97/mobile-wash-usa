@@ -135,6 +135,7 @@ export default function Layout(): React.ReactElement | null {
 					require("../assets/icons/location3.svg"),
 					require("../assets/icons/logout-blue.svg"),
 					require("../assets/icons/logout.svg"),
+					require("../assets/icons/map-marker.svg"),
 					require("../assets/icons/master-card.svg"),
 					require("../assets/icons/message.svg"),
 					require("../assets/icons/messages-blue.svg"),

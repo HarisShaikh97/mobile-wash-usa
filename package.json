@@ -41,7 +41,8 @@
     "redux-devtools-expo-dev-plugin": "^0.2.1",
     "expo-blur": "~13.0.3",
     "expo-asset": "~10.0.10",
-    "expo-location": "~17.0.1"
+    "expo-location": "~17.0.1",
+    "react-native-maps": "1.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,30 +1,65 @@
-import { useState } from "react"
-import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	StyleSheet
-} from "react-native"
-import { ImageBackground, Image } from "expo-image"
+import { useState, useCallback, useEffect } from "react"
+import { View, StyleSheet } from "react-native"
+import { Image } from "expo-image"
+import { useRouter } from "expo-router"
+import MapView, { Region, Details } from "react-native-maps"
 import BackButton from "../../../../components/back-button/BackButton"
-import HorizontalSeparator from "../../../../components/horizontal-separator/HorizontalSeparator"
-import { theme } from "../../../../utils/constants"
+import FormButton from "../../../../components/form-button/FormButton"
+import { useLocation } from "../../../../hooks/useLocation"
+
+// Initial region for the map
+const INITIAL_REGION = {
+	latitude: 37.78825,
+	longitude: -122.4324,
+	latitudeDelta: 0.0922,
+	longitudeDelta: 0.0421
+}
 
 export default function Page(): React.ReactElement | null {
-	// State variable for managing location
-	const [location, setLocation] = useState<string>("")
+	// Initializing the router instance for navigation
+	const router = useRouter()
+
+	// Hook to get the location
+	const location = useLocation()
+
+	// State to hold the selected location
+	const [selectedLocation, setSelectedLocation] =
+		useState<Region>(INITIAL_REGION)
+
+	// Memoized function to handle region change
+	const onRegionChange = useCallback(
+		(region: Region, details: Details) => {
+			// If the change is a gesture, set the selected location
+			if (details.isGesture) {
+				setSelectedLocation(region)
+			}
+		},
+		[setSelectedLocation]
+	)
+
+	// Memoized function to handle form submission
+	const handleSubmit = useCallback(() => {
+		router.back() // Navigate back
+	}, [router])
+
+	// Effect to update selected location when location changes
+	useEffect((): void => {
+		// If location is available, update selected location
+		if (location) {
+			setSelectedLocation({
+				latitude: location.coords.latitude,
+				longitude: location.coords.longitude,
+				latitudeDelta: 0.0922,
+				longitudeDelta: 0.0421
+			})
+		}
+	}, [setSelectedLocation, location])
 
 	return (
-		// ImageBackground component for the screen's background image
-		<ImageBackground
-			source={require("../../../../assets/images/map-lg.png")}
-			style={styles.container}
-			contentFit="fill"
-		>
-			{/* View container for the header section */}
-			<View style={styles.headerContainer}>
-				{/* BackButton component for navigation */}
+		// Main container wrapper
+		<View style={styles.wrapper}>
+			{/* Back button container positioned at top left */}
+			<View style={styles.backButtonWrapper}>
 				<BackButton
 					size="small"
 					color="#000000"
@@ -32,115 +67,71 @@ export default function Page(): React.ReactElement | null {
 					borderColor="#F5F5F5"
 				/>
 			</View>
-			{/* View container for the search bar section */}
-			<View style={styles.searchBarContainer}>
-				{/* View container for the horizontal wrapper */}
-				<View style={styles.horizontalWrapper}>
-					{/* Image for the location icon */}
-					<Image
-						source={require("../../../../assets/icons/location3.svg")}
-						style={styles.locationIcon}
-						contentFit="contain"
-					/>
-					{/* TextInput for user input */}
-					<TextInput
-						value={location}
-						onChangeText={setLocation}
-						placeholder="California, USA"
-						style={styles.textField}
-					/>
-				</View>
-				{/* Conditional rendering for search results list */}
-				{location.length > 0 && (
-					<View style={styles.searchResultsList}>
-						{/* HorizontalSeparator for separating search results */}
-						<HorizontalSeparator color="#DDDDDD" />
-						{/* TouchableOpacity for each search result */}
-						<TouchableOpacity style={styles.horizontalWrapper}>
-							{/* Image for the location icon */}
-							<Image
-								source={require("../../../../assets/icons/location3.svg")}
-								style={styles.locationIcon}
-								contentFit="contain"
-							/>
-							{/* Text for the search result */}
-							<Text style={styles.textField}>
-								Current Location
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.horizontalWrapper}>
-							<Image
-								source={require("../../../../assets/icons/location.svg")}
-								style={styles.locationIcon}
-								contentFit="contain"
-							/>
-							<Text style={styles.textField}>
-								California, USA
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.horizontalWrapper}>
-							<Image
-								source={require("../../../../assets/icons/location.svg")}
-								style={styles.locationIcon}
-								contentFit="contain"
-							/>
-							<Text style={styles.textField}>
-								California, USA
-							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.horizontalWrapper}>
-							<Image
-								source={require("../../../../assets/icons/location.svg")}
-								style={styles.locationIcon}
-								contentFit="contain"
-							/>
-							<Text style={styles.textField}>
-								California, USA
-							</Text>
-						</TouchableOpacity>
-					</View>
-				)}
+			{/* Custom map marker image centered on screen */}
+			<Image
+				source={require("../../../../assets/icons/map-marker.svg")}
+				style={styles.mapMarker}
+				contentFit="contain"
+			/>
+			{/* Confirm button container positioned at bottom */}
+			<View style={styles.formButtonWrapper}>
+				<FormButton
+					length="full"
+					colorTheme="dark"
+					isLoading={false}
+					title="Confirm"
+					onPress={handleSubmit}
+				/>
 			</View>
-		</ImageBackground>
+			{/* Google Maps component with custom configuration */}
+			<MapView
+				style={styles.mapView}
+				initialRegion={INITIAL_REGION}
+				region={selectedLocation}
+				onRegionChangeComplete={onRegionChange}
+				provider="google"
+				scrollEnabled
+				showsUserLocation
+				showsMyLocationButton
+				rotateEnabled={false}
+				pitchEnabled={false}
+			/>
+		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	container: {
+	wrapper: {
 		flex: 1,
-		flexDirection: "column",
-		paddingHorizontal: 20
-	},
-	headerContainer: {
-		paddingVertical: 35
-	},
-	searchBarContainer: {
-		width: "100%",
-		borderRadius: 10,
-		borderWidth: 1,
-		borderColor: "#DDDDDD",
 		backgroundColor: "white",
-		flexDirection: "column"
+		position: "relative"
 	},
-	horizontalWrapper: {
+	mapView: {
+		flex: 1
+	},
+	backButtonWrapper: {
+		position: "absolute",
+		top: 35,
+		left: 25,
+		zIndex: 10
+	},
+	mapMarker: {
+		height: 35,
+		width: 35,
+		borderRadius: 17.5,
+		position: "absolute",
+		top: "50%",
+		left: "50%",
+		transform: [{ translateX: -17.5 }, { translateY: -25 }],
+		zIndex: 10,
+		backgroundColor: "rgba(47, 116, 250, 0.5)"
+	},
+	formButtonWrapper: {
 		width: "100%",
-		flexDirection: "row",
+		position: "absolute",
+		bottom: 35,
+		paddingHorizontal: 25,
 		alignItems: "center",
-		gap: 10,
-		padding: 10
-	},
-	locationIcon: {
-		height: 20,
-		width: 20
-	},
-	textField: {
-		flex: 1,
-		fontSize: 15,
-		fontFamily: "Montserrat-Medium",
-		color: theme.colors.secondary
-	},
-	searchResultsList: {
-		width: "100%",
-		flexDirection: "column"
+		zIndex: 10
 	}
 })
