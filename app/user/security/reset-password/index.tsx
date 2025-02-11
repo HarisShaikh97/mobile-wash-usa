@@ -7,24 +7,28 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [oldPassword, setOldPassword] = useState<string>("")
-	const [newPassword, setNewPassword] = useState<string>("")
-	const [confirmPassword, setConfirmPassword] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [oldPassword, setOldPassword] = useState<string>("") //State for storing old password
+	const [newPassword, setNewPassword] = useState<string>("") //State for storing new password
+	const [confirmPassword, setConfirmPassword] = useState<string>("") //State for storing confirm password
+	const [openModal, setOpenModal] = useState<boolean>(false) //State for managing modal visibility
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true)
+		setOpenModal(true) // Open the modal
 	}, [openModal])
 
+	// Memoized function to handle modal submission
 	const modalHandleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.back()
+		setOpenModal(false) // Close the modal
+		router.back() // Navigate back to the previous page
 	}, [openModal, router])
 
 	return (
 		<View style={styles.bodyContainer}>
+			{/* Modal component for successful password reset */}
 			<ResetPasswordSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
@@ -32,11 +36,15 @@ export default function Page(): React.ReactElement | null {
 				handleSubmit={modalHandleSubmit}
 				mode="app"
 			/>
+			{/* Page title */}
 			<Text style={styles.titleText}>Reset Password</Text>
+			{/* Description text explaining the purpose */}
 			<Text style={styles.descriptionText}>
 				Change your password below to keep your account secure.
 			</Text>
+			{/* Form container with input fields */}
 			<View style={styles.formContainer}>
+				{/* Input field for old password */}
 				<InputField
 					length="full"
 					title="Old Password"
@@ -47,6 +55,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for new password */}
 				<InputField
 					length="full"
 					title="New Password"
@@ -57,6 +66,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Input field for confirming new password */}
 				<InputField
 					length="full"
 					title="Confirm Password"
@@ -67,6 +77,7 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 					type="text"
 				/>
+				{/* Submit button to reset password */}
 				<FormButton
 					length="full"
 					colorTheme="dark"

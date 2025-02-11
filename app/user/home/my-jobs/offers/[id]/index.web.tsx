@@ -10,7 +10,7 @@ export default function Page(): React.ReactElement | null {
 
 	const offers: Offer[] = [
 		{
-			job_id: "1",
+			job_id: 1,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -21,7 +21,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "2",
+			job_id: 2,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -32,7 +32,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "3",
+			job_id: 3,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -43,7 +43,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "4",
+			job_id: 4,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -54,7 +54,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "5",
+			job_id: 5,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -65,7 +65,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "6",
+			job_id: 6,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),
@@ -76,7 +76,7 @@ export default function Page(): React.ReactElement | null {
 			location: "California, USA"
 		},
 		{
-			job_id: "7",
+			job_id: 7,
 			vendor_id: "2",
 			vendorName: "Michael Guzzi",
 			vendorImage: require("../../../../../../assets/images/vendor-profile.png"),

@@ -97,7 +97,9 @@ export default function Tab(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for the chat messages page
 		<View style={styles.bodyContainer}>
+			{/* Mapping through the chats array to render each chat */}
 			{chats.map((chat, index): React.ReactElement | null => {
 				return (
 					<ChatCard

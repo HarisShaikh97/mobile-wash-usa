@@ -45,7 +45,6 @@ export default function Page(): React.ReactElement | null {
 			/>
 			{/* Page title */}
 			<Text style={styles.titleText}>Notifications</Text>
-			{/* Today's notifications section */}
 			{/* Container for today's notifications section */}
 			<View style={styles.sectionContainer}>
 				{/* "Today" section header */}
@@ -72,7 +71,6 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
-			{/* Yesterday's notifications section */}
 			{/* Yesterday's notifications section container */}
 			<View style={styles.sectionContainer}>
 				{/* "Yesterday" section header */}

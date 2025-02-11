@@ -146,40 +146,48 @@ export default function Tab(): React.ReactElement | null {
 		}
 	]
 
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id)
-	const [message, setMessage] = useState<string>("")
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
+	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id) // State for managing selected chat
+	const [message, setMessage] = useState<string>("") // State for managing message text
 	const [openChatActionModal, setOpenChatActionModal] =
-		useState<boolean>(false)
+		useState<boolean>(false) // State for managing chat action modal visibility
 	const [
 		openDeleteChatConfirmationModal,
 		setOpenDeleteChatConfirmationModal
-	] = useState<boolean>(false)
+	] = useState<boolean>(false) // State for managing delete chat confirmation modal visibility
 
+	// Memoized function to handle opening the chat action modal
 	const handleOpenChatActionModal = useCallback((): void => {
-		setOpenChatActionModal(true)
+		setOpenChatActionModal(true) // Open the modal
 	}, [setOpenChatActionModal])
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {}, [])
 
 	return (
 		<View style={styles.container}>
+			{/* Modal for chat actions like delete, block etc */}
 			<ChatActionsModal
 				openModal={openChatActionModal}
 				setOpenModal={setOpenChatActionModal}
 				setOpenDeleteChatModal={setOpenDeleteChatConfirmationModal}
 				mode="web"
 			/>
+			{/* Confirmation modal for deleting chats */}
 			<DeleteChatConfirmationModal
 				openModal={openDeleteChatConfirmationModal}
 				setOpenModal={setOpenDeleteChatConfirmationModal}
 				mode="web"
 			/>
+			{/* Header section with notification button */}
 			<View style={styles.headerContainer}>
 				<NotificationButton mode="web" />
 			</View>
+			{/* Main content container */}
 			<View style={styles.bodyContainer}>
+				{/* Left sidebar showing all chats */}
 				<View style={styles.allChatsCardContainer}>
+					{/* Chat header with background image */}
 					<ImageBackground
 						source={require("../../../../assets/images/chat-header-bg.png")}
 						style={styles.allChatsCardHeader}
@@ -187,11 +195,13 @@ export default function Tab(): React.ReactElement | null {
 					>
 						<Text style={styles.allChatsTitleText}>All chats</Text>
 					</ImageBackground>
+					{/* Scrollable list of chats */}
 					<ScrollView
 						style={styles.allChatsScrollView}
 						showsVerticalScrollIndicator={false}
 					>
 						<View style={styles.allChatsScrollContainer}>
+							{/* Search bar for filtering chats */}
 							<SearchBar
 								placeholder="Search"
 								color="#F5F5F5"
@@ -202,6 +212,7 @@ export default function Tab(): React.ReactElement | null {
 								filterEnabled={false}
 								mode="app"
 							/>
+							{/* List of chat cards */}
 							{chats.map(
 								(chat, index): React.ReactElement | null => {
 									return (
@@ -226,9 +237,12 @@ export default function Tab(): React.ReactElement | null {
 						</View>
 					</ScrollView>
 				</View>
+				{/* Main chat window */}
 				<View style={styles.chatBoxContainer}>
+					{/* Chat header with user profile */}
 					<View style={styles.chatBoxHeaderContainer}>
 						<View style={styles.chatBoxProfileWrapper}>
+							{/* User profile image with online status */}
 							<View style={styles.chatBoxProfileImageWrapper}>
 								<Image
 									source={
@@ -239,12 +253,14 @@ export default function Tab(): React.ReactElement | null {
 									style={styles.chatBoxProfileImage}
 									contentFit="cover"
 								/>
+								{/* Online status indicator */}
 								{chats.find((chat): boolean => {
 									return chat._id === selectedChat
 								})?.online && (
 									<View style={styles.onlineMarker} />
 								)}
 							</View>
+							{/* User details section */}
 							<View style={styles.chatBoxProfileDetailsWrapper}>
 								<Text style={styles.chatBoxUserNameText}>
 									{
@@ -262,6 +278,7 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Chat options button */}
 						<TouchableOpacity
 							style={styles.chatBoxOptionsButtonContainer}
 							onPress={handleOpenChatActionModal}
@@ -273,11 +290,13 @@ export default function Tab(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Chat messages scroll view */}
 					<ScrollView
 						style={styles.chatsCardScrollView}
 						showsVerticalScrollIndicator={false}
 					>
 						<View style={styles.chatCardsScrollContainer}>
+							{/* Job details card */}
 							<View style={styles.jobCard}>
 								<View style={styles.horizontalWrapper}>
 									<Text
@@ -298,6 +317,7 @@ export default function Tab(): React.ReactElement | null {
 									SUV. Preferably before noon...
 								</Text>
 							</View>
+							{/* Yesterday's messages section */}
 							<View style={styles.chatSectionHeader}>
 								<HorizontalSeparator color="#EDEDED" />
 								<Text style={styles.chatSectionTitleText}>
@@ -305,6 +325,7 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 								<HorizontalSeparator color="#EDEDED" />
 							</View>
+							{/* Yesterday's message list */}
 							{messages.map(
 								(message, index): React.ReactElement | null => {
 									return (
@@ -319,6 +340,7 @@ export default function Tab(): React.ReactElement | null {
 									)
 								}
 							)}
+							{/* Today's messages section */}
 							<View style={styles.chatSectionHeader}>
 								<HorizontalSeparator color="#EDEDED" />
 								<Text style={styles.chatSectionTitleText}>
@@ -326,6 +348,7 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 								<HorizontalSeparator color="#EDEDED" />
 							</View>
+							{/* Today's message list */}
 							{messages.map(
 								(message, index): React.ReactElement | null => {
 									return (
@@ -342,6 +365,7 @@ export default function Tab(): React.ReactElement | null {
 							)}
 						</View>
 					</ScrollView>
+					{/* Chat input field */}
 					<ChatInputField
 						value={message}
 						onChangeText={setMessage}

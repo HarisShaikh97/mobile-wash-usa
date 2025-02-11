@@ -9,25 +9,29 @@ import InputField from "../../../components/input-field/InputField"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [newImage, setNewImage] = useState<string | null>(null)
-	const [fullName, setFullName] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
-	const [businessInformation, setBusinessInformation] = useState<string>("")
+	const [newImage, setNewImage] = useState<string | null>(null) // State for storing new image
+	const [fullName, setFullName] = useState<string>("") // State for storing full name
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State for storing phone number
+	const [email, setEmail] = useState<string>("") // State for storing email
+	const [location, setLocation] = useState<string>("") // State for storing location
+	const [businessInformation, setBusinessInformation] = useState<string>("") // State for storing business information
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
-	)
+	) // State for storing uploaded documents
 
+	// Memoized function to handle picking an image from the device
 	const pickImage = useCallback(async (): Promise<void> => {
+		// Requesting permission to access the device's image library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.All,
 				quality: 1
 			})
 
+		// Checking if an image was selected and setting the new image state
 		if (!result.canceled && result.assets && result.assets.length > 0) {
 			setNewImage(result.assets[0].uri)
 		} else {
@@ -35,16 +39,20 @@ export default function Page(): React.ReactElement | null {
 		}
 	}, [setNewImage])
 
+	// Memoized function to handle saving the account details
 	const handleSave = useCallback((): void => {
-		router.navigate("/vendor/email-verification")
+		router.navigate("/vendor/email-verification") // Navigating to the email verification screen
 	}, [router])
 
+	// Memoized function to handle cancelling the action
 	const handleCancel = useCallback((): void => {
-		router.back()
+		router.back() // Navigating back to the previous page
 	}, [router])
 
 	return (
+		// Main container for the edit account form
 		<View style={styles.container}>
+			{/* Profile image section with upload button */}
 			<View style={styles.profileImageContainer}>
 				<Image
 					source={
@@ -55,6 +63,7 @@ export default function Page(): React.ReactElement | null {
 					style={styles.profileImage}
 					contentFit="cover"
 				/>
+				{/* Upload button overlay */}
 				<TouchableOpacity
 					style={styles.uploadButton}
 					onPress={pickImage}
@@ -62,7 +71,9 @@ export default function Page(): React.ReactElement | null {
 					<Feather name="upload" size={12.5} color="white" />
 				</TouchableOpacity>
 			</View>
+			{/* Form container with input fields */}
 			<View style={styles.formContainer}>
+				{/* Full name input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -73,6 +84,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Phone number input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -83,6 +95,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Email input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -93,6 +106,7 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Business information textarea */}
 				<InputField
 					length="full"
 					title="Business Information"
@@ -104,6 +118,7 @@ export default function Page(): React.ReactElement | null {
 					size="small"
 					type="text"
 				/>
+				{/* Document upload section */}
 				<View style={styles.documentInputWrapper}>
 					<InputField
 						length="full"
@@ -113,6 +128,7 @@ export default function Page(): React.ReactElement | null {
 						onUploadFile={setDocuments}
 						type="file"
 					/>
+					{/* Document upload description */}
 					<View style={styles.documentInputDescriptionTextWrapper}>
 						<View style={styles.bulletMarker} />
 						<Text style={styles.documentInputDescriptionText}>
@@ -121,6 +137,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</View>
 				</View>
+				{/* Location input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -132,7 +149,9 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 			</View>
+			{/* Action buttons container */}
 			<View style={styles.actionButtonsWrapper}>
+				{/* Cancel button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,
@@ -149,6 +168,7 @@ export default function Page(): React.ReactElement | null {
 						Cancel
 					</Text>
 				</TouchableOpacity>
+				{/* Save button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,

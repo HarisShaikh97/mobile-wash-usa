@@ -11,32 +11,39 @@ import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
 	const jobs: Job[] = []
 
 	return (
+		// Main scrollable container for the available jobs page
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Jobs filter modal component */}
 			<JobsFilterModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
 			<View style={styles.scrollContainer}>
+				{/* Header section with back button and user profile */}
 				<View style={styles.headerContainer}>
+					{/* Navigation back button */}
 					<BackButton
 						size="large"
 						color="#000000"
 						backgroundColor="#ffffff"
 						borderColor="transparent"
 					/>
+					{/* Container for profile and notification components */}
 					<View style={styles.headerCardsWrapper}>
+						{/* User profile card component */}
 						<ProfileCardWeb
 							imageSource={require("../../../assets/images/profile2.png")}
 							userName="Michael Guzzi"
@@ -44,11 +51,15 @@ export default function Page(): React.ReactElement | null {
 								router.navigate("/vendor/home/profile/preview")
 							}}
 						/>
+						{/* Notification button component */}
 						<NotificationButton mode="web" />
 					</View>
 				</View>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Title bar with search functionality */}
 					<View style={styles.availableJobsTitleBarContainer}>
+						{/* Title and description section */}
 						<View style={styles.availableJobsTitleWrapper}>
 							<Text style={styles.availableJobsTitleText}>
 								Available jobs
@@ -57,6 +68,7 @@ export default function Page(): React.ReactElement | null {
 								Browse and apply nearby
 							</Text>
 						</View>
+						{/* Search bar container */}
 						<View style={styles.searchBarWrapper}>
 							<SearchBar
 								placeholder="Search"
@@ -71,7 +83,9 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</View>
 					</View>
+					{/* Job cards grid container */}
 					<View style={styles.cardsWrapper}>
+						{/* Map through jobs array to render job cards */}
 						{jobs.map((job): React.ReactElement | null => {
 							return (
 								<JobCard
@@ -88,6 +102,7 @@ export default function Page(): React.ReactElement | null {
 								/>
 							)
 						})}
+						{/* Empty view for grid alignment when needed */}
 						{jobs.length % 3 === 2 && (
 							<View style={styles.emptyView} />
 						)}

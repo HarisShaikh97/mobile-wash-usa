@@ -9,10 +9,13 @@ export default function Layout(): React.ReactElement | null {
 	// Using useLocalSearchParams to get the id from the URL
 	const { id } = useLocalSearchParams()
 
+	// Converting id to a number
+	const jobId = Array.isArray(id) ? +id[0] : +id
+
 	return (
 		<View style={styles.wrapper}>
 			{/* OffersPopup component is used to display offers related to the job */}
-			<OffersPopup job_id={`${id}`} mode="app" />
+			<OffersPopup job_id={jobId} mode="app" />
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}

@@ -7,22 +7,29 @@ import NotificationButton from "../../../../components/notification-button/Notif
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Content wrapper */}
 			<View style={styles.scrollContainer}>
+				{/* Header section with back button and user info */}
 				<View style={styles.headerContainer}>
+					{/* Navigation back button */}
 					<BackButton
 						size="large"
 						color="#000000"
 						backgroundColor="#ffffff"
 						borderColor="transparent"
 					/>
+					{/* User profile and notification section */}
 					<View style={styles.headerCardsWrapper}>
+						{/* User profile card component */}
 						<ProfileCardWeb
 							imageSource={require("../../../../assets/images/profile.png")}
 							userName="John Cosby"
@@ -30,16 +37,21 @@ export default function Layout(): React.ReactElement | null {
 								router.navigate("/user/home/profile")
 							}}
 						/>
+						{/* Notification button component */}
 						<NotificationButton mode="web" />
 					</View>
 				</View>
+				{/* Main content area */}
 				<View style={styles.bodyWrapper}>
+					{/* Background header image */}
 					<Image
 						source={require("../../../../assets/images/profile-header-bg-web.png")}
 						style={styles.backgroundCardContainer}
 						contentFit="fill"
 					/>
+					{/* Content container for child components */}
 					<View style={styles.bodyContainer}>
+						{/* Dynamic slot for nested content */}
 						<Slot />
 					</View>
 				</View>

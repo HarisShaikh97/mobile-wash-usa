@@ -5,26 +5,31 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main background image container
 		<ImageBackground
 			source={require("../../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Back navigation button */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Inner content background wrapper */}
 			<ImageBackground
 				source={require("../../../../assets/images/screen-bg.png")}
 				style={styles.bgImage}
 				contentFit="fill"
 			>
+				{/* Scrollable content container */}
 				<ScrollView
 					style={styles.bodyScrollView}
 					showsVerticalScrollIndicator={false}
 				>
+					{/* Dynamic content slot */}
 					<Slot />
 				</ScrollView>
 			</ImageBackground>

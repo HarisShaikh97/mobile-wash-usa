@@ -7,16 +7,19 @@ import SearchBar from "../../../../components/search-bar/SearchBar"
 import { theme } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
 
 	return (
 		<View style={styles.container}>
+			{/* Background image */}
 			<Image
 				source={require("../../../../assets/images/profile-bg.png")}
 				style={styles.bgImage}
 				contentFit="fill"
 			/>
+			{/* Main content container */}
 			<View style={styles.bodyContainer}>
+				{/* Header section with back button */}
 				<View style={styles.headerContainer}>
 					<BackButton
 						size="small"
@@ -25,6 +28,7 @@ export default function Layout(): React.ReactElement | null {
 						borderColor="#ffffff"
 					/>
 				</View>
+				{/* Title section with search bar */}
 				<View style={styles.titleWrapper}>
 					<Text style={styles.titleText}>All Chats</Text>
 					<SearchBar
@@ -38,11 +42,14 @@ export default function Layout(): React.ReactElement | null {
 						mode="app"
 					/>
 				</View>
+				{/* Chat messages container */}
 				<View style={styles.chatsCard}>
+					{/* Chat messages scrollable container */}
 					<ScrollView
 						style={styles.chatsCardScrollView}
 						showsVerticalScrollIndicator={false}
 					>
+						{/* Chat messages slot */}
 						<Slot />
 					</ScrollView>
 				</View>

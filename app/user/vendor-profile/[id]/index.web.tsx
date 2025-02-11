@@ -9,12 +9,15 @@ import { theme } from "../../../../utils/constants"
 import { Review } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
+	// Memoized function to handle sending a message
 	const handleSendMessage = useCallback((): void => {
-		router.navigate(`/user/home/messages`)
+		router.navigate(`/user/home/messages`) // Navigating to the messages page
 	}, [router])
 
 	const reviews: Review[] = [
@@ -68,18 +71,25 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
+	// Memoized function to group reviews into pairs
 	const reviewsPairs = useMemo(() => {
+		// Group reviews into pairs
 		return reviews.reduce<Review[][]>((acc, _, index) => {
+			// Check if the current index is even
 			if (index % 2 === 0) {
+				// If it is, push the reviews slice to the accumulator
 				acc.push(reviews.slice(index, index + 2))
 			}
+			// Return the accumulator
 			return acc
 		}, [])
 	}, [reviews])
 
 	return (
 		<View style={styles.container}>
+			{/* Profile card section containing vendor details */}
 			<View style={styles.profileCardContainer}>
+				{/* Profile image and name section */}
 				<View style={styles.profileImageWrapper}>
 					<Image
 						source={require("../../../../assets/images/vendor-profile.png")}
@@ -94,20 +104,25 @@ export default function Page(): React.ReactElement | null {
 						Michael Guzzi
 					</Text>
 				</View>
+				{/* Stats section showing ratings, reviews and jobs */}
 				<View style={styles.statsWrapper}>
+					{/* Rating stats */}
 					<View style={styles.statsCardContainer}>
 						<Text style={styles.statsQuantityText}>4.5</Text>
 						<Ratings ratings={4.5} size={15} />
 					</View>
+					{/* Reviews count */}
 					<View style={styles.statsCardContainer}>
 						<Text style={styles.statsQuantityText}>135</Text>
 						<Text style={styles.statsTitleText}>Reviews</Text>
 					</View>
+					{/* Completed jobs count */}
 					<View style={styles.statsCardContainer}>
 						<Text style={styles.statsQuantityText}>15</Text>
 						<Text style={styles.statsTitleText}>Jobs Done</Text>
 					</View>
 				</View>
+				{/* Message button section */}
 				<View style={styles.formButtonWrapper}>
 					<FormButton
 						length="half"
@@ -117,6 +132,7 @@ export default function Page(): React.ReactElement | null {
 						onPress={handleSendMessage}
 					/>
 				</View>
+				{/* Vendor description section */}
 				<View style={styles.aboutDetailsWrapper}>
 					<Text style={styles.aboutHeadingText}>
 						About The Vendor
@@ -127,7 +143,9 @@ export default function Page(): React.ReactElement | null {
 						wash, wax, and interior cleaning services.
 					</Text>
 				</View>
+				{/* Additional vendor details section */}
 				<View style={styles.vendorDetailsWrapper}>
+					{/* Member since info */}
 					<View style={styles.vendorDetailsContainer}>
 						<Image
 							source={require("../../../../assets/icons/user2.svg")}
@@ -143,6 +161,7 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 					</View>
+					{/* Jobs completed info */}
 					<View style={styles.vendorDetailsContainer}>
 						<Image
 							source={require("../../../../assets/icons/my-jobs.svg")}
@@ -156,6 +175,7 @@ export default function Page(): React.ReactElement | null {
 							<Text style={styles.vendorDetailText}>15</Text>
 						</View>
 					</View>
+					{/* Location info */}
 					<View style={styles.vendorDetailsContainer}>
 						<Image
 							source={require("../../../../assets/icons/location2.svg")}
@@ -173,7 +193,9 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 			</View>
+			{/* Right side cards section */}
 			<View style={styles.verticalCardsWrapper}>
+				{/* Overall rating card */}
 				<View style={styles.ratingsCardContainer}>
 					<Text style={styles.ratingsHeadingText}>
 						Overall Rating
@@ -184,7 +206,9 @@ export default function Page(): React.ReactElement | null {
 						Base on 135 Reviews
 					</Text>
 				</View>
+				{/* Reviews section */}
 				<View style={styles.reviewsCardContainer}>
+					{/* Map through review pairs */}
 					{reviewsPairs.map(
 						(reviewPair, key): React.ReactElement | null => {
 							return (
@@ -200,6 +224,7 @@ export default function Page(): React.ReactElement | null {
 									]}
 									key={key}
 								>
+									{/* Map through individual reviews in pair */}
 									{reviewPair.map(
 										(
 											review,

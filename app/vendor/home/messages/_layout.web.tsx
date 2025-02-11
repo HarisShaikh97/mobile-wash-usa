@@ -4,8 +4,11 @@ import { WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main container with padding and background color
 		<View style={styles.wrapper}>
+			{/* Main content container */}
 			<View style={styles.container}>
+				{/* Slot for nested route content */}
 				<Slot />
 			</View>
 		</View>

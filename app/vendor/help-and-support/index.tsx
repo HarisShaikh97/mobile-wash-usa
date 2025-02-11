@@ -12,22 +12,26 @@ import SearchBar from "../../../components/search-bar/SearchBar"
 import { theme, FAQs } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [currentFaqIndex, setCurrentFaqIndex] = useState<number | null>(null)
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
+	const [currentFaqIndex, setCurrentFaqIndex] = useState<number | null>(null) // State for tracking current FAQ index
 
 	return (
 		<View style={styles.container}>
+			{/* Page title */}
 			<Text style={styles.titleText}>Help & Support</Text>
+			{/* Scrollable content area */}
 			<ScrollView
 				style={styles.helpSupportCard}
 				showsVerticalScrollIndicator={false}
 			>
 				<View style={styles.helpSupportCardScrollContainer}>
+					{/* Contact Support Section */}
 					<View style={styles.contactSupportSection}>
 						<Text style={styles.cardTitleText}>
 							Contact Support
 						</Text>
 						<HorizontalSeparator color="#DBDBDB" />
+						{/* Chat support option */}
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}
@@ -43,6 +47,7 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 						<HorizontalSeparator color="#DBDBDB" />
+						{/* Email support option */}
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}
@@ -58,6 +63,7 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 						<HorizontalSeparator color="#DBDBDB" />
+						{/* Phone support option */}
 						<View style={styles.contactSupportOptionContainer}>
 							<View
 								style={styles.contactSupportOptionIconContainer}
@@ -73,11 +79,13 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 					</View>
+					{/* FAQ Section */}
 					<View style={styles.faqSection}>
 						<Text style={styles.cardTitleText}>FAQ</Text>
 						<Text style={styles.cardDescriptionText}>
 							Find answer to your problem using this app.
 						</Text>
+						{/* Search bar for FAQs */}
 						<View style={styles.searchBarWrapper}>
 							<SearchBar
 								placeholder="Try find “how to”"
@@ -90,6 +98,7 @@ export default function Page(): React.ReactElement | null {
 								mode="app"
 							/>
 						</View>
+						{/* User type selector tabs */}
 						<View style={styles.customerVendorTabWrapper}>
 							<View style={styles.customerTab}>
 								<Text
@@ -110,6 +119,7 @@ export default function Page(): React.ReactElement | null {
 								Vendor
 							</Text>
 						</View>
+						{/* FAQ list */}
 						<View style={styles.faqsWrapper}>
 							{FAQs.map(
 								(item, index): React.ReactElement | null => {
@@ -118,6 +128,7 @@ export default function Page(): React.ReactElement | null {
 											style={styles.faqItemContainer}
 											key={index}
 										>
+											{/* FAQ question header with expand/collapse functionality */}
 											<TouchableOpacity
 												style={
 													styles.faqItemHeaderContainer
@@ -151,6 +162,7 @@ export default function Page(): React.ReactElement | null {
 													}
 												/>
 											</TouchableOpacity>
+											{/* FAQ answer - shown when expanded */}
 											{currentFaqIndex === index && (
 												<View
 													style={

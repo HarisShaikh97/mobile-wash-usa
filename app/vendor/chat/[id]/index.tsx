@@ -6,6 +6,7 @@ import { theme } from "../../../../utils/constants"
 import { Message } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
 	const messages: Message[] = [
@@ -42,7 +43,9 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for the chat view
 		<View style={styles.bodyContainer}>
+			{/* Job details card showing title and price */}
 			<View style={styles.jobCard}>
 				<View style={styles.horizontalWrapper}>
 					<Text
@@ -54,6 +57,7 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 					<Text style={styles.amountText}>$500</Text>
 				</View>
+				{/* Job description with truncation */}
 				<Text
 					style={styles.jobDescriptionText}
 					numberOfLines={2}
@@ -63,11 +67,13 @@ export default function Page(): React.ReactElement | null {
 					before noon...
 				</Text>
 			</View>
+			{/* Yesterday's messages section */}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
 				<Text style={styles.chatSectionTitleText}>Yesterday</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
+			{/* Render yesterday's messages */}
 			{messages.map((message, index): React.ReactElement | null => {
 				return (
 					<MessageCard
@@ -80,11 +86,13 @@ export default function Page(): React.ReactElement | null {
 					/>
 				)
 			})}
+			{/* Today's messages section */}
 			<View style={styles.chatSectionHeader}>
 				<HorizontalSeparator color="#EDEDED" />
 				<Text style={styles.chatSectionTitleText}>Today</Text>
 				<HorizontalSeparator color="#EDEDED" />
 			</View>
+			{/* Render today's messages */}
 			{messages.map((message, index): React.ReactElement | null => {
 				return (
 					<MessageCard

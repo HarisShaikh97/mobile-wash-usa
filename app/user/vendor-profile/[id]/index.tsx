@@ -9,14 +9,18 @@ import { theme } from "../../../../utils/constants"
 import { Review } from "../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
+	// State to manage the selected tab
 	const [selectedTab, setSelectedTab] = useState<"about" | "rating">("about")
 
+	// Memoized function to handle sending a message
 	const handleSendMessage = useCallback((): void => {
-		router.navigate(`/user/chat/${id}`)
+		router.navigate(`/user/chat/${id}`) // Navigating to the chat page with the job ID
 	}, [router, id])
 
 	const reviews: Review[] = [
@@ -63,7 +67,9 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for the vendor profile page
 		<View style={styles.container}>
+			{/* Profile image section */}
 			<View style={styles.profileImageContainer}>
 				<Image
 					source={require("../../../../assets/images/vendor-profile.png")}
@@ -71,7 +77,9 @@ export default function Page(): React.ReactElement | null {
 					contentFit="cover"
 				/>
 			</View>
+			{/* Vendor name */}
 			<Text style={styles.userNameText}>Michael Guzzi</Text>
+			{/* Stats section showing ratings, reviews and completed jobs */}
 			<View style={styles.statsWrapper}>
 				<View style={styles.statsCardContainer}>
 					<Text style={styles.statsQuantityText}>4.5</Text>
@@ -86,6 +94,7 @@ export default function Page(): React.ReactElement | null {
 					<Text style={styles.statsTitleText}>Jobs Done</Text>
 				</View>
 			</View>
+			{/* Message button */}
 			<FormButton
 				length="half"
 				colorTheme="dark"
@@ -93,6 +102,7 @@ export default function Page(): React.ReactElement | null {
 				title="Send Message"
 				onPress={handleSendMessage}
 			/>
+			{/* Tab navigation */}
 			<View style={styles.tabsWrapper}>
 				<TouchableOpacity
 					style={[
@@ -127,8 +137,11 @@ export default function Page(): React.ReactElement | null {
 					<Text style={styles.tabTitleText}>Rating</Text>
 				</TouchableOpacity>
 			</View>
+			{/* Conditional rendering based on selected tab */}
 			{selectedTab === "about" ? (
+				// About tab content
 				<View style={styles.tabSectionContainer}>
+					{/* Vendor description section */}
 					<View style={styles.aboutDetailsWrapper}>
 						<Text style={styles.aboutHeadingText}>
 							About The Vendor
@@ -139,7 +152,9 @@ export default function Page(): React.ReactElement | null {
 							car wash, wax, and interior cleaning services.
 						</Text>
 					</View>
+					{/* Vendor details section */}
 					<View style={styles.aboutDetailsWrapper}>
+						{/* Location details */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../assets/icons/location2.svg")}
@@ -155,6 +170,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Membership details */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../assets/icons/user2.svg")}
@@ -170,6 +186,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Jobs completed details */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../assets/icons/my-jobs.svg")}
@@ -186,7 +203,9 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 			) : (
+				// Rating tab content
 				<View style={styles.tabSectionContainer}>
+					{/* Overall rating section */}
 					<View style={styles.ratingsWrapper}>
 						<Text style={styles.ratingsHeadingText}>
 							Overall Rating
@@ -197,6 +216,7 @@ export default function Page(): React.ReactElement | null {
 							Base on 135 Reviews
 						</Text>
 					</View>
+					{/* Review cards section */}
 					<View style={styles.reviewCardsWrapper}>
 						{reviews.map(
 							(review, index): React.ReactElement | null => {

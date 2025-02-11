@@ -9,29 +9,35 @@ import FeedbackConfirmationModal from "../../../../components/feedback-confirmat
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
-	const [ratings, setRatings] = useState<number>(0)
-	const [review, setReview] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [ratings, setRatings] = useState<number>(0) // State for managing ratings
+	const [review, setReview] = useState<string>("") // State for managing review text
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
+	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true)
+		setOpenModal(true) // Open the modal
 	}, [setOpenModal])
 
 	return (
 		<View style={styles.container}>
+			{/* Feedback confirmation modal component */}
 			<FeedbackConfirmationModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
+			{/* Success icon */}
 			<Image
 				source={require("../../../../assets/icons/successful.svg")}
 				style={styles.checkIcon}
 				contentFit="contain"
 			/>
+			{/* Main completion message */}
 			<Text style={styles.titleText}>Your Job Has Been Completed!</Text>
+			{/* Job details card */}
 			<View style={styles.jobCardContainer}>
 				<Text
 					style={styles.jobTitleText}
@@ -42,6 +48,7 @@ export default function Page(): React.ReactElement | null {
 				</Text>
 				<Text style={styles.budgetText}>$500</Text>
 			</View>
+			{/* Feedback section header */}
 			<Text style={styles.experienceTitleText}>
 				How was your experience?
 			</Text>
@@ -49,7 +56,9 @@ export default function Page(): React.ReactElement | null {
 				Your feedback helps us ensure quality service. Rate and review
 				below.
 			</Text>
+			{/* Star rating input component */}
 			<RatingsInput size={35} ratings={ratings} setRatings={setRatings} />
+			{/* Review text input field */}
 			<View style={styles.reviewBoxWrapper}>
 				<InputField
 					length="full"
@@ -63,6 +72,7 @@ export default function Page(): React.ReactElement | null {
 					size="large"
 				/>
 			</View>
+			{/* Submit button */}
 			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"

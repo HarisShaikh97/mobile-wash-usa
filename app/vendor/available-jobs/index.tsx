@@ -9,22 +9,25 @@ import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
 	const jobs: Job[] = []
 
 	return (
+		// Main scrollable container for the available jobs page
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Modal component for filtering jobs */}
 			<JobsFilterModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="app"
 			/>
 			<View style={styles.container}>
+				{/* Header section with back and notification buttons */}
 				<View style={styles.headerContainer}>
 					<BackButton
 						size="small"
@@ -34,13 +37,16 @@ export default function Page(): React.ReactElement | null {
 					/>
 					<NotificationButton theme="dark" mode="app" />
 				</View>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Title section */}
 					<View style={styles.titleContainer}>
 						<Text style={styles.titleText}>Available Jobs</Text>
 						<Text style={styles.descriptionText}>
 							Browse and apply nearby
 						</Text>
 					</View>
+					{/* Search bar with filter functionality */}
 					<SearchBar
 						placeholder="Search"
 						color="#F5F5F5"
@@ -52,7 +58,9 @@ export default function Page(): React.ReactElement | null {
 						setOpenFilterModal={setOpenModal}
 						mode="app"
 					/>
+					{/* Container for job cards */}
 					<View style={styles.jobCardsContainer}>
+						{/* Map through jobs array to render individual job cards */}
 						{jobs.map((job): React.ReactElement | null => {
 							return (
 								<JobCard
