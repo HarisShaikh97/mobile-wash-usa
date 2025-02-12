@@ -2,101 +2,76 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import Feather from "@expo/vector-icons/Feather"
+import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
-import { PaymentOptions } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter()
 
-	const [selectedOption, setSelectedOption] = useState<PaymentOptions>("card")
+	const [cardNumber, setCardNumber] = useState<string>("")
+	const [expiryDate, setExpiryDate] = useState<string>("")
+	const [CVC, setCVC] = useState<string>("")
+	const [cardHolderName, setCardHolderName] = useState<string>("")
 
 	const handleSubmit = useCallback(() => {
-		if (selectedOption === "card") {
-			router.navigate("/vendor/payment/card-details")
-		} else if (selectedOption === "paypal") {
-			router.navigate("/vendor/payment/paypal-account")
-		}
-	}, [router, selectedOption])
+		router.navigate("/vendor/home")
+	}, [router])
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.titleWrapper}>
-				<Text style={styles.titleText}>Select Your Payment Method</Text>
-				<Text style={styles.descriptionText}>
-					To receive payments for your services, please select your
-					preferred payment method.
-				</Text>
-			</View>
 			<View style={styles.formContainer}>
-				<Text style={styles.headingText}>Options</Text>
-				<View style={styles.paymentOptionsWrapper}>
-					<TouchableOpacity
-						style={styles.paymentOptionContainer}
-						onPress={() => {
-							setSelectedOption("card")
-						}}
-					>
-						<View style={styles.paymentOptionTitleWrapper}>
-							<Image
-								source={require("../../../assets/icons/card.svg")}
-								style={styles.paymentOptionIcon}
-								contentFit="contain"
-							/>
-							<Text style={styles.paymentOptionTitleText}>
-								Credit Card/Debit Card
-							</Text>
-						</View>
-						<View
-							style={[
-								styles.checkBox,
-								selectedOption === "card"
-									? styles.checkboxChecked
-									: styles.checkboxUnChecked
-							]}
-						>
-							{selectedOption === "card" && (
-								<View style={styles.checkboxInnerCircle} />
-							)}
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.paymentOptionContainer}
-						onPress={() => {
-							setSelectedOption("paypal")
-						}}
-					>
-						<View style={styles.paymentOptionTitleWrapper}>
-							<Image
-								source={require("../../../assets/icons/paypal.svg")}
-								style={styles.paymentOptionIcon}
-								contentFit="contain"
-							/>
-							<Text style={styles.paymentOptionTitleText}>
-								Paypal
-							</Text>
-						</View>
-						<View
-							style={[
-								styles.checkBox,
-								selectedOption === "paypal"
-									? styles.checkboxChecked
-									: styles.checkboxUnChecked
-							]}
-						>
-							{selectedOption === "paypal" && (
-								<View style={styles.checkboxInnerCircle} />
-							)}
-						</View>
-					</TouchableOpacity>
+				<Text style={styles.titleText}>Enter your card details</Text>
+				<InputField
+					length="full"
+					type="text"
+					title="Card Number"
+					placeholder="0000 0000 0000 0000"
+					value={cardNumber}
+					onChangeText={setCardNumber}
+					secureTextEntry={false}
+					multiline={false}
+				/>
+				<View style={styles.inputFieldsWrapper}>
+					<InputField
+						length="half"
+						type="text"
+						title="Expiry Date"
+						placeholder="MM/YY"
+						value={expiryDate}
+						onChangeText={setExpiryDate}
+						secureTextEntry={false}
+						multiline={false}
+					/>
+					<InputField
+						length="half"
+						type="text"
+						title="CVC"
+						placeholder="000"
+						value={CVC}
+						onChangeText={setCVC}
+						secureTextEntry={false}
+						multiline={false}
+					/>
 				</View>
+				<InputField
+					length="full"
+					type="text"
+					title="Card Holder Name"
+					placeholder="Full name"
+					value={cardHolderName}
+					onChangeText={setCardHolderName}
+					secureTextEntry={false}
+					multiline={false}
+				/>
 			</View>
 			<View style={styles.formButtonWrapper}>
 				<FormButton
 					length="full"
 					colorTheme="dark"
 					isLoading={false}
-					title="Next"
+					title="Confirm Payment"
 					onPress={handleSubmit}
 				/>
 			</View>
@@ -113,85 +88,23 @@ const styles = StyleSheet.create({
 	formContainer: {
 		width: "100%",
 		flexDirection: "column",
-		gap: 25,
-		paddingTop: 15
-	},
-	titleWrapper: {
-		flexDirection: "column",
 		alignItems: "center",
-		gap: 10
+		gap: 25
 	},
 	titleText: {
-		fontSize: 37.5,
+		fontSize: 35,
 		fontFamily: "Montserrat-Bold",
 		color: theme.colors.secondary,
-		width: 350,
 		textAlign: "center",
-		lineHeight: 35
+		lineHeight: 37.5,
+		textTransform: "capitalize",
+		width: 235
 	},
-	descriptionText: {
-		fontSize: 16.5,
-		fontFamily: "Roboto-Regular",
-		color: theme.colors.secondary,
-		width: 350,
-		textAlign: "center"
-	},
-	headingText: {
-		fontSize: 17.5,
-		fontFamily: "Montserrat-SemiBold",
-		color: theme.colors.secondary
-	},
-	paymentOptionsWrapper: {
+	inputFieldsWrapper: {
 		width: "100%",
-		flexDirection: "column",
-		gap: 10
-	},
-	paymentOptionContainer: {
-		height: 65,
-		width: "100%",
-		borderRadius: 7.5,
-		borderWidth: 1,
-		borderColor: "#F5F5F5",
-		backgroundColor: "white",
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-between",
-		paddingHorizontal: 20
-	},
-	paymentOptionTitleWrapper: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 20
-	},
-	paymentOptionIcon: {
-		height: 20,
-		width: 20
-	},
-	paymentOptionTitleText: {
-		fontSize: 15,
-		fontFamily: "Montserrat-Medium",
-		color: theme.colors.secondary
-	},
-	checkBox: {
-		height: 20,
-		width: 20,
-		borderRadius: 10,
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 3
-	},
-	checkboxChecked: {
-		backgroundColor: "rgba(47, 116, 250, 0.25)"
-	},
-	checkboxUnChecked: {
-		borderWidth: 1.5,
-		borderColor: "#F5F5F5"
-	},
-	checkboxInnerCircle: {
-		height: "100%",
-		width: "100%",
-		borderRadius: 10,
-		backgroundColor: theme.colors.primary
+		justifyContent: "space-between"
 	},
 	formButtonWrapper: {
 		width: "75%"
