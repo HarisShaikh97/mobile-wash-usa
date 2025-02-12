@@ -6,20 +6,25 @@ import BackButton from "../../../../../components/back-button/BackButton"
 import { theme } from "../../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// Initialize router object for navigation
 	const router = useRouter()
 
+	// Memoized callback for marking job as completed
 	const handleMarkCompleted = useCallback((): void => {
-		router.navigate(`/vendor/job-completion-verification/${id}`)
+		router.navigate(`/vendor/job-completion-verification/${id}`) // Navigate to job completion verification page
 	}, [router, id])
 
+	// Memoized callback for viewing job images
 	const handleViewImage = useCallback((): void => {
-		router.navigate(`/vendor/job-images/${id}`)
+		router.navigate(`/vendor/job-images/${id}`) // Navigate to job images page
 	}, [router, id])
 
 	return (
 		<View style={styles.container}>
+			{/* Header section with back button and action button */}
 			<View style={styles.headerContainer}>
 				<View style={styles.headerTitleWrapper}>
 					<BackButton
@@ -30,6 +35,7 @@ export default function Page(): React.ReactElement | null {
 					/>
 					<Text style={styles.headerTitleText}>Job Details</Text>
 				</View>
+				{/* Mark as completed button */}
 				<TouchableOpacity
 					style={styles.headerActionButtonContainer}
 					onPress={handleMarkCompleted}
@@ -39,12 +45,17 @@ export default function Page(): React.ReactElement | null {
 					</Text>
 				</TouchableOpacity>
 			</View>
+			{/* Body content container */}
 			<View style={styles.bodyContainer}>
+				{/* Job details card section */}
 				<View style={styles.jobDetailsCard}>
+					{/* Job title */}
 					<Text style={styles.jobTitleText}>
 						Car wash service needed
 					</Text>
+					{/* Job metadata section (user, date, time) */}
 					<View style={styles.jobDateTimeWrapper}>
+						{/* User info */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
 							<Image
 								source={require("../../../../../assets/icons/user.svg")}
@@ -56,6 +67,7 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 						<View style={styles.circularSeparator} />
+						{/* Date info */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
 							<Image
 								source={require("../../../../../assets/icons/date.svg")}
@@ -67,6 +79,7 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 						<View style={styles.circularSeparator} />
+						{/* Time info */}
 						<View style={styles.jobDateTimeTextIconWrapper}>
 							<Image
 								source={require("../../../../../assets/icons/time.svg")}
@@ -78,10 +91,12 @@ export default function Page(): React.ReactElement | null {
 							</Text>
 						</View>
 					</View>
+					{/* Budget section */}
 					<View style={styles.budgetSection}>
 						<Text style={styles.budgetTitleText}>Budget</Text>
 						<Text style={styles.budgetPriceText}>$500</Text>
 					</View>
+					{/* Job description section */}
 					<Text style={styles.sectionTitleText}>Job Description</Text>
 					<Text style={styles.sectionDescriptionText}>
 						Lorem Ipsum is simply dummy text of the printing and
@@ -95,8 +110,10 @@ export default function Page(): React.ReactElement | null {
 						took a galley of type and scrambled it to make a type
 						specimen book.
 					</Text>
+					{/* Gallery section */}
 					<Text style={styles.sectionTitleText}>Gallery</Text>
 					<View style={styles.galleryImagesWrapper}>
+						{/* Gallery image 1 */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
@@ -107,6 +124,7 @@ export default function Page(): React.ReactElement | null {
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery image 2 */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
@@ -117,6 +135,7 @@ export default function Page(): React.ReactElement | null {
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery image 3 */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
@@ -127,6 +146,7 @@ export default function Page(): React.ReactElement | null {
 								contentFit="cover"
 							/>
 						</TouchableOpacity>
+						{/* Gallery image 4 with see more overlay */}
 						<TouchableOpacity
 							style={styles.galleryImageItemContainer}
 							onPress={handleViewImage}
@@ -145,6 +165,7 @@ export default function Page(): React.ReactElement | null {
 						</TouchableOpacity>
 					</View>
 				</View>
+				{/* Location card section */}
 				<View style={styles.locationCard}>
 					<Text style={styles.sectionTitleText}>Location</Text>
 					<Text style={styles.sectionDescriptionText}>

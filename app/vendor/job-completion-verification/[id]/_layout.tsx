@@ -5,11 +5,13 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main background container with screen background image
 		<ImageBackground
 			source={require("../../../../assets/images/screen-bg.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Header section containing back navigation button */}
 			<View style={styles.headerContainer}>
 				<BackButton
 					size="small"
@@ -18,7 +20,9 @@ export default function Layout(): React.ReactElement | null {
 					borderColor="transparent"
 				/>
 			</View>
+			{/* Slot component for nested route content */}
 			<Slot />
+			{/* Arc image positioned at bottom right */}
 			<Image
 				source={require("../../../../assets/images/security-arc.png")}
 				alt="sign-up"

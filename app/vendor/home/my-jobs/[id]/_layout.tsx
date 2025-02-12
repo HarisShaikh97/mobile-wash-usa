@@ -6,31 +6,42 @@ import JobActionPopup from "../../../../../components/job-action-popup/JobAction
 import { theme } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
+
+	// Initialize router object for navigation
 	const router = useRouter()
 
 	return (
+		// Main wrapper container
 		<View style={styles.wrapper}>
+			{/* Action popup for marking job as completed */}
 			<JobActionPopup
 				title="Mark As Completed"
 				onPress={() => {
 					router.navigate(`/vendor/job-completion-verification/${id}`)
 				}}
 			/>
+			{/* Scrollable content area */}
 			<ScrollView
 				style={styles.scrollView}
 				showsVerticalScrollIndicator={false}
 			>
+				{/* Main content container */}
 				<View style={styles.container}>
+					{/* Header with navigation buttons */}
 					<View style={styles.headerContainer}>
+						{/* Back navigation button */}
 						<BackButton
 							size="small"
 							color={theme.colors.secondary}
 							backgroundColor="transparent"
 							borderColor="#F5F5F5"
 						/>
+						{/* Delete job button */}
 						<DeleteButton />
 					</View>
+					{/* Slot for nested route content */}
 					<Slot />
 				</View>
 			</ScrollView>

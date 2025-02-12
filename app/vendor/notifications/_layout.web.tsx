@@ -12,28 +12,36 @@ import { theme } from "../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Content wrapper */}
 			<View style={styles.scrollContainer}>
+				{/* Header section with background image */}
 				<ImageBackground
 					source={require("../../../assets/images/profile-header-bg-web.png")}
 					style={styles.headerContainer}
 					contentFit="cover"
 				>
+					{/* Navigation back button */}
 					<BackButton
 						size="large"
 						color="#000000"
 						backgroundColor="#ffffff"
 						borderColor="transparent"
 					/>
+					{/* Page title */}
 					<Text style={styles.titleText}>Notifications</Text>
+					{/* Read all notifications button */}
 					<TouchableOpacity>
 						<Text style={styles.readAllText}>Read all</Text>
 					</TouchableOpacity>
 				</ImageBackground>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Slot component for rendering child routes */}
 					<Slot />
 				</View>
 			</View>

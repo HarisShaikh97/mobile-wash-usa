@@ -6,6 +6,7 @@ import { theme } from "../../../utils/constants"
 import { Notification } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// State for managing the modal visibility
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const notifications: Notification[] = [
@@ -35,20 +36,26 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for notifications page
 		<View style={styles.container}>
+			{/* Modal for notification actions */}
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="app"
 			/>
+			{/* Page title */}
 			<Text style={styles.titleText}>Notifications</Text>
+			{/* Today's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Today</Text>
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through today's notifications */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
+									// Alternate between dark and light themes
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}
 									title={notification.title}
@@ -63,13 +70,16 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
+			{/* Yesterday's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Yesterday</Text>
 				<View style={styles.notificationCardsWrapper}>
+					{/* Map through yesterday's notifications */}
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
+									// Alternate between dark and light themes
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}
 									title={notification.title}

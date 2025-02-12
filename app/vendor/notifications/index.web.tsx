@@ -6,6 +6,7 @@ import { theme } from "../../../utils/constants"
 import { Notification } from "../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// State for managing the modal visibility
 	const [openModal, setOpenModal] = useState<boolean>(false)
 
 	const notifications: Notification[] = [
@@ -35,19 +36,24 @@ export default function Page(): React.ReactElement | null {
 	]
 
 	return (
+		// Main container for notifications
 		<View style={styles.container}>
+			{/* Modal for notification actions */}
 			<NotificationActionsModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
 				mode="web"
 			/>
+			{/* Today's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Today</Text>
+				{/* Wrapper for today's notification cards */}
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
+									// Alternating dark/light theme based on index
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}
 									title={notification.title}
@@ -62,13 +68,16 @@ export default function Page(): React.ReactElement | null {
 					)}
 				</View>
 			</View>
+			{/* Yesterday's notifications section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Yesterday</Text>
+				{/* Wrapper for yesterday's notification cards */}
 				<View style={styles.notificationCardsWrapper}>
 					{notifications.map(
 						(notification, index): React.ReactElement | null => {
 							return (
 								<NotificationCard
+									// Alternating dark/light theme based on index
 									theme={index % 2 === 0 ? "dark" : "light"}
 									type={notification.type}
 									title={notification.title}

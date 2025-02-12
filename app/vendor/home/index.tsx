@@ -15,22 +15,26 @@ import { theme } from "../../../utils/constants"
 import { Job } from "../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
+	// Initialize router object for navigation
 	const router = useRouter()
 
 	const jobs: Job[] = []
 
 	return (
+		// Main scrollable container for the home screen
 		<ScrollView
 			style={styles.scrollContainer}
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.container}>
+				{/* Background image for the top section */}
 				<Image
 					source={require("../../../assets/images/home-screen-bg.png")}
 					style={styles.bgImage}
 					contentFit="fill"
 				/>
 				<View style={styles.bodyContainer}>
+					{/* Header section with profile image and notification button */}
 					<View style={styles.headerContainer}>
 						<TouchableOpacity
 							onPress={() => {
@@ -44,6 +48,7 @@ export default function Tab(): React.ReactElement | null {
 						</TouchableOpacity>
 						<NotificationButton theme="light" mode="app" />
 					</View>
+					{/* Welcome message section */}
 					<View style={styles.welcomeTextWrapper}>
 						<Text style={styles.welcomeHeadingText}>
 							Welcome, Michael
@@ -53,8 +58,10 @@ export default function Tab(): React.ReactElement | null {
 							services to customers in need.
 						</Text>
 					</View>
+					{/* Stats section showing earnings, completed jobs and ratings */}
 					<View style={styles.statsSectionWrapper}>
 						<View style={styles.verticalWrapper}>
+							{/* Total Earnings card */}
 							<ImageBackground
 								source={require("../../../assets/images/card-bg.png")}
 								style={styles.statsCardContainer}
@@ -67,6 +74,7 @@ export default function Tab(): React.ReactElement | null {
 									$ 450,750
 								</Text>
 							</ImageBackground>
+							{/* Jobs Completed card */}
 							<ImageBackground
 								source={require("../../../assets/images/card-bg.png")}
 								style={styles.statsCardContainer}
@@ -80,6 +88,7 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 							</ImageBackground>
 						</View>
+						{/* Overall Rating card */}
 						<ImageBackground
 							source={require("../../../assets/images/card-bg.png")}
 							style={styles.statsCardContainer}
@@ -97,6 +106,7 @@ export default function Tab(): React.ReactElement | null {
 							</Text>
 						</ImageBackground>
 					</View>
+					{/* Available Jobs section */}
 					<View style={styles.availableJobsSectionContainer}>
 						<View style={styles.availableJobsHeaderContainer}>
 							<View style={styles.availableJobsTextContainer}>
@@ -116,6 +126,7 @@ export default function Tab(): React.ReactElement | null {
 								</TouchableOpacity>
 							</View>
 						</View>
+						{/* Job cards container */}
 						<View style={styles.jobCardsContainer}>
 							{jobs.map((job): React.ReactElement | null => {
 								return (

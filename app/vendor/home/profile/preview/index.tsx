@@ -9,12 +9,15 @@ import { theme } from "../../../../../utils/constants"
 import { Review } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Initialize router object for navigation
 	const router = useRouter()
 
+	// State for managing selected tab
 	const [selectedTab, setSelectedTab] = useState<"about" | "rating">("about")
 
+	// Memoized callback for editing profile
 	const handleEditProfile = useCallback((): void => {
-		router.navigate(`/vendor/edit-account`)
+		router.navigate(`/vendor/edit-account`) // Navigate to edit profile page
 	}, [router])
 
 	const reviews: Review[] = [
@@ -62,6 +65,7 @@ export default function Page(): React.ReactElement | null {
 
 	return (
 		<View style={styles.container}>
+			{/* Profile Image Section */}
 			<View style={styles.profileImageContainer}>
 				<Image
 					source={require("../../../../../assets/images/vendor-profile.png")}
@@ -69,21 +73,27 @@ export default function Page(): React.ReactElement | null {
 					contentFit="cover"
 				/>
 			</View>
+			{/* User Name */}
 			<Text style={styles.userNameText}>Michael Guzzi</Text>
+			{/* Stats Section */}
 			<View style={styles.statsWrapper}>
+				{/* Rating Stats */}
 				<View style={styles.statsCardContainer}>
 					<Text style={styles.statsQuantityText}>4.5</Text>
 					<Ratings ratings={4.5} size={15} />
 				</View>
+				{/* Reviews Stats */}
 				<View style={styles.statsCardContainer}>
 					<Text style={styles.statsQuantityText}>135</Text>
 					<Text style={styles.statsTitleText}>Reviews</Text>
 				</View>
+				{/* Jobs Stats */}
 				<View style={styles.statsCardContainer}>
 					<Text style={styles.statsQuantityText}>15</Text>
 					<Text style={styles.statsTitleText}>Jobs Done</Text>
 				</View>
 			</View>
+			{/* Edit Profile Button */}
 			<FormButton
 				length="half"
 				colorTheme="dark"
@@ -91,7 +101,9 @@ export default function Page(): React.ReactElement | null {
 				title="Edit Profile"
 				onPress={handleEditProfile}
 			/>
+			{/* Tab Navigation */}
 			<View style={styles.tabsWrapper}>
+				{/* About Tab */}
 				<TouchableOpacity
 					style={[
 						styles.tabContainer,
@@ -108,6 +120,7 @@ export default function Page(): React.ReactElement | null {
 				>
 					<Text style={styles.tabTitleText}>About</Text>
 				</TouchableOpacity>
+				{/* Rating Tab */}
 				<TouchableOpacity
 					style={[
 						styles.tabContainer,
@@ -125,8 +138,11 @@ export default function Page(): React.ReactElement | null {
 					<Text style={styles.tabTitleText}>Rating</Text>
 				</TouchableOpacity>
 			</View>
+			{/* Tab Content */}
 			{selectedTab === "about" ? (
+				// About Section
 				<View style={styles.tabSectionContainer}>
+					{/* Vendor Description */}
 					<View style={styles.aboutDetailsWrapper}>
 						<Text style={styles.aboutHeadingText}>
 							About The Vendor
@@ -137,7 +153,9 @@ export default function Page(): React.ReactElement | null {
 							car wash, wax, and interior cleaning services.
 						</Text>
 					</View>
+					{/* Vendor Details */}
 					<View style={styles.aboutDetailsWrapper}>
+						{/* Location Info */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../../assets/icons/location2.svg")}
@@ -153,6 +171,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Membership Info */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../../assets/icons/user2.svg")}
@@ -168,6 +187,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Jobs Completed Info */}
 						<View style={styles.vendorDetailsContainer}>
 							<Image
 								source={require("../../../../../assets/icons/my-jobs.svg")}
@@ -184,7 +204,9 @@ export default function Page(): React.ReactElement | null {
 					</View>
 				</View>
 			) : (
+				// Ratings Section
 				<View style={styles.tabSectionContainer}>
+					{/* Overall Rating Display */}
 					<View style={styles.ratingsWrapper}>
 						<Text style={styles.ratingsHeadingText}>
 							Overall Rating
@@ -195,6 +217,7 @@ export default function Page(): React.ReactElement | null {
 							Base on 135 Reviews
 						</Text>
 					</View>
+					{/* Review Cards List */}
 					<View style={styles.reviewCardsWrapper}>
 						{reviews.map(
 							(review, index): React.ReactElement | null => {

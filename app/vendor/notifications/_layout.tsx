@@ -11,22 +11,28 @@ import { theme } from "../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// ScrollView container for the entire notifications layout
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
+			{/* Main container for content */}
 			<View style={styles.container}>
+				{/* Header section with back button and 'Read all' button */}
 				<View style={styles.headerContainer}>
+					{/* Back navigation button */}
 					<BackButton
 						size="small"
 						color="#000000"
 						backgroundColor="transparent"
 						borderColor="#F5F5F5"
 					/>
+					{/* 'Read all' button to mark all notifications as read */}
 					<TouchableOpacity>
 						<Text style={styles.readAllButtonText}>Read all</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Slot component for rendering child routes */}
 				<Slot />
 			</View>
 		</ScrollView>

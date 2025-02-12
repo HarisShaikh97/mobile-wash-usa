@@ -6,16 +6,21 @@ import HorizontalSeparator from "../../../../../components/horizontal-separator/
 import { theme } from "../../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// Initialize router object for navigation
 	const router = useRouter()
 
+	// Memoized callback for navigating to job images page
 	const handleViewImage = useCallback((): void => {
-		router.navigate(`/vendor/job-images/${id}`)
+		router.navigate(`/vendor/job-images/${id}`) // Navigate to job images page
 	}, [router, id])
 
 	return (
+		// Main container for job details
 		<View style={styles.bodyContainer}>
+			{/* Job title section with customer info */}
 			<View style={styles.jobTitleSection}>
 				<Text
 					style={styles.titleText}
@@ -24,7 +29,9 @@ export default function Page(): React.ReactElement | null {
 				>
 					Car Wash Service Needed
 				</Text>
+				{/* Customer, date and time information row */}
 				<View style={styles.jobDateTimeWrapper}>
+					{/* Customer name */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/user.svg")}
@@ -36,6 +43,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</View>
 					<View style={styles.circularSeparator} />
+					{/* Service date */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/date.svg")}
@@ -47,6 +55,7 @@ export default function Page(): React.ReactElement | null {
 						</Text>
 					</View>
 					<View style={styles.circularSeparator} />
+					{/* Service time */}
 					<View style={styles.jobDateTimeTextIconWrapper}>
 						<Image
 							source={require("../../../../../assets/icons/time.svg")}
@@ -60,11 +69,13 @@ export default function Page(): React.ReactElement | null {
 				</View>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Budget section */}
 			<View style={styles.budgetSection}>
 				<Text style={styles.budgetTitleText}>Budget</Text>
 				<Text style={styles.budgetPriceText}>$500</Text>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Job description section */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Job Description</Text>
 				<Text style={styles.sectionDescriptionText}>
@@ -80,6 +91,7 @@ export default function Page(): React.ReactElement | null {
 				</Text>
 			</View>
 			<HorizontalSeparator color="#F5F5F5" />
+			{/* Location section with map */}
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Location</Text>
 				<View style={styles.mapViewWrapper}>
@@ -93,9 +105,11 @@ export default function Page(): React.ReactElement | null {
 					/>
 				</View>
 			</View>
+			{/* Gallery section */}
 			<View style={styles.gallerySection}>
 				<Text style={styles.galleryTitleText}>Gallery</Text>
 				<View style={styles.galleryImagesWrapper}>
+					{/* Gallery image 1 */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -106,6 +120,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image 2 */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -116,6 +131,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image 3 */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}
@@ -126,6 +142,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="cover"
 						/>
 					</TouchableOpacity>
+					{/* Gallery image 4 with see more overlay */}
 					<TouchableOpacity
 						style={styles.galleryImageItemContainer}
 						onPress={handleViewImage}

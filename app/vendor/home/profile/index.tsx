@@ -36,6 +36,7 @@ export default function Tab(): React.ReactElement | null {
 	}, [router])
 
 	return (
+		// Layout component for profile page
 		<ProfileLayout title="Profile">
 			<View style={styles.accountSettingsSection}>
 				{/* Account section header */}

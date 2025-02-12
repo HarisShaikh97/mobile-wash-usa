@@ -7,11 +7,13 @@ import { theme } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main scrollable container
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.container}>
+				{/* Background image container */}
 				<View style={styles.bgImageWrapper}>
 					<Image
 						source={require("../../../../../assets/images/profile-bg.png")}
@@ -19,7 +21,9 @@ export default function Layout(): React.ReactElement | null {
 						contentFit="fill"
 					/>
 				</View>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Header with back and notification buttons */}
 					<View style={styles.headerContainer}>
 						<BackButton
 							size="small"
@@ -29,7 +33,9 @@ export default function Layout(): React.ReactElement | null {
 						/>
 						<NotificationButton theme="dark" mode="app" />
 					</View>
+					{/* Profile card container */}
 					<View style={styles.profileCard}>
+						{/* Slot for nested route content */}
 						<Slot />
 					</View>
 				</View>

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 import Feather from "@expo/vector-icons/Feather"
 import AccountActionModal from "../../../../components/account-action-modal/AccountActionModal"
 import VendorEditProfileCardWeb from "../../../../components/vendor-edit-profile-card-web/VendorEditProfileCardWeb"
@@ -11,11 +12,17 @@ import AccountStatusCardWeb from "../../../../components/account-status-card-web
 import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-web/HelpAndSupportCardWeb"
 import PrivacyPolicyCardWeb from "../../../../components/privacy-policy-card-web/PrivacyPolicyCardWeb"
 import Switch from "../../../../components/switch/Switch"
+import { deleteSession } from "../../../../features/auth/authSlice"
 import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
+	// Initialize router instance for navigation
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
+	// State for managing selected tab
 	const [selectedTab, setSelectedTab] = useState<
 		| "Edit Account"
 		| "Security"
@@ -23,31 +30,45 @@ export default function Tab(): React.ReactElement | null {
 		| "Help & Support"
 		| "Privacy Policy"
 	>("Edit Account")
+
+	// State for managing the account action modal visibility
 	const [openAccountActionModal, setOpenAccountActionModal] =
 		useState<boolean>(false)
+
+	// State for managing the account action type
 	const [accountActiontype, setAccountActionType] = useState<
 		"delete" | "deactivate"
 	>("delete")
 
+	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
 
-	const handleUpdatedNotificationStatus = () => {
-		notificationsEnabled.value = !notificationsEnabled.value
-	}
+	// Memoized callback to toggle notification status
+	const handleUpdatedNotificationStatus = useCallback((): void => {
+		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
+	}, [notificationsEnabled])
 
+	// Memoized function to handle logout
 	const handleLogout = useCallback((): void => {
+		// Dispatching the deleteSession action to remove the user's session
+		dispatch(deleteSession())
+
+		// Navigating to the welcome page after logout
 		router.navigate("/")
 	}, [router])
 
 	return (
 		<View style={styles.wrapper}>
 			<View style={styles.container}>
+				{/* Modal for account actions like delete/deactivate */}
 				<AccountActionModal
 					openModal={openAccountActionModal}
 					setOpenModal={setOpenAccountActionModal}
 					type={accountActiontype}
 					mode="web"
 				/>
+
+				{/* Header section with background image */}
 				<ImageBackground
 					source={require("../../../../assets/images/profile-header-bg-web.png")}
 					style={styles.headerContainer}
@@ -55,9 +76,12 @@ export default function Tab(): React.ReactElement | null {
 				>
 					<Text style={styles.titleText}>{selectedTab}</Text>
 				</ImageBackground>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Left sidebar with settings options */}
 					<View style={styles.settingsCardContainer}>
 						<Text style={styles.settingsTitleText}>Setting</Text>
+						{/* Edit Profile Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -98,6 +122,7 @@ export default function Tab(): React.ReactElement | null {
 								}
 							/>
 						</TouchableOpacity>
+						{/* Security Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -138,6 +163,7 @@ export default function Tab(): React.ReactElement | null {
 								}
 							/>
 						</TouchableOpacity>
+						{/* Account Status Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -178,6 +204,7 @@ export default function Tab(): React.ReactElement | null {
 								}
 							/>
 						</TouchableOpacity>
+						{/* Payment Details Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -207,6 +234,7 @@ export default function Tab(): React.ReactElement | null {
 								color={theme.colors.secondary}
 							/>
 						</TouchableOpacity>
+						{/* Notification Toggle Option */}
 						<View style={styles.settingOptionContainer}>
 							<View style={styles.settingOptionTitleWrapper}>
 								<Image
@@ -232,6 +260,7 @@ export default function Tab(): React.ReactElement | null {
 								duration={250}
 							/>
 						</View>
+						{/* Help & Support Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -272,6 +301,7 @@ export default function Tab(): React.ReactElement | null {
 								}
 							/>
 						</TouchableOpacity>
+						{/* Privacy Policy Option */}
 						<TouchableOpacity
 							style={styles.settingOptionContainer}
 							onPress={() => {
@@ -312,6 +342,7 @@ export default function Tab(): React.ReactElement | null {
 								}
 							/>
 						</TouchableOpacity>
+						{/* Logout Button */}
 						<TouchableOpacity
 							style={styles.logOutButton}
 							onPress={handleLogout}
@@ -324,6 +355,7 @@ export default function Tab(): React.ReactElement | null {
 							<Text style={styles.logoutButtonText}>Log Out</Text>
 						</TouchableOpacity>
 					</View>
+					{/* Right content area - Renders different components based on selected tab */}
 					{selectedTab === "Edit Account" ? (
 						<VendorEditProfileCardWeb />
 					) : selectedTab === "Security" ? (

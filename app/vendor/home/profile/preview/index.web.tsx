@@ -10,10 +10,12 @@ import { theme } from "../../../../../utils/constants"
 import { Review } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Initialize router object for navigation
 	const router = useRouter()
 
+	// Memoized callback for navigating to edit profile page
 	const handleEditProfile = useCallback((): void => {
-		router.navigate(`/vendor/home/profile`)
+		router.navigate("/vendor/home/profile") // Navigate to edit profile page
 	}, [router])
 
 	const reviews: Review[] = [
@@ -67,28 +69,38 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
+	// Memoized function to group reviews into pairs
 	const reviewsPairs = useMemo(() => {
+		// Group reviews into pairs
 		return reviews.reduce<Review[][]>((acc, _, index) => {
+			// If index is even, push reviews into the accumulator array
 			if (index % 2 === 0) {
 				acc.push(reviews.slice(index, index + 2))
 			}
+			// Return the accumulator array
 			return acc
 		}, [])
 	}, [reviews])
 
 	return (
 		<View style={styles.container}>
+			{/* Header section with notification button */}
 			<View style={styles.headerContainer}>
 				<NotificationButton mode="web" />
 			</View>
+			{/* Main body wrapper */}
 			<View style={styles.bodyWrapper}>
+				{/* Background header image */}
 				<Image
 					source={require("../../../../../assets/images/profile-header-bg-web.png")}
 					style={styles.backgroundCardContainer}
 					contentFit="fill"
 				/>
+				{/* Main content container */}
 				<View style={styles.bodyContainer}>
+					{/* Profile card section */}
 					<View style={styles.profileCardContainer}>
+						{/* Profile image and name */}
 						<View style={styles.profileImageWrapper}>
 							<Image
 								source={require("../../../../../assets/images/vendor-profile.png")}
@@ -103,13 +115,16 @@ export default function Page(): React.ReactElement | null {
 								Michael Guzzi
 							</Text>
 						</View>
+						{/* Stats section showing ratings, reviews and jobs */}
 						<View style={styles.statsWrapper}>
+							{/* Rating stats */}
 							<View style={styles.statsCardContainer}>
 								<Text style={styles.statsQuantityText}>
 									4.5
 								</Text>
 								<Ratings ratings={4.5} size={15} />
 							</View>
+							{/* Reviews stats */}
 							<View style={styles.statsCardContainer}>
 								<Text style={styles.statsQuantityText}>
 									135
@@ -118,6 +133,7 @@ export default function Page(): React.ReactElement | null {
 									Reviews
 								</Text>
 							</View>
+							{/* Jobs completed stats */}
 							<View style={styles.statsCardContainer}>
 								<Text style={styles.statsQuantityText}>15</Text>
 								<Text style={styles.statsTitleText}>
@@ -125,6 +141,7 @@ export default function Page(): React.ReactElement | null {
 								</Text>
 							</View>
 						</View>
+						{/* Edit profile button */}
 						<View style={styles.formButtonWrapper}>
 							<FormButton
 								length="half"
@@ -134,6 +151,7 @@ export default function Page(): React.ReactElement | null {
 								onPress={handleEditProfile}
 							/>
 						</View>
+						{/* About section */}
 						<View style={styles.aboutDetailsWrapper}>
 							<Text style={styles.aboutHeadingText}>
 								About The Vendor
@@ -145,7 +163,9 @@ export default function Page(): React.ReactElement | null {
 								services.
 							</Text>
 						</View>
+						{/* Vendor details section */}
 						<View style={styles.vendorDetailsWrapper}>
+							{/* Member since info */}
 							<View style={styles.vendorDetailsContainer}>
 								<Image
 									source={require("../../../../../assets/icons/user2.svg")}
@@ -163,6 +183,7 @@ export default function Page(): React.ReactElement | null {
 									</Text>
 								</View>
 							</View>
+							{/* Jobs completed info */}
 							<View style={styles.vendorDetailsContainer}>
 								<Image
 									source={require("../../../../../assets/icons/my-jobs.svg")}
@@ -180,6 +201,7 @@ export default function Page(): React.ReactElement | null {
 									</Text>
 								</View>
 							</View>
+							{/* Location info */}
 							<View style={styles.vendorDetailsContainer}>
 								<Image
 									source={require("../../../../../assets/icons/location2.svg")}
@@ -199,7 +221,9 @@ export default function Page(): React.ReactElement | null {
 							</View>
 						</View>
 					</View>
+					{/* Vertical cards section */}
 					<View style={styles.verticalCardsWrapper}>
+						{/* Overall ratings card */}
 						<View style={styles.ratingsCardContainer}>
 							<Text style={styles.ratingsHeadingText}>
 								Overall Rating
@@ -210,7 +234,9 @@ export default function Page(): React.ReactElement | null {
 								Base on 135 Reviews
 							</Text>
 						</View>
+						{/* Reviews section */}
 						<View style={styles.reviewsCardContainer}>
+							{/* Map through review pairs */}
 							{reviewsPairs.map(
 								(
 									reviewPair,
@@ -229,6 +255,7 @@ export default function Page(): React.ReactElement | null {
 											]}
 											key={key}
 										>
+											{/* Map through individual reviews in pair */}
 											{reviewPair.map(
 												(
 													review,

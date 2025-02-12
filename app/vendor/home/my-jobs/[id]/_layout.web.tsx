@@ -4,11 +4,13 @@ import { WEB_SIDE_NAV_WIDTH } from "../../../../../utils/constants"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Container for scrollable content
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.scrollContainer}>
+				{/* Slot for nested route content */}
 				<Slot />
 			</View>
 		</ScrollView>
