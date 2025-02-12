@@ -5,19 +5,24 @@ import BackButton from "../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Background image container
 		<ImageBackground
 			source={require("../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Back navigation button */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Main content container */}
 			<View style={styles.bodyContainer}>
+				{/* Card container for the payment form */}
 				<View style={styles.cardContainer}>
+					{/* Slot component for nested route content */}
 					<Slot />
 				</View>
 			</View>

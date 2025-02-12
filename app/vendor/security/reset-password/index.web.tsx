@@ -9,28 +9,33 @@ import FormButton from "../../../../components/form-button/FormButton"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [oldPassword, setOldPassword] = useState<string>("")
-	const [newPassword, setNewPassword] = useState<string>("")
-	const [confirmPassword, setConfirmPassword] = useState<string>("")
-	const [openModal, setOpenModal] = useState<boolean>(false)
+	const [oldPassword, setOldPassword] = useState<string>("") // State for storing the old password
+	const [newPassword, setNewPassword] = useState<string>("") // State for storing the new password
+	const [confirmPassword, setConfirmPassword] = useState<string>("") // State for storing the confirmed password
+	const [openModal, setOpenModal] = useState<boolean>(false) // State for controlling the visibility of the modal
 
+	// Memoized callback for handling form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true)
+		setOpenModal(true) // Open the modal
 	}, [openModal])
 
+	// Memoized callback for handling modal submission
 	const modalHandleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.back()
+		setOpenModal(false) // Close the modal
+		router.back() // Navigate back
 	}, [openModal, router])
 
 	return (
+		// Main container with background image
 		<ImageBackground
 			source={require("../../../../assets/images/sign-up-bg-web.png")}
 			style={styles.container}
 			contentFit="fill"
 		>
+			{/* Modal component for successful password reset */}
 			<ResetPasswordSuccessfulModal
 				openModal={openModal}
 				setOpenModal={setOpenModal}
@@ -38,19 +43,25 @@ export default function Page(): React.ReactElement | null {
 				handleSubmit={modalHandleSubmit}
 				mode="web"
 			/>
+			{/* Navigation back button */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Main content container */}
 			<View style={styles.bodyContainer}>
+				{/* Card container for the form */}
 				<View style={styles.cardContainer}>
+					{/* Title and description section */}
 					<Text style={styles.titleText}>Reset Password</Text>
 					<Text style={styles.descriptionText}>
 						Change your password below to keep your account secure.
 					</Text>
+					{/* Form inputs container */}
 					<View style={styles.formContainer}>
+						{/* Old password input field */}
 						<InputField
 							length="full"
 							title="Old Password"
@@ -61,6 +72,7 @@ export default function Page(): React.ReactElement | null {
 							multiline={false}
 							type="text"
 						/>
+						{/* New password input field */}
 						<InputField
 							length="full"
 							title="New Password"
@@ -71,6 +83,7 @@ export default function Page(): React.ReactElement | null {
 							multiline={false}
 							type="text"
 						/>
+						{/* Confirm password input field */}
 						<InputField
 							length="full"
 							title="Confirm Password"
@@ -82,6 +95,7 @@ export default function Page(): React.ReactElement | null {
 							type="text"
 						/>
 					</View>
+					{/* Submit button container */}
 					<View style={styles.formButtonWrapper}>
 						<FormButton
 							length="full"

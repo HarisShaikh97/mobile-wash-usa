@@ -5,15 +5,23 @@ import HorizontalSeparator from "../../../components/horizontal-separator/Horizo
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
 	return (
+		// Main container for the security page
 		<View style={styles.container}>
+			{/* Page title */}
 			<Text style={styles.titleText}>Security</Text>
+			{/* Card containing security features */}
 			<View style={styles.featuresCard}>
+				{/* Card title */}
 				<Text style={styles.cardTitleText}>Security Features</Text>
+				{/* Horizontal line separator */}
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Container for security options */}
 				<View style={styles.settingOptionContainer}>
+					{/* Password Reset option */}
 					<View style={styles.settingOption}>
 						<Text style={styles.settingOptionText}>
 							Password Reset
@@ -33,6 +41,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 						</TouchableOpacity>
 					</View>
+					{/* Report Abuse option */}
 					<View style={styles.settingOption}>
 						<Text style={styles.settingOptionText}>
 							Report Abuse

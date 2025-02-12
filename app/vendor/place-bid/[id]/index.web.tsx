@@ -9,37 +9,43 @@ import AccountErrorModal from "../../../../components/account-error-modal/Accoun
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Get job ID from URL params
 	const { id } = useLocalSearchParams()
 
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [bidAmount, setBidAmount] = useState<number>(0)
-	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false)
-	const [openErrorModal, setOpenErrorModal] = useState<boolean>(false)
+	const [bidAmount, setBidAmount] = useState<number>(0) // State for storing bid amount
+	const [openSuccessModal, setOpenSuccessModal] = useState<boolean>(false) // State for managing success modal visibility
+	const [openErrorModal, setOpenErrorModal] = useState<boolean>(false) // State for managing error modal visibility
 	const [errorType, setErrorType] = useState<
 		| "verification-pending"
 		| "verification-rejected"
 		| "payment-required"
 		| null
-	>(null)
+	>(null) // State for managing error modal visibility
 
+	// Memoized callback for handling bid submission
 	const handleSubmitBid = useCallback((): void => {
 		// setErrorType("verification-pending")
 		// setOpenErrorModal(true)
-		setOpenSuccessModal(true)
+		setOpenSuccessModal(true) // Show success modal
 	}, [setOpenSuccessModal, setOpenErrorModal, setErrorType])
 
+	// Memoized callback for handling cancel action
 	const handleCancel = useCallback((): void => {
-		router.back()
+		router.back() // Navigate back
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			{/* Modal for displaying successful bid submission */}
 			<BidSubmittedModal
 				openModal={openSuccessModal}
 				setOpenModal={setOpenSuccessModal}
 				mode="web"
 			/>
+			{/* Conditional render of error modal based on error type */}
 			{errorType && (
 				<AccountErrorModal
 					openModal={openErrorModal}
@@ -48,18 +54,21 @@ export default function Page(): React.ReactElement | null {
 					mode="web"
 				/>
 			)}
+			{/* Page title */}
 			<Text style={styles.titleText}>place a bid</Text>
+			{/* Job details card component */}
 			<JobCard
-				_id={id[0]}
-				title="Car Wash Service Needed"
-				description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-				date="28, Oct 2024"
+				id={+id[0]}
+				job_title="Car Wash Service Needed"
+				job_description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+				created_at="28, Oct 2024"
 				address="California, USA"
 				budget={500}
-				status="incoming"
+				status="open"
 				showActionButtons={false}
 				mode="app"
 			/>
+			{/* Bid amount input section */}
 			<View style={styles.bidAmountWrapper}>
 				<Text style={styles.bidAmountTitleText}>Your Bid Amount</Text>
 				<BudgetInput
@@ -68,7 +77,9 @@ export default function Page(): React.ReactElement | null {
 					mode="web"
 				/>
 			</View>
+			{/* Action buttons container */}
 			<View style={styles.actionButtonsWrapper}>
+				{/* Cancel button */}
 				<FormButton
 					colorTheme="light"
 					title="Cancel"
@@ -76,6 +87,7 @@ export default function Page(): React.ReactElement | null {
 					onPress={handleCancel}
 					length="half"
 				/>
+				{/* Submit bid button */}
 				<FormButton
 					colorTheme="dark"
 					title="Submit Bid"

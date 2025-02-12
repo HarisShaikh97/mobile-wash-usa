@@ -1,28 +1,32 @@
 import { useState, useCallback } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { Image } from "expo-image"
+import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
-import Feather from "@expo/vector-icons/Feather"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [cardNumber, setCardNumber] = useState<string>("")
-	const [expiryDate, setExpiryDate] = useState<string>("")
-	const [CVC, setCVC] = useState<string>("")
-	const [cardHolderName, setCardHolderName] = useState<string>("")
+	const [cardNumber, setCardNumber] = useState<string>("") // State for card number input
+	const [expiryDate, setExpiryDate] = useState<string>("") // State for expiry date input
+	const [CVC, setCVC] = useState<string>("") // State for CVC input
+	const [cardHolderName, setCardHolderName] = useState<string>("") // State for card holder name input
 
+	// Memoized callback for handling form submission
 	const handleSubmit = useCallback(() => {
-		router.navigate("/vendor/home")
+		router.navigate("/vendor/home") // Navigate to home page
 	}, [router])
 
 	return (
+		// Main container for the payment form
 		<View style={styles.container}>
+			{/* Container for the form inputs */}
 			<View style={styles.formContainer}>
+				{/* Title of the payment form */}
 				<Text style={styles.titleText}>Enter your card details</Text>
+				{/* Card number input field - full width */}
 				<InputField
 					length="full"
 					type="text"
@@ -33,7 +37,9 @@ export default function Page(): React.ReactElement | null {
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Wrapper for expiry date and CVC fields */}
 				<View style={styles.inputFieldsWrapper}>
+					{/* Expiry date input field - half width */}
 					<InputField
 						length="half"
 						type="text"
@@ -44,6 +50,7 @@ export default function Page(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* CVC input field - half width */}
 					<InputField
 						length="half"
 						type="text"
@@ -55,6 +62,7 @@ export default function Page(): React.ReactElement | null {
 						multiline={false}
 					/>
 				</View>
+				{/* Card holder name input field - full width */}
 				<InputField
 					length="full"
 					type="text"
@@ -66,7 +74,9 @@ export default function Page(): React.ReactElement | null {
 					multiline={false}
 				/>
 			</View>
+			{/* Container for the submit button */}
 			<View style={styles.formButtonWrapper}>
+				{/* Submit button for the payment form */}
 				<FormButton
 					length="full"
 					colorTheme="dark"

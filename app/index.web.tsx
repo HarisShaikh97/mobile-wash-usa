@@ -14,28 +14,37 @@ import { BlurView } from "expo-blur"
 import { theme, backgroundImages } from "../utils/constants"
 
 export default function Page(): React.ReactElement | null {
+	// Initializing the router instance for navigation
 	const router = useRouter()
 
-	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
-	const [nextImageIndex, setNextImageIndex] = useState<number>(1)
+	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0) // State for storing the current image index
+	const [nextImageIndex, setNextImageIndex] = useState<number>(1) // State for storing the next image index
 
+	// Reanimated values for controlling the opacity of the background images
 	const opacity = useSharedValue<number>(1)
 
+	// Memoized callback for updating the current background image index
 	const updateCurrentImageIndex = useCallback((): void => {
+		// Update the current image index by incrementing it by 1
 		setCurrentImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImages.length
 		)
-	}, [])
+	}, [backgroundImages, setCurrentImageIndex])
 
+	// Memoized callback for updating the next background image index
 	const updateNextImageIndex = useCallback((): void => {
+		// Update the next image index by incrementing it by 1
 		setNextImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImages.length
 		)
-	}, [])
+	}, [backgroundImages, setNextImageIndex])
 
+	// Memoized callback for triggering the animation sequence
 	const triggerAnimation = useCallback((): void => {
+		// Animate the opacity value using the withSequence function
 		opacity.value = withSequence(
 			withTiming(0, { duration: 500 }, (finished) => {
+				// If the animation is finished, update the current image index
 				if (finished) {
 					runOnJS(updateCurrentImageIndex)()
 				}
@@ -43,6 +52,7 @@ export default function Page(): React.ReactElement | null {
 			withDelay(
 				100,
 				withTiming(1, { duration: 50 }, (finished) => {
+					// If the animation is finished, update the next image index
 					if (finished) {
 						runOnJS(updateNextImageIndex)()
 					}
@@ -51,6 +61,7 @@ export default function Page(): React.ReactElement | null {
 		)
 	}, [opacity, updateCurrentImageIndex, updateNextImageIndex])
 
+	// Memoized animated style for controlling the opacity of the background images
 	const bgImage = useAnimatedStyle(
 		() => ({
 			opacity: opacity.value
@@ -58,37 +69,46 @@ export default function Page(): React.ReactElement | null {
 		[opacity]
 	)
 
+	// Effect to trigger the animation on focus
 	useFocusEffect(
+		// Memoized callback for triggering the animation on focus
 		useCallback((): (() => void) => {
+			// Set an interval to trigger the animation every 2500 milliseconds
 			const intervalId = setInterval(triggerAnimation, 2500)
 
+			// Return a cleanup function to clear the interval when the component unmounts
 			return (): void => {
 				clearInterval(intervalId)
 				opacity.value = 1
 			}
-		}, [triggerAnimation])
+		}, [triggerAnimation, opacity])
 	)
 
+	// Memoized values for the current and next background images
 	const currentImage = useMemo(
 		() => backgroundImages[currentImageIndex],
-		[currentImageIndex]
+		[backgroundImages, currentImageIndex]
 	)
 
+	// Memoized next background image based on the next index
 	const nextImage = useMemo(
 		() => backgroundImages[nextImageIndex],
-		[nextImageIndex]
+		[backgroundImages, nextImageIndex]
 	)
 
+	// Memoized callback for handling login
 	const handleLogin = useCallback((): void => {
-		router.navigate("/auth/login")
+		router.navigate("/auth/login") // Navigate to login page
 	}, [router])
 
+	// Memoized callback for handling sign up
 	const handleSignUp = useCallback((): void => {
-		router.navigate("/auth/sign-up")
+		router.navigate("/auth/sign-up") // Navigate to sign up page
 	}, [router])
 
 	return (
 		<View style={styles.container}>
+			{/* Animated background image that fades in/out */}
 			<Animated.Image
 				source={currentImage}
 				style={[
@@ -98,31 +118,40 @@ export default function Page(): React.ReactElement | null {
 				]}
 				resizeMode="cover"
 			/>
+			{/* Static background image that shows during transition */}
 			<Image
 				source={nextImage}
 				style={[styles.background, styles.nextBackgroundImage]}
 				contentFit="cover"
 			/>
+			{/* Overlay container with main content */}
 			<View style={[styles.background, styles.overlay]}>
+				{/* Card containing login/signup options */}
 				<View style={styles.cardContainer}>
+					{/* App logo */}
 					<Image
 						source={require("../assets/logo/logo.png")}
 						style={styles.logoImage}
 						contentFit="contain"
 					/>
-					<Text style={styles.salutationText}>Let’s Get Started</Text>
+					{/* Welcome text */}
+					<Text style={styles.salutationText}>Let's Get Started</Text>
+					{/* Description text */}
 					<Text style={styles.descriptionText} numberOfLines={4}>
 						Please Log In Or Sign Up To Find The Best Service
 						Providers For All Your Vehicle, Residential, And
 						Commercial Wash And Maintenance Needs.
 					</Text>
+					{/* Primary action buttons container */}
 					<View style={styles.buttonsWrapper}>
+						{/* Sign up button */}
 						<TouchableOpacity
 							style={[styles.actionButton, styles.signUpButton]}
 							onPress={handleSignUp}
 						>
 							<Text style={styles.actionButtonText}>Sign Up</Text>
 						</TouchableOpacity>
+						{/* Login button */}
 						<TouchableOpacity
 							style={[styles.actionButton, styles.loginButton]}
 							onPress={handleLogin}
@@ -130,10 +159,13 @@ export default function Page(): React.ReactElement | null {
 							<Text style={styles.actionButtonText}>Login</Text>
 						</TouchableOpacity>
 					</View>
+					{/* Social login section text */}
 					<Text style={styles.descriptionText}>
 						Or Via Google And Facebook
 					</Text>
+					{/* Social login buttons container */}
 					<View style={styles.buttonsWrapper}>
+						{/* Google login button */}
 						<TouchableOpacity>
 							<BlurView
 								intensity={18}
@@ -148,6 +180,7 @@ export default function Page(): React.ReactElement | null {
 								/>
 							</BlurView>
 						</TouchableOpacity>
+						{/* Facebook login button */}
 						<TouchableOpacity>
 							<BlurView
 								intensity={18}

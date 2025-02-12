@@ -4,15 +4,20 @@ import BackButton from "../../../../components/back-button/BackButton"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main container with background and padding
 		<View style={styles.container}>
+			{/* Back navigation button */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for centering content */}
 			<View style={styles.bodyContainer}>
+				{/* White card container with rounded corners */}
 				<View style={styles.cardContainer}>
+					{/* Slot for child components */}
 					<Slot />
 				</View>
 			</View>

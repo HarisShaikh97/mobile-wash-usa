@@ -4,12 +4,15 @@ import { Slot } from "expo-router"
 
 export default function Layout(): React.ReactElement | null {
 	return (
+		// Main container for layout
 		<View style={styles.wrapper}>
+			{/* Header image */}
 			<Image
 				source={require("../../../../assets/images/add-job-header.png")}
 				style={styles.headerImage}
 				contentFit="fill"
 			/>
+			{/* Slot component for nested route content */}
 			<Slot />
 		</View>
 	)
