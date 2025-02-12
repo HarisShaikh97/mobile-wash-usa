@@ -2,7 +2,8 @@ import { useState, useCallback, useEffect } from "react"
 import { View, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
-import MapView, { Region, Details } from "react-native-maps"
+import { Region, Details } from "react-native-maps"
+import Map from "../../../../components/map/Map"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import { useLocation } from "../../../../hooks/useLocation"
@@ -84,17 +85,10 @@ export default function Page(): React.ReactElement | null {
 				/>
 			</View>
 			{/* Google Maps component with custom configuration */}
-			<MapView
-				style={styles.mapView}
+			<Map
 				initialRegion={INITIAL_REGION}
-				region={selectedLocation}
-				onRegionChangeComplete={onRegionChange}
-				provider="google"
-				scrollEnabled
-				showsUserLocation
-				showsMyLocationButton
-				rotateEnabled={false}
-				pitchEnabled={false}
+				selectedLocation={selectedLocation}
+				onRegionChange={onRegionChange}
 			/>
 		</View>
 	)
