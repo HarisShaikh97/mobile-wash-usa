@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { ScrollView, View, StyleSheet } from "react-native"
 import { Slot, useRouter } from "expo-router"
 import ProfileCardWeb from "../../../../../../components/profile-card-web/ProfileCardWeb"
@@ -11,6 +11,11 @@ export default function Layout(): React.ReactElement | null {
 	const router = useRouter() // Use useRouter hook to get the router instance
 
 	const [searchValue, setSearchValue] = useState<string>("") // State to manage the search value
+
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/user/home/profile") // Navigating to the profile page
+	}, [router])
 
 	return (
 		// Main scrollable container for the layout
@@ -46,13 +51,7 @@ export default function Layout(): React.ReactElement | null {
 					{/* Wrapper for the header items */}
 					<View style={styles.headerItemsWrapper}>
 						{/* Profile card for the user */}
-						<ProfileCardWeb
-							imageSource={require("../../../../../../assets/images/profile.png")}
-							userName="John Cosby"
-							onPress={() => {
-								router.navigate("/user/home/profile")
-							}}
-						/>
+						<ProfileCardWeb onPress={handleProfilePress} />
 						{/* Notification button for displaying notifications */}
 						<NotificationButton mode="web" />
 					</View>

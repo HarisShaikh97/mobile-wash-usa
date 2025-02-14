@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import {
 	View,
 	ScrollView,
@@ -20,9 +20,6 @@ import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 import { Job, JobTab } from "../../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
-	// Define base URL
-	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
-
 	// Initialize router for navigation
 	const router = useRouter()
 
@@ -33,9 +30,6 @@ export default function Tab(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing the modal visibility
 	const [selectedTab, setSelectedTab] = useState<JobTab>(tabs[0]) // State for managing the selected tab
 
-	// Retrieve user data from Redux store
-	const user = useSelector((state: RootState) => state.auth.user)
-
 	// Retrieve user's token from Redux store
 	const token = useSelector((state: RootState) => state.auth.token)
 
@@ -45,6 +39,11 @@ export default function Tab(): React.ReactElement | null {
 		queryFn: () => getMyJobs({ accessToken: token }),
 		enabled: !!token
 	})
+
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/vendor/home/profile/preview") // Navigating to the profile preview page
+	}, [router])
 
 	return (
 		// Main scrollable container
@@ -63,21 +62,7 @@ export default function Tab(): React.ReactElement | null {
 				{/* Header section with profile and notification */}
 				<View style={styles.headerContainer}>
 					{/* Profile card component */}
-					<ProfileCardWeb
-						imageSource={
-							user &&
-							user.profile_pic &&
-							user.profile_pic.length > 0
-								? {
-										uri: `${BASE_URL}/storage/${user.profile_pic}`
-								  }
-								: require("../../../../assets/images/profile.png")
-						}
-						userName={(user && user.full_name) || ""}
-						onPress={() => {
-							router.navigate("/vendor/home/profile/preview")
-						}}
-					/>
+					<ProfileCardWeb onPress={handleProfilePress} />
 					{/* Notification button component */}
 					<NotificationButton mode="web" />
 				</View>

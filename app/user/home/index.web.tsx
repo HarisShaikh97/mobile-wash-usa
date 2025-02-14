@@ -66,19 +66,7 @@ export default function Tab(): React.ReactElement | null {
 				{/* Header section containing profile and notifications */}
 				<View style={styles.headerContainer}>
 					{/* Profile card showing user avatar and name, links to profile */}
-					<ProfileCardWeb
-						imageSource={
-							user &&
-							user.profile_pic &&
-							user.profile_pic.length > 0
-								? {
-										uri: `${BASE_URL}/storage/${user.profile_pic}`
-								  }
-								: require("../../../assets/images/profile.png")
-						}
-						userName={(user && user.full_name) || ""}
-						onPress={handleProfilePress}
-					/>
+					<ProfileCardWeb onPress={handleProfilePress} />
 					{/* Web-styled notification button */}
 					<NotificationButton mode="web" />
 				</View>

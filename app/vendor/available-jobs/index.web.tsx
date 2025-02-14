@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { View, ScrollView, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import BackButton from "../../../components/back-button/BackButton"
@@ -18,6 +18,11 @@ export default function Page(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
 	const jobs: Job[] = []
+
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/vendor/home/profile/preview") // Navigating to the profile preview page
+	}, [router])
 
 	return (
 		// Main scrollable container for the available jobs page
@@ -44,13 +49,7 @@ export default function Page(): React.ReactElement | null {
 					{/* Container for profile and notification components */}
 					<View style={styles.headerCardsWrapper}>
 						{/* User profile card component */}
-						<ProfileCardWeb
-							imageSource={require("../../../assets/images/profile2.png")}
-							userName="Michael Guzzi"
-							onPress={() => {
-								router.navigate("/vendor/home/profile/preview")
-							}}
-						/>
+						<ProfileCardWeb onPress={handleProfilePress} />
 						{/* Notification button component */}
 						<NotificationButton mode="web" />
 					</View>

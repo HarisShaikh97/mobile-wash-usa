@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { View, ScrollView, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import { useSelector } from "react-redux"
@@ -13,13 +13,13 @@ import { theme, WEB_SIDE_NAV_WIDTH } from "../../../../utils/constants"
 import { Job } from "../../../../utils/types"
 
 export default function Tab(): React.ReactElement | null {
-	// Using useRouter hook to navigate
+	// Initialize router for navigation
 	const router = useRouter()
-
-	const [searchValue, setSearchValue] = useState<string>("") // State for search input
 
 	// Retrieve user's token from Redux store
 	const token = useSelector((state: RootState) => state.auth.token)
+
+	const [searchValue, setSearchValue] = useState<string>("") // State for search input
 
 	// Query to fetch user's jobs using TanStack Query
 	const { data: myJobs } = useQuery({
@@ -27,6 +27,11 @@ export default function Tab(): React.ReactElement | null {
 		queryFn: () => getMyJobs({ accessToken: token }),
 		enabled: !!token
 	})
+
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/user/home/profile") // Navigating to the profile page
+	}, [router])
 
 	return (
 		<ScrollView
@@ -50,13 +55,7 @@ export default function Tab(): React.ReactElement | null {
 					{/* Container for user profile and notification button */}
 					<View style={styles.headerItemsWrapper}>
 						{/* Profile card with user information and navigation action */}
-						<ProfileCardWeb
-							imageSource={require("../../../../assets/images/profile.png")}
-							userName="John Cosby"
-							onPress={() => {
-								router.navigate("/user/home/profile")
-							}}
-						/>
+						<ProfileCardWeb onPress={handleProfilePress} />
 						{/* Notification button to alert users to new messages or alerts */}
 						<NotificationButton mode="web" />
 					</View>

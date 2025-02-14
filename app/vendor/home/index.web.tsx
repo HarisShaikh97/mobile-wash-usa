@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import {
 	View,
 	ScrollView,
@@ -29,6 +30,11 @@ export default function Tab(): React.ReactElement | null {
 
 	const myJobs: Job[] = []
 
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/vendor/home/profile/preview") // Navigating to the profile preview page
+	}, [router])
+
 	return (
 		// Main scrollable container
 		<ScrollView
@@ -39,21 +45,7 @@ export default function Tab(): React.ReactElement | null {
 			<View style={styles.scrollContainer}>
 				{/* Header section with profile card and notification button */}
 				<View style={styles.headerContainer}>
-					<ProfileCardWeb
-						imageSource={
-							user &&
-							user.profile_pic &&
-							user.profile_pic.length > 0
-								? {
-										uri: `${BASE_URL}/storage/${user.profile_pic}`
-								  }
-								: require("../../../assets/images/profile.png")
-						}
-						userName={(user && user.full_name) || ""}
-						onPress={() => {
-							router.navigate("/vendor/home/profile/preview")
-						}}
-					/>
+					<ProfileCardWeb onPress={handleProfilePress} />
 					<NotificationButton mode="web" />
 				</View>
 				{/* Profile section with welcome card and stats */}

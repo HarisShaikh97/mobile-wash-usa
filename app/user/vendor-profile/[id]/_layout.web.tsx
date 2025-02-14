@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import { ScrollView, View, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { Slot, useRouter } from "expo-router"
@@ -9,6 +10,11 @@ import { theme } from "../../../../utils/constants"
 export default function Layout(): React.ReactElement | null {
 	// Initializing the router instance for navigation
 	const router = useRouter()
+
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/user/home/profile") // Navigating to the profile page
+	}, [router])
 
 	return (
 		// Main scrollable container
@@ -30,13 +36,7 @@ export default function Layout(): React.ReactElement | null {
 					{/* User profile and notification section */}
 					<View style={styles.headerCardsWrapper}>
 						{/* User profile card component */}
-						<ProfileCardWeb
-							imageSource={require("../../../../assets/images/profile.png")}
-							userName="John Cosby"
-							onPress={() => {
-								router.navigate("/user/home/profile")
-							}}
-						/>
+						<ProfileCardWeb onPress={handleProfilePress} />
 						{/* Notification button component */}
 						<NotificationButton mode="web" />
 					</View>
