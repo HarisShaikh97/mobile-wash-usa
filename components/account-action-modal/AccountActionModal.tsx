@@ -4,6 +4,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface AccountActionModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -17,18 +18,22 @@ export default function AccountActionModal({
 	type,
 	mode
 }: AccountActionModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for handling the "Proceed" action
 	const handleProceed = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/")
+		setOpenModal(false) // Close the modal
+		router.navigate("/") // Navigate to the welcome page
 	}, [openModal, router])
 
+	// Memoized callback for handling the "Cancel" action
 	const handleCancel = useCallback((): void => {
-		setOpenModal(false)
+		setOpenModal(false) // Close the modal
 	}, [openModal])
 
 	return (
+		// Modal component for account actions with fade animation
 		<Modal
 			animationType="fade"
 			transparent
@@ -37,7 +42,9 @@ export default function AccountActionModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Wrapper view with semi-transparent background */}
 			<View style={styles.modalWrapper}>
+				{/* Container view with responsive styling based on mode (app/web) */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -46,15 +53,19 @@ export default function AccountActionModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Warning title text */}
 					<Text style={styles.titleText}>
 						This is a permanent action.
 					</Text>
+					{/* Description text that changes based on action type */}
 					<Text style={styles.descriptionText}>
 						{type === "deactivate"
 							? "You can choose to deactivate your account temporarily or delete it permanently. Please select an option below."
 							: "Permanently delete your account. All your data will be erased, and this action cannot be undone."}
 					</Text>
+					{/* Container for action buttons */}
 					<View style={styles.actionButtonsWrapper}>
+						{/* Cancel button */}
 						<FormButton
 							colorTheme="black"
 							title="Cancel"
@@ -62,6 +73,7 @@ export default function AccountActionModal({
 							length="half"
 							onPress={handleCancel}
 						/>
+						{/* Action button (Deactivate/Delete) */}
 						<FormButton
 							colorTheme="danger"
 							title={

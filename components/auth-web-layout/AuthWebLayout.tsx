@@ -2,25 +2,31 @@ import { View, ImageSourcePropType, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import BackButton from "../back-button/BackButton"
 
+// Interface for the props of the component
+interface AuthWebLayoutProps {
+	bgImage: ImageSourcePropType
+	children: React.ReactNode
+}
+
 export default function AuthWebLayout({
 	bgImage,
 	children
-}: {
-	children: React.ReactNode
-	bgImage: ImageSourcePropType
-}): React.ReactElement | null {
+}: AuthWebLayoutProps): React.ReactElement | null {
 	return (
+		// Main background container with image
 		<ImageBackground
 			source={bgImage}
 			style={styles.wrapper}
 			contentFit="cover"
 		>
+			{/* Back navigation button with custom styling */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for the form content */}
 			<View style={styles.formCardContainer}>{children}</View>
 		</ImageBackground>
 	)

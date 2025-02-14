@@ -5,6 +5,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface JobCompletionSuccessfulModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -16,14 +17,17 @@ export default function JobCompletionSuccessfulModal({
 	setOpenModal,
 	mode
 }: JobCompletionSuccessfulModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for handling the form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/vendor/home")
-	}, [openModal, router])
+		setOpenModal(false) // Close the modal
+		router.navigate("/vendor/home") // Navigate to the home page
+	}, [setOpenModal, router])
 
 	return (
+		// Modal component for displaying job completion success message
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -32,6 +36,7 @@ export default function JobCompletionSuccessfulModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Outer wrapper with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -40,6 +45,7 @@ export default function JobCompletionSuccessfulModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Inner container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -48,6 +54,7 @@ export default function JobCompletionSuccessfulModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image wrapper */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={[
@@ -58,21 +65,26 @@ export default function JobCompletionSuccessfulModal({
 						]}
 						contentFit="fill"
 					>
+						{/* Success icon */}
 						<Image
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
+						{/* Modal content container */}
 						<View style={styles.modalBodyContainer}>
+							{/* Success title */}
 							<Text style={styles.titleText}>
 								Job Completed Successfully!
 							</Text>
+							{/* Success description */}
 							<Text style={styles.descriptionText}>
 								Thank you! The OTP was verified, and the job has
 								been marked as complete.
 							</Text>
 						</View>
+						{/* Button container */}
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"

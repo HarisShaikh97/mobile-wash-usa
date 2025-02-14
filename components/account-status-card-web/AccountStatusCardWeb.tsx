@@ -1,9 +1,9 @@
-import { useState, useCallback } from "react"
+import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useRouter } from "expo-router"
 import HorizontalSeparator from "../horizontal-separator/HorizontalSeparator"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface AccountStatusCardProps {
 	setType: (type: "delete" | "deactivate") => void
 	setOpenModal: (open: boolean) => void
@@ -13,20 +13,22 @@ export default function AccountStatusCardWeb({
 	setType,
 	setOpenModal
 }: AccountStatusCardProps): React.ReactElement | null {
-	const router = useRouter()
-
+	// Memoized callback for handling the "Delete Account" button
 	const handleDeleteAccount = useCallback(() => {
-		setType("delete")
-		setOpenModal(true)
+		setType("delete") // Set the action type to "delete"
+		setOpenModal(true) // Open the modal
 	}, [setType, setOpenModal])
 
+	// Memoized callback for handling the "Deactivate Account" button
 	const handleDeactivateAccount = useCallback(() => {
-		setType("deactivate")
-		setOpenModal(true)
+		setType("deactivate") // Set the action type to "deactivate"
+		setOpenModal(true) // Open the modal
 	}, [setType, setOpenModal])
 
 	return (
+		// Main container for the account status card
 		<View style={styles.container}>
+			{/* Title section with heading and description */}
 			<View style={styles.titleWrapper}>
 				<Text style={styles.titleText}>Manage your account status</Text>
 				<Text style={styles.descriptionText}>
@@ -34,14 +36,17 @@ export default function AccountStatusCardWeb({
 					delete it permanently. Please select an option below.
 				</Text>
 			</View>
+			{/* Card containing account action options */}
 			<View style={styles.accountActionsCard}>
+				{/* Deactivate account section */}
 				<View style={styles.accountActionSection}>
 					<Text style={styles.cardTitleText}>Deactivate Account</Text>
 					<Text style={styles.cardDescriptionText}>
-						Temporarily deactivate your account. You won’t be able
+						Temporarily deactivate your account. You won't be able
 						to access it, but all your data will remain saved. You
 						can reactivate at any time by logging in again.
 					</Text>
+					{/* Button to trigger account deactivation */}
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeactivateAccount}
@@ -51,13 +56,16 @@ export default function AccountStatusCardWeb({
 						</Text>
 					</TouchableOpacity>
 				</View>
+				{/* Visual separator between actions */}
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Delete account section */}
 				<View style={styles.accountActionSection}>
 					<Text style={styles.cardTitleText}>Delete Account</Text>
 					<Text style={styles.cardDescriptionText}>
 						Permanently delete your account. All your data will be
 						erased, and this action cannot be undone.
 					</Text>
+					{/* Button to trigger account deletion */}
 					<TouchableOpacity
 						style={styles.accountActionButton}
 						onPress={handleDeleteAccount}

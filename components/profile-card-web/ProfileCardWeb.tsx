@@ -7,6 +7,7 @@ import {
 import { Image } from "expo-image"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ProfileCardProps {
 	imageSource: ImageSourcePropType
 	userName: string
@@ -19,12 +20,15 @@ export default function ProfileCardWeb({
 	onPress
 }: ProfileCardProps): React.ReactElement | null {
 	return (
+		// Container for the profile card
 		<TouchableOpacity style={styles.profileCard} onPress={onPress}>
+			{/* Profile image */}
 			<Image
 				source={imageSource}
 				style={styles.profileImage}
 				contentFit="cover"
 			/>
+			{/* User name */}
 			<Text style={styles.userNameText}>{userName}</Text>
 		</TouchableOpacity>
 	)

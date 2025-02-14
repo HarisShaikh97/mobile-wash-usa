@@ -9,8 +9,8 @@ import {
 import * as DocumentPicker from "expo-document-picker"
 import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import { theme } from "../../utils/constants"
-import { JobType, JobSubType } from "../../utils/types"
 
+// Interface for the base props of the component
 interface BaseInputFieldProps {
 	title: string
 	placeholder: string
@@ -18,6 +18,7 @@ interface BaseInputFieldProps {
 	zIndex?: number
 }
 
+// Interface for the select input field props
 interface SelectInputFieldProps extends BaseInputFieldProps {
 	type: "select"
 	data: Array<any>
@@ -25,29 +26,34 @@ interface SelectInputFieldProps extends BaseInputFieldProps {
 	onChangeValue: (val: any) => void
 }
 
+// Interface for the text input field props
 interface TextInputFieldProps extends BaseInputFieldProps {
 	type: "text"
 	value: string
 	onChangeText: (text: string) => void
 }
 
+// Interface for the text input field props with multiline option
 interface TextInputFieldPropsMultiLine extends TextInputFieldProps {
 	secureTextEntry: false
 	multiline: true
 	size: "small" | "large"
 }
 
+// Interface for the text input field props with single line option
 interface TextInputFieldPropsSingleLine extends TextInputFieldProps {
 	secureTextEntry: boolean
 	multiline: false
 }
 
+// Interface for the file input field props
 interface FileInputFieldProps extends BaseInputFieldProps {
 	type: "file"
 	files: DocumentPicker.DocumentPickerResult | null
 	onUploadFile: (value: DocumentPicker.DocumentPickerResult) => void
 }
 
+// Union type for the props of the component (single line, multi line, file, select)
 type InputFieldProps =
 	| TextInputFieldPropsMultiLine
 	| TextInputFieldPropsSingleLine
@@ -57,28 +63,38 @@ type InputFieldProps =
 export default function InputField(
 	props: InputFieldProps
 ): React.ReactElement | null {
+	// Extract the title, placeholder, and type from the props
 	const { title, placeholder, type } = props
 
+	// State for storing the visibility of the password
 	const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(
 		type === "text" ? !props.secureTextEntry : false
 	)
+
+	// State for storing the open state of the dropdown
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
+	// Memoized callback for handling file upload
 	const handleFileUpload = useCallback(async () => {
+		// If the type is file, try to get the file picker result
 		if (type === "file") {
 			try {
+				// Get the file picker result
 				const docRes = await DocumentPicker.getDocumentAsync({
 					type: "*/*",
 					multiple: true
 				})
+				// Call the onUploadFile callback with the file picker result
 				props.onUploadFile(docRes)
 			} catch (error) {
+				// Log the error message
 				console.log("Error while selecting file: ", error)
 			}
 		}
 	}, [type, props])
 
 	return (
+		// Main container wrapper
 		<View
 			style={[
 				styles.inputFieldWrapper,
@@ -88,7 +104,9 @@ export default function InputField(
 				{ zIndex: props.zIndex || 0 }
 			]}
 		>
+			{/* Input field title */}
 			<Text style={styles.inputFieldTitleText}>{title}</Text>
+			{/* Input field container */}
 			<View
 				style={[
 					styles.inputFieldContainer,
@@ -99,8 +117,10 @@ export default function InputField(
 						: styles.inputFieldSingleLine
 				]}
 			>
+				{/* Content wrapper for input and icons */}
 				<View style={styles.contentWrapper}>
 					{type === "text" ? (
+						// Text input component
 						<TextInput
 							style={[
 								styles.inputField,
@@ -117,11 +137,13 @@ export default function InputField(
 							multiline={props.multiline}
 						/>
 					) : (
+						// Display text for file and select inputs
 						<Text
 							style={styles.inputFieldText}
 							numberOfLines={1}
 							ellipsizeMode="tail"
 						>
+							{/* Display file names, selected value, or placeholder */}
 							{props.type === "file" &&
 							props.files &&
 							props.files.assets &&
@@ -134,7 +156,9 @@ export default function InputField(
 								: placeholder}
 						</Text>
 					)}
+					{/* Right side buttons/icons */}
 					{type === "text" ? (
+						// Password visibility toggle button
 						props.secureTextEntry && (
 							<TouchableOpacity
 								style={styles.inputFieldButton}
@@ -150,6 +174,7 @@ export default function InputField(
 							</TouchableOpacity>
 						)
 					) : type === "file" ? (
+						// File upload button
 						<TouchableOpacity
 							style={styles.inputFieldButton}
 							onPress={handleFileUpload}
@@ -161,6 +186,7 @@ export default function InputField(
 							/>
 						</TouchableOpacity>
 					) : (
+						// Dropdown toggle button
 						<TouchableOpacity
 							style={styles.inputFieldButton}
 							onPress={() => {
@@ -179,6 +205,7 @@ export default function InputField(
 						</TouchableOpacity>
 					)}
 				</View>
+				{/* Dropdown options container */}
 				{type === "select" && isOpen && (
 					<View style={styles.dropdownContainer}>
 						{props.data.map(

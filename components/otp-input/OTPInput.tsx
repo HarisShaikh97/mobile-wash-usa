@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native"
 import { OtpInput } from "react-native-otp-entry"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface OTPInputProps {
 	onChangeText: (text: string) => void
 }
@@ -11,7 +12,9 @@ export default function OTPInput({
 	onChangeText
 }: OTPInputProps): React.ReactElement | null {
 	return (
+		// Wrapper for the OTP input component
 		<View style={styles.otpInputWrapper}>
+			{/* OTP input component */}
 			<OtpInput
 				numberOfDigits={6}
 				theme={{

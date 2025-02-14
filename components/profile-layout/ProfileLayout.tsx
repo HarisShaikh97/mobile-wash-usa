@@ -11,6 +11,7 @@ import BackButton from "../back-button/BackButton"
 import NotificationButton from "../notification-button/NotificationButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ProfileLayoutProps {
 	children: React.ReactNode
 	title: string
@@ -21,18 +22,24 @@ export default function ProfileLayout({
 	title
 }: ProfileLayoutProps): React.ReactElement | null {
 	return (
+		// KeyboardAvoidingView handles keyboard overlap with inputs
 		<KeyboardAvoidingView
 			style={styles.scrollContainer}
 			behavior={Platform.OS === "ios" ? "padding" : "height"}
 		>
+			{/* ScrollView enables scrolling through content */}
 			<ScrollView showsVerticalScrollIndicator={false}>
+				{/* Main container for profile layout */}
 				<View style={styles.container}>
+					{/* Background image for profile header */}
 					<Image
 						source={require("../../assets/images/profile-bg.png")}
 						style={styles.bgImage}
 						contentFit="fill"
 					/>
+					{/* Container for main content */}
 					<View style={styles.bodyContainer}>
+						{/* Header with navigation and notification buttons */}
 						<View style={styles.headerContainer}>
 							<BackButton
 								size="small"
@@ -42,7 +49,9 @@ export default function ProfileLayout({
 							/>
 							<NotificationButton theme="dark" mode="app" />
 						</View>
+						{/* Profile section title */}
 						<Text style={styles.titleText}>{title}</Text>
+						{/* Card container for profile settings */}
 						<View style={styles.accountSettingsCard}>
 							{children}
 						</View>

@@ -4,6 +4,7 @@ import { Image } from "expo-image"
 import * as ImagePicker from "expo-image-picker"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ChatInputFieldProps {
 	value: string
 	onChangeText: (text: string) => void
@@ -15,15 +16,19 @@ export default function ChatInputField({
 	onChangeText,
 	onSubmit
 }: ChatInputFieldProps): React.ReactElement | null {
+	// State for storing the image URI
 	const [newImage, setNewImage] = useState<string | null>(null)
 
+	// Memoized callback for picking an image from the library
 	const pickImage = useCallback(async (): Promise<void> => {
+		// Requesting permission to access the library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.All,
 				quality: 1
 			})
 
+		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
 		if (!result.canceled && result.assets && result.assets.length > 0) {
 			setNewImage(result.assets[0].uri)
 		} else {
@@ -32,7 +37,9 @@ export default function ChatInputField({
 	}, [setNewImage])
 
 	return (
+		// Main container for the chat input field
 		<View style={styles.inputFieldContainer}>
+			{/* Camera button to pick images */}
 			<TouchableOpacity onPress={pickImage}>
 				<Image
 					source={require("../../assets/icons/camera.svg")}
@@ -40,6 +47,7 @@ export default function ChatInputField({
 					contentFit="contain"
 				/>
 			</TouchableOpacity>
+			{/* Text input field for chat messages */}
 			<TextInput
 				style={styles.inputField}
 				value={value}
@@ -47,10 +55,12 @@ export default function ChatInputField({
 				placeholder="Say something"
 				placeholderTextColor={"rgba(51, 51, 51, 0.3)"}
 			/>
+			{/* Send button container */}
 			<TouchableOpacity
 				style={styles.sendButtonContainer}
 				onPress={onSubmit}
 			>
+				{/* Send icon */}
 				<Image
 					source={require("../../assets/icons/send.svg")}
 					style={styles.sendIcon}

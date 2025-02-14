@@ -3,6 +3,7 @@ import { Modal, View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ChatActionsModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -16,16 +17,19 @@ export default function ChatActionsModal({
 	setOpenDeleteChatModal,
 	mode
 }: ChatActionsModalProps): React.ReactElement | null {
+	// Memoized callback for handling the deletion of the chat
 	const handleDeleteChat = useCallback((): void => {
-		setOpenModal(false)
-		setOpenDeleteChatModal(true)
-	}, [openModal])
+		setOpenModal(false) // Close the modal
+		setOpenDeleteChatModal(true) // Open the delete chat modal
+	}, [setOpenModal, setOpenDeleteChatModal])
 
+	// Memoized callback for handling the report of the chat
 	const handleReportChat = useCallback((): void => {
-		setOpenModal(false)
-	}, [openModal])
+		setOpenModal(false) // Close the modal
+	}, [setOpenModal])
 
 	return (
+		// Modal component for displaying chat actions
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -34,6 +38,7 @@ export default function ChatActionsModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Wrapper view with platform-specific styling */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -42,6 +47,7 @@ export default function ChatActionsModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -50,8 +56,11 @@ export default function ChatActionsModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Horizontal bar indicator - only shown in mobile app */}
 					{mode === "app" && <View style={styles.horizontalBar} />}
+					{/* Wrapper for action buttons */}
 					<View style={styles.actionButtonsWrapper}>
+						{/* Delete chat button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
@@ -73,6 +82,7 @@ export default function ChatActionsModal({
 								Delete
 							</Text>
 						</TouchableOpacity>
+						{/* Report chat button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,

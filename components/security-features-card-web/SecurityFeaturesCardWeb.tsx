@@ -5,18 +5,28 @@ import HorizontalSeparator from "../horizontal-separator/HorizontalSeparator"
 import { theme } from "../../utils/constants"
 
 export default function SecurityFeaturesCardWeb(): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
+
+	// Get the current pathname for navigation
 	const pathname = usePathname()
 
 	return (
+		// Main container for security features card
 		<View style={styles.container}>
+			{/* Card title */}
 			<Text style={styles.cardTitleText}>Security Features</Text>
+			{/* Horizontal line separator */}
 			<HorizontalSeparator color="#DBDBDB" />
+			{/* Container for security setting options */}
 			<View style={styles.settingOptionContainer}>
+				{/* Password Reset option */}
 				<View style={styles.settingOption}>
 					<Text style={styles.settingOptionText}>Password Reset</Text>
+					{/* Navigation button for password reset */}
 					<TouchableOpacity
 						onPress={() => {
+							// Determine route based on current user type (user/vendor)
 							router.navigate(
 								`/${
 									pathname.includes("/user/")
@@ -33,8 +43,10 @@ export default function SecurityFeaturesCardWeb(): React.ReactElement | null {
 						/>
 					</TouchableOpacity>
 				</View>
+				{/* Report Abuse option */}
 				<View style={styles.settingOption}>
 					<Text style={styles.settingOptionText}>Report Abuse</Text>
+					{/* Navigation button for report abuse (functionality to be implemented) */}
 					<TouchableOpacity>
 						<Feather
 							name="chevron-right"

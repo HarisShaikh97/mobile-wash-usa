@@ -9,6 +9,7 @@ import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ServiceCardProps {
 	title: string
 	image: ImageSourcePropType
@@ -20,9 +21,11 @@ export default function ServiceCard({
 	image,
 	mode
 }: ServiceCardProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
 	return (
+		// Touchable card container with conditional styling based on mode
 		<TouchableOpacity
 			style={[
 				styles.cardContainer,
@@ -34,8 +37,11 @@ export default function ServiceCard({
 				router.navigate("/user/add-job")
 			}}
 		>
+			{/* Background image with cover fit */}
 			<Image source={image} style={styles.bgImage} contentFit="cover" />
+			{/* Overlay container with semi-transparent background */}
 			<View style={styles.bodyContainer}>
+				{/* Text container with conditional styling based on mode */}
 				<View
 					style={[
 						styles.textContainer,
@@ -44,6 +50,7 @@ export default function ServiceCard({
 							: styles.textContainerWeb
 					]}
 				>
+					{/* Title text with conditional styling based on mode */}
 					<Text
 						style={[
 							styles.titleText,

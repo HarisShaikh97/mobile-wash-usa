@@ -4,6 +4,7 @@ import { Image, ImageBackground } from "expo-image"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface InvalidOTPModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -15,11 +16,13 @@ export default function InvalidOTPModal({
 	setOpenModal,
 	mode
 }: InvalidOTPModalProps): React.ReactElement | null {
-	const handleSubmit = useCallback((): void => {
-		setOpenModal(false)
-	}, [openModal])
+	// Modal callback function to handle the "Retry" action
+	const handleRetry = useCallback((): void => {
+		setOpenModal(false) // Close the modal
+	}, [setOpenModal])
 
 	return (
+		// Modal component for displaying invalid OTP message
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -28,6 +31,7 @@ export default function InvalidOTPModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Main modal wrapper with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -36,6 +40,7 @@ export default function InvalidOTPModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -44,6 +49,7 @@ export default function InvalidOTPModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image wrapper */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={[
@@ -54,12 +60,14 @@ export default function InvalidOTPModal({
 						]}
 						contentFit="fill"
 					>
+						{/* Invalid OTP icon */}
 						<Image
 							source={require("../../assets/icons/invalid.svg")}
 							style={styles.invalidIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
+						{/* Modal content container */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.titleText}>Invalid OTP</Text>
 							<Text style={styles.descriptionText}>
@@ -67,13 +75,14 @@ export default function InvalidOTPModal({
 								again.
 							</Text>
 						</View>
+						{/* Retry button container */}
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
 								colorTheme="black"
 								isLoading={false}
 								title="Retry"
-								onPress={handleSubmit}
+								onPress={handleRetry}
 							/>
 						</View>
 					</ImageBackground>

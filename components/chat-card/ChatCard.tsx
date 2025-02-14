@@ -1,9 +1,11 @@
+import { useCallback } from "react"
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter, usePathname } from "expo-router"
 import { theme } from "../../utils/constants"
 import { Chat } from "../../utils/types"
 
+// Interface for the base props of the component
 interface ChatCardBaseProps {
 	_id: Chat["_id"]
 	fullName: Chat["fullName"]
@@ -14,25 +16,46 @@ interface ChatCardBaseProps {
 	online: Chat["online"]
 }
 
+// Interface for the app props of the component
 interface ChatCardAppProps extends ChatCardBaseProps {
 	mode: "app"
 }
 
+// Interface for the web props of the component
 interface ChatCardWebProps extends ChatCardBaseProps {
 	mode: "web"
 	selectedChat: Chat["_id"]
 	setSelectedChat: (val: Chat["_id"]) => void
 }
 
+// Type for the props of the component (union of app and web props)
 type ChatCardProps = ChatCardAppProps | ChatCardWebProps
 
 export default function ChatCard(
 	props: ChatCardProps
 ): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
+
+	// Get the current pathname from the router
 	const pathname = usePathname()
 
+	// Memoized callback for handling the selection of the chat
+	const handleSelectChat = useCallback((): void => {
+		// If the mode is web, set the selected chat, otherwise navigate to the chat screen
+		if (props.mode === "web") {
+			props.setSelectedChat(props._id)
+		} else {
+			router.navigate(
+				pathname.includes("/user/")
+					? `/user/chat/${props._id}`
+					: `/vendor/chat/${props._id}`
+			)
+		}
+	}, [props, pathname, router])
+
 	return (
+		// Main touchable container for the chat card
 		<TouchableOpacity
 			style={[
 				styles.container,
@@ -43,19 +66,11 @@ export default function ChatCard(
 					? styles.containerSelected
 					: styles.containerUnSelected
 			]}
-			onPress={() => {
-				if (props.mode === "web") {
-					props.setSelectedChat(props._id)
-				} else {
-					router.navigate(
-						pathname.includes("/user/")
-							? `/user/chat/${props._id}`
-							: `/vendor/chat/${props._id}`
-					)
-				}
-			}}
+			onPress={handleSelectChat}
 		>
+			{/* Left section containing profile image and user details */}
 			<View style={styles.horizontalWrapper}>
+				{/* Profile image container with online status indicator */}
 				<View
 					style={[
 						styles.profileImageContainer,
@@ -69,9 +84,12 @@ export default function ChatCard(
 						style={styles.profileImage}
 						contentFit="cover"
 					/>
+					{/* Online status indicator */}
 					{props.online && <View style={styles.onlineMarker} />}
 				</View>
+				{/* User name and last message container */}
 				<View style={styles.verticalWrapper}>
+					{/* User name text */}
 					<Text
 						style={[
 							styles.userNameText,
@@ -85,6 +103,7 @@ export default function ChatCard(
 					>
 						{props.fullName}
 					</Text>
+					{/* Last message preview */}
 					<Text
 						style={[
 							styles.lastMessageText,
@@ -100,12 +119,14 @@ export default function ChatCard(
 					</Text>
 				</View>
 			</View>
+			{/* Right section containing time and unread messages count */}
 			<View
 				style={[
 					styles.verticalWrapper,
 					styles.verticallyCenteredWrapper
 				]}
 			>
+				{/* Last message timestamp */}
 				<Text
 					style={[
 						styles.lastMessageTimeText,
@@ -118,6 +139,7 @@ export default function ChatCard(
 				>
 					{props.lastMessageTime}
 				</Text>
+				{/* Unread messages counter or empty space */}
 				{props.unreadMessages > 0 ? (
 					<View
 						style={[

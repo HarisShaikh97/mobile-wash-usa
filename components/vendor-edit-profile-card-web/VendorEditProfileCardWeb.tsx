@@ -15,25 +15,29 @@ import InputField from "../input-field/InputField"
 import { theme } from "../../utils/constants"
 
 export default function VendorEditProfileCardWeb(): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
-	const [newImage, setNewImage] = useState<string | null>(null)
-	const [fullName, setFullName] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
-	const [businessInformation, setBusinessInformation] = useState<string>("")
+	const [newImage, setNewImage] = useState<string | null>(null) // State to store the selected image URI
+	const [fullName, setFullName] = useState<string>("") // State to store the full name
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State to store the phone number
+	const [email, setEmail] = useState<string>("") // State to store the email
+	const [location, setLocation] = useState<string>("") // State to store the location
+	const [businessInformation, setBusinessInformation] = useState<string>("") // State to store the business information
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
-	)
+	) // State to store the selected documents
 
+	// Memoized callback for picking an image from the library
 	const pickImage = useCallback(async (): Promise<void> => {
+		// Requesting permission to access the library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.All,
 				quality: 1
 			})
 
+		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
 		if (!result.canceled && result.assets && result.assets.length > 0) {
 			setNewImage(result.assets[0].uri)
 		} else {
@@ -41,19 +45,23 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 		}
 	}, [setNewImage])
 
+	// Memoized callback for handling the save action
 	const handleSave = useCallback(() => {
-		router.navigate("/vendor/home")
+		router.navigate("/vendor/home") // Navigate to the home page
 	}, [router])
 
+	// Memoized callback for handling the cancel action
 	const handleCancel = useCallback(() => {
-		router.back()
+		router.back() // Navigate back
 	}, [router])
 	return (
+		// Main scrollable container for the edit profile form
 		<ScrollView
 			style={styles.scrollView}
 			showsVerticalScrollIndicator={false}
 		>
 			<View style={styles.container}>
+				{/* Profile image section with upload button */}
 				<View style={styles.profileImageContainer}>
 					<Image
 						source={
@@ -64,6 +72,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						style={styles.profileImage}
 						contentFit="cover"
 					/>
+					{/* Upload button overlay */}
 					<TouchableOpacity
 						style={styles.uploadButton}
 						onPress={pickImage}
@@ -71,7 +80,9 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						<Feather name="upload" size={13.5} color="white" />
 					</TouchableOpacity>
 				</View>
+				{/* Form container with input fields */}
 				<View style={styles.formContainer}>
+					{/* Input field for full name */}
 					<InputField
 						length="full"
 						type="text"
@@ -82,6 +93,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* Input field for phone number */}
 					<InputField
 						length="full"
 						type="text"
@@ -92,6 +104,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* Input field for email */}
 					<InputField
 						length="full"
 						type="text"
@@ -102,6 +115,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* Business information textarea */}
 					<InputField
 						length="full"
 						title="Business Information"
@@ -113,7 +127,9 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						size="small"
 						type="text"
 					/>
+					{/* Document upload section */}
 					<View style={styles.documentInputWrapper}>
+						{/* Input field for document upload */}
 						<InputField
 							length="full"
 							title="Upload Documents"
@@ -122,6 +138,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 							onUploadFile={setDocuments}
 							type="file"
 						/>
+						{/* Document upload description */}
 						<View
 							style={styles.documentInputDescriptionTextWrapper}
 						>
@@ -132,6 +149,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 							</Text>
 						</View>
 					</View>
+					{/* Location input field */}
 					<InputField
 						length="full"
 						type="text"
@@ -142,7 +160,9 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 						secureTextEntry={false}
 						multiline={false}
 					/>
+					{/* Action buttons container */}
 					<View style={styles.actionButtonsWrapper}>
+						{/* Cancel button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
@@ -159,6 +179,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 								Cancel
 							</Text>
 						</TouchableOpacity>
+						{/* Save button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,

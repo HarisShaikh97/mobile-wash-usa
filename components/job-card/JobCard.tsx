@@ -6,6 +6,7 @@ import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
 import { Job } from "../../utils/types"
 
+// Interface for the props of the component
 interface JobCardProps {
 	id: Job["id"]
 	job_title: Job["job_title"]

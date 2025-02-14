@@ -5,6 +5,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface AccountVerificationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -16,14 +17,17 @@ export default function AccountVerificationSuccessfulModal({
 	setOpenModal,
 	mode
 }: AccountVerificationModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Callback function for the form button
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/auth/login")
+		setOpenModal(false) // Close the modal
+		router.navigate("/auth/login") // Navigate to the login page
 	}, [openModal, router])
 
 	return (
+		// Modal component for account verification success message
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -32,6 +36,7 @@ export default function AccountVerificationSuccessfulModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Outer wrapper for modal with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -40,6 +45,7 @@ export default function AccountVerificationSuccessfulModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Inner container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -48,16 +54,19 @@ export default function AccountVerificationSuccessfulModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image for the modal */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
 						contentFit="fill"
 					>
+						{/* Success icon */}
 						<Image
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 						/>
+						{/* Container for text content */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.descriptionText}>
 								Your Account Has Been
@@ -69,6 +78,7 @@ export default function AccountVerificationSuccessfulModal({
 								You Can Now Log In And Start Using The Platform
 							</Text>
 						</View>
+						{/* Login button */}
 						<FormButton
 							length="full"
 							colorTheme="dark"

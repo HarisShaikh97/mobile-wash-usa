@@ -18,26 +18,34 @@ export default function AddJobWebLayout({
 }: {
 	children: React.ReactNode
 }): React.ReactElement | null {
-	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
-	const [nextImageIndex, setNextImageIndex] = useState<number>(1)
+	const [currentImageIndex, setCurrentImageIndex] = useState<number>(0) // State variable to track the current image index
+	const [nextImageIndex, setNextImageIndex] = useState<number>(1) // State variable to track the next image index
 
+	// Shared value to control the opacity of the background image
 	const opacity = useSharedValue<number>(1)
 
+	// Memoized callback for updating the current and next image indices
 	const updateCurrentImageIndex = useCallback((): void => {
+		// Update the current image index by incrementing it by 1
 		setCurrentImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImagesWeb.length
 		)
-	}, [])
+	}, [setCurrentImageIndex, backgroundImagesWeb])
 
+	// Memoized callback for updating the next image index
 	const updateNextImageIndex = useCallback((): void => {
+		// Update the next image index by incrementing it by 1
 		setNextImageIndex(
 			(prevIndex) => (prevIndex + 1) % backgroundImagesWeb.length
 		)
-	}, [])
+	}, [setNextImageIndex, backgroundImagesWeb])
 
+	// Memoized callback for triggering the animation
 	const triggerAnimation = useCallback((): void => {
+		// Update the opacity of the background image with a sequence of timing and delay animations
 		opacity.value = withSequence(
 			withTiming(0, { duration: 500 }, (finished) => {
+				// If the animation is finished, update the current image index
 				if (finished) {
 					runOnJS(updateCurrentImageIndex)()
 				}
@@ -45,6 +53,7 @@ export default function AddJobWebLayout({
 			withDelay(
 				100,
 				withTiming(1, { duration: 50 }, (finished) => {
+					// If the animation is finished, update the next image index
 					if (finished) {
 						runOnJS(updateNextImageIndex)()
 					}
@@ -53,6 +62,7 @@ export default function AddJobWebLayout({
 		)
 	}, [opacity, updateCurrentImageIndex, updateNextImageIndex])
 
+	// Memoized animated style for the background image
 	const bgImage = useAnimatedStyle(
 		() => ({
 			opacity: opacity.value
@@ -60,36 +70,47 @@ export default function AddJobWebLayout({
 		[opacity]
 	)
 
+	// Effect to trigger the animation when the component is focused
 	useFocusEffect(
+		// Memoized callback for triggering the animation when the component is focused
 		useCallback((): (() => void) => {
+			// Trigger the animation every 2.5 seconds
 			const intervalId = setInterval(triggerAnimation, 2500)
 
+			// Clean up the interval when the component unmounts
 			return (): void => {
 				clearInterval(intervalId)
 				opacity.value = 1
 			}
-		}, [triggerAnimation])
+		}, [triggerAnimation, opacity])
 	)
 
+	// Memoized current background image based on the current index
 	const currentImage = useMemo(
 		() => backgroundImagesWeb[currentImageIndex],
-		[currentImageIndex]
+		[currentImageIndex, backgroundImagesWeb]
 	)
 
+	// Memoized next background image based on the next index
 	const nextImage = useMemo(
 		() => backgroundImagesWeb[nextImageIndex],
-		[nextImageIndex]
+		[nextImageIndex, backgroundImagesWeb]
 	)
 	return (
+		// Main container for the entire layout
 		<View style={styles.container}>
+			{/* Back button component with custom styling */}
 			<BackButton
 				size="large"
 				color="#000000"
 				backgroundColor="#ffffff"
 				borderColor="transparent"
 			/>
+			{/* Container for the main content area */}
 			<View style={styles.bodyContainer}>
+				{/* Container for the animated image carousel */}
 				<View style={styles.animatedCarousalContainer}>
+					{/* Current background image with animation */}
 					<Animated.Image
 						source={currentImage}
 						style={[
@@ -99,15 +120,18 @@ export default function AddJobWebLayout({
 						]}
 						resizeMode="cover"
 					/>
+					{/* Next background image that will be shown after transition */}
 					<Image
 						source={nextImage}
 						style={[styles.background, styles.nextBackgroundImage]}
 						contentFit="cover"
 					/>
+					{/* Container for carousel indicator dots */}
 					<View style={styles.indicatorContainer}>
 						{backgroundImagesWeb.map(
 							(_, index): React.ReactElement | null => {
 								return (
+									// Individual indicator dot
 									<View
 										style={[
 											styles.indicator,
@@ -125,6 +149,7 @@ export default function AddJobWebLayout({
 						)}
 					</View>
 				</View>
+				{/* Container for the form content passed as children */}
 				<View style={styles.formContainer}>{children}</View>
 			</View>
 		</View>

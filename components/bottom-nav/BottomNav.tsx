@@ -12,28 +12,39 @@ export default function BottomNav({
 	navigation,
 	insets
 }: BottomTabBarProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
+
+	// Get the current pathname from the router
 	const pathname = usePathname()
 
 	return (
+		// Container for bottom navigation with background image
 		<ImageBackground
 			source={require("../../assets/images/bottom-nav.png")}
 			style={styles.bottomNavigationContainer}
 			contentFit="fill"
 		>
+			{/* Floating action button for adding jobs or searching */}
 			<TouchableOpacity
 				style={styles.addButtonContainer}
 				onPress={() => {
+					// Navigate to add job page for users
 					if (pathname.includes("/user/")) {
 						router.navigate("/user/add-job")
-					} else if (pathname !== "/vendor/available-jobs") {
+					}
+					// Navigate to available jobs page for vendors if not already there
+					else if (pathname !== "/vendor/available-jobs") {
 						router.navigate("/vendor/available-jobs")
 					}
 				}}
 			>
+				{/* Show different icons based on user type */}
 				{pathname.includes("/user/") ? (
+					// Plus icon for users to add new jobs
 					<AntDesign name="plus" size={27.5} color="white" />
 				) : (
+					// Search icon for vendors to find jobs
 					<Image
 						source={require("../../assets/icons/search-job.svg")}
 						style={styles.searchJobIcon}
@@ -41,7 +52,9 @@ export default function BottomNav({
 					/>
 				)}
 			</TouchableOpacity>
+			{/* Container for navigation items */}
 			<View style={styles.navItemsWrapper}>
+				{/* Map through routes to render navigation items */}
 				{state.routes.map((route, index) => (
 					<NavItem
 						state={state}

@@ -4,6 +4,7 @@ import Entypo from "@expo/vector-icons/Entypo"
 import { Notification } from "../../utils/types"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface NotificationCardProps {
 	theme: "light" | "dark"
 	type: Notification["type"]
@@ -24,6 +25,7 @@ export default function NotificationCard({
 	mode
 }: NotificationCardProps): React.ReactElement | null {
 	return (
+		// Main container with conditional styling based on theme and mode
 		<View
 			style={[
 				styles.container,
@@ -38,6 +40,7 @@ export default function NotificationCard({
 				}
 			]}
 		>
+			{/* Notification type icon */}
 			<Image
 				source={
 					type === "message"
@@ -51,6 +54,7 @@ export default function NotificationCard({
 				}
 				contentFit="contain"
 			/>
+			{/* Notification content wrapper */}
 			<View
 				style={[
 					styles.notificationDetailsWrapper,
@@ -59,8 +63,10 @@ export default function NotificationCard({
 						: styles.notificationDetailsWrapperWeb
 				]}
 			>
+				{/* Title, description and menu button section */}
 				<View style={styles.horizontalWrapper}>
 					<View style={styles.verticalWrapper}>
+						{/* Notification title with ellipsis */}
 						<Text
 							style={[
 								styles.titleText,
@@ -73,6 +79,7 @@ export default function NotificationCard({
 						>
 							{title}
 						</Text>
+						{/* Notification description */}
 						<Text
 							style={[
 								styles.descriptionText,
@@ -84,6 +91,7 @@ export default function NotificationCard({
 							{description}
 						</Text>
 					</View>
+					{/* Three dots menu button */}
 					<TouchableOpacity
 						onPress={() => {
 							setOpenModal(true)
@@ -96,7 +104,9 @@ export default function NotificationCard({
 						/>
 					</TouchableOpacity>
 				</View>
+				{/* Action button and timestamp section */}
 				<View style={[styles.centerAligned, styles.horizontalWrapper]}>
+					{/* Conditional rendering of action button based on notification type */}
 					{type === "security" ? (
 						<View />
 					) : (
@@ -122,6 +132,7 @@ export default function NotificationCard({
 							</Text>
 						</TouchableOpacity>
 					)}
+					{/* Timestamp */}
 					<Text
 						style={[
 							styles.textSmall,

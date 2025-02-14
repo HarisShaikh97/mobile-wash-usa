@@ -4,6 +4,7 @@ import Ratings from "../ratings/Ratings"
 import { theme } from "../../utils/constants"
 import { Review } from "../../utils/types"
 
+// Interface for the props of the component
 interface ReviewCardProps {
 	vendor_id: Review["vendor_id"]
 	userName: Review["userName"]
@@ -26,6 +27,7 @@ export default function ReviewCard({
 	mode
 }: ReviewCardProps): React.ReactElement | null {
 	return (
+		// Main container for the review card
 		<View
 			style={[
 				styles.cardContainer,
@@ -35,15 +37,21 @@ export default function ReviewCard({
 				{ alignSelf: alignSelf }
 			]}
 		>
+			{/* User profile image */}
 			<Image
 				source={image}
 				style={styles.profileImage}
 				contentFit="cover"
 			/>
+			{/* Container for review details (username, review text, rating, time) */}
 			<View style={styles.reviewDetailsContainer}>
+				{/* Username display */}
 				<Text style={styles.userNameText}>{userName}</Text>
+				{/* Review content */}
 				<Text style={styles.reviewText}>{review}</Text>
+				{/* Star rating component */}
 				<Ratings ratings={rating} size={15} />
+				{/* Timestamp of the review */}
 				<Text style={styles.reviewText}>{time}</Text>
 			</View>
 		</View>

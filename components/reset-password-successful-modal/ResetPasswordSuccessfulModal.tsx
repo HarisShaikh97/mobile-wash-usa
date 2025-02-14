@@ -3,6 +3,7 @@ import { Image, ImageBackground } from "expo-image"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface ResetPasswordModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -19,6 +20,7 @@ export default function ResetPasswordSuccessfulModal({
 	mode
 }: ResetPasswordModalProps): React.ReactElement | null {
 	return (
+		// Modal component for displaying password reset success message
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -27,6 +29,7 @@ export default function ResetPasswordSuccessfulModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Outer wrapper with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -35,6 +38,7 @@ export default function ResetPasswordSuccessfulModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Inner container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -43,17 +47,20 @@ export default function ResetPasswordSuccessfulModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image wrapper */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
 						contentFit="fill"
 					>
+						{/* Success icon */}
 						<Image
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
+						{/* Container for success message text */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.descriptionText}>
 								Your Password Has Been
@@ -65,6 +72,7 @@ export default function ResetPasswordSuccessfulModal({
 								You Can Now Log In With Your New Password
 							</Text>
 						</View>
+						{/* Action button */}
 						<FormButton
 							length="full"
 							colorTheme="dark"

@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native"
 import MapView, { Region, Details } from "react-native-maps"
 
+// Interface for the props of the component
 interface MapProps {
 	initialRegion: Region
 	selectedLocation: Region
@@ -13,6 +14,7 @@ export default function Map({
 	onRegionChange
 }: MapProps): React.ReactElement | null {
 	return (
+		// Map component with Google Maps provider
 		<MapView
 			style={styles.mapView}
 			initialRegion={initialRegion}

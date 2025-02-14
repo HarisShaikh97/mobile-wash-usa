@@ -6,6 +6,7 @@ import Ratings from "../ratings/Ratings"
 import { theme } from "../../utils/constants"
 import { Offer } from "../../utils/types"
 
+// Interface for the props of the component
 interface OfferCardProps {
 	size: "small" | "large"
 	width: "full" | "third"
@@ -35,21 +36,31 @@ export default function OfferCard({
 	location,
 	mode
 }: OfferCardProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for handling the send message action
 	const handleSendMessage = useCallback((): void => {
+		// Navigate to the chat page for the vendor based on the mode
 		if (mode === "app") {
 			router.navigate(`/user/chat/${vendorId}`)
 		} else {
 			router.navigate("/user/home/messages")
 		}
-	}, [router, mode])
+	}, [router, mode, vendorId])
 
+	// Memoized callback for handling the accept offer action
 	const handleAcceptOffer = useCallback((): void => {
-		router.navigate(`/user/offer-accepted/${JobId}`)
-	}, [router])
+		router.navigate(`/user/offer-accepted/${JobId}`) // Navigate to the offer accepted page
+	}, [router, JobId])
+
+	// Memoized callback for handling the view profile action
+	const handleViewProfile = useCallback((): void => {
+		router.navigate(`/user/vendor-profile/${vendorId}`) // Navigate to the vendor profile page
+	}, [router, vendorId])
 
 	return (
+		// Main card container with conditional width styling
 		<View
 			style={[
 				styles.cardContainer,
@@ -58,8 +69,10 @@ export default function OfferCard({
 					: styles.cardContainerThird
 			]}
 		>
+			{/* Vendor profile section */}
 			<View style={styles.horizontalWrapper}>
 				<View style={styles.vendorProfileDetailsContainer}>
+					{/* Vendor profile image */}
 					<View style={styles.vendorProfileImageWrapper}>
 						<Image
 							source={vendorImage}
@@ -67,6 +80,7 @@ export default function OfferCard({
 							contentFit="cover"
 						/>
 					</View>
+					{/* Vendor name */}
 					<Text
 						style={styles.vendorNameText}
 						numberOfLines={2}
@@ -75,23 +89,25 @@ export default function OfferCard({
 						{vendorName}
 					</Text>
 				</View>
+				{/* View profile button */}
 				<TouchableOpacity
 					style={styles.viewProfileButton}
-					onPress={() => {
-						router.navigate(`/user/vendor-profile/${vendorId}`)
-					}}
+					onPress={handleViewProfile}
 				>
 					<Text style={styles.viewProfileButtonText}>
 						View Profile
 					</Text>
 				</TouchableOpacity>
 			</View>
+			{/* Bid amount section */}
 			<View style={styles.horizontalWrapper}>
 				<Text style={styles.sectionTitleText}>Bid Amount</Text>
 				<Text style={styles.amountText}>${amount}</Text>
 			</View>
+			{/* Vendor information section */}
 			<View style={styles.verticalWrapper}>
 				<Text style={styles.sectionTitleText}>About The Vendor</Text>
+				{/* Ratings and reviews */}
 				<View style={styles.ratingsReviewsWrapper}>
 					<Ratings ratings={ratings} size={16.5} />
 					<Text style={styles.sectionDescriptionText}>
@@ -99,6 +115,7 @@ export default function OfferCard({
 					</Text>
 				</View>
 			</View>
+			{/* Conditional rendering of location and jobs completed for large size cards */}
 			{size === "large" && (
 				<View style={styles.horizontalWrapper}>
 					<View style={styles.jobsCompletedAndLocationContainer}>
@@ -135,7 +152,9 @@ export default function OfferCard({
 					</View>
 				</View>
 			)}
+			{/* Action buttons section */}
 			<View style={styles.horizontalWrapper}>
+				{/* Send message button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,
@@ -152,6 +171,7 @@ export default function OfferCard({
 						Send Message
 					</Text>
 				</TouchableOpacity>
+				{/* Accept offer button */}
 				<TouchableOpacity
 					style={[
 						styles.actionButtonContainer,

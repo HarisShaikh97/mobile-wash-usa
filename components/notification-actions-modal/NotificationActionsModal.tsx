@@ -3,6 +3,7 @@ import { Modal, View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface NotificationActionsModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -14,15 +15,18 @@ export default function NotificationActionsModal({
 	setOpenModal,
 	mode
 }: NotificationActionsModalProps): React.ReactElement | null {
+	// Memoized callback for handling the "Delete" action
 	const handleDeleteNotification = useCallback((): void => {
-		setOpenModal(false)
-	}, [openModal])
+		setOpenModal(false) // Close the modal
+	}, [setOpenModal])
 
+	// Memoized callback for handling the "Turn off notifications" action
 	const handleTurnOffNotifications = useCallback((): void => {
-		setOpenModal(false)
-	}, [openModal])
+		setOpenModal(false) // Close the modal
+	}, [setOpenModal])
 
 	return (
+		// Modal component with conditional animation based on mode
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -31,6 +35,7 @@ export default function NotificationActionsModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Main modal wrapper with conditional styling for app/web */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -39,6 +44,7 @@ export default function NotificationActionsModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Modal content container with mode-specific styling */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -47,8 +53,11 @@ export default function NotificationActionsModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Horizontal bar indicator shown only in app mode */}
 					{mode === "app" && <View style={styles.horizontalBar} />}
+					{/* Container for action buttons */}
 					<View style={styles.actionButtonsWrapper}>
+						{/* Delete notification button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,
@@ -70,6 +79,7 @@ export default function NotificationActionsModal({
 								Delete
 							</Text>
 						</TouchableOpacity>
+						{/* Turn off notifications button */}
 						<TouchableOpacity
 							style={[
 								styles.actionButtonContainer,

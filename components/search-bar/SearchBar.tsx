@@ -1,9 +1,11 @@
+import { useCallback } from "react"
 import { View, TouchableOpacity, TextInput, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { RgbaColor, HexColor } from "../../utils/types"
 import { theme } from "../../utils/constants"
 
+// Interface for the base props of the component
 interface SearchBarBaseProps {
 	placeholder: string
 	color: RgbaColor | HexColor | "transparent"
@@ -14,21 +16,32 @@ interface SearchBarBaseProps {
 	mode: "app" | "web"
 }
 
+// Interface for the props of the component when filter is enabled
 interface SearchBarFilterEnabledProps extends SearchBarBaseProps {
 	filterEnabled: true
 	setOpenFilterModal: (value: boolean) => void
 }
 
+// Interface for the props of the component when filter is disabled
 interface SearchBarFilterDisabledProps extends SearchBarBaseProps {
 	filterEnabled: false
 }
 
+// Union type for the props of the component (filter enabled or disabled)
 type SearchBarProps = SearchBarFilterEnabledProps | SearchBarFilterDisabledProps
 
 export default function SearchBar(
 	props: SearchBarProps
 ): React.ReactElement | null {
+	// Memoized callback for handling the filter button press
+	const handleFilterButtonPress = useCallback(() => {
+		if (props.filterEnabled) {
+			props.setOpenFilterModal(true)
+		}
+	}, [props])
+
 	return (
+		// Main container with conditional styling based on mode (app/web)
 		<View
 			style={[
 				styles.container,
@@ -41,6 +54,7 @@ export default function SearchBar(
 				}
 			]}
 		>
+			{/* Search input field wrapper with icon */}
 			<View style={styles.inputFieldWrapper}>
 				<AntDesign name="search1" size={15} color="#CACACA" />
 				<TextInput
@@ -51,7 +65,9 @@ export default function SearchBar(
 					placeholderTextColor={"#CACACA"}
 				/>
 			</View>
+			{/* Conditional rendering of filter button or empty space */}
 			{props.filterEnabled ? (
+				// Filter button with active marker and icon
 				<TouchableOpacity
 					style={[
 						styles.filterButton,
@@ -59,11 +75,11 @@ export default function SearchBar(
 							? styles.filterButtonApp
 							: styles.filterButtonWeb
 					]}
-					onPress={() => {
-						props.setOpenFilterModal(true)
-					}}
+					onPress={handleFilterButtonPress}
 				>
+					{/* Red dot indicator for active filter */}
 					<View style={styles.activeMarker} />
+					{/* Filter icon with conditional sizing */}
 					<Image
 						source={require("../../assets/icons/filter.svg")}
 						style={
@@ -75,6 +91,7 @@ export default function SearchBar(
 					/>
 				</TouchableOpacity>
 			) : (
+				// Empty view for spacing when filter is disabled
 				<View style={styles.emptyView} />
 			)}
 		</View>

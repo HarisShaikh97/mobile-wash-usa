@@ -8,21 +8,25 @@ import InputField from "../input-field/InputField"
 import { theme } from "../../utils/constants"
 
 export default function CustomerEditProfileCardWeb(): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
-	const [newImage, setNewImage] = useState<string | null>(null)
-	const [fullName, setFullName] = useState<string>("")
-	const [phoneNumber, setPhoneNumber] = useState<string>("")
-	const [email, setEmail] = useState<string>("")
-	const [location, setLocation] = useState<string>("")
+	const [newImage, setNewImage] = useState<string | null>(null) // State to store the selected image URI
+	const [fullName, setFullName] = useState<string>("") // State to store the full name
+	const [phoneNumber, setPhoneNumber] = useState<string>("") // State to store the phone number
+	const [email, setEmail] = useState<string>("") // State to store the email
+	const [location, setLocation] = useState<string>("") // State to store the location
 
+	// Callback function to pick an image from the device's gallery
 	const pickImage = useCallback(async (): Promise<void> => {
+		// Requesting permission to access the library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.All,
 				quality: 1
 			})
 
+		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
 		if (!result.canceled && result.assets && result.assets.length > 0) {
 			setNewImage(result.assets[0].uri)
 		} else {
@@ -30,16 +34,21 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 		}
 	}, [setNewImage])
 
+	// Callback function to handle the save action
 	const handleSave = useCallback(() => {
-		router.navigate("/user/home")
+		router.navigate("/user/home") // Navigate to the home page
 	}, [router])
 
+	// Callback function to handle the cancel action
 	const handleCancel = useCallback(() => {
-		router.back()
+		router.back() // Navigate back
 	}, [router])
 	return (
+		// Main container for the edit profile card
 		<View style={styles.container}>
+			{/* Profile image section with upload button */}
 			<View style={styles.profileImageContainer}>
+				{/* Display either the newly selected image or default profile image */}
 				<Image
 					source={
 						newImage
@@ -49,6 +58,7 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					style={styles.profileImage}
 					contentFit="cover"
 				/>
+				{/* Upload button overlay */}
 				<TouchableOpacity
 					style={styles.uploadButton}
 					onPress={pickImage}
@@ -56,7 +66,9 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					<Feather name="upload" size={13.5} color="white" />
 				</TouchableOpacity>
 			</View>
+			{/* Form container for user information */}
 			<View style={styles.formContainer}>
+				{/* Full name input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -67,6 +79,7 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Phone number input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -77,6 +90,7 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Email input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -87,6 +101,7 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Location input field */}
 				<InputField
 					length="full"
 					type="text"
@@ -97,7 +112,9 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 					secureTextEntry={false}
 					multiline={false}
 				/>
+				{/* Action buttons container */}
 				<View style={styles.actionButtonsWrapper}>
+					{/* Cancel button */}
 					<TouchableOpacity
 						style={[
 							styles.actionButtonContainer,
@@ -114,6 +131,7 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 							Cancel
 						</Text>
 					</TouchableOpacity>
+					{/* Save button */}
 					<TouchableOpacity
 						style={[
 							styles.actionButtonContainer,

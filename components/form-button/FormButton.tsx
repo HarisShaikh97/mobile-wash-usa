@@ -6,6 +6,7 @@ import {
 } from "react-native"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface FormButtonProps {
 	length: "full" | "half"
 	colorTheme: "light" | "dark" | "danger" | "black" | "gray"
@@ -22,12 +23,15 @@ export default function FormButton({
 	onPress
 }: FormButtonProps): React.ReactElement | null {
 	return (
+		// TouchableOpacity component that acts as a button
 		<TouchableOpacity
 			style={[
 				styles.buttonContainer,
+				// Set button width based on length prop
 				length === "full"
 					? styles.buttonContainerFull
 					: styles.buttonContainerHalf,
+				// Apply different theme styles based on colorTheme prop
 				colorTheme === "dark"
 					? styles.buttonDarkTheme
 					: colorTheme === "light"
@@ -41,7 +45,9 @@ export default function FormButton({
 			disabled={isLoading}
 			onPress={onPress}
 		>
+			{/* Show loading indicator or button text based on isLoading prop */}
 			{isLoading ? (
+				// Loading spinner with color based on theme
 				<ActivityIndicator
 					size={25}
 					color={
@@ -55,11 +61,14 @@ export default function FormButton({
 					}
 				/>
 			) : (
+				// Button text with styling based on length and theme
 				<Text
 					style={[
+						// Text size based on button length
 						length === "full"
 							? styles.buttonText
 							: styles.buttonTextSmall,
+						// Text color based on theme
 						colorTheme === "dark"
 							? styles.buttonDarkThemeText
 							: colorTheme === "light"

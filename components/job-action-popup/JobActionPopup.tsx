@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface JobActionPopupProps {
 	title: string
 	onPress: () => void
@@ -11,8 +12,10 @@ export default function JobActionPopup({
 	onPress
 }: JobActionPopupProps): React.ReactElement | null {
 	return (
+		// Container for the popup
 		<TouchableOpacity style={styles.wrapper} onPress={onPress}>
 			<View style={styles.container}>
+				{/* Popup title */}
 				<Text style={styles.titleText}>{title}</Text>
 			</View>
 		</TouchableOpacity>

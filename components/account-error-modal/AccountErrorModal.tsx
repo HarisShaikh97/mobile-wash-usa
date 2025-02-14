@@ -4,6 +4,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface AccountErrorModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -17,10 +18,13 @@ export default function AccountErrorModal({
 	type,
 	mode
 }: AccountErrorModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for handling the "Proceed" action
 	const handleProceed = useCallback((): void => {
-		setOpenModal(false)
+		setOpenModal(false) // Close the modal
+		// Navigate to the appropriate page based on the error type
 		if (type === "payment-required") {
 			router.navigate("/vendor/payment")
 		} else {
@@ -28,12 +32,14 @@ export default function AccountErrorModal({
 		}
 	}, [openModal, router])
 
+	// Memoized callback for handling the "Cancel" action
 	const handleCancel = useCallback((): void => {
-		setOpenModal(false)
-		router.back()
+		setOpenModal(false) // Close the modal
+		router.back() // Navigate back
 	}, [openModal, router])
 
 	return (
+		// Modal component for displaying account-related errors
 		<Modal
 			animationType="fade"
 			transparent
@@ -42,7 +48,9 @@ export default function AccountErrorModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Wrapper view with semi-transparent background */}
 			<View style={styles.modalWrapper}>
+				{/* Container view with responsive styling based on mode (app/web) */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -51,6 +59,7 @@ export default function AccountErrorModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Title text with conditional styling based on error type */}
 					<Text
 						style={[
 							styles.titleText,
@@ -61,12 +70,14 @@ export default function AccountErrorModal({
 								: styles.titleTextPaymentRequired
 						]}
 					>
+						{/* Dynamic title based on error type */}
 						{type === "verification-pending"
 							? "Verification Pending"
 							: type === "verification-rejected"
 							? "Verification Required"
 							: "Payment Method Required"}
 					</Text>
+					{/* Description text explaining the error situation */}
 					<Text style={styles.descriptionText}>
 						{type === "verification-pending"
 							? "Your account is not yet verified. The admin is currently reviewing your documents. If you need assistance, please contact support."
@@ -74,7 +85,9 @@ export default function AccountErrorModal({
 							? "Your submitted documents have been rejected. Please upload the required documents again to proceed with job applications."
 							: "You are verified, but you need to add a payment method to proceed with job applications."}
 					</Text>
+					{/* Action buttons container */}
 					<View style={styles.actionButtonsWrapper}>
+						{/* Cancel button */}
 						<FormButton
 							colorTheme="light"
 							title="Cancel"
@@ -82,6 +95,7 @@ export default function AccountErrorModal({
 							length="half"
 							onPress={handleCancel}
 						/>
+						{/* Action button with dynamic title based on error type */}
 						<FormButton
 							colorTheme="dark"
 							title={

@@ -84,7 +84,7 @@ export default function Page(): React.ReactElement | null {
 		}, [triggerAnimation, opacity])
 	)
 
-	// Memoized values for the current and next background images
+	// Memoized current background image based on the current index
 	const currentImage = useMemo(
 		() => backgroundImages[currentImageIndex],
 		[backgroundImages, currentImageIndex]

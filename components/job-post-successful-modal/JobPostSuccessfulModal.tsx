@@ -5,6 +5,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface JobPostModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -16,19 +17,23 @@ export default function JobPostSuccessfulModal({
 	setOpenModal,
 	mode
 }: JobPostModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Function to handle the navigation to the dashboard
 	const handleGoToDashboard = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/user/home")
-	}, [openModal, router])
+		setOpenModal(false) // Close the modal
+		router.navigate("/user/home") // Navigate to the dashboard
+	}, [setOpenModal, router])
 
+	// Function to handle posting another job
 	const handlePostAnotherJob = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/user/add-job")
-	}, [openModal, router])
+		setOpenModal(false) // Close the modal
+		router.navigate("/user/add-job") // Navigate to the add job page
+	}, [setOpenModal, router])
 
 	return (
+		// Modal component for displaying success message
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -37,6 +42,7 @@ export default function JobPostSuccessfulModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Outer wrapper with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -45,6 +51,7 @@ export default function JobPostSuccessfulModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Inner container with white background */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -53,6 +60,7 @@ export default function JobPostSuccessfulModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image wrapper */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={[
@@ -63,12 +71,14 @@ export default function JobPostSuccessfulModal({
 						]}
 						contentFit="fill"
 					>
+						{/* Success icon */}
 						<Image
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
+						{/* Success message container */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.titleText}>
 								Job Posted Successfully!
@@ -78,7 +88,9 @@ export default function JobPostSuccessfulModal({
 								now apply!
 							</Text>
 						</View>
+						{/* Action buttons container */}
 						<View style={styles.formButtonsWrapper}>
+							{/* Go to dashboard button */}
 							<FormButton
 								length="half"
 								colorTheme="light"
@@ -86,6 +98,7 @@ export default function JobPostSuccessfulModal({
 								title="Go to Dashboard"
 								onPress={handleGoToDashboard}
 							/>
+							{/* Post another job button */}
 							<FormButton
 								length="half"
 								colorTheme="dark"

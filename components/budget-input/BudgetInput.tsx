@@ -9,6 +9,7 @@ import {
 import Entypo from "@expo/vector-icons/Entypo"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface BudgetInputProps {
 	value: number
 	setValue: (val: number | ((prev: number) => number)) => void
@@ -20,32 +21,40 @@ export default function BudgetInput({
 	setValue,
 	mode
 }: BudgetInputProps): React.ReactElement | null {
+	// Memoized callback for incrementing the value
 	const handleIncrement = useCallback((): void => {
-		setValue((prev) => prev + 1)
+		setValue((prev) => prev + 1) // Increment the value
 	}, [setValue])
 
+	// Memoized callback for decrementing the value
 	const handleDecrement = useCallback((): void => {
-		setValue((prev) => (prev === 0 ? prev : prev - 1))
+		setValue((prev) => (prev === 0 ? prev : prev - 1)) // Decrement the value
 	}, [setValue])
 
 	return (
+		// Main container for the budget input component
 		<View style={styles.inputFieldContainer}>
+			{/* Decrement button */}
 			<TouchableOpacity
 				style={styles.updateButtonContainer}
 				onPress={handleDecrement}
 			>
 				<Entypo name="minus" size={15} color={theme.colors.primary} />
 			</TouchableOpacity>
+			{/* Conditional rendering based on mode */}
 			{mode === "app" ? (
+				// Input field for app mode with dollar sign and editable value
 				<View style={styles.valueTextWrapper}>
 					<Text style={styles.valueText}>$</Text>
 					<TextInput
 						style={styles.valueText}
 						value={value.toString()}
 						onChangeText={(text) => {
+							// Reset to 0 if input is empty
 							if (text === "") {
 								setValue(0)
 							} else {
+								// Convert input to number and update if valid
 								const numericValue = parseFloat(text)
 								if (!isNaN(numericValue)) {
 									setValue(numericValue)
@@ -56,8 +65,10 @@ export default function BudgetInput({
 					/>
 				</View>
 			) : (
+				// Display-only text for web mode
 				<Text style={styles.valueText}>${value}</Text>
 			)}
+			{/* Increment button */}
 			<TouchableOpacity
 				style={styles.updateButtonContainer}
 				onPress={handleIncrement}

@@ -1,6 +1,7 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons"
 
+// Interface for the props of the component
 interface RatingsInputProps {
 	ratings: number
 	setRatings: (value: number) => void
@@ -13,7 +14,9 @@ export default function RatingsInput({
 	size
 }: RatingsInputProps): React.ReactElement | null {
 	return (
+		// Container for the star rating buttons
 		<View style={styles.container}>
+			{/* Star rating button for 1 star */}
 			<TouchableOpacity
 				onPress={() => {
 					setRatings(1)
@@ -22,9 +25,10 @@ export default function RatingsInput({
 				<Ionicons
 					name={ratings >= 1 ? "star-sharp" : "star-outline"}
 					size={size}
-					color="#FBBA1D"
+					color="#FBBA1D" // Yellow color for the star
 				/>
 			</TouchableOpacity>
+			{/* Star rating button for 2 stars */}
 			<TouchableOpacity
 				onPress={() => {
 					setRatings(2)
@@ -36,6 +40,7 @@ export default function RatingsInput({
 					color="#FBBA1D"
 				/>
 			</TouchableOpacity>
+			{/* Star rating button for 3 stars */}
 			<TouchableOpacity
 				onPress={() => {
 					setRatings(3)
@@ -47,6 +52,7 @@ export default function RatingsInput({
 					color="#FBBA1D"
 				/>
 			</TouchableOpacity>
+			{/* Star rating button for 4 stars */}
 			<TouchableOpacity
 				onPress={() => {
 					setRatings(4)
@@ -58,6 +64,7 @@ export default function RatingsInput({
 					color="#FBBA1D"
 				/>
 			</TouchableOpacity>
+			{/* Star rating button for 5 stars */}
 			<TouchableOpacity
 				onPress={() => {
 					setRatings(5)

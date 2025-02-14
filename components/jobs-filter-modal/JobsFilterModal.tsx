@@ -9,10 +9,16 @@ import FormButton from "../form-button/FormButton"
 import { theme, services } from "../../utils/constants"
 import { SelectOption } from "../../utils/types"
 
+// Budget range limit
 const LIMIT = 700
+
+// Thumb size for the range slider
 const THUMB_SIZE = 20
+
+// Track bar length for the range slider
 const TRACK_BAR_LENGTH = 300
 
+// Interface for the props of the component
 interface JobsFilterModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -24,15 +30,19 @@ export default function JobsFilterModal({
 	setOpenModal,
 	mode
 }: JobsFilterModalProps): React.ReactElement | null {
+	// Shared value for the minimum position of the range slider
 	const minPosition = useSharedValue(0)
+
+	// Shared value for the maximum position of the range slider
 	const maxPosition = useSharedValue(280)
 
-	const [jobType, setJobType] = useState<SelectOption | null>(null)
-	const [sortType, setSortType] = useState<SelectOption | null>(null)
-	const [minValue, setMinValue] = useState<number>(0)
-	const [maxValue, setMaxValue] = useState<number>(LIMIT)
-	const [location, setLocation] = useState<string>("")
+	const [jobType, setJobType] = useState<SelectOption | null>(null) // State for storing the job type
+	const [sortType, setSortType] = useState<SelectOption | null>(null) // State for storing the sort type
+	const [minValue, setMinValue] = useState<number>(0) // State for storing the minimum value of the range slider
+	const [maxValue, setMaxValue] = useState<number>(LIMIT) // State for storing the maximum value of the range slider
+	const [location, setLocation] = useState<string>("") // State for storing the location
 
+	// Array of sort options
 	const sortOptions: SelectOption[] = [
 		{
 			title: "Most Popular"
@@ -42,17 +52,49 @@ export default function JobsFilterModal({
 		}
 	]
 
+	// Memoized callback for applying the filter
 	const handleApplyFilter = useCallback((): void => {
+		// Set the minimum value of the range slider according to the position of the thumb
 		setMinValue(Math.floor((minPosition.value * LIMIT) / TRACK_BAR_LENGTH))
+		// Set the maximum value of the range slider according to the position of the thumb
 		setMaxValue(
 			Math.ceil(
 				(maxPosition.value * LIMIT) / (TRACK_BAR_LENGTH - THUMB_SIZE)
 			)
 		)
+		// Close the modal
 		setOpenModal(false)
-	}, [openModal])
+	}, [
+		setMinValue,
+		setMaxValue,
+		minPosition,
+		maxPosition,
+		setOpenModal,
+		LIMIT,
+		TRACK_BAR_LENGTH,
+		THUMB_SIZE
+	])
+
+	const handleResetFilter = useCallback((): void => {
+		setMinValue(0)
+		setMaxValue(LIMIT)
+		minPosition.value = 0
+		maxPosition.value = 280
+		setLocation("")
+		setJobType(null)
+		setSortType(null)
+	}, [
+		setMinValue,
+		setMaxValue,
+		minPosition,
+		maxPosition,
+		setLocation,
+		setJobType,
+		setSortType
+	])
 
 	return (
+		// Modal component for displaying filter options
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -61,6 +103,7 @@ export default function JobsFilterModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Root view for gesture handling */}
 			<GestureHandlerRootView
 				style={[
 					styles.modalWrapper,
@@ -69,6 +112,7 @@ export default function JobsFilterModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Background container with image */}
 				<ImageBackground
 					source={require("../../assets/images/modal-background.png")}
 					style={[
@@ -79,20 +123,21 @@ export default function JobsFilterModal({
 					]}
 					contentFit="fill"
 				>
+					{/* Header section with title and reset button */}
 					<View style={styles.modalHeaderContainer}>
 						<Text style={styles.titleText}>Filter</Text>
 						<TouchableOpacity
 							style={styles.filterButtonContainer}
-							onPress={() => {
-								setOpenModal(false)
-							}}
+							onPress={handleResetFilter}
 						>
 							<Text style={styles.filterButtonContainerText}>
 								Reset
 							</Text>
 						</TouchableOpacity>
 					</View>
+					{/* Form container with filter inputs */}
 					<View style={styles.formContainer}>
+						{/* Job Type dropdown */}
 						<InputField
 							length="full"
 							type="select"
@@ -103,6 +148,7 @@ export default function JobsFilterModal({
 							placeholder="Select Job Type"
 							zIndex={2}
 						/>
+						{/* Sort By dropdown */}
 						<InputField
 							length="full"
 							type="select"
@@ -113,6 +159,7 @@ export default function JobsFilterModal({
 							placeholder="Sort By"
 							zIndex={1}
 						/>
+						{/* Budget range slider */}
 						<RangeInput
 							title="Budget Range"
 							limit={LIMIT}
@@ -122,6 +169,7 @@ export default function JobsFilterModal({
 							maxPosition={maxPosition}
 							mode={mode}
 						/>
+						{/* Location input field */}
 						<InputField
 							length="full"
 							title="Location"
@@ -132,12 +180,14 @@ export default function JobsFilterModal({
 							multiline={false}
 							type="text"
 						/>
+						{/* Map preview */}
 						<Image
 							source={require("../../assets/images/map.png")}
 							style={styles.mapView}
 							contentFit="cover"
 						/>
 					</View>
+					{/* Apply filter button */}
 					<FormButton
 						title="Apply Filter"
 						onPress={handleApplyFilter}

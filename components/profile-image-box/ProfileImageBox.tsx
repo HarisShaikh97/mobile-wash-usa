@@ -1,6 +1,7 @@
 import { View, StyleSheet, ImageSourcePropType } from "react-native"
 import { Image } from "expo-image"
 
+// Interface for the props of the component
 interface ProfileImageBoxProps {
 	source: ImageSourcePropType
 	mode: "web" | "app"
@@ -11,6 +12,7 @@ export default function ProfileImageBox({
 	mode
 }: ProfileImageBoxProps): React.ReactElement | null {
 	return (
+		// Container for the profile image
 		<View
 			style={[
 				styles.profileImageContainer,
@@ -19,6 +21,7 @@ export default function ProfileImageBox({
 					: styles.profileImageContainerWeb
 			]}
 		>
+			{/* Profile image */}
 			<Image
 				source={source}
 				style={

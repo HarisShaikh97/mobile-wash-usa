@@ -6,14 +6,17 @@ import SearchBar from "../search-bar/SearchBar"
 import { theme, FAQs } from "../../utils/constants"
 
 export default function HelpAndSupportCardWeb(): React.ReactElement | null {
-	const [searchValue, setSearchValue] = useState<string>("")
-	const [currentFaqIndex, setCurrentFaqIndex] = useState<number | null>(null)
+	const [searchValue, setSearchValue] = useState<string>("") // State for storing the search value
+	const [currentFaqIndex, setCurrentFaqIndex] = useState<number | null>(null) // State for storing the current FAQ index
 
 	return (
+		// Main container for help and support card
 		<View style={styles.container}>
+			{/* Contact support section */}
 			<View style={styles.contactSupportSection}>
 				<Text style={styles.cardTitleText}>Contact Support</Text>
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Chat support option */}
 				<View style={styles.contactSupportOptionContainer}>
 					<View style={styles.contactSupportOptionIconContainer}>
 						<AntDesign name="message1" size={11.5} color="white" />
@@ -23,6 +26,7 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 					</Text>
 				</View>
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Email support option */}
 				<View style={styles.contactSupportOptionContainer}>
 					<View style={styles.contactSupportOptionIconContainer}>
 						<Feather name="mail" size={11.5} color="white" />
@@ -32,6 +36,7 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 					</Text>
 				</View>
 				<HorizontalSeparator color="#DBDBDB" />
+				{/* Phone support option */}
 				<View style={styles.contactSupportOptionContainer}>
 					<View style={styles.contactSupportOptionIconContainer}>
 						<Ionicons
@@ -43,11 +48,13 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 					<Text style={styles.contactSupportOptionText}>Call us</Text>
 				</View>
 			</View>
+			{/* FAQ section */}
 			<View style={styles.faqSection}>
 				<Text style={styles.cardTitleText}>FAQ</Text>
 				<Text style={styles.cardDescriptionText}>
 					Find answer to your problem using this app.
 				</Text>
+				{/* Search bar for FAQs */}
 				<View style={styles.searchBarWrapper}>
 					<SearchBar
 						placeholder="Try find “how to”"
@@ -60,6 +67,7 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 						mode="app"
 					/>
 				</View>
+				{/* User type selection tabs */}
 				<View style={styles.customerVendorTabWrapper}>
 					<View style={styles.customerTab}>
 						<Text
@@ -77,10 +85,12 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 						Vendor
 					</Text>
 				</View>
+				{/* FAQ items list */}
 				<View style={styles.faqsWrapper}>
 					{FAQs.map((item, index): React.ReactElement | null => {
 						return (
 							<View style={styles.faqItemContainer} key={index}>
+								{/* FAQ question header with expand/collapse functionality */}
 								<TouchableOpacity
 									style={styles.faqItemHeaderContainer}
 									onPress={() => {
@@ -104,6 +114,7 @@ export default function HelpAndSupportCardWeb(): React.ReactElement | null {
 										color={theme.colors.secondary}
 									/>
 								</TouchableOpacity>
+								{/* FAQ answer - only shown when expanded */}
 								{currentFaqIndex === index && (
 									<View
 										style={

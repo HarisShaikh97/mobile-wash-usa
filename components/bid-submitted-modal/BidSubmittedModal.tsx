@@ -5,6 +5,7 @@ import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 import { theme } from "../../utils/constants"
 
+// Interface for the props of the component
 interface BidSubmittedModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -16,19 +17,23 @@ export default function BidSubmittedModal({
 	setOpenModal,
 	mode
 }: BidSubmittedModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for "Go to Dashboard" button
 	const handleGoToDashboard = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/vendor/home")
+		setOpenModal(false) // Close the modal
+		router.navigate("/vendor/home") // Navigate to the dashboard
 	}, [openModal, router])
 
+	// Memoized callback for "View More Jobs" button
 	const handleViewMoreJobs = useCallback((): void => {
-		setOpenModal(false)
-		router.replace("/vendor/available-jobs")
+		setOpenModal(false) // Close the modal
+		router.replace("/vendor/available-jobs") // Navigate to the available jobs page
 	}, [openModal, router])
 
 	return (
+		// Modal component with different animation types for app and web
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -37,6 +42,7 @@ export default function BidSubmittedModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Main modal wrapper with different styles for app and web */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -45,6 +51,7 @@ export default function BidSubmittedModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Modal container with specific styling for app and web */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -53,16 +60,19 @@ export default function BidSubmittedModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image for the modal */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
 						contentFit="fill"
 					>
+						{/* Success icon displayed at the top */}
 						<Image
 							source={require("../../assets/icons/successful.svg")}
 							style={styles.successfulIcon}
 							alt="icon"
 						/>
+						{/* Container for modal text content */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.titleText}>Bid Submitted!</Text>
 							<Text style={styles.descriptionText}>
@@ -71,7 +81,9 @@ export default function BidSubmittedModal({
 								offer and respond soon. Stay tuned for updates!
 							</Text>
 						</View>
+						{/* Container for action buttons */}
 						<View style={styles.formButtonsWrapper}>
+							{/* FormButton component for "Go to Dashboard" */}
 							<FormButton
 								length="half"
 								colorTheme="light"
@@ -79,6 +91,7 @@ export default function BidSubmittedModal({
 								title="Go to Dashboard"
 								onPress={handleGoToDashboard}
 							/>
+							{/* FormButton component for "View More Jobs" */}
 							<FormButton
 								length="half"
 								colorTheme="dark"

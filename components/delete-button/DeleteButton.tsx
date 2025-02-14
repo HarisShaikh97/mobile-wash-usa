@@ -3,6 +3,7 @@ import { Image } from "expo-image"
 
 export default function DeleteButton(): React.ReactElement | null {
 	return (
+		// TouchableOpacity container for the delete button
 		<TouchableOpacity style={styles.deleteButtonContainer}>
 			<Image
 				source={require("../../assets/icons/delete.svg")}

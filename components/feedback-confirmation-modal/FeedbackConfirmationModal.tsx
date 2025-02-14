@@ -4,6 +4,7 @@ import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
 import FormButton from "../form-button/FormButton"
 
+// Interface for the props of the component
 interface FeedbackConfirmationModalProps {
 	openModal: boolean
 	setOpenModal: (value: boolean) => void
@@ -15,14 +16,17 @@ export default function FeedbackConfirmationModal({
 	setOpenModal,
 	mode
 }: FeedbackConfirmationModalProps): React.ReactElement | null {
+	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Memoized callback for handling the "Close" action
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(false)
-		router.navigate("/user/home")
-	}, [openModal, router])
+		setOpenModal(false) // Close the modal
+		router.navigate("/user/home") // Navigate to the home page
+	}, [setOpenModal, router])
 
 	return (
+		// Modal component for displaying feedback confirmation
 		<Modal
 			animationType={mode === "app" ? "slide" : "fade"}
 			transparent
@@ -31,6 +35,7 @@ export default function FeedbackConfirmationModal({
 				setOpenModal(false)
 			}}
 		>
+			{/* Outer wrapper with background overlay */}
 			<View
 				style={[
 					styles.modalWrapper,
@@ -39,6 +44,7 @@ export default function FeedbackConfirmationModal({
 						: styles.modalWrapperWeb
 				]}
 			>
+				{/* Inner container for modal content */}
 				<View
 					style={[
 						styles.modalContainer,
@@ -47,22 +53,26 @@ export default function FeedbackConfirmationModal({
 							: styles.modalContainerWeb
 					]}
 				>
+					{/* Background image wrapper */}
 					<ImageBackground
 						source={require("../../assets/images/modal-background.png")}
 						style={styles.backgroundImage}
 						contentFit="fill"
 					>
+						{/* Star icon at the top */}
 						<Image
 							source={require("../../assets/icons/star.svg")}
 							style={styles.starIcon}
 							alt="icon"
 							contentFit="contain"
 						/>
+						{/* Container for the thank you message */}
 						<View style={styles.modalBodyContainer}>
 							<Text style={styles.titleText}>
 								Thank you for your feedback!
 							</Text>
 						</View>
+						{/* Container for the close button */}
 						<View style={styles.formButtonsWrapper}>
 							<FormButton
 								length="full"
