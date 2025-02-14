@@ -2,8 +2,12 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter, useLocalSearchParams } from "expo-router"
+import { useSelector } from "react-redux"
+import { useQuery } from "@tanstack/react-query"
 import HorizontalSeparator from "../../../../../components/horizontal-separator/HorizontalSeparator"
 import OfferCard from "../../../../../components/offer-card/OfferCard"
+import { getJobById } from "../../../../../helpers/job"
+import { RootState } from "../../../../../store/store"
 import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
 
@@ -13,6 +17,19 @@ export default function Page(): React.ReactElement | null {
 
 	// Using useRouter hook to navigate
 	const router = useRouter()
+
+	// Converting id to a number
+	const jobId = Array.isArray(id) ? +id[0] : +id
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data } = useQuery({
+		queryKey: ["job-by-id", token, jobId],
+		queryFn: () => getJobById({ accessToken: token, jobId: jobId }),
+		enabled: !!token
+	})
 
 	const offers: Offer[] = [
 		{
@@ -89,7 +106,7 @@ export default function Page(): React.ReactElement | null {
 					numberOfLines={2}
 					ellipsizeMode="tail"
 				>
-					Car Wash Service Needed
+					{data?.job?.job_title || ""}
 				</Text>
 				{/* Wrapper for job date and time */}
 				<View style={styles.jobDateTimeWrapper}>
@@ -101,7 +118,11 @@ export default function Page(): React.ReactElement | null {
 							contentFit="contain"
 						/>
 						<Text style={styles.sectionDescriptionText}>
-							John Doe
+							{`${
+								data?.job?.user?.full_name?.split(" ")[0] || ""
+							} ${
+								data?.job?.user?.full_name?.split(" ")[1] || ""
+							}`.trim()}
 						</Text>
 					</View>
 					{/* Circular separator */}
@@ -114,7 +135,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="contain"
 						/>
 						<Text style={styles.sectionDescriptionText}>
-							28, Oct 2024
+							{data?.job?.scheduled_time?.split(" ")[0] || ""}
 						</Text>
 					</View>
 					{/* Circular separator */}
@@ -127,7 +148,7 @@ export default function Page(): React.ReactElement | null {
 							contentFit="contain"
 						/>
 						<Text style={styles.sectionDescriptionText}>
-							10am to 1pm
+							{data?.job?.scheduled_time?.split(" ")[1] || ""}
 						</Text>
 					</View>
 				</View>
@@ -137,7 +158,9 @@ export default function Page(): React.ReactElement | null {
 			{/* Section for the job budget */}
 			<View style={styles.budgetSection}>
 				<Text style={styles.budgetTitleText}>Budget</Text>
-				<Text style={styles.budgetPriceText}>$500</Text>
+				<Text style={styles.budgetPriceText}>
+					${`${data?.job?.budget || "NaN"}`}
+				</Text>
 			</View>
 			{/* Horizontal separator */}
 			<HorizontalSeparator color="#F5F5F5" />
@@ -145,15 +168,7 @@ export default function Page(): React.ReactElement | null {
 			<View style={styles.sectionContainer}>
 				<Text style={styles.sectionTitleText}>Job Description</Text>
 				<Text style={styles.sectionDescriptionText}>
-					Lorem Ipsum is simply dummy text of the printing and
-					typesetting industry. Lorem Ipsum has been the industry's
-					standard dummy text ever since the 1500s, when an unknown
-					printer took a galley of type and scrambled it to make a
-					type specimen book. Lorem Ipsum is simply dummy text of the
-					printing and typesetting industry. Lorem Ipsum has been the
-					industry's standard dummy text ever since the 1500s, when an
-					unknown printer took a galley of type and scrambled it to
-					make a type specimen book.
+					{data?.job?.job_description || ""}
 				</Text>
 			</View>
 			{/* Horizontal separator */}
@@ -164,7 +179,7 @@ export default function Page(): React.ReactElement | null {
 				{/* Wrapper for the map and location text */}
 				<View style={styles.mapViewWrapper}>
 					<Text style={styles.locationText}>
-						Overlook Avenue, Belleville, NJ, USA
+						{data?.job?.address || ""}
 					</Text>
 					<Image
 						source={require("../../../../../assets/images/map.png")}

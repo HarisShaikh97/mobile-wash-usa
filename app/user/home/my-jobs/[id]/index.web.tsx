@@ -2,9 +2,13 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter, useLocalSearchParams } from "expo-router"
+import { useQuery } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
 import BackButton from "../../../../../components/back-button/BackButton"
 import OfferCard from "../../../../../components/offer-card/OfferCard"
 import OffersPopup from "../../../../../components/offers-popup/OffersPopup"
+import { getJobById } from "../../../../../helpers/job"
+import { RootState } from "../../../../../store/store"
 import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
 
@@ -17,6 +21,16 @@ export default function Page(): React.ReactElement | null {
 
 	// Converting id to a number
 	const jobId = Array.isArray(id) ? +id[0] : +id
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data } = useQuery({
+		queryKey: ["job-by-id", token, jobId],
+		queryFn: () => getJobById({ accessToken: token, jobId: jobId }),
+		enabled: !!token
+	})
 
 	const offers: Offer[] = [
 		{
@@ -149,7 +163,7 @@ export default function Page(): React.ReactElement | null {
 				<View style={styles.jobDetailsCard}>
 					{/* Job Title Text for the job details */}
 					<Text style={styles.jobTitleText}>
-						Car wash service needed
+						{data?.job?.job_title || ""}
 					</Text>
 					{/* Job Date and Time Wrapper for the job details */}
 					<View style={styles.jobDateTimeWrapper}>
@@ -163,7 +177,13 @@ export default function Page(): React.ReactElement | null {
 							/>
 							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
-								John Doe
+								{`${
+									data?.job?.user?.full_name?.split(" ")[0] ||
+									""
+								} ${
+									data?.job?.user?.full_name?.split(" ")[1] ||
+									""
+								}`.trim()}
 							</Text>
 						</View>
 						{/* Circular Separator for the job details */}
@@ -178,7 +198,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
-								28, Oct 2024
+								{data?.job?.scheduled_time?.split(" ")[0] || ""}
 							</Text>
 						</View>
 						{/* Circular Separator for the job details */}
@@ -193,7 +213,7 @@ export default function Page(): React.ReactElement | null {
 							/>
 							{/* Section Description Text for the job details */}
 							<Text style={styles.sectionDescriptionText}>
-								10am to 1pm
+								{data?.job?.scheduled_time?.split(" ")[1] || ""}
 							</Text>
 						</View>
 					</View>
@@ -202,28 +222,21 @@ export default function Page(): React.ReactElement | null {
 						{/* Budget Title Text for the job details */}
 						<Text style={styles.budgetTitleText}>Budget</Text>
 						{/* Budget Price Text for the job details */}
-						<Text style={styles.budgetPriceText}>$500</Text>
+						<Text style={styles.budgetPriceText}>
+							${`${data?.job?.budget || "NaN"}`}
+						</Text>
 					</View>
 					{/* Section Title Text for the job details */}
 					<Text style={styles.sectionTitleText}>Job Description</Text>
 					{/* Section Description Text for the job details */}
 					<Text style={styles.sectionDescriptionText}>
-						Lorem Ipsum is simply dummy text of the printing and
-						typesetting industry. Lorem Ipsum has been the
-						industry's standard dummy text ever since the 1500s,
-						when an unknown printer took a galley of type and
-						scrambled it to make a type specimen book. Lorem Ipsum
-						is simply dummy text of the printing and typesetting
-						industry. Lorem Ipsum has been the industry's standard
-						dummy text ever since the 1500s, when an unknown printer
-						took a galley of type and scrambled it to make a type
-						specimen book.
+						{data?.job?.job_description || ""}
 					</Text>
 					{/* Section Title Text for the job details */}
 					<Text style={styles.sectionTitleText}>Location</Text>
 					{/* Section Description Text for the job details */}
 					<Text style={styles.sectionDescriptionText}>
-						Overlook Avenue, Belleville, NJ, USA
+						{data?.job?.address || ""}
 					</Text>
 					{/* Map View for the job details */}
 					<Image

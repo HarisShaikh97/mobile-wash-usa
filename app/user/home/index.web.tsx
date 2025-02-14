@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import {
 	View,
 	ScrollView,
@@ -39,6 +40,21 @@ export default function Tab(): React.ReactElement | null {
 		enabled: !!token
 	})
 
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/user/home/profile") // Navigating to the profile page
+	}, [router])
+
+	// Memoized function to handle add job press
+	const handleAddJobPress = useCallback((): void => {
+		router.navigate("/user/add-job") // Navigating to the add job page
+	}, [router])
+
+	// Memoized function to handle see all jobs press
+	const handleSeeAllJobsPress = useCallback((): void => {
+		router.navigate("/user/home/my-jobs") // Navigating to the see all jobs page
+	}, [router])
+
 	return (
 		// Main ScrollView container with side nav offset and custom background
 		<ScrollView
@@ -61,9 +77,7 @@ export default function Tab(): React.ReactElement | null {
 								: require("../../../assets/images/profile.png")
 						}
 						userName={(user && user.full_name) || ""}
-						onPress={() => {
-							router.navigate("/user/home/profile")
-						}}
+						onPress={handleProfilePress}
 					/>
 					{/* Web-styled notification button */}
 					<NotificationButton mode="web" />
@@ -114,9 +128,7 @@ export default function Tab(): React.ReactElement | null {
 						{/* Primary CTA button for job creation */}
 						<TouchableOpacity
 							style={styles.postJobButtonContainer}
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
+							onPress={handleAddJobPress}
 						>
 							<Text style={styles.postJobButtonText}>
 								Post a New Job
@@ -150,11 +162,7 @@ export default function Tab(): React.ReactElement | null {
 						</Text>
 					</View>
 					{/* Link to full jobs list */}
-					<TouchableOpacity
-						onPress={() => {
-							router.navigate("/user/home/my-jobs")
-						}}
-					>
+					<TouchableOpacity onPress={handleSeeAllJobsPress}>
 						<Text style={styles.seeAllText}>See all</Text>
 					</TouchableOpacity>
 				</View>

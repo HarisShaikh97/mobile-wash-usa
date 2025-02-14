@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import {
 	View,
 	ScrollView,
@@ -38,6 +39,21 @@ export default function Tab(): React.ReactElement | null {
 		enabled: !!token
 	})
 
+	// Memoized function to handle profile press
+	const handleProfilePress = useCallback((): void => {
+		router.navigate("/user/home/profile") // Navigating to the profile page
+	}, [router])
+
+	// Memoized function to handle add job press
+	const handleAddJobPress = useCallback((): void => {
+		router.navigate("/user/add-job") // Navigating to the add job page
+	}, [router])
+
+	// Memoized function to handle see all jobs press
+	const handleSeeAllJobsPress = useCallback((): void => {
+		router.navigate("/user/home/my-jobs") // Navigating to the see all jobs page
+	}, [router])
+
 	return (
 		// Main ScrollView container for the home screen
 		<ScrollView
@@ -57,11 +73,7 @@ export default function Tab(): React.ReactElement | null {
 					{/* Header with profile image and notification button */}
 					<View style={styles.headerContainer}>
 						{/* Profile image button */}
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/home/profile")
-							}}
-						>
+						<TouchableOpacity onPress={handleProfilePress}>
 							<ProfileImageBox
 								source={
 									user &&
@@ -127,9 +139,7 @@ export default function Tab(): React.ReactElement | null {
 						{/* Post job button */}
 						<TouchableOpacity
 							style={styles.postJobButtonContainer}
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
+							onPress={handleAddJobPress}
 						>
 							<Text style={styles.postJobButtonText}>
 								Post a New Job
@@ -147,9 +157,7 @@ export default function Tab(): React.ReactElement | null {
 								</Text>
 								{/* See all jobs button */}
 								<TouchableOpacity
-									onPress={() => {
-										router.navigate("/user/home/my-jobs")
-									}}
+									onPress={handleSeeAllJobsPress}
 								>
 									<Text style={styles.seeAllText}>
 										See All

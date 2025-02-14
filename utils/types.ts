@@ -143,6 +143,11 @@ export type QueryData = {
 	accessToken: string | null
 }
 
+export type JobByIdData = {
+	accessToken: string | null
+	jobId: Job["id"]
+}
+
 export type User = {
 	id: number
 	full_name: string
@@ -163,5 +168,3 @@ export type User = {
 }
 
 export type JobTab = "Pending" | "Completed" | "Cancelled"
-
-export type PaymentOptions = "card" | "pod"
