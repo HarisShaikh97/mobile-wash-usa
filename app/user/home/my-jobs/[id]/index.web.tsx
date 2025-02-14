@@ -32,6 +32,8 @@ export default function Page(): React.ReactElement | null {
 		enabled: !!token
 	})
 
+	console.log(data)
+
 	const offers: Offer[] = [
 		{
 			job_id: 1,
@@ -119,24 +121,45 @@ export default function Page(): React.ReactElement | null {
 					<View
 						style={[
 							styles.headerActionButtonContainer,
-							styles.statusTabContainer
+							data?.job?.status === "completed"
+								? styles.statusTabGreenContainer
+								: data?.job?.status === "cancelled"
+								? styles.statusTabRedContainer
+								: data?.job?.status === "in-progress"
+								? styles.statusTabYellowContainer
+								: styles.statusTabBlueContainer
 						]}
 					>
 						{/* Status Tab Text for the job details */}
 						<Text
 							style={[
 								styles.headerActionButtonText,
-								styles.statusTabText
+								data?.job?.status === "completed"
+									? styles.statusTabGreenText
+									: data?.job?.status === "cancelled"
+									? styles.statusTabRedText
+									: data?.job?.status === "in-progress"
+									? styles.statusTabYellowText
+									: styles.statusTabBlueText
 							]}
 						>
-							In progress
+							{data?.job?.status === "completed"
+								? "Completed"
+								: data?.job?.status === "cancelled"
+								? "Cancelled"
+								: data?.job?.status === "in-progress"
+								? "In Progress"
+								: data?.job?.status === "open"
+								? "Open"
+								: "N/A"}
 						</Text>
 					</View>
 					{/* Delete Button Container for the job details */}
 					<TouchableOpacity
 						style={[
 							styles.headerActionButtonContainer,
-							styles.deleteButtonContainer
+							styles.deleteButtonContainer,
+							styles.statusTabRedContainer
 						]}
 					>
 						{/* Delete Button Icon for the job details */}
@@ -149,7 +172,7 @@ export default function Page(): React.ReactElement | null {
 						<Text
 							style={[
 								styles.headerActionButtonText,
-								styles.deleteButtonText
+								styles.statusTabRedText
 							]}
 						>
 							Delete
@@ -390,19 +413,33 @@ const styles = StyleSheet.create({
 		fontFamily: "Roboto-Regular",
 		textTransform: "capitalize"
 	},
-	statusTabContainer: {
+	statusTabYellowContainer: {
 		backgroundColor: "rgba(255, 193, 7, 0.1)"
 	},
-	statusTabText: {
+	statusTabGreenContainer: {
+		backgroundColor: "rgba(40, 167, 69, 0.1)"
+	},
+	statusTabRedContainer: {
+		backgroundColor: "rgba(220, 53, 69, 0.1)"
+	},
+	statusTabBlueContainer: {
+		backgroundColor: "rgba(47, 116, 250, 0.1)"
+	},
+	statusTabYellowText: {
 		color: "rgba(255, 193, 7, 1)"
 	},
+	statusTabGreenText: {
+		color: "rgba(40, 167, 69, 1)"
+	},
+	statusTabRedText: {
+		color: "rgba(220, 53, 69, 1)"
+	},
+	statusTabBlueText: {
+		color: "rgba(47, 116, 250, 1)"
+	},
 	deleteButtonContainer: {
-		backgroundColor: "rgba(220, 53, 69, 0.1)",
 		flexDirection: "row",
 		gap: 10
-	},
-	deleteButtonText: {
-		color: "rgba(220, 53, 69, 1)"
 	},
 	deleteButtonIcon: {
 		height: 15,
