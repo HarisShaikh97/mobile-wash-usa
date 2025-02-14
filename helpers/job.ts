@@ -29,3 +29,16 @@ export const getJobById = async (data: JobByIdData): Promise<any> => {
 	// Return the response data
 	return response.data.data
 }
+
+// Delete job function to delete a job
+export const deleteJobById = async (data: JobByIdData): Promise<any> => {
+	// Create a request with the token
+	const response = await api.delete(`/api/v1/jobs/${data.jobId}`, {
+		headers: {
+			Authorization: `Bearer ${data.accessToken}`
+		}
+	})
+
+	// Return the response data
+	return response.data
+}

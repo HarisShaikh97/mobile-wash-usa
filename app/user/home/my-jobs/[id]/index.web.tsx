@@ -1,13 +1,19 @@
 import { useCallback } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import {
+	View,
+	Text,
+	TouchableOpacity,
+	ActivityIndicator,
+	StyleSheet
+} from "react-native"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter, useLocalSearchParams } from "expo-router"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useSelector } from "react-redux"
 import BackButton from "../../../../../components/back-button/BackButton"
 import OfferCard from "../../../../../components/offer-card/OfferCard"
 import OffersPopup from "../../../../../components/offers-popup/OffersPopup"
-import { getJobById } from "../../../../../helpers/job"
+import { getJobById, deleteJobById } from "../../../../../helpers/job"
 import { RootState } from "../../../../../store/store"
 import { theme } from "../../../../../utils/constants"
 import { Offer } from "../../../../../utils/types"
@@ -19,20 +25,14 @@ export default function Page(): React.ReactElement | null {
 	// Using useRouter hook to navigate
 	const router = useRouter()
 
+	// Using useQueryClient hook to manage query caching
+	const queryClient = useQueryClient()
+
 	// Converting id to a number
 	const jobId = Array.isArray(id) ? +id[0] : +id
 
 	// Retrieve user's token from Redux store
 	const token = useSelector((state: RootState) => state.auth.token)
-
-	// Query to fetch user's jobs using TanStack Query
-	const { data } = useQuery({
-		queryKey: ["job-by-id", token, jobId],
-		queryFn: () => getJobById({ accessToken: token, jobId: jobId }),
-		enabled: !!token
-	})
-
-	console.log(data)
 
 	const offers: Offer[] = [
 		{
@@ -92,11 +92,48 @@ export default function Page(): React.ReactElement | null {
 		}
 	]
 
+	// Memoized function to handle delete job success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+			queryClient.invalidateQueries({
+				queryKey: ["my-jobs", token],
+				refetchType: "all"
+			}) // Invalidate the my-jobs query
+			router.back() // Navigate back to the previous page
+		},
+		[router]
+	)
+
+	// Memoized function to handle delete job error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+	}, [])
+
 	// Memoized function to handle viewing job images
 	const handleViewImage = useCallback((): void => {
 		// Navigate to the job images page with the current job's id.
 		router.navigate(`/user/job-images/${id}`)
 	}, [router, id])
+
+	// Query to fetch user's jobs using TanStack Query
+	const { data } = useQuery({
+		queryKey: ["job-by-id", token, jobId],
+		queryFn: () => getJobById({ accessToken: token, jobId: jobId }),
+		enabled: !!token
+	})
+
+	// Mutation hook to handle delete job
+	const { mutate: deleteJob, isPending: isDeleting } = useMutation({
+		mutationFn: deleteJobById,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
+	// Memoized function to handle delete job
+	const handleDeleteJob = useCallback((): void => {
+		deleteJob({ accessToken: token, jobId: jobId }) // Mutate the delete job function with the job's id and token
+	}, [deleteJob, token, jobId])
 
 	return (
 		// Container for the entire job details
@@ -161,22 +198,32 @@ export default function Page(): React.ReactElement | null {
 							styles.deleteButtonContainer,
 							styles.statusTabRedContainer
 						]}
+						onPress={handleDeleteJob}
 					>
 						{/* Delete Button Icon for the job details */}
-						<Image
-							source={require("../../../../../assets/icons/delete3.svg")}
-							style={styles.deleteButtonIcon}
-							contentFit="contain"
-						/>
-						{/* Delete Button Text for the job details */}
-						<Text
-							style={[
-								styles.headerActionButtonText,
-								styles.statusTabRedText
-							]}
-						>
-							Delete
-						</Text>
+						{!isDeleting && (
+							<Image
+								source={require("../../../../../assets/icons/delete3.svg")}
+								style={styles.deleteButtonIcon}
+								contentFit="contain"
+							/>
+						)}
+						{/* Delete Button Text for the job details - show loading indicator while deleting */}
+						{isDeleting ? (
+							<ActivityIndicator
+								size={25}
+								color={"rgba(220, 53, 69, 1)"}
+							/>
+						) : (
+							<Text
+								style={[
+									styles.headerActionButtonText,
+									styles.statusTabRedText
+								]}
+							>
+								Delete
+							</Text>
+						)}
 					</TouchableOpacity>
 				</View>
 			</View>

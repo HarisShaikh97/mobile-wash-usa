@@ -55,7 +55,7 @@ export default function JobCard({
 							? styles.jobTitleTextApp
 							: styles.jobTitleTextWeb
 					]}
-					numberOfLines={2}
+					numberOfLines={1}
 					ellipsizeMode="tail"
 				>
 					{job_title}
