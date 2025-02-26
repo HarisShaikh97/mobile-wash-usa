@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import { DocumentPickerResult } from "expo-document-picker"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
-import { signUp } from "../../../../helpers/auth"
+import { vendorSignUp } from "../../../../helpers/auth"
 import { addVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
 import { theme } from "../../../../utils/constants"
 
@@ -49,7 +49,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Mutation hook to handle sign up
 	const { mutate, isPending } = useMutation({
-		mutationFn: signUp,
+		mutationFn: vendorSignUp,
 		onSuccess: handleSuccess,
 		onError: handleError
 	})

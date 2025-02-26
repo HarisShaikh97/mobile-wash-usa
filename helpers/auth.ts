@@ -11,10 +11,20 @@ import {
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
 
-// Sign up function to handle sign up
-export const signUp = async (
-	data: FormData | CustomerSignUpData
+// Sign up function to handle customer sign up
+export const customerSignUp = async (
+	data: CustomerSignUpData
 ): Promise<any> => {
+	// Create a request with the data
+	const response = await api.post("/api/v1/register", data)
+	// Return the response data
+	return response.data
+}
+
+// Sign up function to handle vendor sign up
+export const vendorSignUp = async (data: FormData): Promise<any> => {
+	const headers = new Headers()
+	headers.append("accept", "application/json")
 	// Create a request with the data
 	const response = await api.post("/api/v1/register", data)
 	// Return the response data
