@@ -23,13 +23,13 @@ export const customerSignUp = async (
 
 // Sign up function to handle vendor sign up
 export const vendorSignUp = async (data: FormData): Promise<any> => {
-	// Create a headers object
-	const headers = new Headers()
-	// Append headers
-	headers.append("Content-Type", "multipart/form-data")
-	headers.append("accept", "application/json")
 	// Create a request with the data
-	const response = await api.post("/api/v1/register", data)
+	const response = await api.post("/api/v1/register", data, {
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "multipart/form-data"
+		}
+	})
 	// Return the response data
 	return response.data
 }
