@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "@tanstack/react-query"
+import { showToastable } from "react-native-toastable"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
@@ -45,6 +46,14 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle set new password error
 	const handleError = useCallback((error: any) => {
 		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.fields?.password[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
 	}, [])
 
 	// Mutation hook to handle set new password
@@ -60,6 +69,13 @@ export default function Page(): React.ReactElement | null {
 		if (password === confirmPassword) {
 			// Mutate the set new password function with the access token and password
 			mutate({ accessToken: accessToken, password: password })
+		} else {
+			// Show error toast message
+			showToastable({
+				message:
+					"Passwords do not match! Please make sure they match and try again.",
+				status: "danger"
+			})
 		}
 	}, [mutate, accessToken, password, confirmPassword])
 

@@ -4,6 +4,7 @@ import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
 import { useDispatch } from "react-redux"
 import { DocumentPickerResult } from "expo-document-picker"
+import { showToastable } from "react-native-toastable"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
 import { vendorSignUp } from "../../../../helpers/auth"
@@ -37,6 +38,13 @@ export default function Page(): React.ReactElement | null {
 				})
 			)
 
+			// Show success toast message
+			showToastable({
+				message:
+					"Verify your account using the OTP sent to your email.",
+				status: "success"
+			})
+
 			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
 		},
 		[router, email, dispatch, addVerificationEmail]
@@ -45,6 +53,14 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle sign up error
 	const handleError = useCallback((error: any) => {
 		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
 	}, [])
 
 	// Mutation hook to handle sign up

@@ -4,6 +4,7 @@ import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
 import { useDispatch } from "react-redux"
+import { showToastable } from "react-native-toastable"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { login } from "../../../helpers/auth"
@@ -31,6 +32,12 @@ export default function Page(): React.ReactElement | null {
 				})
 			)
 
+			// Show success toast message
+			showToastable({
+				message: "Login successful!",
+				status: "success"
+			})
+
 			// Get the role of the user
 			const role = data?.data?.user?.role
 			if (role) {
@@ -46,6 +53,14 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle login error
 	const handleError = useCallback((error: any) => {
 		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
 	}, [])
 
 	// Mutation hook to handle login

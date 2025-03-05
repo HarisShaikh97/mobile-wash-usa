@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
 import { useMutation } from "@tanstack/react-query"
 import { useDispatch, useSelector } from "react-redux"
+import { showToastable } from "react-native-toastable"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import { verifyResetPassword } from "../../../../helpers/auth"
@@ -37,6 +38,13 @@ export default function Page(): React.ReactElement | null {
 			// Dispatch action to add access token
 			dispatch(addAccessToken({ accessToken: data.data.access_token }))
 
+			// Show success toast message
+			showToastable({
+				message:
+					"OTP verified successfully! You can now change your password.",
+				status: "success"
+			})
+
 			// Navigate to the change password page
 			router.navigate("/auth/forgot-password/change-password")
 		},
@@ -46,6 +54,14 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle verify reset password error
 	const handleError = useCallback((error: any) => {
 		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
 	}, [])
 
 	// Mutation hook to handle verify reset password

@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "@tanstack/react-query"
-import { useDispatch } from "react-redux"
+import { showToastable } from "react-native-toastable"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
@@ -38,6 +38,14 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle account verification error
 	const handleError = useCallback((error: any) => {
 		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
 	}, [])
 
 	// Mutation hook to handle account verification
