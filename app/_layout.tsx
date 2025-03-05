@@ -216,6 +216,8 @@ export default function Layout(): React.ReactElement | null {
 						}}
 						position="top"
 						offset={15}
+						duration={3500}
+						containerStyle={styles.toastContainer}
 					/>
 					{/* Stack navigator with hidden headers */}
 					<Stack screenOptions={{ headerShown: false }} />
@@ -228,5 +230,8 @@ export default function Layout(): React.ReactElement | null {
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1
+	},
+	toastContainer: {
+		alignSelf: "center"
 	}
 })
