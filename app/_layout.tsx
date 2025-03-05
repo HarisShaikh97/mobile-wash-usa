@@ -8,8 +8,10 @@ import * as Font from "expo-font"
 import { Provider } from "react-redux"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useReactQueryDevTools } from "@dev-plugins/react-query"
-import { store } from "../store/store"
 import { Asset } from "expo-asset"
+import Toastable from "react-native-toastable"
+import { store } from "../store/store"
+import { theme } from "../utils/constants"
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync()
@@ -204,6 +206,17 @@ export default function Layout(): React.ReactElement | null {
 				<Provider store={store}>
 					{/* Hide the status bar */}
 					<StatusBar hidden />
+					{/* Toastable component for displaying toasts */}
+					<Toastable
+						statusMap={{
+							success: "#28A745",
+							danger: "#DC3545",
+							warning: "#EF6C00",
+							info: theme.colors.primary
+						}}
+						position="top"
+						offset={15}
+					/>
 					{/* Stack navigator with hidden headers */}
 					<Stack screenOptions={{ headerShown: false }} />
 				</Provider>
