@@ -7,9 +7,9 @@ import { Chat } from "../../utils/types"
 
 // Interface for the base props of the component
 interface ChatCardBaseProps {
-	_id: Chat["_id"]
-	fullName: Chat["fullName"]
-	image: Chat["image"]
+	id: Chat["id"]
+	fullName: Chat["full_name"]
+	image: Chat["profile_pic"]
 	lastMessage: Chat["lastMessage"]
 	lastMessageTime: Chat["lastMessageTime"]
 	unreadMessages: Chat["unreadMessages"]
@@ -24,8 +24,8 @@ interface ChatCardAppProps extends ChatCardBaseProps {
 // Interface for the web props of the component
 interface ChatCardWebProps extends ChatCardBaseProps {
 	mode: "web"
-	selectedChat: Chat["_id"]
-	setSelectedChat: (val: Chat["_id"]) => void
+	selectedChat: Chat["id"] | null
+	setSelectedChat: (val: Chat["id"] | null) => void
 }
 
 // Type for the props of the component (union of app and web props)
@@ -34,6 +34,9 @@ type ChatCardProps = ChatCardAppProps | ChatCardWebProps
 export default function ChatCard(
 	props: ChatCardProps
 ): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize the router instance for navigation
 	const router = useRouter()
 
@@ -44,12 +47,12 @@ export default function ChatCard(
 	const handleSelectChat = useCallback((): void => {
 		// If the mode is web, set the selected chat, otherwise navigate to the chat screen
 		if (props.mode === "web") {
-			props.setSelectedChat(props._id)
+			props.setSelectedChat(props.id)
 		} else {
 			router.navigate(
 				pathname.includes("/user/")
-					? `/user/chat/${props._id}`
-					: `/vendor/chat/${props._id}`
+					? `/user/chat/${props.id}`
+					: `/vendor/chat/${props.id}`
 			)
 		}
 	}, [props, pathname, router])
@@ -62,7 +65,7 @@ export default function ChatCard(
 				props.mode === "web"
 					? styles.containerWeb
 					: styles.containerApp,
-				props.mode === "web" && props._id === props.selectedChat
+				props.mode === "web" && props.id === props.selectedChat
 					? styles.containerSelected
 					: styles.containerUnSelected
 			]}
@@ -80,7 +83,13 @@ export default function ChatCard(
 					]}
 				>
 					<Image
-						source={props.image}
+						source={
+							props.image.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${props.image}`
+								  }
+								: require("../../assets/images/profile.png")
+						}
 						style={styles.profileImage}
 						contentFit="cover"
 					/>
@@ -94,7 +103,7 @@ export default function ChatCard(
 						style={[
 							styles.userNameText,
 							props.mode === "web" &&
-							props._id === props.selectedChat
+							props.id === props.selectedChat
 								? styles.textSelected
 								: styles.textUnSelected
 						]}
@@ -108,7 +117,7 @@ export default function ChatCard(
 						style={[
 							styles.lastMessageText,
 							props.mode === "web" &&
-							props._id === props.selectedChat
+							props.id === props.selectedChat
 								? styles.textSelected
 								: styles.textUnSelected
 						]}
@@ -130,7 +139,7 @@ export default function ChatCard(
 				<Text
 					style={[
 						styles.lastMessageTimeText,
-						props.mode === "web" && props._id === props.selectedChat
+						props.mode === "web" && props.id === props.selectedChat
 							? styles.textSelected
 							: styles.textUnSelected
 					]}
@@ -145,7 +154,7 @@ export default function ChatCard(
 						style={[
 							styles.unreadMessagesContainer,
 							props.mode === "web" &&
-							props._id === props.selectedChat
+							props.id === props.selectedChat
 								? styles.unreadMessagesContainerSelected
 								: styles.unreadMessagesContainerUnSelected
 						]}
@@ -154,7 +163,7 @@ export default function ChatCard(
 							style={[
 								styles.unreadMessagesCount,
 								props.mode === "web" &&
-								props._id === props.selectedChat
+								props.id === props.selectedChat
 									? styles.unreadMessagesCountSelected
 									: styles.unreadMessagesCountUnSelected
 							]}

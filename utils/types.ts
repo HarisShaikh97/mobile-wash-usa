@@ -73,10 +73,10 @@ export type Offer = {
 }
 
 export type Chat = {
-	_id: string
-	fullName: string
+	id: number
+	full_name: string
 	online: boolean
-	image: ImageSourcePropType
+	profile_pic: string
 	lastMessage: string
 	lastMessageTime: string
 	unreadMessages: number

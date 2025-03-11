@@ -20,98 +20,7 @@ import { Chat, Message } from "../../../../utils/types"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
-	const chats: Chat[] = [
-		{
-			_id: "1",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "2",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "3",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "4",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "5",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "6",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "7",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "8",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "9",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "10",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		}
-	]
+	const chats: Chat[] = []
 
 	const messages: Message[] = [
 		{
@@ -147,7 +56,7 @@ export default function Tab(): React.ReactElement | null {
 	]
 
 	const [searchValue, setSearchValue] = useState<string>("") // State for search input
-	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id) // State for managing selected chat
+	const [selectedChat, setSelectedChat] = useState<Chat["id"] | null>(null) // State for managing selected chat
 	const [message, setMessage] = useState<string>("") // State for managing message text
 	const [openChatActionModal, setOpenChatActionModal] =
 		useState<boolean>(false) // State for managing chat action modal visibility
@@ -217,9 +126,9 @@ export default function Tab(): React.ReactElement | null {
 								(chat, index): React.ReactElement | null => {
 									return (
 										<ChatCard
-											_id={chat._id}
-											fullName={chat.fullName}
-											image={chat.image}
+											id={chat.id}
+											fullName={chat.full_name}
+											image={chat.profile_pic}
 											lastMessage={chat.lastMessage}
 											lastMessageTime={
 												chat.lastMessageTime
@@ -247,15 +156,15 @@ export default function Tab(): React.ReactElement | null {
 								<Image
 									source={
 										chats.find((chat): boolean => {
-											return chat._id === selectedChat
-										})?.image
+											return chat.id === selectedChat
+										})?.profile_pic
 									}
 									style={styles.chatBoxProfileImage}
 									contentFit="cover"
 								/>
 								{/* Online status indicator */}
 								{chats.find((chat): boolean => {
-									return chat._id === selectedChat
+									return chat.id === selectedChat
 								})?.online && (
 									<View style={styles.onlineMarker} />
 								)}
@@ -265,13 +174,13 @@ export default function Tab(): React.ReactElement | null {
 								<Text style={styles.chatBoxUserNameText}>
 									{
 										chats.find((chat): boolean => {
-											return chat._id === selectedChat
-										})?.fullName
+											return chat.id === selectedChat
+										})?.full_name
 									}
 								</Text>
 								<Text style={styles.chatBoxOnlineText}>
 									{chats.find((chat): boolean => {
-										return chat._id === selectedChat
+										return chat.id === selectedChat
 									})?.online
 										? "Online"
 										: "Offline"}

@@ -7,6 +7,8 @@ import {
 	StyleSheet
 } from "react-native"
 import { Image, ImageBackground } from "expo-image"
+import { useSelector } from "react-redux"
+import { useQuery } from "@tanstack/react-query"
 import Entypo from "@expo/vector-icons/Entypo"
 import NotificationButton from "../../../../components/notification-button/NotificationButton"
 import SearchBar from "../../../../components/search-bar/SearchBar"
@@ -16,103 +18,12 @@ import HorizontalSeparator from "../../../../components/horizontal-separator/Hor
 import MessageCard from "../../../../components/message-card/MessageCard"
 import ChatActionsModal from "../../../../components/chat-actions-modal/ChatActionsModal"
 import DeleteChatConfirmationModal from "../../../../components/delete-chat-confirmation-modal/DeleteChatConfirmationModal"
+import { getAllChats } from "../../../../helpers/chat"
+import { RootState } from "../../../../store/store"
 import { Chat, Message } from "../../../../utils/types"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
-	const chats: Chat[] = [
-		{
-			_id: "1",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "2",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "3",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "4",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "5",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "6",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "7",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		},
-		{
-			_id: "8",
-			fullName: "Emmet Perry",
-			image: require("../../../../assets/images/vendor-profile2.png"),
-			lastMessage: "Excepteur sint occaecat cupidatat non",
-			lastMessageTime: "12:50",
-			unreadMessages: 0,
-			online: true
-		},
-		{
-			_id: "9",
-			fullName: "Oliver A",
-			image: require("../../../../assets/images/vendor-profile3.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "11:35",
-			unreadMessages: 2,
-			online: false
-		},
-		{
-			_id: "10",
-			fullName: "Michael Guzzi",
-			image: require("../../../../assets/images/vendor-profile.png"),
-			lastMessage: "tempor incididunt ut labore et dolore",
-			lastMessageTime: "10:45",
-			unreadMessages: 1,
-			online: true
-		}
-	]
-
 	const messages: Message[] = [
 		{
 			_id: "1",
@@ -146,10 +57,13 @@ export default function Tab(): React.ReactElement | null {
 		}
 	]
 
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
 	// State to manage the search value
 	const [searchValue, setSearchValue] = useState<string>("")
 	// State to manage the selected chat's ID
-	const [selectedChat, setSelectedChat] = useState<Chat["_id"]>(chats[0]._id)
+	const [selectedChat, setSelectedChat] = useState<Chat["id"] | null>(null)
 	// State to manage the message text
 	const [message, setMessage] = useState<string>("")
 	// State to manage the visibility of the chat action modal
@@ -160,6 +74,13 @@ export default function Tab(): React.ReactElement | null {
 		openDeleteChatConfirmationModal,
 		setOpenDeleteChatConfirmationModal
 	] = useState<boolean>(false)
+
+	// Query to fetch user's chats using TanStack Query
+	const { data: chats } = useQuery({
+		queryKey: ["all-chats", token],
+		queryFn: () => getAllChats({ accessToken: token }),
+		enabled: !!token
+	})
 
 	// Memoized function to handle opening the chat action modal
 	const handleOpenChatActionModal = useCallback((): void => {
@@ -219,27 +140,35 @@ export default function Tab(): React.ReactElement | null {
 								mode="app"
 							/>
 							{/* Mapping through chats array to render each chat */}
-							{chats.map(
-								(chat, index): React.ReactElement | null => {
-									return (
-										<ChatCard
-											_id={chat._id}
-											fullName={chat.fullName}
-											image={chat.image}
-											lastMessage={chat.lastMessage}
-											lastMessageTime={
-												chat.lastMessageTime
-											}
-											unreadMessages={chat.unreadMessages}
-											online={chat.online}
-											mode="web"
-											selectedChat={selectedChat}
-											setSelectedChat={setSelectedChat}
-											key={index}
-										/>
-									)
-								}
-							)}
+							{Array.isArray(chats) &&
+								chats.map(
+									(
+										chat: Chat,
+										index: number
+									): React.ReactElement | null => {
+										return (
+											<ChatCard
+												id={chat.id}
+												fullName={chat.full_name}
+												image={chat.profile_pic}
+												lastMessage={chat.lastMessage}
+												lastMessageTime={
+													chat.lastMessageTime
+												}
+												unreadMessages={
+													chat.unreadMessages
+												}
+												online={chat.online}
+												mode="web"
+												selectedChat={selectedChat}
+												setSelectedChat={
+													setSelectedChat
+												}
+												key={index}
+											/>
+										)
+									}
+								)}
 						</View>
 					</ScrollView>
 				</View>
@@ -252,40 +181,55 @@ export default function Tab(): React.ReactElement | null {
 							{/* Profile Image Wrapper for chat box */}
 							<View style={styles.chatBoxProfileImageWrapper}>
 								{/* Profile Image for chat box */}
-								<Image
-									source={
-										chats.find((chat): boolean => {
-											return chat._id === selectedChat
-										})?.image
-									}
-									style={styles.chatBoxProfileImage}
-									contentFit="cover"
-								/>
-								{/* Online Marker for chat box */}
-								{chats.find((chat): boolean => {
-									return chat._id === selectedChat
-								})?.online && (
-									<View style={styles.onlineMarker} />
+								{Array.isArray(chats) && (
+									<Image
+										source={
+											chats.find(
+												(chat: Chat): boolean => {
+													return (
+														chat.id === selectedChat
+													)
+												}
+											)?.image
+										}
+										style={styles.chatBoxProfileImage}
+										contentFit="cover"
+									/>
 								)}
+								{/* Online Marker for chat box */}
+								{Array.isArray(chats) &&
+									chats.find((chat: Chat): boolean => {
+										return chat.id === selectedChat
+									})?.online && (
+										<View style={styles.onlineMarker} />
+									)}
 							</View>
 							{/* Profile Details Wrapper for chat box */}
 							<View style={styles.chatBoxProfileDetailsWrapper}>
 								{/* User Name Text for chat box */}
-								<Text style={styles.chatBoxUserNameText}>
-									{
-										chats.find((chat): boolean => {
-											return chat._id === selectedChat
-										})?.fullName
-									}
-								</Text>
+								{Array.isArray(chats) && (
+									<Text style={styles.chatBoxUserNameText}>
+										{
+											chats.find(
+												(chat: Chat): boolean => {
+													return (
+														chat.id === selectedChat
+													)
+												}
+											)?.fullName
+										}
+									</Text>
+								)}
 								{/* Online Text for chat box */}
-								<Text style={styles.chatBoxOnlineText}>
-									{chats.find((chat): boolean => {
-										return chat._id === selectedChat
-									})?.online
-										? "Online"
-										: "Offline"}
-								</Text>
+								{Array.isArray(chats) && (
+									<Text style={styles.chatBoxOnlineText}>
+										{chats.find((chat: Chat): boolean => {
+											return chat.id === selectedChat
+										})?.online
+											? "Online"
+											: "Offline"}
+									</Text>
+								)}
 							</View>
 						</View>
 						{/* Options Button Container for chat box */}
