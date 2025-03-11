@@ -2,15 +2,23 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import Ratings from "../../../../../components/ratings/Ratings"
 import FormButton from "../../../../../components/form-button/FormButton"
 import ReviewCard from "../../../../../components/review-card/ReviewCard"
+import { RootState } from "../../../../../store/store"
 import { theme } from "../../../../../utils/constants"
 import { Review } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize router object for navigation
 	const router = useRouter()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	// State for managing selected tab
 	const [selectedTab, setSelectedTab] = useState<"about" | "rating">("about")
@@ -68,13 +76,23 @@ export default function Page(): React.ReactElement | null {
 			{/* Profile Image Section */}
 			<View style={styles.profileImageContainer}>
 				<Image
-					source={require("../../../../../assets/images/vendor-profile.png")}
+					source={
+						user && user.profile_pic && user.profile_pic.length > 0
+							? {
+									uri: `${BASE_URL}/storage/${user.profile_pic}`
+							  }
+							: require("../../../../../assets/images/profile.png")
+					}
 					style={styles.profileImage}
 					contentFit="cover"
 				/>
 			</View>
 			{/* User Name */}
-			<Text style={styles.userNameText}>Michael Guzzi</Text>
+			<Text style={styles.userNameText}>
+				{`${user && user.full_name.split(" ")[0]} ${
+					user && user.full_name.split(" ")[1]
+				}`}
+			</Text>
 			{/* Stats Section */}
 			<View style={styles.statsWrapper}>
 				{/* Rating Stats */}

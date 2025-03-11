@@ -2,19 +2,30 @@ import { useState, useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import * as ImagePicker from "expo-image-picker"
 import Feather from "@expo/vector-icons/Feather"
 import InputField from "../../../components/input-field/InputField"
+import { RootState } from "../../../store/store"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter() // Initializing the router instance for navigation
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
+	// Initializing the router instance for navigation
+	const router = useRouter()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	const [newImage, setNewImage] = useState<string | null>(null) // State for managing the new image selected by the user
-	const [fullName, setFullName] = useState<string>("") // State for managing the user's full name
-	const [phoneNumber, setPhoneNumber] = useState<string>("") // State for managing the user's phone number
-	const [email, setEmail] = useState<string>("") // State for managing the user's email
-	const [location, setLocation] = useState<string>("") // State for managing the user's location
+	const [fullName, setFullName] = useState<string>(user?.full_name || "") // State for managing the user's full name
+	const [phoneNumber, setPhoneNumber] = useState<string>(
+		user?.phone_number || ""
+	) // State for managing the user's phone number
+	const [email, setEmail] = useState<string>(user?.email || "") // State for managing the user's email
+	const [location, setLocation] = useState<string>(user?.address || "") // State for managing the user's location
 
 	// Memoized function to handle image selection
 	const pickImage = useCallback(async (): Promise<void> => {
@@ -52,7 +63,13 @@ export default function Page(): React.ReactElement | null {
 					source={
 						newImage
 							? { uri: newImage } // Using the selected image URI
-							: require("../../../assets/images/profile.png") // Default profile image
+							: user &&
+							  user.profile_pic &&
+							  user.profile_pic.length > 0
+							? {
+									uri: `${BASE_URL}/storage/${user.profile_pic}`
+							  }
+							: require("../../../assets/images/profile.png")
 					}
 					style={styles.profileImage}
 					contentFit="cover"

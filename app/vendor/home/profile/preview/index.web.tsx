@@ -1,17 +1,25 @@
 import { useMemo, useCallback } from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { View, Text, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import NotificationButton from "../../../../../components/notification-button/NotificationButton"
 import Ratings from "../../../../../components/ratings/Ratings"
 import FormButton from "../../../../../components/form-button/FormButton"
 import ReviewCard from "../../../../../components/review-card/ReviewCard"
+import { RootState } from "../../../../../store/store"
 import { theme } from "../../../../../utils/constants"
 import { Review } from "../../../../../utils/types"
 
 export default function Page(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize router object for navigation
 	const router = useRouter()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	// Memoized callback for navigating to edit profile page
 	const handleEditProfile = useCallback((): void => {
@@ -103,7 +111,15 @@ export default function Page(): React.ReactElement | null {
 						{/* Profile image and name */}
 						<View style={styles.profileImageWrapper}>
 							<Image
-								source={require("../../../../../assets/images/vendor-profile.png")}
+								source={
+									user &&
+									user.profile_pic &&
+									user.profile_pic.length > 0
+										? {
+												uri: `${BASE_URL}/storage/${user.profile_pic}`
+										  }
+										: require("../../../../../assets/images/profile.png")
+								}
 								style={styles.profileImage}
 								contentFit="cover"
 							/>
@@ -112,7 +128,9 @@ export default function Page(): React.ReactElement | null {
 								numberOfLines={1}
 								ellipsizeMode="tail"
 							>
-								Michael Guzzi
+								{`${user && user.full_name.split(" ")[0]} ${
+									user && user.full_name.split(" ")[1]
+								}`}
 							</Text>
 						</View>
 						{/* Stats section showing ratings, reviews and jobs */}

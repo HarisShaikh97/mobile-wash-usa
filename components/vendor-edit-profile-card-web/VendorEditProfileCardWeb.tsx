@@ -8,22 +8,34 @@ import {
 } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
 import * as ImagePicker from "expo-image-picker"
 import { DocumentPickerResult } from "expo-document-picker"
 import Feather from "@expo/vector-icons/Feather"
 import InputField from "../input-field/InputField"
+import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
 
 export default function VendorEditProfileCardWeb(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Initialize the router instance for navigation
 	const router = useRouter()
 
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
+
 	const [newImage, setNewImage] = useState<string | null>(null) // State to store the selected image URI
-	const [fullName, setFullName] = useState<string>("") // State to store the full name
-	const [phoneNumber, setPhoneNumber] = useState<string>("") // State to store the phone number
-	const [email, setEmail] = useState<string>("") // State to store the email
-	const [location, setLocation] = useState<string>("") // State to store the location
-	const [businessInformation, setBusinessInformation] = useState<string>("") // State to store the business information
+	const [fullName, setFullName] = useState<string>(user?.full_name || "") // State to store the full name
+	const [phoneNumber, setPhoneNumber] = useState<string>(
+		user?.phone_number || ""
+	) // State to store the phone number
+	const [email, setEmail] = useState<string>(user?.email || "") // State to store the email
+	const [location, setLocation] = useState<string>(user?.address || "") // State to store the location
+	const [businessInformation, setBusinessInformation] = useState<string>(
+		user?.business_information || ""
+	) // State to store the business information
 	const [documents, setDocuments] = useState<DocumentPickerResult | null>(
 		null
 	) // State to store the selected documents
@@ -66,8 +78,14 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 					<Image
 						source={
 							newImage
-								? { uri: newImage }
-								: require("../../assets/images/profile2.png")
+								? { uri: newImage } // Using the selected image URI
+								: user &&
+								  user.profile_pic &&
+								  user.profile_pic.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${user.profile_pic}`
+								  }
+								: require("../../assets/images/profile.png")
 						}
 						style={styles.profileImage}
 						contentFit="cover"

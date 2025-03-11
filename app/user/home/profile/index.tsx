@@ -3,19 +3,26 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Feather from "@expo/vector-icons/Feather"
 import ProfileImageBox from "../../../../components/profile-image-box/ProfileImageBox"
 import Switch from "../../../../components/switch/Switch"
 import { deleteSession } from "../../../../features/auth/authSlice"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
+	// Define base URL
+	const BASE_URL = process.env.EXPO_PUBLIC_API_URL
+
 	// Using useRouter hook to navigate
 	const router = useRouter()
 
 	// Initializing the dispatch function for Redux
 	const dispatch = useDispatch()
+
+	// Retrieve user data from Redux store
+	const user = useSelector((state: RootState) => state.auth.user)
 
 	// Shared value to track notification enabled/disabled state
 	const notificationsEnabled = useSharedValue(false)
@@ -42,12 +49,24 @@ export default function Tab(): React.ReactElement | null {
 				<View style={styles.profileIconWrapper}>
 					{/* User profile image */}
 					<ProfileImageBox
-						source={require("../../../../assets/images/profile.png")}
+						source={
+							user &&
+							user.profile_pic &&
+							user.profile_pic.length > 0
+								? {
+										uri: `${BASE_URL}/storage/${user.profile_pic}`
+								  }
+								: require("../../../../assets/images/profile.png")
+						}
 						mode="app"
 					/>
 					<View style={styles.profileTextWrapper}>
 						{/* Username display */}
-						<Text style={styles.usernameText}>John Doe</Text>
+						<Text style={styles.usernameText}>
+							{`${user && user.full_name.split(" ")[0]} ${
+								user && user.full_name.split(" ")[1]
+							}`}
+						</Text>
 						{/* Personal info label */}
 						<Text style={styles.personalInfoText}>
 							Personal Info
