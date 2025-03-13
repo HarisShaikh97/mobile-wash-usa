@@ -32,7 +32,7 @@ export default function Page(): React.ReactElement | null {
 		// Launching the image library to select an image
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.All, // Allowing selection of all media types
+				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
 				quality: 1 // Setting image quality to maximum
 			})
 

@@ -27,8 +27,8 @@ export default function Page(): React.ReactElement | null {
 		// Requesting permission to access the device's image library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.All,
-				quality: 1
+				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
+				quality: 1 // Setting image quality to maximum
 			})
 
 		// Checking if an image was selected and setting the new image state

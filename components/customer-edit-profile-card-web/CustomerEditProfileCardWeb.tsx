@@ -32,8 +32,8 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 		// Requesting permission to access the library
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
-				mediaTypes: ImagePicker.MediaTypeOptions.All,
-				quality: 1
+				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
+				quality: 1 // Setting image quality to maximum
 			})
 
 		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
