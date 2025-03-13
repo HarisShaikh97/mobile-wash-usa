@@ -41,7 +41,7 @@ export default function Page(): React.ReactElement | null {
 				status: "success"
 			})
 
-			// router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
+			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
 		},
 		[router, email, dispatch, addVerificationEmail]
 	)

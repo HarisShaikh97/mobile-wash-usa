@@ -6,7 +6,10 @@ import { showToastable } from "react-native-toastable"
 import FormButton from "../../../../components/form-button/FormButton"
 import OTPInput from "../../../../components/otp-input/OTPInput"
 import AccountVerificationSuccessfulModal from "../../../../components/account-verification-successful-modal/AccountVerificationSuccessfulModal"
-import { verifyRegistration } from "../../../../helpers/auth"
+import {
+	verifyRegistration,
+	resendAccountVerificationOTP
+} from "../../../../helpers/auth"
 import { deleteVerificationEmail } from "../../../../features/email-verification/emailVerificationSlice"
 import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
@@ -23,7 +26,7 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Memoized function to handle account verification success
-	const handleSuccess = useCallback(
+	const handleVerificationSuccess = useCallback(
 		(data: any) => {
 			console.log(data)
 
@@ -36,7 +39,32 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Memoized function to handle account verification error
-	const handleError = useCallback((error: any) => {
+	const handleVerificationError = useCallback((error: any) => {
+		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
+	}, [])
+
+	// Memoized function to handle resend account verification OTP success
+	const handleResendOTPSuccess = useCallback((data: any) => {
+		console.log(data)
+
+		// Show success toast message
+		showToastable({
+			message:
+				"OTP has been resent to your email. Please check your email.",
+			status: "success"
+		})
+	}, [])
+
+	// Memoized function to handle resend account verification OTP error
+	const handleResendOTPError = useCallback((error: any) => {
 		console.log(error)
 
 		// Show error toast message
@@ -49,17 +77,30 @@ export default function Page(): React.ReactElement | null {
 	}, [])
 
 	// Mutation hook to handle account verification
-	const { mutate, isPending } = useMutation({
+	const { mutate: verify, isPending: isVerificationPending } = useMutation({
 		mutationFn: verifyRegistration,
-		onSuccess: handleSuccess,
-		onError: handleError
+		onSuccess: handleVerificationSuccess,
+		onError: handleVerificationError
+	})
+
+	// Mutation hook to handle resend account verification OTP
+	const { mutate: resendOTP } = useMutation({
+		mutationFn: resendAccountVerificationOTP,
+		onSuccess: handleResendOTPSuccess,
+		onError: handleResendOTPError
 	})
 
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
 		// Mutate the account verification function with the user's email and OTP
-		mutate({ email: email, otp: OTP })
-	}, [mutate, email, OTP])
+		verify({ email: email, otp: OTP })
+	}, [verify, email, OTP])
+
+	// Memoized function to handle resend OTP
+	const handleResendOTP = useCallback((): void => {
+		// Mutate the resend OTP function with the user's email
+		resendOTP({ email: email })
+	}, [resendOTP, email])
 
 	return (
 		<View style={styles.bodyContainer}>
@@ -141,7 +182,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={isPending}
+					isLoading={isVerificationPending}
 					title="Verify Account"
 					onPress={handleSubmit}
 				/>
@@ -153,7 +194,7 @@ export default function Page(): React.ReactElement | null {
 				>
 					Don’t receive code ?
 				</Text>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={handleResendOTP}>
 					<Text
 						style={[
 							styles.policyAndTermsText,

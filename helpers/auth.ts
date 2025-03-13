@@ -5,7 +5,8 @@ import {
 	VerifyRegistrationData,
 	ForgotPasswordData,
 	VerifyResetPasswordData,
-	SetNewPasswordData
+	SetNewPasswordData,
+	ResendOTPData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -17,19 +18,24 @@ export const customerSignUp = async (
 ): Promise<any> => {
 	// Create a request with the data
 	const response = await api.post("/api/v1/register", data)
+
 	// Return the response data
 	return response.data
 }
 
 // Sign up function to handle vendor sign up
 export const vendorSignUp = async (data: FormData): Promise<any> => {
-	// Create a request with the data
-	const response = await api.post("/api/v1/register", data, {
+	// Set the headers for the request
+	const headers = {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "multipart/form-data"
 		}
-	})
+	}
+
+	// Create a request with the data and headers
+	const response = await api.post("/api/v1/register", data, headers)
+
 	// Return the response data
 	return response.data
 }
@@ -38,6 +44,7 @@ export const vendorSignUp = async (data: FormData): Promise<any> => {
 export const login = async (data: LoginData): Promise<any> => {
 	// Create a request with the data
 	const response = await api.post("/api/v1/login", data)
+
 	// Return the response data
 	return response.data
 }
@@ -51,6 +58,7 @@ export const verifyRegistration = async (
 		"/api/v1/account/verify-registration-otp",
 		data
 	)
+
 	// Return the response data
 	return response.data
 }
@@ -61,6 +69,7 @@ export const forgotPassword = async (
 ): Promise<any> => {
 	// Create a request with the data
 	const response = await api.post("/api/v1/account/password/reset", data)
+
 	// Return the response data
 	return response.data
 }
@@ -74,6 +83,7 @@ export const verifyResetPassword = async (
 		"/api/v1/account/verify-reset-password-otp",
 		data
 	)
+
 	// Return the response data
 	return response.data
 }
@@ -82,16 +92,37 @@ export const verifyResetPassword = async (
 export const setNewPassword = async (
 	data: SetNewPasswordData
 ): Promise<any> => {
-	// Create a request with the password and bearer token
+	// Set the headers for the request
+	const headers = {
+		headers: {
+			Authorization: `Bearer ${data.accessToken}`
+		}
+	}
+
+	// Create the request body
+	const body = { password: data.password }
+
+	// Create a request with the body and headers
 	const response = await api.post(
 		"/api/v1/account/password/create-new",
-		{ password: data.password },
-		{
-			headers: {
-				Authorization: `Bearer ${data.accessToken}`
-			}
-		}
+		body,
+		headers
 	)
+
+	// Return the response data
+	return response.data
+}
+
+// Set new password function to resend OTP for account verification
+export const resendAccountVerificationOTP = async (
+	data: ResendOTPData
+): Promise<any> => {
+	// Create the request body
+	const body = { email: data.email, resend_otp: true }
+
+	// Create a request with the password and bearer token
+	const response = await api.post("/api/v1/register", body)
+
 	// Return the response data
 	return response.data
 }

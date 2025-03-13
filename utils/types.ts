@@ -139,13 +139,17 @@ export type SetNewPasswordData = {
 	password: string
 }
 
-export type QueryData = {
-	accessToken: string | null
-}
-
 export type JobByIdData = {
 	accessToken: string | null
 	jobId: Job["id"]
+}
+
+export type ResendOTPData = {
+	email: string
+}
+
+export type QueryData = {
+	accessToken: string | null
 }
 
 export type User = {
