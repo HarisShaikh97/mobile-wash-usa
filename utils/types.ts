@@ -24,11 +24,17 @@ export type Service = {
 }
 
 export type JobSubType = {
-	title: string
+	id: number
+	name: string
+	description: string | null
+	parent: number
 }
 
 export type JobType = {
-	title: string
+	id: number
+	name: string
+	description: string | null
+	parent: number
 	subTypes: JobSubType[]
 }
 

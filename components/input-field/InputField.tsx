@@ -152,7 +152,7 @@ export default function InputField(
 										.map((item) => item.name)
 										.join(", ")
 								: props.type === "select" && props.value
-								? props.value.title
+								? props.value.name
 								: placeholder}
 						</Text>
 					)}
@@ -219,7 +219,7 @@ export default function InputField(
 										}}
 									>
 										<Text style={styles.inputFieldText}>
-											{option.title}
+											{option.name}
 										</Text>
 									</TouchableOpacity>
 								)

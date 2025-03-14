@@ -1,20 +1,34 @@
 import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
+import { useQuery } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
 import AddJobWebLayout from "../../../components/add-job-web-layout/AddJobWebLayout"
 import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
+import { getJobTypes } from "../../../helpers/job"
+import { RootState } from "../../../store/store"
 import { JobType, JobSubType } from "../../../utils/types"
-import { theme, jobTypes } from "../../../utils/constants"
+import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	const router = useRouter() // Initializing the router instance for navigation
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
 
 	const [jobTitle, setJobTitle] = useState<string>("") // State for managing job title
 	const [selectedJobType, setSelectedJobType] = useState<JobType | null>(null) // State for managing selected job type
 	const [selectedJobSubType, setSelectedJobSubType] =
 		useState<JobSubType | null>(null) // State for managing selected job sub type
 	const [jobDescription, setJobDescription] = useState<string>("") // State for managing job description
+
+	// Query to fetch job types using TanStack Query
+	const { data: jobTypes = [] } = useQuery<JobType[]>({
+		queryKey: ["job-types", token],
+		queryFn: () => getJobTypes({ accessToken: token }),
+		enabled: !!token
+	})
 
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback(() => {
@@ -60,7 +74,7 @@ export default function Page(): React.ReactElement | null {
 							data={selectedJobType.subTypes}
 							value={selectedJobSubType}
 							onChangeValue={setSelectedJobSubType}
-							title={selectedJobType.title}
+							title={selectedJobType.name}
 							placeholder="Select Job Sub Type"
 							zIndex={1}
 						/>

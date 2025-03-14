@@ -4,7 +4,7 @@ import { QueryData, JobByIdData } from "../utils/types"
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
 
-// Login function to fetch user's jobs
+// Get my jobs function to fetch all jobs
 export const getMyJobs = async (data: QueryData): Promise<any> => {
 	// Create a request with the token
 	const response = await api.get("/api/v1/get-my-jobs", {
@@ -41,4 +41,17 @@ export const deleteJobById = async (data: JobByIdData): Promise<any> => {
 
 	// Return the response data
 	return response.data
+}
+
+// Get my jobs function to fetch all jobs
+export const getJobTypes = async (data: QueryData): Promise<any> => {
+	// Create a request with the token
+	const response = await api.get("/api/v1/services", {
+		headers: {
+			Authorization: `Bearer ${data.accessToken}`
+		}
+	})
+
+	// Return the response data
+	return response.data.data.services
 }
