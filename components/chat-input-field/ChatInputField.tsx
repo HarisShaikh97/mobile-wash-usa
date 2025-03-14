@@ -1,5 +1,11 @@
 import { useState, useCallback } from "react"
-import { View, TextInput, TouchableOpacity, StyleSheet } from "react-native"
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	StyleSheet
+} from "react-native"
 import { Image } from "expo-image"
 import * as ImagePicker from "expo-image-picker"
 import { theme } from "../../utils/constants"
@@ -17,7 +23,8 @@ export default function ChatInputField({
 	onSubmit
 }: ChatInputFieldProps): React.ReactElement | null {
 	// State for storing the image URI
-	const [newImage, setNewImage] = useState<string | null>(null)
+	const [newImage, setNewImage] =
+		useState<ImagePicker.ImagePickerResult | null>(null)
 
 	// Memoized callback for picking an image from the library
 	const pickImage = useCallback(async (): Promise<void> => {
@@ -29,8 +36,8 @@ export default function ChatInputField({
 			})
 
 		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
-		if (!result.canceled && result.assets && result.assets.length > 0) {
-			setNewImage(result.assets[0].uri)
+		if (!result.canceled) {
+			setNewImage(result)
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
@@ -48,13 +55,19 @@ export default function ChatInputField({
 				/>
 			</TouchableOpacity>
 			{/* Text input field for chat messages */}
-			<TextInput
-				style={styles.inputField}
-				value={value}
-				onChangeText={onChangeText}
-				placeholder="Say something"
-				placeholderTextColor={"rgba(51, 51, 51, 0.3)"}
-			/>
+			{newImage?.assets ? (
+				<Text style={styles.inputField}>
+					{newImage.assets[0].fileName}
+				</Text>
+			) : (
+				<TextInput
+					style={styles.inputField}
+					value={value}
+					onChangeText={onChangeText}
+					placeholder="Say something"
+					placeholderTextColor={"rgba(51, 51, 51, 0.3)"}
+				/>
+			)}
 			{/* Send button container */}
 			<TouchableOpacity
 				style={styles.sendButtonContainer}

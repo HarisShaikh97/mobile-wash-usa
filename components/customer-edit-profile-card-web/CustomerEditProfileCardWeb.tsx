@@ -19,7 +19,8 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
 
-	const [newImage, setNewImage] = useState<string | null>(null) // State to store the selected image URI
+	const [newImage, setNewImage] =
+		useState<ImagePicker.ImagePickerResult | null>(null) // State to store the selected image URI
 	const [fullName, setFullName] = useState<string>(user?.full_name || "") // State to store the full name
 	const [phoneNumber, setPhoneNumber] = useState<string>(
 		user?.phone_number || ""
@@ -37,8 +38,8 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 			})
 
 		// If the user picked an image, set the newImage state with the URI of the picked image else log a message
-		if (!result.canceled && result.assets && result.assets.length > 0) {
-			setNewImage(result.assets[0].uri)
+		if (!result.canceled) {
+			setNewImage(result)
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
@@ -61,8 +62,8 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 				{/* Display either the newly selected image or default profile image */}
 				<Image
 					source={
-						newImage
-							? { uri: newImage } // Using the selected image URI
+						newImage?.assets
+							? { uri: newImage.assets[0].uri } // Using the selected image URI
 							: user &&
 							  user.profile_pic &&
 							  user.profile_pic.length > 0

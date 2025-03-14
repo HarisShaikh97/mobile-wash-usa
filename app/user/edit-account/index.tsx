@@ -19,7 +19,8 @@ export default function Page(): React.ReactElement | null {
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
 
-	const [newImage, setNewImage] = useState<string | null>(null) // State for managing the new image selected by the user
+	const [newImage, setNewImage] =
+		useState<ImagePicker.ImagePickerResult | null>(null) // State for managing the new image selected by the user
 	const [fullName, setFullName] = useState<string>(user?.full_name || "") // State for managing the user's full name
 	const [phoneNumber, setPhoneNumber] = useState<string>(
 		user?.phone_number || ""
@@ -37,8 +38,8 @@ export default function Page(): React.ReactElement | null {
 			})
 
 		// Checking if an image was selected and not canceled
-		if (!result.canceled && result.assets && result.assets.length > 0) {
-			setNewImage(result.assets[0].uri) // Setting the new image URI to the state
+		if (!result.canceled) {
+			setNewImage(result) // Setting the new image URI to the state
 		} else {
 			console.log("No image selected or operation canceled!") // Logging a message if no image is selected or the operation is canceled
 		}
@@ -61,8 +62,8 @@ export default function Page(): React.ReactElement | null {
 				{/* Displaying the selected image or a default profile image */}
 				<Image
 					source={
-						newImage
-							? { uri: newImage } // Using the selected image URI
+						newImage?.assets
+							? { uri: newImage.assets[0].uri } // Using the selected image URI
 							: user &&
 							  user.profile_pic &&
 							  user.profile_pic.length > 0
