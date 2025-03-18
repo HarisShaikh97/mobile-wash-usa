@@ -28,7 +28,7 @@ export default function Tab(): React.ReactElement | null {
 	const notificationsEnabled = useSharedValue(false)
 
 	// Memoized function to handle updating the notification status
-	const handleUpdatedNotificationStatus = useCallback(() => {
+	const handleUpdatedNotificationStatus = useCallback((): void => {
 		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
 	}, [notificationsEnabled])
 
@@ -39,7 +39,7 @@ export default function Tab(): React.ReactElement | null {
 
 		// Navigating to the welcome page after logout
 		router.navigate("/")
-	}, [router])
+	}, [router, dispatch, deleteSession])
 
 	return (
 		<View style={styles.accountSettingsSection}>

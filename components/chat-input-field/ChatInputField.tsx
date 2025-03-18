@@ -41,7 +41,7 @@ export default function ChatInputField({
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
-	}, [setNewImage])
+	}, [setNewImage, ImagePicker])
 
 	return (
 		// Main container for the chat input field

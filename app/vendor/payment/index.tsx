@@ -15,7 +15,7 @@ export default function Page(): React.ReactElement | null {
 	const [cardHolderName, setCardHolderName] = useState<string>("") // State for card holder name input
 
 	// Memoized callback for handling form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		router.navigate("/vendor/home") // Navigate to home page
 	}, [router])
 

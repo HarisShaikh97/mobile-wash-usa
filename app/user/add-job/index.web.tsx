@@ -31,7 +31,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		router.navigate("/user/add-job/details") // Navigating to the next page on form submission
 	}, [router])
 

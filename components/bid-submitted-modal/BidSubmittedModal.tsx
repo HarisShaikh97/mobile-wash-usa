@@ -24,13 +24,13 @@ export default function BidSubmittedModal({
 	const handleGoToDashboard = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.navigate("/vendor/home") // Navigate to the dashboard
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	// Memoized callback for "View More Jobs" button
 	const handleViewMoreJobs = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.replace("/vendor/available-jobs") // Navigate to the available jobs page
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	return (
 		// Modal component with different animation types for app and web

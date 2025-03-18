@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle sign up success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Dispatch action to store email for verification
@@ -48,21 +48,24 @@ export default function Page(): React.ReactElement | null {
 
 			router.navigate("/auth/sign-up/verification-code") // Navigating to the verification code page
 		},
-		[router, email, dispatch, addVerificationEmail]
+		[router, email, dispatch, addVerificationEmail, showToastable]
 	)
 
 	// Memoized function to handle sign up error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle sign up
 	const { mutate, isPending } = useMutation({

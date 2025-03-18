@@ -27,7 +27,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle account verification success
 	const handleVerificationSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Dispatch action to delete verification email
@@ -39,42 +39,51 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Memoized function to handle account verification error
-	const handleVerificationError = useCallback((error: any) => {
-		console.log(error)
+	const handleVerificationError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Memoized function to handle resend account verification OTP success
-	const handleResendOTPSuccess = useCallback((data: any) => {
-		console.log(data)
+	const handleResendOTPSuccess = useCallback(
+		(data: any): void => {
+			console.log(data)
 
-		// Show success toast message
-		showToastable({
-			message:
-				"OTP has been resent to your email. Please check your email.",
-			status: "success"
-		})
-	}, [])
+			// Show success toast message
+			showToastable({
+				message:
+					"OTP has been resent to your email. Please check your email.",
+				status: "success"
+			})
+		},
+		[showToastable]
+	)
 
 	// Memoized function to handle resend account verification OTP error
-	const handleResendOTPError = useCallback((error: any) => {
-		console.log(error)
+	const handleResendOTPError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle account verification
 	const { mutate: verify, isPending: isVerificationPending } = useMutation({

@@ -75,7 +75,7 @@ export default function InputField(
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	// Memoized callback for handling file upload
-	const handleFileUpload = useCallback(async () => {
+	const handleFileUpload = useCallback(async (): Promise<void> => {
 		// If the type is file, try to get the file picker result
 		if (type === "file") {
 			try {
@@ -91,7 +91,7 @@ export default function InputField(
 				console.log("Error while selecting file: ", error)
 			}
 		}
-	}, [type, props])
+	}, [type, props, DocumentPicker])
 
 	return (
 		// Main container wrapper

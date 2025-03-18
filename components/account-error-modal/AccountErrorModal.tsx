@@ -30,13 +30,13 @@ export default function AccountErrorModal({
 		} else {
 			router.back()
 		}
-	}, [openModal, router])
+	}, [setOpenModal, router, type])
 
 	// Memoized callback for handling the "Cancel" action
 	const handleCancel = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.back() // Navigate back
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	return (
 		// Modal component for displaying account-related errors

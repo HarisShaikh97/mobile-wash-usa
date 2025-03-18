@@ -57,11 +57,11 @@ export default function Page(): React.ReactElement | null {
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
-	}, [setNewImage])
+	}, [setNewImage, ImagePicker])
 
 	// Memoized function to handle profile update success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Show success toast message
@@ -72,21 +72,24 @@ export default function Page(): React.ReactElement | null {
 
 			router.navigate("/vendor/email-verification") // Navigating to the email verification page on success
 		},
-		[router]
+		[router, showToastable]
 	)
 
 	// Memoized function to handle profile update error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle profile update
 	const { mutate, isPending } = useMutation({
@@ -96,7 +99,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	// Memoized function to handle profile update
-	const handleSave = useCallback(() => {
+	const handleSave = useCallback((): void => {
 		// Create a new FormData instance to send data to the server
 		const formData = new FormData()
 
@@ -164,7 +167,8 @@ export default function Page(): React.ReactElement | null {
 		businessInformation,
 		newImage,
 		documents,
-		token
+		token,
+		mutate
 	])
 
 	// Memoized function to handle cancelling the action

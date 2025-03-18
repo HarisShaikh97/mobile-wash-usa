@@ -55,7 +55,7 @@ export default function Tab(): React.ReactElement | null {
 
 		// Navigating to the welcome page after logout
 		router.navigate("/")
-	}, [router])
+	}, [router, dispatch, deleteSession])
 
 	return (
 		<View style={styles.wrapper}>

@@ -34,7 +34,7 @@ export default function SearchBar(
 	props: SearchBarProps
 ): React.ReactElement | null {
 	// Memoized callback for handling the filter button press
-	const handleFilterButtonPress = useCallback(() => {
+	const handleFilterButtonPress = useCallback((): void => {
 		if (props.filterEnabled) {
 			props.setOpenFilterModal(true)
 		}

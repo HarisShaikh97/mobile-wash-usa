@@ -17,7 +17,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle sending a message
 	const handleSendMessage = useCallback((): void => {
-		router.navigate(`/user/home/messages`) // Navigating to the messages page
+		router.navigate("/user/home/messages") // Navigating to the messages page
 	}, [router])
 
 	const reviews: Review[] = [

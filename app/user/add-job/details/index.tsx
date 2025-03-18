@@ -27,20 +27,20 @@ export default function Page(): React.ReactElement | null {
 		useState<boolean>(false) // Toggles the visibility of the date picker
 
 	// Function to show the date picker
-	const showDatePicker = useCallback(() => {
+	const showDatePicker = useCallback((): void => {
 		// Set the visibility of the date picker to true
 		setDatePickerVisibility(true)
 	}, [setDatePickerVisibility])
 
 	// Function to hide the date picker
-	const hideDatePicker = useCallback(() => {
+	const hideDatePicker = useCallback((): void => {
 		// Set the visibility of the date picker to false
 		setDatePickerVisibility(false)
 	}, [setDatePickerVisibility])
 
 	// Function to handle date and time selection
 	const handleConfirm = useCallback(
-		(date: Date) => {
+		(date: Date): void => {
 			// Update the state with the chosen date
 			setDateTime(date)
 			// Hide the date picker after selection
@@ -50,13 +50,13 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Function to handle location selection
-	const handleSelectLocation = useCallback(() => {
+	const handleSelectLocation = useCallback((): void => {
 		// Navigate to the location selection page
 		router.navigate("/user/add-job/select-location")
 	}, [router])
 
 	// Function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		// Navigate to the review page
 		router.navigate("/user/add-job/review")
 	}, [router])

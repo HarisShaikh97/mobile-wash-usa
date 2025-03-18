@@ -50,11 +50,11 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
-	}, [setNewImage])
+	}, [setNewImage, ImagePicker])
 
 	// Memoized function to handle profile update success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Show success toast message
@@ -65,21 +65,24 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 
 			router.navigate("/user/email-verification") // Navigating to the email verification page on success
 		},
-		[router]
+		[router, showToastable]
 	)
 
 	// Memoized function to handle profile update error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle profile update
 	const { mutate, isPending } = useMutation({
@@ -125,10 +128,19 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 
 		// Mutate the updateProfile function with the form data and access token
 		mutate({ data: formData, accessToken: token })
-	}, [router, fullName, email, phoneNumber, location, newImage, token])
+	}, [
+		router,
+		fullName,
+		email,
+		phoneNumber,
+		location,
+		newImage,
+		token,
+		mutate
+	])
 
 	// Callback function to handle the cancel action
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back() // Navigate back
 	}, [router])
 	return (

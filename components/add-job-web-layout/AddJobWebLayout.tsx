@@ -60,7 +60,15 @@ export default function AddJobWebLayout({
 				})
 			)
 		)
-	}, [opacity, updateCurrentImageIndex, updateNextImageIndex])
+	}, [
+		opacity,
+		updateCurrentImageIndex,
+		updateNextImageIndex,
+		withSequence,
+		withTiming,
+		withDelay,
+		runOnJS
+	])
 
 	// Memoized animated style for the background image
 	const bgImage = useAnimatedStyle(

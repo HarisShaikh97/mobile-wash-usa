@@ -46,7 +46,7 @@ export default function Layout(): React.ReactElement | null {
 	)
 
 	// Callback to handle the layout of the root view
-	const onLayoutRootView = useCallback(async () => {
+	const onLayoutRootView = useCallback(async (): Promise<void> => {
 		// If the app is ready, hide the splash screen
 		if (appIsReady) {
 			await SplashScreen.hideAsync()

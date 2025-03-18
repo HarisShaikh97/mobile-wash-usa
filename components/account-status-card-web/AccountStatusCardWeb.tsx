@@ -14,13 +14,13 @@ export default function AccountStatusCardWeb({
 	setOpenModal
 }: AccountStatusCardProps): React.ReactElement | null {
 	// Memoized callback for handling the "Delete Account" button
-	const handleDeleteAccount = useCallback(() => {
+	const handleDeleteAccount = useCallback((): void => {
 		setType("delete") // Set the action type to "delete"
 		setOpenModal(true) // Open the modal
 	}, [setType, setOpenModal])
 
 	// Memoized callback for handling the "Deactivate Account" button
-	const handleDeactivateAccount = useCallback(() => {
+	const handleDeactivateAccount = useCallback((): void => {
 		setType("deactivate") // Set the action type to "deactivate"
 		setOpenModal(true) // Open the modal
 	}, [setType, setOpenModal])

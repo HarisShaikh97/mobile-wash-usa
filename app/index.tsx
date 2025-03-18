@@ -59,7 +59,15 @@ export default function Page(): React.ReactElement | null {
 				})
 			)
 		)
-	}, [opacity, updateCurrentImageIndex, updateNextImageIndex])
+	}, [
+		opacity,
+		updateCurrentImageIndex,
+		updateNextImageIndex,
+		withSequence,
+		withTiming,
+		withDelay,
+		runOnJS
+	])
 
 	// Memoized animated style for controlling the opacity of the background images
 	const bgImage = useAnimatedStyle(

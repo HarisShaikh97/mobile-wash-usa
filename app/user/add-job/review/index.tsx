@@ -10,7 +10,7 @@ export default function Page(): React.ReactElement | null {
 	const router = useRouter() // Initializing the router instance for navigation
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		router.navigate("/user/add-job/payment-card-details") // Navigating to the next page
 	}, [router])
 

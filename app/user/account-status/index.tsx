@@ -13,19 +13,19 @@ export default function Page(): React.ReactElement | null {
 	const [type, setType] = useState<"delete" | "deactivate">("delete")
 
 	// Memoized function to handle account deletion
-	const handleDeleteAccount = useCallback(() => {
+	const handleDeleteAccount = useCallback((): void => {
 		setType("delete") // Setting action type to 'delete'
 		setOpenModal(true) // Opening the modal
 	}, [setType, setOpenModal])
 
 	// Memoized function to handle account deactivation
-	const handleDeactivateAccount = useCallback(() => {
+	const handleDeactivateAccount = useCallback((): void => {
 		setType("deactivate") // Setting action type to 'deactivate'
 		setOpenModal(true) // Opening the modal
 	}, [setType, setOpenModal])
 
 	// Memoized function to handle cancel action
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back() // Navigating back
 	}, [router])
 

@@ -94,19 +94,23 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle delete job success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
+
+			// Invalidate the my-jobs query
 			queryClient.invalidateQueries({
 				queryKey: ["my-jobs", token],
 				refetchType: "all"
-			}) // Invalidate the my-jobs query
-			router.back() // Navigate back to the previous page
+			})
+
+			// Navigate back to the previous page
+			router.back()
 		},
-		[router]
+		[router, queryClient]
 	)
 
 	// Memoized function to handle delete job error
-	const handleError = useCallback((error: any) => {
+	const handleError = useCallback((error: any): void => {
 		console.log(error)
 	}, [])
 

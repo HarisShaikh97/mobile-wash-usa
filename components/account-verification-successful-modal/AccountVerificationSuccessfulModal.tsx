@@ -24,7 +24,7 @@ export default function AccountVerificationSuccessfulModal({
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.navigate("/auth/login") // Navigate to the login page
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	return (
 		// Modal component for account verification success message

@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle verify reset password success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Dispatch action to delete verification email
@@ -48,21 +48,30 @@ export default function Page(): React.ReactElement | null {
 			// Navigate to the change password page
 			router.navigate("/auth/forgot-password/change-password")
 		},
-		[router, dispatch, deleteVerificationEmail]
+		[
+			router,
+			dispatch,
+			deleteVerificationEmail,
+			addAccessToken,
+			showToastable
+		]
 	)
 
 	// Memoized function to handle verify reset password error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle verify reset password
 	const { mutate, isPending } = useMutation({

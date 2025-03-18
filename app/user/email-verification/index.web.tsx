@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle profile update success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Show success toast message
@@ -53,46 +53,55 @@ export default function Page(): React.ReactElement | null {
 
 			router.navigate("/user/home/profile") // Navigating to the profile page on success
 		},
-		[router, dispatch, updateUserDetails]
+		[router, dispatch, updateUserDetails, showToastable]
 	)
 
 	// Memoized function to handle profile update error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Memoized function to handle resend account verification OTP success
-	const handleResendOTPSuccess = useCallback((data: any) => {
-		console.log(data)
+	const handleResendOTPSuccess = useCallback(
+		(data: any): void => {
+			console.log(data)
 
-		// Show success toast message
-		showToastable({
-			message:
-				"OTP has been resent to your email. Please check your email.",
-			status: "success"
-		})
-	}, [])
+			// Show success toast message
+			showToastable({
+				message:
+					"OTP has been resent to your email. Please check your email.",
+				status: "success"
+			})
+		},
+		[showToastable]
+	)
 
 	// Memoized function to handle resend account verification OTP error
-	const handleResendOTPError = useCallback((error: any) => {
-		console.log(error)
+	const handleResendOTPError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle verification of the profile update
 	const { mutate, isPending } = useMutation({
@@ -118,11 +127,11 @@ export default function Page(): React.ReactElement | null {
 
 		// Mutate the updateProfile function with the form data and access token
 		mutate({ data: formData, accessToken: token })
-	}, [OTP, token])
+	}, [OTP, token, mutate])
 
 	// Memoized function to handle resend OTP
 	const handleResendOTP = useCallback((): void => {
-		// Mutate the resend OTP function with the user's email
+		// Mutate the resend OTP function with the user's access token
 		resendOTP({ accessToken: token })
 	}, [resendOTP, token])
 

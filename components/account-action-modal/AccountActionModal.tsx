@@ -25,12 +25,12 @@ export default function AccountActionModal({
 	const handleProceed = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.navigate("/") // Navigate to the welcome page
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	// Memoized callback for handling the "Cancel" action
 	const handleCancel = useCallback((): void => {
 		setOpenModal(false) // Close the modal
-	}, [openModal])
+	}, [setOpenModal])
 
 	return (
 		// Modal component for account actions with fade animation

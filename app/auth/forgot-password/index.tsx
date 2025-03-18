@@ -22,7 +22,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle forgot password success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Add the user's email to the Redux store
@@ -41,21 +41,24 @@ export default function Page(): React.ReactElement | null {
 			// Navigate to the verification code page
 			router.navigate("/auth/forgot-password/verification-code")
 		},
-		[router, dispatch, addVerificationEmail, userName]
+		[router, dispatch, addVerificationEmail, userName, showToastable]
 	)
 
 	// Memoized function to handle forgot password error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle forgot password
 	const { mutate, isPending } = useMutation({

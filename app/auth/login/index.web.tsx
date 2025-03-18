@@ -22,7 +22,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle login success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Get the user's information
@@ -74,21 +74,31 @@ export default function Page(): React.ReactElement | null {
 				router.navigate("/auth/sign-up/verification-code")
 			}
 		},
-		[router, dispatch, createSession, addVerificationEmail, userName]
+		[
+			router,
+			dispatch,
+			createSession,
+			addVerificationEmail,
+			userName,
+			showToastable
+		]
 	)
 
 	// Memoized function to handle login error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle login
 	const { mutate, isPending } = useMutation({

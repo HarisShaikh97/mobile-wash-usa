@@ -31,7 +31,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle set new password success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Dispatch action to delete access token
@@ -44,17 +44,20 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Memoized function to handle set new password error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.fields?.password[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.fields?.password[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle set new password
 	const { mutate, isPending } = useMutation({
@@ -77,7 +80,7 @@ export default function Page(): React.ReactElement | null {
 				status: "danger"
 			})
 		}
-	}, [mutate, accessToken, password, confirmPassword])
+	}, [mutate, accessToken, password, confirmPassword, showToastable])
 
 	// Function to handle modal submission
 	const modalHandleSubmit = useCallback((): void => {
@@ -85,7 +88,7 @@ export default function Page(): React.ReactElement | null {
 		setOpenModal(false)
 		// Navigate to the login page
 		router.navigate("/auth/login")
-	}, [openModal, router])
+	}, [openModal, router, setOpenModal])
 
 	return (
 		<View style={styles.bodyContainer}>

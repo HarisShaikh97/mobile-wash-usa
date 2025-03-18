@@ -29,7 +29,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle region change
 	const onRegionChange = useCallback(
-		(region: Region, details: Details) => {
+		(region: Region, details: Details): void => {
 			// If the change is a gesture, set the selected location
 			if (details.isGesture) {
 				setSelectedLocation(region)
@@ -39,7 +39,7 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		router.back() // Navigate back
 	}, [router])
 

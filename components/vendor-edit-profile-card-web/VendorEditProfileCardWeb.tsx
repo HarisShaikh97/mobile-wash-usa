@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker"
 import { DocumentPickerResult } from "expo-document-picker"
 import Feather from "@expo/vector-icons/Feather"
 import InputField from "../input-field/InputField"
+import FormButton from "../form-button/FormButton"
 import { updateProfile } from "../../helpers/profile"
 import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
@@ -62,11 +63,11 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 		} else {
 			console.log("No image selected or operation canceled!")
 		}
-	}, [setNewImage])
+	}, [setNewImage, ImagePicker])
 
 	// Memoized function to handle profile update success
 	const handleSuccess = useCallback(
-		(data: any) => {
+		(data: any): void => {
 			console.log(data)
 
 			// Show success toast message
@@ -77,21 +78,24 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 
 			router.navigate("/vendor/email-verification") // Navigating to the email verification page on success
 		},
-		[router]
+		[router, showToastable]
 	)
 
 	// Memoized function to handle profile update error
-	const handleError = useCallback((error: any) => {
-		console.log(error)
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
 
-		// Show error toast message
-		showToastable({
-			message:
-				error?.response?.data?.errors?.messages[0] ||
-				"Something went wrong!",
-			status: "danger"
-		})
-	}, [])
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
 
 	// Mutation hook to handle profile update
 	const { mutate, isPending } = useMutation({
@@ -180,11 +184,12 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 		businessInformation,
 		newImage,
 		documents,
-		token
+		token,
+		mutate
 	])
 
 	// Memoized callback for handling the cancel action
-	const handleCancel = useCallback(() => {
+	const handleCancel = useCallback((): void => {
 		router.back() // Navigate back
 	}, [router])
 	return (
@@ -302,39 +307,21 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 					{/* Action buttons container */}
 					<View style={styles.actionButtonsWrapper}>
 						{/* Cancel button */}
-						<TouchableOpacity
-							style={[
-								styles.actionButtonContainer,
-								styles.cancelButtonContainer
-							]}
+						<FormButton
+							length="half"
+							colorTheme="light"
+							isLoading={false}
+							title="Cancel"
 							onPress={handleCancel}
-						>
-							<Text
-								style={[
-									styles.actionButtonText,
-									styles.cancelButtonText
-								]}
-							>
-								Cancel
-							</Text>
-						</TouchableOpacity>
+						/>
 						{/* Save button */}
-						<TouchableOpacity
-							style={[
-								styles.actionButtonContainer,
-								styles.saveButtonContainer
-							]}
+						<FormButton
+							length="half"
+							colorTheme="dark"
+							isLoading={isPending}
+							title="Save"
 							onPress={handleSave}
-						>
-							<Text
-								style={[
-									styles.actionButtonText,
-									styles.saveButtonText
-								]}
-							>
-								Save
-							</Text>
-						</TouchableOpacity>
+						/>
 					</View>
 				</View>
 			</View>
@@ -410,34 +397,11 @@ const styles = StyleSheet.create({
 		color: theme.colors.secondary
 	},
 	actionButtonsWrapper: {
+		width: "75%",
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 15,
 		paddingTop: 25,
 		marginBottom: 10
-	},
-	actionButtonContainer: {
-		height: 55,
-		width: 140,
-		borderRadius: 11.5,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	actionButtonText: {
-		fontSize: 15,
-		fontFamily: "Roboto-Medium"
-	},
-	cancelButtonContainer: {
-		borderWidth: 1,
-		borderColor: theme.colors.primary
-	},
-	cancelButtonText: {
-		color: theme.colors.primary
-	},
-	saveButtonContainer: {
-		backgroundColor: theme.colors.primary
-	},
-	saveButtonText: {
-		color: "white"
 	}
 })

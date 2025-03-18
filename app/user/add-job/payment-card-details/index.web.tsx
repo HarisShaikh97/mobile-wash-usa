@@ -15,7 +15,7 @@ export default function Page(): React.ReactElement | null {
 	const [openModal, setOpenModal] = useState<boolean>(false) // State for managing modal visibility
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		setOpenModal(true) // Function to open the modal on form submission
 	}, [setOpenModal])
 

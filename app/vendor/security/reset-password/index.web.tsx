@@ -20,13 +20,13 @@ export default function Page(): React.ReactElement | null {
 	// Memoized callback for handling form submission
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true) // Open the modal
-	}, [openModal])
+	}, [setOpenModal])
 
 	// Memoized callback for handling modal submission
 	const modalHandleSubmit = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.back() // Navigate back
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	return (
 		// Main container with background image

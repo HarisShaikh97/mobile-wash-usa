@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import { Image, ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 import Feather from "@expo/vector-icons/Feather"
 import CustomerEditProfileCardWeb from "../../../../components/customer-edit-profile-card-web/CustomerEditProfileCardWeb"
 import SecurityFeaturesCardWeb from "../../../../components/security-features-card-web/SecurityFeaturesCardWeb"
@@ -11,11 +12,15 @@ import HelpAndSupportCardWeb from "../../../../components/help-and-support-card-
 import PrivacyPolicyCardWeb from "../../../../components/privacy-policy-card-web/PrivacyPolicyCardWeb"
 import AccountActionModal from "../../../../components/account-action-modal/AccountActionModal"
 import Switch from "../../../../components/switch/Switch"
+import { deleteSession } from "../../../../features/auth/authSlice"
 import { theme } from "../../../../utils/constants"
 
 export default function Tab(): React.ReactElement | null {
 	// Initialize router for navigation
 	const router = useRouter()
+
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
 
 	// State to track which settings tab is currently selected
 	const [selectedTab, setSelectedTab] = useState<
@@ -39,14 +44,18 @@ export default function Tab(): React.ReactElement | null {
 	const notificationsEnabled = useSharedValue(false)
 
 	// Memoized function to handle updating the notification status
-	const handleUpdatedNotificationStatus = useCallback(() => {
+	const handleUpdatedNotificationStatus = useCallback((): void => {
 		notificationsEnabled.value = !notificationsEnabled.value // Toggle the notification status
 	}, [notificationsEnabled])
 
-	// Memoized function to handle logging out
+	// Memoized function to handle logout
 	const handleLogout = useCallback((): void => {
-		router.navigate("/") // Navigate to home page on logout
-	}, [router])
+		// Dispatching the deleteSession action to remove the user's session
+		dispatch(deleteSession())
+
+		// Navigating to the welcome page after logout
+		router.navigate("/")
+	}, [router, dispatch, deleteSession])
 
 	return (
 		<View style={styles.container}>

@@ -25,7 +25,7 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized callback for editing profile
 	const handleEditProfile = useCallback((): void => {
-		router.navigate(`/vendor/edit-account`) // Navigate to edit profile page
+		router.navigate("/vendor/edit-account") // Navigate to edit profile page
 	}, [router])
 
 	const reviews: Review[] = [

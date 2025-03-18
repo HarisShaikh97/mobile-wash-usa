@@ -25,7 +25,7 @@ export default function SideNavWeb({
 
 		// Navigating to the welcome page after logout
 		router.navigate("/")
-	}, [router])
+	}, [router, dispatch, deleteSession])
 
 	return (
 		// Main container for the side navigation

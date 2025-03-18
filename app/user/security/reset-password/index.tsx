@@ -18,13 +18,13 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
 		setOpenModal(true) // Open the modal
-	}, [openModal])
+	}, [setOpenModal])
 
 	// Memoized function to handle modal submission
 	const modalHandleSubmit = useCallback((): void => {
 		setOpenModal(false) // Close the modal
 		router.back() // Navigate back to the previous page
-	}, [openModal, router])
+	}, [setOpenModal, router])
 
 	return (
 		<View style={styles.bodyContainer}>

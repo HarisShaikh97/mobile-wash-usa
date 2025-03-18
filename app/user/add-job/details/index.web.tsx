@@ -14,7 +14,7 @@ export default function Page(): React.ReactElement | null {
 	const [budget, setBudget] = useState<number>(0) // State for storing budget amount
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(() => {
+	const handleSubmit = useCallback((): void => {
 		router.navigate("/user/add-job/review") // Navigating to the review page
 	}, [router])
 
