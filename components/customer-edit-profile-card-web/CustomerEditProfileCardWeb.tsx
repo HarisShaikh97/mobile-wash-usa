@@ -3,9 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useSelector } from "react-redux"
+import { useMutation } from "@tanstack/react-query"
+import { showToastable } from "react-native-toastable"
 import * as ImagePicker from "expo-image-picker"
 import Feather from "@expo/vector-icons/Feather"
 import InputField from "../input-field/InputField"
+import FormButton from "../form-button/FormButton"
+import { updateProfile } from "../../helpers/profile"
 import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
 
@@ -18,6 +22,9 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
 
 	const [newImage, setNewImage] =
 		useState<ImagePicker.ImagePickerResult | null>(null) // State to store the selected image URI
@@ -45,10 +52,80 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 		}
 	}, [setNewImage])
 
-	// Callback function to handle the save action
-	const handleSave = useCallback(() => {
-		router.navigate("/user/home") // Navigate to the home page
-	}, [router])
+	// Memoized function to handle profile update success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Show success toast message
+			showToastable({
+				message: "Verify your email using the OTP sent to your email.",
+				status: "success"
+			})
+
+			router.navigate("/user/email-verification") // Navigating to the email verification page on success
+		},
+		[router]
+	)
+
+	// Memoized function to handle profile update error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
+	}, [])
+
+	// Mutation hook to handle profile update
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateProfile,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
+	// Memoized function to handle profile update
+	const handleSave = useCallback(async (): Promise<void> => {
+		// Create a new FormData instance to send data to the server
+		const formData = new FormData()
+
+		// Append user's personal information
+		formData.append("full_name", fullName)
+		formData.append("email", email)
+		formData.append("phone_number", phoneNumber)
+		formData.append("address", location)
+		formData.append("_method", "PATCH")
+
+		// Append image if it exists
+		if (newImage && newImage.assets && newImage.assets.length > 0) {
+			// Get the first asset
+			const asset = newImage.assets[0]
+
+			// Fetch the blob from the asset's URI
+			try {
+				const response = await fetch(asset.uri)
+				const blob = await response.blob()
+
+				// Create a new File object with the blob and asset's name
+				const file = new File([blob], asset.fileName || "document", {
+					type: asset.mimeType || "application/octet-stream",
+					lastModified: Date.now()
+				})
+
+				// Append the file to the form data
+				formData.append("profile_pic", file, file.name)
+			} catch (error) {
+				console.error("Error fetching asset:", error)
+			}
+		}
+
+		// Mutate the updateProfile function with the form data and access token
+		mutate({ data: formData, accessToken: token })
+	}, [router, fullName, email, phoneNumber, location, newImage, token])
 
 	// Callback function to handle the cancel action
 	const handleCancel = useCallback(() => {
@@ -132,39 +209,21 @@ export default function CustomerEditProfileCardWeb(): React.ReactElement | null 
 				{/* Action buttons container */}
 				<View style={styles.actionButtonsWrapper}>
 					{/* Cancel button */}
-					<TouchableOpacity
-						style={[
-							styles.actionButtonContainer,
-							styles.cancelButtonContainer
-						]}
+					<FormButton
+						length="half"
+						colorTheme="light"
+						isLoading={false}
+						title="Cancel"
 						onPress={handleCancel}
-					>
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.cancelButtonText
-							]}
-						>
-							Cancel
-						</Text>
-					</TouchableOpacity>
+					/>
 					{/* Save button */}
-					<TouchableOpacity
-						style={[
-							styles.actionButtonContainer,
-							styles.saveButtonContainer
-						]}
+					<FormButton
+						length="half"
+						colorTheme="dark"
+						isLoading={isPending}
+						title="Save"
 						onPress={handleSave}
-					>
-						<Text
-							style={[
-								styles.actionButtonText,
-								styles.saveButtonText
-							]}
-						>
-							Save
-						</Text>
-					</TouchableOpacity>
+					/>
 				</View>
 			</View>
 		</View>
@@ -214,34 +273,11 @@ const styles = StyleSheet.create({
 		padding: 10
 	},
 	actionButtonsWrapper: {
+		width: "75%",
 		flexDirection: "row",
 		alignItems: "center",
 		gap: 15,
 		paddingTop: 25,
 		marginBottom: 10
-	},
-	actionButtonContainer: {
-		height: 55,
-		width: 140,
-		borderRadius: 11.5,
-		alignItems: "center",
-		justifyContent: "center"
-	},
-	actionButtonText: {
-		fontSize: 15,
-		fontFamily: "Roboto-Medium"
-	},
-	cancelButtonContainer: {
-		borderWidth: 1,
-		borderColor: theme.colors.primary
-	},
-	cancelButtonText: {
-		color: theme.colors.primary
-	},
-	saveButtonContainer: {
-		backgroundColor: theme.colors.primary
-	},
-	saveButtonText: {
-		color: "white"
 	}
 })

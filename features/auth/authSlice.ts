@@ -23,6 +23,10 @@ export const authSlice = createSlice({
 			state.user = action.payload.user
 			state.token = action.payload.token
 		},
+		updateUserDetails: (state, action) => {
+			// Set the user to the payload
+			state.user = action.payload.user
+		},
 		deleteSession: (state) => {
 			// Set the user and token to null
 			state.user = null
@@ -32,7 +36,8 @@ export const authSlice = createSlice({
 })
 
 // Export the actions for the slice
-export const { createSession, deleteSession } = authSlice.actions
+export const { createSession, updateUserDetails, deleteSession } =
+	authSlice.actions
 
 // Export the reducer for the slice
 export default authSlice.reducer

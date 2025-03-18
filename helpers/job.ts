@@ -6,12 +6,15 @@ const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
 
 // Get my jobs function to fetch all jobs
 export const getMyJobs = async (data: QueryData): Promise<any> => {
-	// Create a request with the token
-	const response = await api.get("/api/v1/get-my-jobs", {
+	// Set the headers for the request
+	const headers = {
 		headers: {
 			Authorization: `Bearer ${data.accessToken}`
 		}
-	})
+	}
+
+	// Create a request with the headers
+	const response = await api.get("/api/v1/get-my-jobs", headers)
 
 	// Return the response data
 	return response.data.data
@@ -19,12 +22,15 @@ export const getMyJobs = async (data: QueryData): Promise<any> => {
 
 // Get job by id function to fetch a job
 export const getJobById = async (data: JobByIdData): Promise<any> => {
-	// Create a request with the token
-	const response = await api.get(`/api/v1/jobs/${data.jobId}`, {
+	// Set the headers for the request
+	const headers = {
 		headers: {
 			Authorization: `Bearer ${data.accessToken}`
 		}
-	})
+	}
+
+	// Create a request with the headers
+	const response = await api.get(`/api/v1/jobs/${data.jobId}`, headers)
 
 	// Return the response data
 	return response.data.data
@@ -32,12 +38,15 @@ export const getJobById = async (data: JobByIdData): Promise<any> => {
 
 // Delete job function to delete a job
 export const deleteJobById = async (data: JobByIdData): Promise<any> => {
-	// Create a request with the token
-	const response = await api.delete(`/api/v1/jobs/${data.jobId}`, {
+	// Set the headers for the request
+	const headers = {
 		headers: {
 			Authorization: `Bearer ${data.accessToken}`
 		}
-	})
+	}
+
+	// Create a request with the headers
+	const response = await api.delete(`/api/v1/jobs/${data.jobId}`, headers)
 
 	// Return the response data
 	return response.data
@@ -45,12 +54,15 @@ export const deleteJobById = async (data: JobByIdData): Promise<any> => {
 
 // Get my jobs function to fetch all jobs
 export const getJobTypes = async (data: QueryData): Promise<any> => {
-	// Create a request with the token
-	const response = await api.get("/api/v1/services", {
+	// Set the headers for the request
+	const headers = {
 		headers: {
 			Authorization: `Bearer ${data.accessToken}`
 		}
-	})
+	}
+
+	// Create a request with the headers
+	const response = await api.get("/api/v1/services", headers)
 
 	// Return the response data
 	return response.data.data.services

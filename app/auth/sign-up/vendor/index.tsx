@@ -71,7 +71,7 @@ export default function Page(): React.ReactElement | null {
 	})
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback(async (): Promise<void> => {
+	const handleSubmit = useCallback(() => {
 		// Create a new FormData instance to send data to the server
 		const formData = new FormData()
 
@@ -91,34 +91,23 @@ export default function Page(): React.ReactElement | null {
 		// Append documents if they exist
 		if (documents && documents.assets && documents.assets.length > 0) {
 			// Fetch each asset and append it to the form data
-			const fetchPromises = documents.assets.map(async (asset, index) => {
-				return fetch(asset.uri)
-					.then((response) => response.blob()) // Fetch the blob from the asset's URI
-					.then((blob) => {
-						// Create a new File object with the blob and asset's name
-						const file = new File(
-							[blob],
-							asset.name || `document_${index}`,
-							{
-								type:
-									asset.mimeType ||
-									"application/octet-stream",
-								lastModified: Date.now()
-							}
-						)
-						// Append the file to the form data
-						formData.append("documents[]", file, file.name)
-					})
-			})
+			documents.assets.forEach((asset, index) => {
+				// Get the file name and type from the asset
+				const fileUri = asset.uri
+				const fileName =
+					asset.name ||
+					`document_${index}.${
+						asset.mimeType?.split("/")[1] || "pdf"
+					}`
+				const fileType = asset.mimeType || "application/octet-stream"
 
-			// Wait for all promises to resolve and append the documents to the form data
-			await Promise.all(fetchPromises)
-				.then(() => {
-					console.log("Documents appended to form data successfully")
-				})
-				.catch((error) => {
-					console.error("Error fetching assets:", error)
-				})
+				// Append the file to the form data
+				formData.append("documents[]", {
+					uri: fileUri,
+					name: fileName,
+					type: fileType
+				} as any)
+			})
 		}
 
 		// Mutate the sign up function with the user's information

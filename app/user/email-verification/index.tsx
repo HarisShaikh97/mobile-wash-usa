@@ -1,14 +1,130 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
+import { useSelector, useDispatch } from "react-redux"
+import { showToastable } from "react-native-toastable"
 import FormButton from "../../../components/form-button/FormButton"
 import OTPInput from "../../../components/otp-input/OTPInput"
+import {
+	verifyUpdateProfile,
+	resendUpdateProfileVerificationOTP
+} from "../../../helpers/profile"
+import { updateUserDetails } from "../../../features/auth/authSlice"
+import { RootState } from "../../../store/store"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const [OTP, setOTP] = useState<string>("") // State to manage the OTP input
+	// Initializing the router instance for navigation
+	const router = useRouter()
+
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// State to manage the OTP input
+	const [OTP, setOTP] = useState<string>("")
+
+	// Memoized function to handle profile update success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Show success toast message
+			showToastable({
+				message: "Profile updated successfully!",
+				status: "success"
+			})
+
+			// Get the user's information
+			const user = data?.data?.user
+
+			// Check if the user is defined
+			if (user) {
+				// Update the user's information in the Redux store
+				dispatch(
+					updateUserDetails({
+						user: user
+					})
+				)
+			}
+
+			router.navigate("/user/home/profile") // Navigating to the profile page on success
+		},
+		[router, dispatch, updateUserDetails]
+	)
+
+	// Memoized function to handle profile update error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
+	}, [])
+
+	// Memoized function to handle resend account verification OTP success
+	const handleResendOTPSuccess = useCallback((data: any) => {
+		console.log(data)
+
+		// Show success toast message
+		showToastable({
+			message:
+				"OTP has been resent to your email. Please check your email.",
+			status: "success"
+		})
+	}, [])
+
+	// Memoized function to handle resend account verification OTP error
+	const handleResendOTPError = useCallback((error: any) => {
+		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
+	}, [])
+
+	// Mutation hook to handle verification of the profile update
+	const { mutate, isPending } = useMutation({
+		mutationFn: verifyUpdateProfile,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
+	// Mutation hook to handle resend update profile verification OTP
+	const { mutate: resendOTP } = useMutation({
+		mutationFn: resendUpdateProfileVerificationOTP,
+		onSuccess: handleResendOTPSuccess,
+		onError: handleResendOTPError
+	})
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback((): void => {}, [])
+	const handleSubmit = useCallback((): void => {
+		// Create a new FormData instance to send data to the server
+		const formData = new FormData()
+
+		// Append the OTP to the form data
+		formData.append("otp", OTP)
+
+		// Mutate the updateProfile function with the form data and access token
+		mutate({ data: formData, accessToken: token })
+	}, [OTP, token])
+
+	// Memoized function to handle resend OTP
+	const handleResendOTP = useCallback((): void => {
+		// Mutate the resend OTP function with the user's email
+		resendOTP({ accessToken: token })
+	}, [resendOTP, token])
 
 	return (
 		// Container for the verification code input
@@ -28,7 +144,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={false}
+					isLoading={isPending}
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>
@@ -44,7 +160,7 @@ export default function Page(): React.ReactElement | null {
 						Don’t receive code ?
 					</Text>
 					{/* Touchable area for the resend code link */}
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleResendOTP}>
 						{/* Link to resend the verification code */}
 						<Text
 							style={[

@@ -9,6 +9,7 @@ import InputField from "../../../components/input-field/InputField"
 import FormButton from "../../../components/form-button/FormButton"
 import { login } from "../../../helpers/auth"
 import { createSession } from "../../../features/auth/authSlice"
+import { addVerificationEmail } from "../../../features/email-verification/emailVerificationSlice"
 import { theme } from "../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
@@ -24,30 +25,56 @@ export default function Page(): React.ReactElement | null {
 		(data: any) => {
 			console.log(data)
 
-			// Create a session for the user
-			dispatch(
-				createSession({
-					user: data.data.user,
-					token: data.data.access_token
+			// Get the user's information
+			const user = data?.data?.user
+
+			// Get the user's access token
+			const accessToken = data?.data?.access_token
+
+			// Get the user's role
+			const role = user?.role
+
+			// Check if the user, access token, and role are defined
+			if (user && accessToken && role) {
+				// Show success toast message
+				showToastable({
+					message: "Login successful!",
+					status: "success"
 				})
-			)
 
-			// Show success toast message
-			showToastable({
-				message: "Login successful!",
-				status: "success"
-			})
+				// Create a session for the user
+				dispatch(
+					createSession({
+						user: user,
+						token: accessToken
+					})
+				)
 
-			// Get the role of the user
-			const role = data?.data?.user?.role
-			if (role) {
 				// Check if the user is a vendor or a customer and navigate to the appropriate page
 				router.navigate(
 					role === "vendor" ? "/vendor/home" : "/user/home"
 				)
+			} else if (data?.otp_required) {
+				// Show warning toast message
+				showToastable({
+					message:
+						data?.messages[0] ||
+						"Please verify your account by using the OTP sent to your email.",
+					status: "warning"
+				})
+
+				// Dispatch action to store email for verification
+				dispatch(
+					addVerificationEmail({
+						email: userName
+					})
+				)
+
+				// Navigating to the verification code page
+				router.navigate("/auth/sign-up/verification-code")
 			}
 		},
-		[router, dispatch, createSession]
+		[router, dispatch, createSession, addVerificationEmail, userName]
 	)
 
 	// Memoized function to handle login error

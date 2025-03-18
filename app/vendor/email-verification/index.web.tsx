@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useRouter } from "expo-router"
-import { useSelector, useDispatch } from "react-redux"
 import { useMutation } from "@tanstack/react-query"
+import { useSelector, useDispatch } from "react-redux"
 import { showToastable } from "react-native-toastable"
 import FormButton from "../../../components/form-button/FormButton"
 import OTPInput from "../../../components/otp-input/OTPInput"
@@ -127,20 +127,19 @@ export default function Page(): React.ReactElement | null {
 	}, [resendOTP, token])
 
 	return (
-		// Main container for the verification page
 		<View style={styles.bodyContainer}>
-			{/* Title of the verification page */}
-			<Text style={styles.titleText}>Enter the Verification Code</Text>
-			{/* Description text explaining the verification process */}
+			{/* Page title */}
+			<Text style={styles.titleText}>Enter The Verification Code</Text>
+			{/* Page description */}
 			<Text style={styles.descriptionText}>
-				A 6-digit code has been sent to your email. Please enter the
-				code below to Change your email.
+				A 6-digit code has been sent to your email/phone. Please enter
+				the code below to reset your password.
 			</Text>
-			{/* Container for the form elements */}
+			{/* Form container */}
 			<View style={styles.formContainer}>
-				{/* OTP input component for entering verification code */}
+				{/* OTP input field */}
 				<OTPInput onChangeText={setOTP} />
-				{/* Submit button for verification */}
+				{/* Form button to submit OTP */}
 				<FormButton
 					length="full"
 					colorTheme="dark"
@@ -148,29 +147,26 @@ export default function Page(): React.ReactElement | null {
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>
-				{/* Container for resend code option */}
-				<View style={styles.policyAndTermsTextWrapper}>
-					{/* Text asking if user received the code */}
+			</View>
+			{/* Wrapper for resend code text and link */}
+			<View style={styles.policyAndTermsTextWrapper}>
+				{/* Text before the resend code link */}
+				<Text
+					style={[styles.policyAndTermsText, styles.resendCodeText]}
+				>
+					Don’t receive code ?
+				</Text>
+				{/* Link to resend code */}
+				<TouchableOpacity onPress={handleResendOTP}>
 					<Text
 						style={[
 							styles.policyAndTermsText,
-							styles.resendCodeText
+							styles.policyAndTermsLinkText
 						]}
 					>
-						Don't receive code ?
+						{" Re-send"}
 					</Text>
-					{/* Touchable link to resend the code */}
-					<TouchableOpacity onPress={handleResendOTP}>
-						<Text
-							style={[
-								styles.policyAndTermsText,
-								styles.policyAndTermsLinkText
-							]}
-						>
-							{"	Re-send"}
-						</Text>
-					</TouchableOpacity>
-				</View>
+				</TouchableOpacity>
 			</View>
 		</View>
 	)
@@ -178,42 +174,43 @@ export default function Page(): React.ReactElement | null {
 
 const styles = StyleSheet.create({
 	bodyContainer: {
-		flex: 1,
+		width: "100%",
 		flexDirection: "column",
-		alignItems: "center",
-		paddingHorizontal: 25,
-		gap: 10,
-		zIndex: 10
+		alignItems: "center"
 	},
 	titleText: {
 		fontFamily: "Montserrat-Bold",
-		fontSize: 30,
+		fontSize: 37.5,
 		color: theme.colors.secondary,
-		textAlign: "center",
-		lineHeight: 32.5
+		textAlign: "center"
 	},
 	descriptionText: {
 		fontFamily: "Roboto-Regular",
-		fontSize: 16.5,
+		fontSize: 18.5,
+		width: 335,
 		color: theme.colors.secondary,
 		textAlign: "center",
-		width: 285,
-		paddingTop: 7.5,
-		lineHeight: 20
+		paddingTop: 7.5
 	},
 	formContainer: {
 		width: "100%",
 		flexDirection: "column",
 		alignItems: "center",
-		gap: 25,
-		paddingTop: 10
+		gap: 20,
+		paddingTop: 10,
+		paddingHorizontal: 50
 	},
 	policyAndTermsTextWrapper: {
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		paddingTop: 15
 	},
 	policyAndTermsText: {
-		fontSize: 13.5
+		fontSize: 15
+	},
+	policyAndTermsTextBlack: {
+		color: theme.colors.secondary,
+		fontFamily: "Roboto-Regular"
 	},
 	policyAndTermsLinkText: {
 		color: theme.colors.primary,

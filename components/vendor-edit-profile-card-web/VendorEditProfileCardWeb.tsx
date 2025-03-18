@@ -9,10 +9,13 @@ import {
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
 import { useSelector } from "react-redux"
+import { useMutation } from "@tanstack/react-query"
+import { showToastable } from "react-native-toastable"
 import * as ImagePicker from "expo-image-picker"
 import { DocumentPickerResult } from "expo-document-picker"
 import Feather from "@expo/vector-icons/Feather"
 import InputField from "../input-field/InputField"
+import { updateProfile } from "../../helpers/profile"
 import { RootState } from "../../store/store"
 import { theme } from "../../utils/constants"
 
@@ -25,6 +28,9 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 
 	// Retrieve user data from Redux store
 	const user = useSelector((state: RootState) => state.auth.user)
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
 
 	const [newImage, setNewImage] =
 		useState<ImagePicker.ImagePickerResult | null>(null) // State to store the selected image URI
@@ -58,10 +64,124 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 		}
 	}, [setNewImage])
 
-	// Memoized callback for handling the save action
-	const handleSave = useCallback(() => {
-		router.navigate("/vendor/home") // Navigate to the home page
-	}, [router])
+	// Memoized function to handle profile update success
+	const handleSuccess = useCallback(
+		(data: any) => {
+			console.log(data)
+
+			// Show success toast message
+			showToastable({
+				message: "Verify your email using the OTP sent to your email.",
+				status: "success"
+			})
+
+			router.navigate("/vendor/email-verification") // Navigating to the email verification page on success
+		},
+		[router]
+	)
+
+	// Memoized function to handle profile update error
+	const handleError = useCallback((error: any) => {
+		console.log(error)
+
+		// Show error toast message
+		showToastable({
+			message:
+				error?.response?.data?.errors?.messages[0] ||
+				"Something went wrong!",
+			status: "danger"
+		})
+	}, [])
+
+	// Mutation hook to handle profile update
+	const { mutate, isPending } = useMutation({
+		mutationFn: updateProfile,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
+	// Memoized function to handle profile update
+	const handleSave = useCallback(async (): Promise<void> => {
+		// Create a new FormData instance to send data to the server
+		const formData = new FormData()
+
+		// Append user's personal information
+		formData.append("full_name", fullName)
+		formData.append("email", email)
+		formData.append("phone_number", phoneNumber)
+		formData.append("address", location)
+		formData.append("business_information", businessInformation)
+		formData.append("_method", "PATCH")
+
+		// Append image if it exists
+		if (newImage && newImage.assets && newImage.assets.length > 0) {
+			// Get the first asset
+			const asset = newImage.assets[0]
+
+			// Fetch the blob from the asset's URI
+			try {
+				const response = await fetch(asset.uri)
+				const blob = await response.blob()
+
+				// Create a new File object with the blob and asset's name
+				const file = new File([blob], asset.fileName || "document", {
+					type: asset.mimeType || "application/octet-stream",
+					lastModified: Date.now()
+				})
+
+				// Append the file to the form data
+				formData.append("profile_pic", file, file.name)
+			} catch (error) {
+				console.error("Error fetching asset:", error)
+			}
+		}
+
+		// Append documents if they exist
+		if (documents && documents.assets && documents.assets.length > 0) {
+			// Fetch each asset and append it to the form data
+			const fetchPromises = documents.assets.map(async (asset, index) => {
+				return fetch(asset.uri)
+					.then((response) => response.blob()) // Fetch the blob from the asset's URI
+					.then((blob) => {
+						// Create a new File object with the blob and asset's name
+						const file = new File(
+							[blob],
+							asset.name || `document_${index}`,
+							{
+								type:
+									asset.mimeType ||
+									"application/octet-stream",
+								lastModified: Date.now()
+							}
+						)
+						// Append the file to the form data
+						formData.append("documents[]", file, file.name)
+					})
+			})
+
+			// Wait for all promises to resolve and append the documents to the form data
+			await Promise.all(fetchPromises)
+				.then(() => {
+					console.log("Documents appended to form data successfully")
+				})
+				.catch((error) => {
+					console.error("Error fetching assets:", error)
+				})
+		}
+
+		// Mutate the updateProfile function with the form data and access token
+		mutate({ data: formData, accessToken: token })
+	}, [
+		router,
+		fullName,
+		email,
+		phoneNumber,
+		location,
+		businessInformation,
+		newImage,
+		documents,
+		token
+	])
 
 	// Memoized callback for handling the cancel action
 	const handleCancel = useCallback(() => {
