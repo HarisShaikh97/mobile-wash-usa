@@ -2,7 +2,8 @@ import axios from "axios"
 import {
 	VerifyProfileUpdateData,
 	ProfileUpdateData,
-	ResendProfileUpdateOTPData
+	ResendProfileUpdateOTPData,
+	ResetPasswordData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -55,7 +56,7 @@ export const verifyUpdateProfile = async (
 	return response.data
 }
 
-// Verify update profile function to handle resend update profile verification OTP
+// Resend OTP function to handle resend update profile verification OTP
 export const resendUpdateProfileVerificationOTP = async (
 	data: ResendProfileUpdateOTPData
 ): Promise<any> => {
@@ -72,6 +73,33 @@ export const resendUpdateProfileVerificationOTP = async (
 	// Create a request with the headers
 	const response = await api.post(
 		"/api/v1/account/profile-update-otp-request",
+		body,
+		headers
+	)
+
+	// Return the response data
+	return response.data
+}
+
+// Reset password function to handle password reset
+export const resetPassword = async (data: ResetPasswordData): Promise<any> => {
+	// Set the headers for the request
+	const headers = {
+		headers: {
+			Authorization: `Bearer ${data.accessToken}`
+		}
+	}
+
+	// Create the request body
+	const body = {
+		old_password: data.oldPassword,
+		new_password: data.newPassword,
+		_method: "PATCH"
+	}
+
+	// Create a request with the headers
+	const response = await api.post(
+		"/api/v1/account/password/change",
 		body,
 		headers
 	)

@@ -2,25 +2,81 @@ import { useState, useCallback } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useMutation } from "@tanstack/react-query"
+import { useSelector } from "react-redux"
+import { showToastable } from "react-native-toastable"
 import ResetPasswordSuccessfulModal from "../../../../components/reset-password-successful-modal/ResetPasswordSuccessfulModal"
 import BackButton from "../../../../components/back-button/BackButton"
 import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import { resetPassword } from "../../../../helpers/profile"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	// Initializing the router instance for navigation
 	const router = useRouter()
 
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
 	const [oldPassword, setOldPassword] = useState<string>("") // State for storing the old password
 	const [newPassword, setNewPassword] = useState<string>("") // State for storing the new password
 	const [confirmPassword, setConfirmPassword] = useState<string>("") // State for storing the confirmed password
 	const [openModal, setOpenModal] = useState<boolean>(false) // State for controlling the visibility of the modal
 
+	// Memoized function to handle password reset success
+	const handleSuccess = useCallback(
+		(data: any): void => {
+			console.log(data)
+
+			// Show the success modal
+			setOpenModal(true)
+		},
+		[setOpenModal]
+	)
+
+	// Memoized function to handle password reset error
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
+
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
+
+	// Mutation hook to handle password reset
+	const { mutate, isPending } = useMutation({
+		mutationFn: resetPassword,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
+
 	// Memoized callback for handling form submission
 	const handleSubmit = useCallback((): void => {
-		setOpenModal(true) // Open the modal
-	}, [setOpenModal])
+		// Check if the new password and confirmation match
+		if (newPassword === confirmPassword) {
+			// Mutate the resetPassword function with the old password, new password, and access token
+			mutate({
+				oldPassword: oldPassword,
+				newPassword: newPassword,
+				accessToken: token
+			})
+		} else {
+			// Show error toast message
+			showToastable({
+				message: "Passwords do not match!",
+				status: "danger"
+			})
+		}
+	}, [mutate, oldPassword, newPassword, confirmPassword, token])
 
 	// Memoized callback for handling modal submission
 	const modalHandleSubmit = useCallback((): void => {
@@ -100,7 +156,7 @@ export default function Page(): React.ReactElement | null {
 						<FormButton
 							length="full"
 							colorTheme="dark"
-							isLoading={false}
+							isLoading={isPending}
 							title="Reset Password"
 							onPress={handleSubmit}
 						/>

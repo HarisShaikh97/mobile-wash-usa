@@ -157,7 +157,7 @@ export default function Page(): React.ReactElement | null {
 		}
 
 		// Mutate the updateProfile function with the form data and access token
-		mutate({ data: formData, accessToken: token })
+		mutate({ body: formData, accessToken: token })
 	}, [
 		router,
 		fullName,

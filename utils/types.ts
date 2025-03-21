@@ -170,6 +170,12 @@ export type ResendProfileUpdateOTPData = {
 	accessToken: AccessToken
 }
 
+export type ResetPasswordData = {
+	accessToken: AccessToken
+	oldPassword: string
+	newPassword: string
+}
+
 export type QueryData = {
 	accessToken: AccessToken
 }
