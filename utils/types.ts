@@ -152,7 +152,7 @@ export type JobByIdData = {
 	jobId: Job["id"]
 }
 
-export type ResendOTPData = {
+export type ResendAccountVerificationOTPData = {
 	email: string
 }
 

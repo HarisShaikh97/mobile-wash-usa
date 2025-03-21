@@ -6,7 +6,7 @@ import {
 	ForgotPasswordData,
 	VerifyResetPasswordData,
 	SetNewPasswordData,
-	ResendOTPData
+	ResendAccountVerificationOTPData
 } from "../utils/types"
 
 // Create an axios instance with the base URL
@@ -115,7 +115,7 @@ export const setNewPassword = async (
 
 // Set new password function to resend OTP for account verification
 export const resendAccountVerificationOTP = async (
-	data: ResendOTPData
+	data: ResendAccountVerificationOTPData
 ): Promise<any> => {
 	// Create the request body
 	const body = { email: data.email, resend_otp: true }
