@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit"
-import devToolsEnhancer from "redux-devtools-expo-dev-plugin"
 import authSlice from "../features/auth/authSlice"
 import emailVerificationSlice from "../features/email-verification/emailVerificationSlice"
 import resetPasswordSlice from "../features/reset-password/resetPasswordSlice"
@@ -11,9 +10,7 @@ export const store = configureStore({
 		emailVerification: emailVerificationSlice,
 		resetPassword: resetPasswordSlice
 	},
-	devTools: false,
-	enhancers: (getDefaultEnhancers) =>
-		getDefaultEnhancers().concat(devToolsEnhancer())
+	devTools: false
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

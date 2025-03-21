@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		elevation: 5,
+		shadowColor: theme.colors.primary,
 		shadowOffset: { width: 2.5, height: 5 },
 		shadowOpacity: 0.3,
 		shadowRadius: 3

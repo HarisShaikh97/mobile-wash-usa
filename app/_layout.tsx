@@ -7,7 +7,6 @@ import * as SplashScreen from "expo-splash-screen"
 import * as Font from "expo-font"
 import { Provider } from "react-redux"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { useReactQueryDevTools } from "@dev-plugins/react-query"
 import { Asset } from "expo-asset"
 import Toastable from "react-native-toastable"
 import { store } from "../store/store"
@@ -22,9 +21,6 @@ const queryClient = new QueryClient()
 export default function Layout(): React.ReactElement | null {
 	// State variable to track when the app is ready
 	const [appIsReady, setAppIsReady] = useState(false)
-
-	// Hook to enable React Query DevTools
-	useReactQueryDevTools(queryClient)
 
 	// Memoized callback to prefetch images
 	const cacheImages = useCallback(
