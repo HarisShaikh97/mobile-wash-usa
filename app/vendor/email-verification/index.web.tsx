@@ -126,7 +126,7 @@ export default function Page(): React.ReactElement | null {
 	// Memoized function to handle resend OTP
 	const handleResendOTP = useCallback((): void => {
 		// Mutate the resend OTP function with the user's access token
-		resendOTP(token)
+		resendOTP({ accessToken: token })
 	}, [resendOTP, token])
 
 	return (

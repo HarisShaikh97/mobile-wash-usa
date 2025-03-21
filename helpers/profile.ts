@@ -1,30 +1,28 @@
 import axios from "axios"
-import { VerifyProfileUpdateData, AccessToken } from "../utils/types"
+import {
+	VerifyProfileUpdateData,
+	ProfileUpdateData,
+	ResendProfileUpdateOTPData
+} from "../utils/types"
 
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
 
 // Sign up function to handle profile update
-export const updateProfile = async ({
-	data,
-	accessToken
-}: {
-	data: FormData
-	accessToken: AccessToken
-}): Promise<any> => {
+export const updateProfile = async (data: ProfileUpdateData): Promise<any> => {
 	// Set the headers for the request
 	const headers = {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "multipart/form-data",
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer ${data.accessToken}`
 		}
 	}
 
 	// Create a request with the data and headers
 	const response = await api.post(
 		"/api/v1/account/profile-update-otp-request",
-		data,
+		data.body,
 		headers
 	)
 
@@ -59,12 +57,12 @@ export const verifyUpdateProfile = async (
 
 // Verify update profile function to handle resend update profile verification OTP
 export const resendUpdateProfileVerificationOTP = async (
-	accessToken: AccessToken
+	data: ResendProfileUpdateOTPData
 ): Promise<any> => {
 	// Set the headers for the request
 	const headers = {
 		headers: {
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer ${data.accessToken}`
 		}
 	}
 

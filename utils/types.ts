@@ -156,9 +156,18 @@ export type ResendOTPData = {
 	email: string
 }
 
+export type ProfileUpdateData = {
+	accessToken: AccessToken
+	body: FormData
+}
+
 export type VerifyProfileUpdateData = {
 	accessToken: AccessToken
 	otp: string
+}
+
+export type ResendProfileUpdateOTPData = {
+	accessToken: AccessToken
 }
 
 export type QueryData = {
