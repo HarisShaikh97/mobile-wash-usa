@@ -1,4 +1,5 @@
 import axios from "axios"
+import { VerifyProfileUpdateData, AccessToken } from "../utils/types"
 
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
@@ -9,7 +10,7 @@ export const updateProfile = async ({
 	accessToken
 }: {
 	data: FormData
-	accessToken: string | null
+	accessToken: AccessToken
 }): Promise<any> => {
 	// Set the headers for the request
 	const headers = {
@@ -32,26 +33,23 @@ export const updateProfile = async ({
 }
 
 // Verify update profile function to handle profile update verification
-export const verifyUpdateProfile = async ({
-	data,
-	accessToken
-}: {
-	data: FormData
-	accessToken: string | null
-}): Promise<any> => {
+export const verifyUpdateProfile = async (
+	data: VerifyProfileUpdateData
+): Promise<any> => {
 	// Set the headers for the request
 	const headers = {
 		headers: {
-			Accept: "application/json",
-			"Content-Type": "multipart/form-data",
-			Authorization: `Bearer ${accessToken}`
+			Authorization: `Bearer ${data.accessToken}`
 		}
 	}
+
+	// Create the request body
+	const body = { otp: data.otp }
 
 	// Create a request with the headers
 	const response = await api.post(
 		"/api/v1/account/verify-profile-update-otp",
-		data,
+		body,
 		headers
 	)
 
@@ -60,31 +58,23 @@ export const verifyUpdateProfile = async ({
 }
 
 // Verify update profile function to handle resend update profile verification OTP
-export const resendUpdateProfileVerificationOTP = async ({
-	accessToken
-}: {
-	accessToken: string | null
-}): Promise<any> => {
+export const resendUpdateProfileVerificationOTP = async (
+	accessToken: AccessToken
+): Promise<any> => {
 	// Set the headers for the request
 	const headers = {
 		headers: {
-			Accept: "application/json",
-			"Content-Type": "multipart/form-data",
 			Authorization: `Bearer ${accessToken}`
 		}
 	}
 
-	// Create a form data object for the request
-	const data = new FormData()
-
-	// Append the data to the form data object
-	data.append("resend_otp", "1")
-	data.append("_method", "PATCH")
+	// Create the request body
+	const body = { resend_otp: "1", _method: "PATCH" }
 
 	// Create a request with the headers
 	const response = await api.post(
 		"/api/v1/account/profile-update-otp-request",
-		data,
+		body,
 		headers
 	)
 

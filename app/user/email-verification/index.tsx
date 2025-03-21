@@ -104,7 +104,7 @@ export default function Page(): React.ReactElement | null {
 	)
 
 	// Mutation hook to handle verification of the profile update
-	const { mutate, isPending } = useMutation({
+	const { mutate: verify, isPending: isVerifying } = useMutation({
 		mutationFn: verifyUpdateProfile,
 		onSuccess: handleSuccess,
 		onError: handleError
@@ -119,20 +119,14 @@ export default function Page(): React.ReactElement | null {
 
 	// Memoized function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// Create a new FormData instance to send data to the server
-		const formData = new FormData()
-
-		// Append the OTP to the form data
-		formData.append("otp", OTP)
-
 		// Mutate the updateProfile function with the form data and access token
-		mutate({ data: formData, accessToken: token })
-	}, [OTP, token, mutate])
+		verify({ otp: OTP, accessToken: token })
+	}, [OTP, token, verify])
 
 	// Memoized function to handle resend OTP
 	const handleResendOTP = useCallback((): void => {
 		// Mutate the resend OTP function with the user's access token
-		resendOTP({ accessToken: token })
+		resendOTP(token)
 	}, [resendOTP, token])
 
 	return (
@@ -153,7 +147,7 @@ export default function Page(): React.ReactElement | null {
 				<FormButton
 					length="full"
 					colorTheme="dark"
-					isLoading={isPending}
+					isLoading={isVerifying}
 					title="Verify Code"
 					onPress={handleSubmit}
 				/>

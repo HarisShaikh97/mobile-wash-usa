@@ -18,6 +18,8 @@ export type UserRole = "customer" | "vendor"
 
 export type AccountStatus = "active" | "inactive" | "banned"
 
+export type AccessToken = string | null
+
 export type Service = {
 	title: string
 	image: ImageSourcePropType
@@ -141,12 +143,12 @@ export type VerifyResetPasswordData = {
 }
 
 export type SetNewPasswordData = {
-	accessToken: string
+	accessToken: AccessToken
 	password: string
 }
 
 export type JobByIdData = {
-	accessToken: string | null
+	accessToken: AccessToken
 	jobId: Job["id"]
 }
 
@@ -154,8 +156,13 @@ export type ResendOTPData = {
 	email: string
 }
 
+export type VerifyProfileUpdateData = {
+	accessToken: AccessToken
+	otp: string
+}
+
 export type QueryData = {
-	accessToken: string | null
+	accessToken: AccessToken
 }
 
 export type User = {
