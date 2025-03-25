@@ -14,7 +14,10 @@
 		},
 		"jsEngine": "hermes",
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"config": {
+				"googleMapsApiKey": "process.env.GOOGLE_MAPS_API_KEY"
+			}
 		},
 		"android": {
 			"adaptiveIcon": {
@@ -22,7 +25,12 @@
 				"backgroundColor": "#ffffff"
 			},
 			"permissions": ["android.permission.RECORD_AUDIO"],
-			"package": "com.mobilewashusa.mobilewashusa"
+			"package": "com.mobilewashusa.mobilewashusa",
+			"config": {
+				"googleMaps": {
+					"apiKey": "process.env.GOOGLE_MAPS_API_KEY"
+				}
+			}
 		},
 		"web": {
 			"bundler": "metro",

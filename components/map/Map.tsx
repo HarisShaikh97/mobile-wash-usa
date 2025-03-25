@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import MapView, { Region, Details } from "react-native-maps"
+import MapView, { Region, Details, PROVIDER_GOOGLE } from "react-native-maps"
 
 // Interface for the props of the component
 interface MapProps {
@@ -20,7 +20,7 @@ export default function Map({
 			initialRegion={initialRegion}
 			region={selectedLocation}
 			onRegionChangeComplete={onRegionChange}
-			provider="google"
+			provider={PROVIDER_GOOGLE}
 			scrollEnabled
 			showsUserLocation
 			showsMyLocationButton
