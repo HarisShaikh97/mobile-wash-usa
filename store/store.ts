@@ -2,13 +2,15 @@ import { configureStore } from "@reduxjs/toolkit"
 import authSlice from "../features/auth/authSlice"
 import emailVerificationSlice from "../features/email-verification/emailVerificationSlice"
 import resetPasswordSlice from "../features/reset-password/resetPasswordSlice"
+import addJobSlice from "../features/add-job/addJobSlice"
 
-// Create a Redux store with the auth, emailVerification, and resetPassword slices
+// Create a Redux store with the auth, emailVerification, resetPassword, and addJob slices
 export const store = configureStore({
 	reducer: {
 		auth: authSlice,
 		emailVerification: emailVerificationSlice,
-		resetPassword: resetPasswordSlice
+		resetPassword: resetPasswordSlice,
+		addJob: addJobSlice
 	},
 	devTools: false
 })

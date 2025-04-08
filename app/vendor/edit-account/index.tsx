@@ -48,7 +48,8 @@ export default function Page(): React.ReactElement | null {
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
-				quality: 1 // Setting image quality to maximum
+				quality: 1, // Setting image quality to maximum
+				allowsMultipleSelection: false // Disallowing multiple selection of images
 			})
 
 		// Checking if an image was selected and setting the new image state

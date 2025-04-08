@@ -7,6 +7,7 @@ import {
 	StyleSheet
 } from "react-native"
 import * as DocumentPicker from "expo-document-picker"
+import * as ImagePicker from "expo-image-picker"
 import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons"
 import { theme } from "../../utils/constants"
 
@@ -53,11 +54,19 @@ interface FileInputFieldProps extends BaseInputFieldProps {
 	onUploadFile: (value: DocumentPicker.DocumentPickerResult) => void
 }
 
+// Interface for the image input field props
+interface ImageInputFieldProps extends BaseInputFieldProps {
+	type: "image"
+	images: ImagePicker.ImagePickerResult | null
+	onUploadImage: (value: ImagePicker.ImagePickerResult) => void
+}
+
 // Union type for the props of the component (single line, multi line, file, select)
 type InputFieldProps =
 	| TextInputFieldPropsMultiLine
 	| TextInputFieldPropsSingleLine
 	| FileInputFieldProps
+	| ImageInputFieldProps
 	| SelectInputFieldProps
 
 export default function InputField(
@@ -75,12 +84,12 @@ export default function InputField(
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 
 	// Memoized callback for handling file upload
-	const handleFileUpload = useCallback(async (): Promise<void> => {
+	const handleUpload = useCallback(async (): Promise<void> => {
 		// If the type is file, try to get the file picker result
 		if (type === "file") {
 			try {
 				// Get the file picker result
-				const docRes = await DocumentPicker.getDocumentAsync({
+				let docRes = await DocumentPicker.getDocumentAsync({
 					type: "*/*",
 					multiple: true
 				})
@@ -90,8 +99,23 @@ export default function InputField(
 				// Log the error message
 				console.log("Error while selecting file: ", error)
 			}
+		} else if (type === "image") {
+			// Requesting permission to access the library
+			let result: ImagePicker.ImagePickerResult =
+				await ImagePicker.launchImageLibraryAsync({
+					mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
+					quality: 1, // Setting image quality to maximum
+					allowsMultipleSelection: true // Allowing multiple selection of images
+				})
+
+			// If the user picked an image, set the newImage state with the URI of the picked image else log a message
+			if (!result.canceled) {
+				props.onUploadImage(result)
+			} else {
+				console.log("No image selected or operation canceled!")
+			}
 		}
-	}, [type, props, DocumentPicker])
+	}, [type, props, DocumentPicker, ImagePicker])
 
 	return (
 		// Main container wrapper
@@ -151,6 +175,13 @@ export default function InputField(
 								? props.files.assets
 										.map((item) => item.name)
 										.join(", ")
+								: props.type === "image" &&
+								  props.images &&
+								  props.images.assets &&
+								  props.images.assets.length > 0
+								? props.images.assets
+										.map((item) => item.fileName)
+										.join(", ")
 								: props.type === "select" && props.value
 								? props.value.name
 								: placeholder}
@@ -173,11 +204,11 @@ export default function InputField(
 								/>
 							</TouchableOpacity>
 						)
-					) : type === "file" ? (
+					) : type === "file" || type === "image" ? (
 						// File upload button
 						<TouchableOpacity
 							style={styles.inputFieldButton}
-							onPress={handleFileUpload}
+							onPress={handleUpload}
 						>
 							<MaterialCommunityIcons
 								name="paperclip"
@@ -244,7 +275,7 @@ const styles = StyleSheet.create({
 		width: "47.5%"
 	},
 	inputFieldTitleText: {
-		fontFamily: "Roboto-Regular",
+		fontFamily: "Roboto-Medium",
 		fontSize: 12.5,
 		color: theme.colors.secondary,
 		marginLeft: 7.5

@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { User } from "../../utils/types"
+import { User, AccessToken } from "../../utils/types"
 
 // Interface for the AuthState type
 export interface AuthState {
 	user: User | null
-	token: string | null
+	token: AccessToken
 }
 
 // Initial state for the AuthState type

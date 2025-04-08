@@ -10,19 +10,35 @@ import {
 } from "react-native"
 import { ImageBackground } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch, useSelector } from "react-redux"
+import * as ImagePicker from "expo-image-picker"
 import DateTimePickerModal from "react-native-modal-datetime-picker"
+import { showToastable } from "react-native-toastable"
 import BackButton from "../../../../components/back-button/BackButton"
 import BudgetInput from "../../../../components/budget-input/BudgetInput"
+import InputField from "../../../../components/input-field/InputField"
 import FormButton from "../../../../components/form-button/FormButton"
+import { addJobDetails } from "../../../../features/add-job/addJobSlice"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
 	// Initializing the router instance for navigation
 	const router = useRouter()
 
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
+
+	// Retrieve new job details from Redux store
+	const newJobDetails = useSelector((state: RootState) => state.addJob)
+
 	// State variables for managing date and time, budget, and date picker visibility
 	const [dateTime, setDateTime] = useState<Date | null>(null) // Stores the selected date and time
-	const [budget, setBudget] = useState<number>(0) // Stores the selected budget
+	const [address, setAddress] = useState<string>(newJobDetails.address || "") // State for storing address
+	const [budget, setBudget] = useState<number>(newJobDetails.budget || 0) // Stores the selected budget
+	const [images, setImages] = useState<ImagePicker.ImagePickerResult | null>(
+		null
+	) // State to store the selected images result
 	const [isDatePickerVisible, setDatePickerVisibility] =
 		useState<boolean>(false) // Toggles the visibility of the date picker
 
@@ -49,17 +65,39 @@ export default function Page(): React.ReactElement | null {
 		[setDateTime, hideDatePicker]
 	)
 
-	// Function to handle location selection
-	const handleSelectLocation = useCallback((): void => {
-		// Navigate to the location selection page
-		router.navigate("/user/add-job/select-location")
-	}, [router])
-
 	// Function to handle form submission
 	const handleSubmit = useCallback((): void => {
-		// Navigate to the review page
-		router.navigate("/user/add-job/review")
-	}, [router])
+		// Checking if all required fields are filled
+		if (address.length > 0 && dateTime) {
+			// Dispatching the addJobNeeds action with the job details
+			dispatch(
+				addJobDetails({
+					budget: budget,
+					address: address,
+					dateTime: dateTime.toISOString(),
+					images: images
+				})
+			)
+
+			// Navigate to the location selection page
+			router.navigate("/user/add-job/select-location")
+		} else {
+			// Show success toast warning for incomplete form
+			showToastable({
+				message: "Please fill in all the fields!",
+				status: "warning"
+			})
+		}
+	}, [
+		router,
+		dispatch,
+		showToastable,
+		addJobDetails,
+		budget,
+		address,
+		dateTime,
+		images
+	])
 
 	return (
 		// KeyboardAvoidingView to handle keyboard visibility and scrolling
@@ -114,23 +152,17 @@ export default function Page(): React.ReactElement | null {
 								mode="app"
 							/>
 						</View>
-						{/* Input field wrapper for the location field */}
-						<View style={styles.inputFieldWrapper}>
-							{/* Title text for the location field */}
-							<Text style={styles.inputFieldTitleText}>
-								Location
-							</Text>
-							{/* TouchableOpacity for selecting a location */}
-							<TouchableOpacity
-								style={styles.inputFieldContainer}
-								onPress={handleSelectLocation}
-							>
-								{/* Text for the location field */}
-								<Text style={styles.inputFieldText}>
-									Select Your Location
-								</Text>
-							</TouchableOpacity>
-						</View>
+						{/* InputField component for address input */}
+						<InputField
+							length="full"
+							type="text"
+							value={address}
+							onChangeText={setAddress}
+							title="Address"
+							multiline={false}
+							secureTextEntry={false}
+							placeholder="Enter your address"
+						/>
 						{/* Input field wrapper for the date and time field */}
 						<View style={styles.inputFieldWrapper}>
 							{/* Title text for the date and time field */}
@@ -146,10 +178,19 @@ export default function Page(): React.ReactElement | null {
 								<Text style={styles.inputFieldText}>
 									{dateTime
 										? dateTime.toLocaleString()
-										: "DD/MM/YYYY TT"}
+										: "05 October 2011 14:48 UTC"}
 								</Text>
 							</TouchableOpacity>
 						</View>
+						{/* InputField component for images input */}
+						<InputField
+							length="full"
+							title="Upload Images"
+							placeholder="Upload your job images"
+							images={images}
+							onUploadImage={setImages}
+							type="image"
+						/>
 						{/* FormButton for submitting the form */}
 						<FormButton
 							length="full"

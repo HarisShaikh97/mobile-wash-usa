@@ -34,7 +34,7 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 	const token = useSelector((state: RootState) => state.auth.token)
 
 	const [newImage, setNewImage] =
-		useState<ImagePicker.ImagePickerResult | null>(null) // State to store the selected image URI
+		useState<ImagePicker.ImagePickerResult | null>(null) // State to store the selected image result
 	const [fullName, setFullName] = useState<string>(user?.full_name || "") // State to store the full name
 	const [phoneNumber, setPhoneNumber] = useState<string>(
 		user?.phone_number || ""
@@ -54,7 +54,8 @@ export default function VendorEditProfileCardWeb(): React.ReactElement | null {
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
-				quality: 1 // Setting image quality to maximum
+				quality: 1, // Setting image quality to maximum
+				allowsMultipleSelection: false // Disallowing multiple selection of images
 			})
 
 		// If the user picked an image, set the newImage state with the URI of the picked image else log a message

@@ -2,17 +2,133 @@ import { useCallback } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useSelector } from "react-redux"
+import { useMutation } from "@tanstack/react-query"
+import { showToastable } from "react-native-toastable"
 import AddJobWebLayout from "../../../../components/add-job-web-layout/AddJobWebLayout"
 import FormButton from "../../../../components/form-button/FormButton"
+import { useLocation } from "../../../../hooks/useLocation"
+import { postNewJob } from "../../../../helpers/job"
+import { RootState } from "../../../../store/store"
 import { theme } from "../../../../utils/constants"
 
 export default function Page(): React.ReactElement | null {
-	const router = useRouter() // Initializing the router instance for navigation
+	// Initializing the router instance for navigation
+	const router = useRouter()
+
+	// Hook to get the location
+	const location = useLocation()
+
+	// Retrieve user's token from Redux store
+	const token = useSelector((state: RootState) => state.auth.token)
+
+	// Retrieve new job details from Redux store
+	const newJobDetails = useSelector((state: RootState) => state.addJob)
+
+	// Memoized function to handle post new job success
+	const handleSuccess = useCallback(
+		(data: any): void => {
+			console.log(data)
+
+			// Show success toast message
+			showToastable({
+				message: "Job posted successfully!",
+				status: "success"
+			})
+
+			router.navigate("/user/add-job/payment-card-details") // Navigating to the payment method selection page
+		},
+		[router, showToastable]
+	)
+
+	// Memoized function to handle post new job error
+	const handleError = useCallback(
+		(error: any): void => {
+			console.log(error)
+
+			// Show error toast message
+			showToastable({
+				message:
+					error?.response?.data?.errors?.messages[0] ||
+					"Something went wrong!",
+				status: "danger"
+			})
+		},
+		[showToastable]
+	)
+
+	// Mutation hook to handle post new job
+	const { mutate, isPending } = useMutation({
+		mutationFn: postNewJob,
+		onSuccess: handleSuccess,
+		onError: handleError
+	})
 
 	// Memoized function to handle form submission
-	const handleSubmit = useCallback((): void => {
-		router.navigate("/user/add-job/payment-card-details") // Navigating to the payment method selection page
+	const handleEditJobNeeds = useCallback((): void => {
+		router.navigate("/user/add-job") // Navigating to the job needs page
 	}, [router])
+
+	// Memoized function to handle form submission
+	const handleEditJobDetails = useCallback((): void => {
+		router.navigate("/user/add-job/details") // Navigating to the job details page
+	}, [router])
+
+	// Memoized function to handle form submission
+	const handleSubmit = useCallback(async (): Promise<void> => {
+		// Create a new FormData instance to send data to the server
+		const formData = new FormData()
+
+		// Append new job details to the form data
+		formData.append("job_title", newJobDetails.jobTitle || "")
+		formData.append("job_description", newJobDetails.jobDescription || "")
+		formData.append("service_id", `${newJobDetails.jobType?.id || ""}`)
+		formData.append("budget", `${newJobDetails.budget || ""}`)
+		formData.append("address", newJobDetails.address || "")
+		formData.append(
+			"location[latitude]",
+			`${location?.coords.latitude || ""}`
+		)
+		formData.append(
+			"location[longitude]",
+			`${location?.coords.longitude || ""}`
+		)
+		formData.append("scheduled_time", newJobDetails.dateTime || "")
+
+		// Append images if they exist
+		if (
+			newJobDetails.images &&
+			newJobDetails.images.assets &&
+			newJobDetails.images.assets.length > 0
+		) {
+			// Process all assets
+			for (const asset of newJobDetails.images.assets) {
+				// Fetch the blob from the asset's URI
+				try {
+					const response = await fetch(asset.uri)
+					const blob = await response.blob()
+
+					// Create a new File object with the blob and asset's name
+					const file = new File(
+						[blob],
+						asset.fileName || "document",
+						{
+							type: asset.mimeType || "application/octet-stream",
+							lastModified: Date.now()
+						}
+					)
+
+					// Append the image to the form data
+					formData.append("images[]", file, file.name)
+				} catch (error) {
+					console.error("Error fetching asset:", error)
+				}
+			}
+		}
+
+		// Mutate the updateProfile function with the form data and access token
+		mutate({ body: formData, accessToken: token })
+	}, [mutate, newJobDetails, token, location])
 
 	return (
 		<AddJobWebLayout>
@@ -30,14 +146,10 @@ export default function Page(): React.ReactElement | null {
 							numberOfLines={2}
 							ellipsizeMode="tail"
 						>
-							Car Wash At Home
+							{newJobDetails.jobTitle}
 						</Text>
 						{/* Edit icon for the job title */}
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
-						>
+						<TouchableOpacity onPress={handleEditJobNeeds}>
 							<Image
 								source={require("../../../../assets/icons/edit.svg")}
 								style={styles.editIcon}
@@ -52,13 +164,9 @@ export default function Page(): React.ReactElement | null {
 							numberOfLines={2}
 							ellipsizeMode="tail"
 						>
-							Vehicle
+							{newJobDetails.jobType?.name || ""}
 						</Text>
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
-						>
+						<TouchableOpacity onPress={handleEditJobNeeds}>
 							<Image
 								source={require("../../../../assets/icons/edit.svg")}
 								style={styles.editIcon}
@@ -72,14 +180,9 @@ export default function Page(): React.ReactElement | null {
 							numberOfLines={2}
 							ellipsizeMode="tail"
 						>
-							Looking for a thorough exterior and interior car
-							wash for my SUV.
+							{newJobDetails.jobDescription}
 						</Text>
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job")
-							}}
-						>
+						<TouchableOpacity onPress={handleEditJobNeeds}>
 							<Image
 								source={require("../../../../assets/icons/edit.svg")}
 								style={styles.editIcon}
@@ -93,13 +196,9 @@ export default function Page(): React.ReactElement | null {
 							numberOfLines={2}
 							ellipsizeMode="tail"
 						>
-							$500
+							${newJobDetails.budget}
 						</Text>
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job/details")
-							}}
-						>
+						<TouchableOpacity onPress={handleEditJobDetails}>
 							<Image
 								source={require("../../../../assets/icons/edit.svg")}
 								style={styles.editIcon}
@@ -113,13 +212,25 @@ export default function Page(): React.ReactElement | null {
 							numberOfLines={2}
 							ellipsizeMode="tail"
 						>
-							October 5, 2024 at 2:00 PM
+							{newJobDetails.address}
 						</Text>
-						<TouchableOpacity
-							onPress={() => {
-								router.navigate("/user/add-job/details")
-							}}
+						<TouchableOpacity onPress={handleEditJobDetails}>
+							<Image
+								source={require("../../../../assets/icons/edit.svg")}
+								style={styles.editIcon}
+								contentFit="contain"
+							/>
+						</TouchableOpacity>
+					</View>
+					<View style={styles.jobDetailContainer}>
+						<Text
+							style={styles.jobDetailText}
+							numberOfLines={2}
+							ellipsizeMode="tail"
 						>
+							{newJobDetails.dateTime}
+						</Text>
+						<TouchableOpacity onPress={handleEditJobDetails}>
 							<Image
 								source={require("../../../../assets/icons/edit.svg")}
 								style={styles.editIcon}
@@ -132,7 +243,7 @@ export default function Page(): React.ReactElement | null {
 						<FormButton
 							length="full"
 							colorTheme="dark"
-							isLoading={false}
+							isLoading={isPending}
 							title="Next"
 							onPress={handleSubmit}
 						/>

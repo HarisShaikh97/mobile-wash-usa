@@ -32,7 +32,8 @@ export default function ChatInputField({
 		let result: ImagePicker.ImagePickerResult =
 			await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allowing selection of images only
-				quality: 1 // Setting image quality to maximum
+				quality: 1, // Setting image quality to maximum
+				allowsMultipleSelection: true // Allowing multiple selection of images
 			})
 
 		// If the user picked an image, set the newImage state with the URI of the picked image else log a message

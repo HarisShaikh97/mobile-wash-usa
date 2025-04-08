@@ -1,5 +1,5 @@
 import axios from "axios"
-import { QueryData, JobByIdData } from "../utils/types"
+import { QueryData, JobByIdData, PostNewJobData } from "../utils/types"
 
 // Create an axios instance with the base URL
 const api = axios.create({ baseURL: process.env.EXPO_PUBLIC_API_URL })
@@ -66,4 +66,22 @@ export const getJobTypes = async (data: QueryData): Promise<any> => {
 
 	// Return the response data
 	return response.data.data.services
+}
+
+// Get my jobs function to fetch all jobs
+export const postNewJob = async (data: PostNewJobData): Promise<any> => {
+	// Set the headers for the request
+	const headers = {
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "multipart/form-data",
+			Authorization: `Bearer ${data.accessToken}`
+		}
+	}
+
+	// Create a request with the headers
+	const response = await api.post("/api/v1/jobs", data.body, headers)
+
+	// Return the response data
+	return response.data
 }

@@ -2,11 +2,13 @@ import { useState, useCallback, useEffect } from "react"
 import { View, StyleSheet } from "react-native"
 import { Image } from "expo-image"
 import { useRouter } from "expo-router"
+import { useDispatch } from "react-redux"
 import { Region, Details } from "react-native-maps"
 import Map from "../../../../components/map/Map"
 import BackButton from "../../../../components/back-button/BackButton"
 import FormButton from "../../../../components/form-button/FormButton"
 import { useLocation } from "../../../../hooks/useLocation"
+import { addJobLocation } from "../../../../features/add-job/addJobSlice"
 
 // Initial region for the map
 const INITIAL_REGION = {
@@ -19,6 +21,9 @@ const INITIAL_REGION = {
 export default function Page(): React.ReactElement | null {
 	// Initializing the router instance for navigation
 	const router = useRouter()
+
+	// Initializing the dispatch function for Redux
+	const dispatch = useDispatch()
 
 	// Hook to get the location
 	const location = useLocation()
@@ -38,10 +43,19 @@ export default function Page(): React.ReactElement | null {
 		[setSelectedLocation]
 	)
 
-	// Memoized function to handle form submission
-	const handleSubmit = useCallback((): void => {
-		router.back() // Navigate back
-	}, [router])
+	// Function to handle confirm location
+	const handleConfirm = useCallback((): void => {
+		// Dispatching the addJobNeeds action with the location(latitude and longitude)
+		dispatch(
+			addJobLocation({
+				longitude: selectedLocation.longitude,
+				latitude: selectedLocation.latitude
+			})
+		)
+
+		// Navigate to the review page
+		router.navigate("/user/add-job/review")
+	}, [router, dispatch, selectedLocation])
 
 	// Effect to update selected location when location changes
 	useEffect((): void => {
@@ -81,7 +95,7 @@ export default function Page(): React.ReactElement | null {
 					colorTheme="dark"
 					isLoading={false}
 					title="Confirm"
-					onPress={handleSubmit}
+					onPress={handleConfirm}
 				/>
 			</View>
 			{/* Google Maps component with custom configuration */}

@@ -152,6 +152,11 @@ export type JobByIdData = {
 	jobId: Job["id"]
 }
 
+export type PostNewJobData = {
+	accessToken: AccessToken
+	body: FormData
+}
+
 export type ResendAccountVerificationOTPData = {
 	email: string
 }
