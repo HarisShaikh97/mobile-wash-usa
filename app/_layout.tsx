@@ -58,21 +58,21 @@ export default function Layout(): React.ReactElement | null {
 
 				// Load fonts using the Font module
 				await Font.loadAsync({
-					"Montserrat-Black": require("../assets/fonts/Montserrat/Montserrat Black 900.ttf"),
-					"Montserrat-ExtraBold": require("../assets/fonts/Montserrat/Montserrat ExtraBold 800.ttf"),
-					"Montserrat-Bold": require("../assets/fonts/Montserrat/Montserrat Bold 700.ttf"),
-					"Montserrat-SemiBold": require("../assets/fonts/Montserrat/Montserrat SemiBold 600.ttf"),
-					"Montserrat-Medium": require("../assets/fonts/Montserrat/Montserrat Medium 500.ttf"),
-					"Montserrat-Regular": require("../assets/fonts/Montserrat/Montserrat Regular 400.ttf"),
-					"Montserrat-Light": require("../assets/fonts/Montserrat/Montserrat Light 300.ttf"),
-					"Montserrat-ExtraLight": require("../assets/fonts/Montserrat/Montserrat ExtraLight 275.ttf"),
-					"Montserrat-Thin": require("../assets/fonts/Montserrat/Montserrat Thin 250.ttf"),
-					"Roboto-Black": require("../assets/fonts/Roboto/Roboto Black 900.ttf"),
-					"Roboto-Bold": require("../assets/fonts/Roboto/Roboto Bold 700.ttf"),
-					"Roboto-Medium": require("../assets/fonts/Roboto/Roboto Medium 500.ttf"),
-					"Roboto-Regular": require("../assets/fonts/Roboto/Roboto 400.ttf"),
-					"Roboto-Light": require("../assets/fonts/Roboto/Roboto Light 300.ttf"),
-					"Roboto-Thin": require("../assets/fonts/Roboto/Roboto Thin 250.ttf")
+					"Montserrat-Black": require("../assets/fonts/Montserrat/Montserrat_Black_900.ttf"),
+					"Montserrat-ExtraBold": require("../assets/fonts/Montserrat/Montserrat_ExtraBold_800.ttf"),
+					"Montserrat-Bold": require("../assets/fonts/Montserrat/Montserrat_Bold_700.ttf"),
+					"Montserrat-SemiBold": require("../assets/fonts/Montserrat/Montserrat_SemiBold_600.ttf"),
+					"Montserrat-Medium": require("../assets/fonts/Montserrat/Montserrat_Medium_500.ttf"),
+					"Montserrat-Regular": require("../assets/fonts/Montserrat/Montserrat_Regular_400.ttf"),
+					"Montserrat-Light": require("../assets/fonts/Montserrat/Montserrat_Light_300.ttf"),
+					"Montserrat-ExtraLight": require("../assets/fonts/Montserrat/Montserrat_ExtraLight_275.ttf"),
+					"Montserrat-Thin": require("../assets/fonts/Montserrat/Montserrat_Thin_250.ttf"),
+					"Roboto-Black": require("../assets/fonts/Roboto/Roboto_Black_900.ttf"),
+					"Roboto-Bold": require("../assets/fonts/Roboto/Roboto_Bold_700.ttf"),
+					"Roboto-Medium": require("../assets/fonts/Roboto/Roboto_Medium_500.ttf"),
+					"Roboto-Regular": require("../assets/fonts/Roboto/Roboto_400.ttf"),
+					"Roboto-Light": require("../assets/fonts/Roboto/Roboto_Light_300.ttf"),
+					"Roboto-Thin": require("../assets/fonts/Roboto/Roboto_Thin_250.ttf")
 				})
 
 				// Prefetch images using the cacheImages function

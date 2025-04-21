@@ -49,8 +49,21 @@
 				"expo-font",
 				{
 					"fonts": [
-						"./assets/fonts/Montserrat",
-						"./assets/fonts/Roboto"
+						"./assets/fonts/Montserrat/Montserrat_Black_900.ttf",
+						"./assets/fonts/Montserrat/Montserrat_ExtraBold_800.ttf",
+						"./assets/fonts/Montserrat/Montserrat_Bold_700.ttf",
+						"./assets/fonts/Montserrat/Montserrat_SemiBold_600.ttf",
+						"./assets/fonts/Montserrat/Montserrat_Medium_500.ttf",
+						"./assets/fonts/Montserrat/Montserrat_Regular_400.ttf",
+						"./assets/fonts/Montserrat/Montserrat_Light_300.ttf",
+						"./assets/fonts/Montserrat/Montserrat_ExtraLight_275.ttf",
+						"./assets/fonts/Montserrat/Montserrat_Thin_250.ttf",
+						"./assets/fonts/Roboto/Roboto_Black_900.ttf",
+						"./assets/fonts/Roboto/Roboto_Bold_700.ttf",
+						"./assets/fonts/Roboto/Roboto_Medium_500.ttf",
+						"./assets/fonts/Roboto/Roboto_400.ttf",
+						"./assets/fonts/Roboto/Roboto_Light_300.ttf",
+						"./assets/fonts/Roboto/Roboto_Thin_250.ttf"
 					]
 				}
 			],
